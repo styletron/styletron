@@ -1,0 +1,21 @@
+{
+  "name": "styletron",
+  "version": "0.1.0",
+  "description": "A generic server-rendering helper for css-in-js tools",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "devDependencies": {
+    "tape": "^4.5.1",
+    "jsdom": "^3.0.0"
+  },
+  "dependencies": {
+    "asap": "^2.0.3"
+  },
+  "license": "MIT"
+}
