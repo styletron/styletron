@@ -2,7 +2,7 @@
 
 var test = require('tape');
 var asap = require('asap');
-var jsdom = require('jsdom');
+var runBrowser = require('./run-browser');
 
 var styletron = require('../');
 
@@ -28,17 +28,10 @@ test('autobuffering should fail without document', function(t) {
 });
 
 test('auto-injection works with document', function(t) {
-  t.plan(2);
+  t.plan(1);
 
-  domTest(function() {
-    styletron.injector.injectOnce('foo', '.foo {}');
-
-    asap(function() {
-      var styleTags = global.document.getElementsByTagName('style');
-      t.ok(styleTags.length, 'style tag exists');
-      t.equal(styleTags[0].textContent, '.foo {}', 'style tag content matches expected');
-      reset();
-    });
+  runBrowser('foo.js', function(result) {
+    t.equal(result.content, '.foo {}', 'style tag content matches expected');
   });
 });
 
@@ -48,13 +41,4 @@ test('auto-injection works with document', function(t) {
 
 function reset() {
   styletron.injector.reset();
-}
-
-function domTest(testFn) {
-  global.document = jsdom.jsdom();
-  testFn();
-  asap(function() {
-    global.document.close();
-    global.document = undefined;
-  });
 }

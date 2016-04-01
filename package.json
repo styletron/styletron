@@ -12,7 +12,8 @@
   },
   "devDependencies": {
     "tape": "^4.5.1",
-    "jsdom": "^3.0.0"
+    "electron-spawn": "^4.1.1",
+    "through2": "^2.0.1"
   },
   "dependencies": {
     "asap": "^2.0.3"
