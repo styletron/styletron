@@ -12,7 +12,37 @@ This module provides functionality for:
    * Ignoring of duplicate style injections
  * Extraction of CSS at render-time on the server, which can be sent down along with markup
 
-Real-world usage examples coming soon.
+## Usage
+
+Note: This module is designed to be integrated into other, more opinionated modules with larger scope.
+
+#### Injecting a style into document `<head>`
+
+```js
+const {injectOnce} = require('styletron').injector;
+injectOnce('someUniqueId', '.foo {}');
+```
+
+
+#### Extracting "injected" CSS at render-time on the server
+
+```js
+const renderApp = require('./render-my-app-fn');
+/**
+ * `renderApp` is some function that renders the app, returning a string of HTML. 
+ * This function should also result in `injectOnce` being called at some point.
+ */
+const styletron = require('styletron');
+const {html, css} = styletron.server.renderStatic(() => {
+  const html = renderApp();
+  return html;
+}
+/**
+ * `css` will be a string containing all the css that was passed into `injectOnce`
+ * during the render. When you send down the HTML to the client, you should set this
+ * as the contents of a <style data-styletron></style> element in the <head>.
+ */
+```
 
 This concept is originally from https://github.com/Khan/aphrodite, but this module is much smaller in scope and unopinionated.
 
