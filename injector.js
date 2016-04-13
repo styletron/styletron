@@ -35,22 +35,10 @@ module.exports = {
  */
 
 /**
- * Injects css into a <style> element in the document head.
- * If a styletron <style> element exists in the document head
- * it will be used, otherwise one will be created.
- * @param  {string} css - string of css
- * @return {void}
- */
-function injectStylesIntoHead(css) {
-  if (styleDOMElement === undefined) {
-    var found = existingStyleElement();
-    styleDOMElement = found ? found : appendToHead(createStyleElement());
-  }
-  styleDOMElement.appendChild(document.createTextNode(css));
-}
-
-/**
- * Sasdfasdfasdfasdfasfd
+ * Injects the given css with the given unique into into the buffer. If in the
+ * browser, also schedules the style buffer to be flushed and injected into the
+ * document <head>. If css for the given unique key has already been injected,
+ * it is ignored.
  * @param  {string} key - unique key for the css
  * @param  {string} css - the css to inject
  * @return {boolean}    - if the css will be injected
@@ -75,35 +63,8 @@ function injectOnce(key, css) {
 }
 
 /**
- * Resets the buffer
- * @return {void}
- */
-function reset() {
-  injectionBuffer = '';
-  alreadyInjected = {};
-  isBuffering = false;
-  styleDOMElement = undefined;
-};
-
-/**
- * Returns an array of keys for already injected styles
- * @return {array} - array of keys
- */
-function getInjectedKeys() {
-  return Object.keys(alreadyInjected);
-}
-
-/**
- * Marks a key as already injected
- * @param  {string} key - unique key to mark as injected
- * @return {void}
- */
-function markAsInjected(key) {
-  alreadyInjected[key] = true;
-}
-
-/**
- * Sets isBuffering flag to true
+ * Sets isBuffering flag to true. Should only be called by the server if
+ * server rendering.
  * @return {void}
  */
 function startBuffering() {
@@ -111,6 +72,17 @@ function startBuffering() {
     throw Error('Cannot buffer while already buffering');
   }
   isBuffering = true;
+};
+
+/**
+ * Flushes the buffer and injects the styles into the document
+ * @return {void}
+ */
+function flushToStyleElement() {
+  var css = flushBuffer();
+  if (css.length > 0) {
+    injectStylesIntoHead(css);
+  }
 };
 
 /**
@@ -125,15 +97,47 @@ function flushBuffer() {
 };
 
 /**
- * Flushes the buffer and injects the styles into the document
+ * Injects css into a <style> element in the document head.
+ * If a styletron <style> element exists in the document head
+ * it will be used, otherwise one will be created.
+ * @param  {string} css - string of css
  * @return {void}
  */
-function flushToStyleElement() {
-  var css = flushBuffer();
-  if (css.length > 0) {
-    injectStylesIntoHead(css);
+function injectStylesIntoHead(css) {
+  if (styleDOMElement === undefined) {
+    var found = existingStyleElement();
+    styleDOMElement = found ? found : appendToHead(createStyleElement());
   }
+  styleDOMElement.appendChild(document.createTextNode(css));
+}
+
+/**
+ * Resets the buffer
+ * @return {void}
+ */
+function reset() {
+  injectionBuffer = '';
+  alreadyInjected = {};
+  isBuffering = false;
+  styleDOMElement = undefined;
 };
+
+/**
+ * Marks a key as already injected
+ * @param  {string} key - unique key to mark as injected
+ * @return {void}
+ */
+function markAsInjected(key) {
+  alreadyInjected[key] = true;
+}
+
+/**
+ * Returns an array of keys for already injected styles
+ * @return {array} - array of keys
+ */
+function getInjectedKeys() {
+  return Object.keys(alreadyInjected);
+}
 
 /**
  * Helpers
