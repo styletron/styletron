@@ -152,6 +152,6 @@ function existingStyleElement() {
 function createStyleElement() {
   var element = document.createElement('style');
   element.type = 'text/css';
-  element.setAttribute('date-styletron', '');
+  element.setAttribute('data-styletron', '');
   return element;
 }
