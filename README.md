@@ -25,7 +25,7 @@ styletron.injectOnce('someUniqueId', '.foo { color: red }');
 
 #### Extracting "injected" CSS at render-time on the server
 
-See [styletron-server](https://github.com/rtsao/styletron-server)
+**See [`styletron-server`](https://github.com/rtsao/styletron-server)**
 
 This concept is originally from https://github.com/Khan/aphrodite, but this module is smaller in scope and more generic.
 
