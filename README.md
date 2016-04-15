@@ -19,13 +19,13 @@ Note: This module is designed to be integrated into other, more opinionated modu
 #### Injecting a style into document `<head>`
 
 ```js
-const {injectOnce} = require('styletron');
-styletron.injectOnce('someUniqueId', '.foo {}');
+const styletron = require('styletron');
+styletron.injectOnce('someUniqueId', '.foo { color: red }');
 ```
 
 #### Extracting "injected" CSS at render-time on the server
 
-See: https://github.com/rtsao/styletron-server
+See [styletron-server](https://github.com/rtsao/styletron-server)
 
 This concept is originally from https://github.com/Khan/aphrodite, but this module is smaller in scope and more generic.
 
