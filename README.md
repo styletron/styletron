@@ -33,14 +33,27 @@ const renderApp = require('./render-my-app-fn');
  * This function should also result in `injectOnce` being called at some point.
  */
 const styletron = require('styletron');
-const {html, css} = styletron.server.renderStatic(() => {
+const {html, css, hydrationSrc} = styletron.server.renderStatic(() => {
   const html = renderApp();
   return html;
 }
+
 /**
- * `css` will be a string containing all the css that was passed into `injectOnce`
+ * `html` is simply the return value of the function passed into `renderStatic`.
+ * It is passed through for convenience.
+ */
+
+/**
+ * `css` is a string containing all the css that was passed into `injectOnce`
  * during the render. When you send down the HTML to the client, you should set this
  * as the contents of a <style data-styletron></style> element in the <head>.
+ * This string should be sanitized before being set as contents into HTML.
+ */
+
+/**
+ * `hydrationSrc` is a string of JS source code to hydrate styletron on the
+ * client. This prevents re-injection of styles rendered onthe server. Set this string
+ * as the contents of a <script></script> element before your main bundle.
  */
 ```
 

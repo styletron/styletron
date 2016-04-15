@@ -7,38 +7,38 @@ var runBrowser = require('./run-browser');
 var styletron = require('../');
 
 test('injecting styles to buffer works', function(t) {
-  styletron.injector.startBuffering();
-  styletron.injector.injectOnce('foo', '.foo {}');
-  var contents = styletron.injector.flushBuffer();
-  var alreadyInjected = styletron.injector.getInjectedKeys();
+  styletron.reset();
+  styletron.startBuffering();
+  styletron.injectOnce('foo', '.foo {}');
+  var contents = styletron.flushBuffer();
+  var alreadyInjected = styletron.getInjectedKeys();
   t.equal(contents, '.foo {}',
     'contents of buffer matches expected');
   t.deepEqual(alreadyInjected, ['foo'],
     'already injected keys matches expected');
-  reset();
   t.end();
 });
 
 test('autobuffering should fail without document', function(t) {
+  styletron.reset();
   t.throws(function() {
-    styletron.injector.injectOnce('foo', '.foo {}');
+    styletron.injectOnce('foo', '.foo {}');
   });
-  reset();
   t.end();
 });
 
 test('auto-injection works with document', function(t) {
   t.plan(1);
 
-  runBrowser('foo.js', function(result) {
+  runBrowser('basic.js', function(result) {
     t.equal(result.content, '.foo {}', 'style tag content matches expected');
   });
 });
 
-/**
- * Test helpers
- */
+test('hydration works', function(t) {
+  t.plan(1);
 
-function reset() {
-  styletron.injector.reset();
-}
+  runBrowser('hydration.js', function(result) {
+    t.equal(result.content, '.bar {}', 'style tag content matches expected');
+  });
+});
