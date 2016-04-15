@@ -27,6 +27,23 @@ test('autobuffering should fail without document', function(t) {
   t.end();
 });
 
+test('true singleton', function(t) {
+  styletron.reset();
+  styletron.startBuffering();
+  styletron.injectOnce('foo', '.foo {}');
+
+  var styletron2 = requireNoCache('../');
+  styletron2.injectOnce('bar', '.bar {}');
+
+  var contents = styletron.flushBuffer();
+  var alreadyInjected = styletron.getInjectedKeys();
+  t.equal(contents, '.foo {}.bar {}',
+    'contents of buffer matches expected');
+  t.deepEqual(alreadyInjected, ['foo', 'bar'],
+    'already injected keys matches expected');
+  t.end();
+});
+
 test('auto-injection works with document', function(t) {
   t.plan(1);
 
@@ -42,3 +59,12 @@ test('hydration works', function(t) {
     t.equal(result.content, '.bar {}', 'style tag content matches expected');
   });
 });
+
+/**
+ * Test Helpers
+ */
+
+function requireNoCache(moduleName) {
+  delete require.cache[moduleName];
+  return require(moduleName);
+}
