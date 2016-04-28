@@ -12,9 +12,9 @@ This module provides functionality for:
    * Ignoring of duplicate style injections
  * Extraction of CSS at render-time on the server, which can be sent down along with markup
 
-## Usage
+This concept behind this module is originally from https://github.com/Khan/aphrodite, but this module is smaller in scope and more generic.
 
-Note: This module is designed to be integrated into other, more opinionated modules with larger scope.
+## Usage
 
 #### Injecting a style into document `<head>`
 
@@ -27,7 +27,7 @@ styletron.injectOnce('someUniqueId', '.foo { color: red }');
 
 **See [`styletron-server`](https://github.com/rtsao/styletron-server)**
 
-This concept is originally from https://github.com/Khan/aphrodite, but this module is smaller in scope and more generic.
+## [API documentation](docs/api.md)
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
