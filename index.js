@@ -79,7 +79,12 @@ function injectOnce(key, css) {
 
   if (!isBuffering) {
     if (typeof document === 'undefined') {
-      throw Error('Cannot automatically buffer without a document');
+      /**
+       * `styletron.startBuffering()` must be called before server rendering.
+       * In this case (where no document exists and buffering not started), no
+       * CSS will be added to the buffer for extraction on the server.
+       */
+      return false;
     }
 
     isBuffering = true;

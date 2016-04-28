@@ -21,9 +21,7 @@ test('injecting styles to buffer works', function(t) {
 
 test('autobuffering should fail without document', function(t) {
   styletron.reset();
-  t.throws(function() {
-    styletron.injectOnce('foo', '.foo {}');
-  });
+  t.notOk(styletron.injectOnce('qux', '.qux {}'), 'no injection');
   t.end();
 });
 
