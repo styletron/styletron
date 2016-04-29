@@ -20,7 +20,7 @@ This concept behind this module is originally from https://github.com/Khan/aphro
 
 ```js
 const styletron = require('styletron');
-styletron.injectOnce('someUniqueId', '.foo { color: red }');
+styletron.injectOnce('.foo { color: red }', 'someUniqueId');
 ```
 
 #### Extracting "injected" CSS at render-time on the server

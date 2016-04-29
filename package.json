@@ -8,14 +8,17 @@
   "bugs": "https://github.com/rtsao/styletron/issues",
   "main": "index.js",
   "scripts": {
+    "precommit": "npm test && npm run build-docs && git diff --exit-code docs/api.md",
+    "build-docs": "docdown ./index.js docs/api.md url='https://github.com/rtsao/styletron/blob/master/index.js' toc='categories' title='API documentation'",
     "test": "node test/index.js"
   },
   "dependencies": {
     "asap": "^2.0.3"
   },
   "devDependencies": {
-    "tape": "^4.5.1",
     "electron-spawn": "^4.1.1",
+    "husky": "^0.11.4",
+    "tape": "^4.5.1",
     "through2": "^2.0.1"
   },
   "license": "MIT"
