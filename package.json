@@ -9,7 +9,7 @@
   "scripts": {
     "build-docs": "jsdoc -c jsdoc.json",
     "test": "lerna run test",
-    "predeploy-docs": "rm -rf htmldocs && npm run build-docs",
+    "predeploy-docs": "rm -rf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
   },
   "devDependencies": {
