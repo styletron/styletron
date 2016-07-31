@@ -4,7 +4,7 @@
 [![dependencies status][deps-badge]][deps-href]
 [![npm version][npm-badge]][npm-href]
 
-WIP
+Universal, high-performance JavaScript styles. More docs coming soon.
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
