@@ -1,0 +1,31 @@
+{
+    "tags": {
+        "allowUnknownTags": false
+    },
+    "source": {
+        "include": [
+            "./README.md",
+            "packages/styletron/src",
+            "packages/styletron-core/src",
+            "packages/styletron-react/src"
+        ],
+        "includePattern": ".js$"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "opts": {
+        "template": "node_modules/docdash",
+        "encoding": "utf8",
+        "destination": "htmldocs/",
+        "recurse": true,
+        "verbose": true
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+    "docdash": {
+        "sort": false
+    }
+}

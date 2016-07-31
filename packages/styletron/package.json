@@ -1,0 +1,28 @@
+{
+  "name": "styletron",
+  "version": "2.0.0",
+  "description": "A universal stylesheet manager for node.js and browsers",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "main": "./lib/styletron-node.js",
+  "browser": "./lib/styletron-browser.js",
+  "scripts": {
+    "transpile": "buble -i src -o lib",
+    "pretest": "npm run transpile",
+    "test": "unitest --node=lib/test/index.js --browser=lib/test/browser.js",
+    "test-browser": "unitest --browser=test/browser.js",
+    "test-node": "node test/index.js"
+  },
+  "dependencies": {
+    "fenwick-tree": "0.0.0",
+    "styletron-core": "*"
+  },
+  "devDependencies": {
+    "buble": "^0.12.5",
+    "tape": "^4.6.0",
+    "unitest": "^0.10.3"
+  },
+  "license": "MIT"
+}

@@ -1,25 +1,19 @@
 {
-  "name": "styletron",
+  "name": "styletron-monorepo",
   "version": "1.0.0",
   "description": "A generic server-rendering helper for css-in-js tools",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "index.js",
   "scripts": {
-    "precommit": "npm test && npm run build-docs && git diff --exit-code docs/api.md",
-    "build-docs": "docdown ./index.js docs/api.md url='https://github.com/rtsao/styletron/blob/master/index.js' toc='categories' title='API documentation'",
-    "test": "node test/index.js"
-  },
-  "dependencies": {
-    "asap": "^2.0.3"
+    "build-docs": "jsdoc -c jsdoc.json",
+    "test": "lerna run test"
   },
   "devDependencies": {
-    "electron-spawn": "^4.1.1",
-    "husky": "^0.11.4",
-    "tape": "^4.5.1",
-    "through2": "^2.0.1"
+    "docdash": "^0.4.0",
+    "jsdoc": "^3.4.0",
+    "lerna": "2.0.0-beta.24"
   },
   "license": "MIT"
 }
