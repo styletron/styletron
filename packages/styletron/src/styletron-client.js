@@ -34,9 +34,24 @@ class StyletronClient extends StyletronCore {
    * @param {CSSRuleList} ruleList The rule list
    */
   hydrateCacheFromCssRules(ruleList) {
+    let mediaCount = 0;
+    let count = 0;
     for (let i = 0; i < ruleList.length; i++) {
-      assignInfoFromCSSRule(this.cache, ruleList[i]);
+      const rule = ruleList[i];
+      if (rule instanceof CSSStyleRule) {
+        count++;
+        assignRule(this.cache, cacheInfoFromCSSStyleRule(rule));
+      } else if (rule instanceof CSSMediaRule) {
+        const media = rule.media.mediaText;
+        mediaCount += rule.cssRules.length;
+        for (let i = 0; i < rule.cssRules.length; i++) {
+          const info = cacheInfoFromCSSStyleRule(rule.cssRules[i]);
+          info.media = media;
+          assignRule(this.cache, info);
+        }
+      }
     }
+    this.counts = fenwick([count, mediaCount]);
   }
 
   /**
@@ -77,19 +92,6 @@ module.exports = StyletronClient;
 /*
  * Hydration helpers
  */
-
-function assignInfoFromCSSRule(target, rule) {
-  if (rule instanceof CSSStyleRule) {
-    assignRule(target, cacheInfoFromCSSStyleRule(rule));
-  } else if (rule instanceof CSSMediaRule) {
-    const media = rule.media.mediaText;
-    for (let i = 0; i < rule.cssRules.length; i++) {
-      const info = cacheInfoFromCSSStyleRule(rule.cssRules[i]);
-      info.media = media;
-      assignRule(target, info);
-    }
-  }
-}
 
 function assignRule(target, ruleInfo) {
   let pseudo;

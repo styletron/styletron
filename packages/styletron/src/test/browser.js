@@ -3,6 +3,7 @@ const test = require('tape');
 const util = require('util');
 const fs = require('fs');
 const path = require('path');
+const fenwick = require('fenwick-tree');
 const forEach = Array.prototype.forEach;
 
 const cache = require('../../fixtures/basic.js');
@@ -15,12 +16,18 @@ class StyletronTest extends Styletron {
   getCache() {
     return this.cache;
   }
+  getCounts() {
+    return this.counts;
+  }
 }
 
 test('hydration', t => {
   const element = createStyleElement(css);
   const instance = new StyletronTest(element);
   t.deepEqual(instance.getCache(), cache);
+  const counts = instance.getCounts();
+  t.equal(fenwick.query(counts, 0), 3);
+  t.equal(fenwick.query(counts, 1), 5);
   t.end();
 });
 
