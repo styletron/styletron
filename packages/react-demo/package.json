@@ -1,0 +1,30 @@
+{
+  "name": "react-demo",
+  "version": "0.0.1",
+  "description": "A universal stylesheet manager for node.js and browsers",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "main": "lib/index.js",
+  "scripts": {
+    "bundle-client": "mkdir -p static && browserify src/client.js -o static/bundle.js",
+    "prestart": "npm run bundle-client",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "compression": "^1.6.2",
+    "connect": "^3.4.1",
+    "react-dom": "^15.3.0",
+    "react-fp": "^0.3.0",
+    "serve-static": "^1.11.1",
+    "styletron": "*",
+    "styletron-react": "*",
+    "styletron-utils": "*"
+  },
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "browserify": "^13.1.0"
+  }
+}
