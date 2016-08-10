@@ -13,8 +13,7 @@
     "test": "node lib/test/index.js"
   },
   "devDependencies": {
-    "buble": "^0.12.5",
-    "tape": "^4.6.0"
+    "buble": "^0.12.5"
   },
   "license": "MIT"
 }

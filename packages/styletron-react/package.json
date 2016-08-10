@@ -24,7 +24,6 @@
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
-    "tape": "^4.6.0",
     "styletron-server": "*",
     "unitest": "^0.10.3"
   },

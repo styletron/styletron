@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "buble": "^0.12.5",
-    "tape": "^4.6.0",
     "test-fixtures": "*",
     "unitest": "^0.10.3"
   },
