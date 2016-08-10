@@ -6,8 +6,8 @@
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "./lib/styletron-node.js",
-  "browser": "./lib/styletron-browser.js",
+  "main": "./lib/styletron-client.js",
+  "browser": "./lib/styletron-server.js",
   "scripts": {
     "transpile": "buble -i src -o lib",
     "pretest": "npm run transpile",
