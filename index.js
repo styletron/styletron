@@ -75,7 +75,7 @@ function injectOnce(css, key) {
   }
 
   if (!isBuffering) {
-    if (typeof document === 'undefined') {
+    if (typeof document === 'undefined' || typeof window === 'undefined') {
       // `styletron.startBuffering()` must be called before server rendering.
       // In this case (where no document exists and buffering not started), no
       // CSS will be added to the buffer for extraction on the server.
