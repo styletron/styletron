@@ -16,7 +16,8 @@
     "asap": "^2.0.3"
   },
   "devDependencies": {
-    "electron-spawn": "^4.1.1",
+    "docdown": "^0.7.1",
+    "electron-spawn": "^5.0.0",
     "husky": "^0.11.4",
     "tape": "^4.5.1",
     "through2": "^2.0.1"
