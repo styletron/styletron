@@ -1,4 +1,4 @@
-# styletron
+# [![Styletron logo](https://cdn.rawgit.com/rtsao/styletron/logo/logo.svg "Styletron")](https://github.com/rtsao/styletron)
 
 [![build status][build-badge]][build-href]
 [![dependencies status][deps-badge]][deps-href]
