@@ -1,6 +1,6 @@
 {
   "name": "styletron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A generic server-rendering helper for css-in-js tools",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
