@@ -1,9 +1,12 @@
 const cacheToCss = require('../cache-to-css');
 const Styletron = require('../styletron-server');
+
 const fs = require('fs');
 const path = require('path');
 const test = require('tape');
 const util = require('util');
+
+const fixtures = require('test-fixtures');
 
 class StyletronTest extends Styletron {
   constructor(...args) {
@@ -14,17 +17,14 @@ class StyletronTest extends Styletron {
   }
 }
 
-const cache = require('../../fixtures/basic.js');
-const css = fs.readFileSync(path.resolve(__dirname, '../../fixtures/basic.css'), 'utf8').trim();
-
 test('test toCss', t => {
-  t.equal(cacheToCss(cache), css);
+  t.equal(cacheToCss(fixtures.basic.cache), fixtures.basic.css);
   t.end();
 });
 
 test('test toCss method', t => {
   const instance = new StyletronTest();
-  instance.setCache(cache);
-  t.equal(instance.getCss(), css);
+  instance.setCache(fixtures.basic.cache);
+  t.equal(instance.getCss(), fixtures.basic.css);
   t.end();
 });

@@ -35,7 +35,7 @@ StyletronProvider.PropTypes = {
   children: React.PropTypes.element.isRequired
 };
 
-StyletronProvider.contextTypes = {
+StyletronProvider.childContextTypes = {
   styletron: React.PropTypes.object.isRequired
 };
 

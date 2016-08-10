@@ -5,8 +5,9 @@
     "source": {
         "include": [
             "./README.md",
-            "packages/styletron/src",
             "packages/styletron-core/src",
+            "packages/styletron-client/src",
+            "packages/styletron-server/src",
             "packages/styletron-react/src"
         ],
         "includePattern": ".js$"

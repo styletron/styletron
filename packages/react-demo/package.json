@@ -22,9 +22,9 @@
     "styletron-react": "*",
     "styletron-utils": "*"
   },
-  "license": "MIT",
-  "private": true,
   "devDependencies": {
     "browserify": "^13.1.0"
-  }
+  },
+  "license": "MIT",
+  "private": true
 }

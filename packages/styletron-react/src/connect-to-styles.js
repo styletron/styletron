@@ -1,5 +1,4 @@
 const React = require('react');
-const styletron = require('styletron');
 const utils = require('styletron-utils');
 
 module.exports = connectToStyles;
@@ -13,11 +12,10 @@ function connectToStyles(styleFn) {
           acc[key] = utils.injectStyle(this.context.styletron, styles[key])
           return acc;
         }, {});
-        return React.createElement(Component, {
+        return React.createElement(Component, Object.assign({
           styles: classMap,
-          ref: c => {this.connectedElement = c},
-          ...this.props
-        });
+          ref: c => {this.connectedElement = c}
+        }, this.props));
       }
     }
     Connected.contextTypes = {styletron: React.PropTypes.object.isRequired};

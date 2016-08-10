@@ -1,10 +1,5 @@
 const fenwick = require('fenwick-tree');
 
-// const cssShorthandProperties = require('css-shorthand-properties').shorthandProperties;
-// console.log(cssShorthandProperties);
-
-
-
 const StyletronCore = require('styletron-core');
 
 /**

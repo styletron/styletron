@@ -6,8 +6,7 @@ const path = require('path');
 const fenwick = require('fenwick-tree');
 const forEach = Array.prototype.forEach;
 
-const cache = require('../../fixtures/basic.js');
-const css = fs.readFileSync(path.resolve(__dirname, '../../fixtures/basic.css'), 'utf8').trim();
+const fixtures = require('test-fixtures');
 
 class StyletronTest extends Styletron {
   constructor(...args) {
@@ -22,9 +21,9 @@ class StyletronTest extends Styletron {
 }
 
 test('hydration', t => {
-  const element = createStyleElement(css);
+  const element = createStyleElement(fixtures.basic.css);
   const instance = new StyletronTest(element);
-  t.deepEqual(instance.getCache(), cache);
+  t.deepEqual(instance.getCache(), fixtures.basic.cache);
   const counts = instance.getCounts();
   t.equal(fenwick.query(counts, 0), 3);
   t.equal(fenwick.query(counts, 1), 5);
