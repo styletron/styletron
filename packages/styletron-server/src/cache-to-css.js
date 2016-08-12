@@ -6,15 +6,16 @@ module.exports = cacheObjToCss;
  * @return {string}          String of CSS
  */
 function cacheObjToCss(cacheObj) {
+  let mediaCss = '';
   let css = '';
   for (let key in cacheObj) {
     if (key === 'media') {
-      css += mediaObjToCss(cacheObj[key]);
+      mediaCss += mediaObjToCss(cacheObj[key]);
       continue;
     }
     css += baseHandler(key, cacheObj[key]);
   }
-  return css;
+  return css + mediaCss;
 }
 
 function mediaObjToCss(mediaObj) {
