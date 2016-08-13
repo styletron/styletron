@@ -47,6 +47,7 @@ class StyletronClient extends StyletronCore {
       }
     }
     this.counts = fenwick([count, mediaCount]);
+    this.counter = count + mediaCount;
   }
 
   /**
