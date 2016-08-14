@@ -7,6 +7,8 @@
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
     "build-docs": "jsdoc -c jsdoc.json",
     "test": "lerna run test",
     "predeploy-docs": "rm -rf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
@@ -17,6 +19,9 @@
     "jsdoc": "^3.4.0",
     "lerna": "2.0.0-beta.24",
     "push-dir": "^0.2.2",
+    "react": "^15.3.0",
+    "react-addons-test-utils": "^15.3.0",
+    "react-dom": "^15.3.0",
     "tape": "^4.6.0"
   },
   "license": "MIT"
