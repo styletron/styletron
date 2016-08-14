@@ -20,7 +20,11 @@ function connectToStyles(styleFn) {
     }
     Connected.contextTypes = {styletron: React.PropTypes.object.isRequired};
     Connected.displayName = `connectToStyles(${getDisplayName(Component)})`;
-    Connected.WrappedClass = Component;
+    if (Component.defaultProps) {
+      Connected.defaultProps = Component.defaultProps;
+    } else if (typeof Component.getDefaultProps === 'function') {
+      Connected.defaultProps = Component.getDefaultProps();
+    }
     return Connected;
   };
 }
