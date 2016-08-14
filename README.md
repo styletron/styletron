@@ -29,7 +29,7 @@ styletron.injectOnce('.foo { color: red }', 'someUniqueId');
 
 ## [API documentation](docs/api.md)
 
-[build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
+[build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=v1
 [build-href]: https://travis-ci.org/rtsao/styletron
 [deps-badge]: https://david-dm.org/rtsao/styletron.svg
 [deps-href]: https://david-dm.org/rtsao/styletron
