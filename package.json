@@ -10,6 +10,7 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "build-docs": "jsdoc -c jsdoc.json",
+    "pretest": "lerna run pretest",
     "test": "lerna run test --concurrency=1",
     "predeploy-docs": "rm -rf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
