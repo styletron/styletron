@@ -13,4 +13,6 @@ install:
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - npm install
   - node_modules/.bin/lerna bootstrap
-script: npm run test
+script:
+  - npm run bootstrap
+  - npm run test
