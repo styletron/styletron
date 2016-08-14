@@ -109,10 +109,19 @@ function assignRule(target, ruleInfo) {
 }
 
 function cacheInfoFromCSSStyleRule(rule) {
-  const prop = rule.style[0];
+  let prop;
+  let val;
+  if (rule.style.length > 1) {
+    const idx = rule.style.cssText.indexOf(': ');
+    prop = rule.style.cssText.substring(0, idx);
+    val = rule.style.cssText.substring(idx + 2, rule.style.cssText.length - 1);
+  } else {
+    prop = rule.style[0];
+    val = rule.style[prop]
+  }
   return {
     prop,
-    val: rule.style[prop],
+    val,
     selector: rule.selectorText
   };
 }
