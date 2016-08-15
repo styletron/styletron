@@ -16,6 +16,7 @@ const React = require('react');
  * 
  * @property {object} styletron - Styletron instance
  * @property {ReactElement} children - children
+ * @extends ReactClass
  */
 class StyletronProvider extends React.Component {
   getChildContext() {
