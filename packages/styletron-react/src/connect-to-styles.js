@@ -3,6 +3,34 @@ const utils = require('styletron-utils');
 
 module.exports = connectToStyles;
 
+/**
+ * Higher-order component for presentational components
+ * @param  {function} styleFn Styler function
+ * @return {function}         Higher order component
+ * @example
+ * class Panel extends React.Component {
+ *   render() {
+ *     <div className={this.styles.container}>
+ *       <h1 className{this.styles.title}>Panel</h1>
+ *       {this.props.children}
+ *     </div>
+ *   }
+ * }
+ *
+ * const hoc = connectToStyles(props => {
+ *   return {
+ *     container: {
+ *       width: '640px',
+ *       background: props.color
+ *     },
+ *     title: {
+ *       fontSize: '40px'
+ *     }
+ *   };
+ * });
+ *
+ * module.exports = hoc(Panel);
+ */
 function connectToStyles(styleFn) {
   return function hoc(Component) {
     class Connected extends React.Component {
