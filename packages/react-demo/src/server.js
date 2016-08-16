@@ -1,7 +1,7 @@
 const http = require('http');
 const connect = require('connect');
 const compression = require('compression');
-const static = require('serve-static');
+const serve = require('serve-static');
 
 const StyletronServer = require('styletron-server');
 const {createElement} = require('react');
@@ -11,7 +11,7 @@ const App = require('./app');
 
 const server = connect();
 server.use(compression());
-server.use(static('static', {index: false}));
+server.use(serve('static', {index: false}));
 
 const getMarkup = (bodyContent, cssContent) =>
 `<!DOCTYPE html>

@@ -1,7 +1,7 @@
-const {div, createFactory} = require('react-fp');
+const React = require('react');
 
 function Header(props) {
-  return div('hello world');
+  return <div>hello world</div>;
 }
 
-module.exports = createFactory(Header);
+module.exports = Header;

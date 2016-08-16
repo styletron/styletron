@@ -1,8 +1,8 @@
-const {div, createFactory} = require('react-fp');
+const React = require('react');
 const {connectToStyles} = require('styletron-react');
 
 function Container({styles, children}) {
-  return div({className: styles.container}, children);
+  return <div className={styles.container}>{children}</div>;
 }
 
 Container.defaultProps = {
@@ -20,4 +20,4 @@ const hoc = connectToStyles(props => {
   }
 });
 
-module.exports = createFactory(hoc(Container));
+module.exports = hoc(Container);

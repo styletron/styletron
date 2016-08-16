@@ -8,9 +8,9 @@
   "bugs": "https://github.com/rtsao/styletron/issues",
   "main": "lib/index.js",
   "scripts": {
-    "bundle-client": "mkdir -p static && browserify src/client.js -o static/bundle.js",
+    "bundle-client": "mkdir -p static && browserify src/client.js -o static/bundle.js -t babelify",
     "prestart": "npm run bundle-client",
-    "start": "node src/server.js"
+    "start": "babel-node src/server.js"
   },
   "peerDependencies": {
     "react": "^15.3.0",
@@ -19,7 +19,6 @@
   "dependencies": {
     "compression": "^1.6.2",
     "connect": "^3.4.1",
-    "react-fp": "^1.0.0",
     "serve-static": "^1.11.1",
     "styletron-client": "*",
     "styletron-react": "*",
@@ -27,7 +26,13 @@
     "styletron-utils": "*"
   },
   "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
     "browserify": "^13.1.0"
+  },
+  "engines": {
+    "node": ">=4"
   },
   "license": "MIT",
   "private": true
