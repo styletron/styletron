@@ -20,15 +20,33 @@ class StyletronTest extends Styletron {
   }
 }
 
-test('hydration', t => {
+test('hydration basic', t => {
   const element = createStyleElement(fixtures.basic.css);
   const instance = new StyletronTest(element);
   t.deepEqual(instance.getCache(), fixtures.basic.cache);
-  const counts = instance.getCounts();
+  let counts = instance.getCounts();
+  t.equal(fenwick.query(counts, 0), 3);
+  t.equal(fenwick.query(counts, 1), 4);
+  instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
   t.equal(fenwick.query(counts, 0), 3);
   t.equal(fenwick.query(counts, 1), 5);
   t.end();
 });
+
+test('hydration multiple media queries', t => {
+  const element = createStyleElement(fixtures.multipleMedia.css);
+  const instance = new StyletronTest(element);
+  t.deepEqual(instance.getCache(), fixtures.multipleMedia.cache);
+  let counts = instance.getCounts();
+  t.equal(fenwick.query(counts, 0), 3);
+  t.equal(fenwick.query(counts, 1), 4);
+  instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
+  counts = instance.getCounts();
+  t.equal(fenwick.query(counts, 0), 3);
+  t.equal(fenwick.query(counts, 1), 5);
+  t.end();
+});
+
 
 test('rule insertion order', t => {
   const element = createStyleElement('');

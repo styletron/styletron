@@ -38,7 +38,7 @@ class StyletronClient extends StyletronCore {
         assignRule(this.cache, cacheInfoFromCSSStyleRule(rule));
       } else if (rule instanceof CSSMediaRule) {
         const media = rule.media.mediaText;
-        mediaCount += rule.cssRules.length;
+        mediaCount++;
         for (let i = 0; i < rule.cssRules.length; i++) {
           const info = cacheInfoFromCSSStyleRule(rule.cssRules[i]);
           info.media = media;
@@ -47,7 +47,7 @@ class StyletronClient extends StyletronCore {
       }
     }
     this.counts = fenwick([count, mediaCount]);
-    this.counter = count + mediaCount;
+    this.counter = ruleList.length;
   }
 
   /**
