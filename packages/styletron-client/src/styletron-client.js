@@ -19,6 +19,10 @@ class StyletronClient extends StyletronCore {
     if (!styleElement) {
       throw Error('no stylesheet');
     }
+    const serverCount = styleElement.getAttribute('data-count');
+    if (serverCount) {
+      this.serverCount = parseInt(serverCount, 10);
+    }
     this.counts = fenwick([0, 0]);
     this.styleElement = styleElement;
     this.hydrateCacheFromCssRules(styleElement.sheet.rules);
@@ -66,6 +70,9 @@ class StyletronClient extends StyletronCore {
   injectDeclaration(decl) {
     const oldCount = this.counter;
     const className = super.injectDeclaration(decl);
+    if (this.serverCount && this.counter <= this.serverCount) {
+      return className;
+    }
     if (oldCount !== this.counter) {
       let index;
       if (!decl.media) {

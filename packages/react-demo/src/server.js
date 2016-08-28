@@ -13,14 +13,14 @@ const server = connect();
 server.use(compression());
 server.use(serve('static', {index: false}));
 
-const getMarkup = (bodyContent, cssContent) =>
+const getMarkup = (bodyContent, cssContent, count) =>
 `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Styletron React Demo</title>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<style id="styletron">${cssContent}</style>
+<style id="styletron" data-count="${count}"">${cssContent}</style>
 </head>
 <body>
 <div id="app">${bodyContent}</div>
@@ -35,7 +35,8 @@ server.use((req, res) => {
   }));
   const html = renderToString(app);
   const css = styletron.getCss();
-  res.end(getMarkup(html, css));
+  const count = styletron.getCount();
+  res.end(getMarkup(html, css, count));
 });
 
 http.createServer(server).listen(3000, () => {

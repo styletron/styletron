@@ -28,6 +28,10 @@ class StyletronServer extends StyletronCore {
     return cacheToCss(this.cache);
   }
 
+  getCount() {
+    return this.counter;
+  }
+
 }
 
 module.exports = StyletronServer;
