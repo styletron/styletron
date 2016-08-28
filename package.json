@@ -25,5 +25,8 @@
     "react-dom": "^15.3.0",
     "tape": "^4.6.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "benchmark": "^2.1.1"
+  }
 }
