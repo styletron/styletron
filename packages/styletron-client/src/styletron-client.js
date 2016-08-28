@@ -22,6 +22,7 @@ class StyletronClient extends StyletronCore {
     const serverCount = styleElement.getAttribute('data-count');
     if (serverCount) {
       this.serverCount = parseInt(serverCount, 10);
+      this.clientCount = 0;
     }
     this.counts = fenwick([0, 0]);
     this.styleElement = styleElement;
@@ -70,7 +71,8 @@ class StyletronClient extends StyletronCore {
   injectDeclaration(decl) {
     const oldCount = this.counter;
     const className = super.injectDeclaration(decl);
-    if (this.serverCount && this.counter <= this.serverCount) {
+    if (this.serverCount && this.clientCount < this.serverCount) {
+      this.clientCount++;
       return className;
     }
     if (oldCount !== this.counter) {

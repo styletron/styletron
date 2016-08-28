@@ -33,20 +33,23 @@ test('hydration basic', t => {
   t.end();
 });
 
-test('hydration multiple media queries', t => {
-  const element = createStyleElement(fixtures.multipleMedia.css);
+test('deterministic server call count hydration', t => {
+  const element = createStyleElement('');
+  element.setAttribute('data-count', '6');
   const instance = new StyletronTest(element);
-  t.deepEqual(instance.getCache(), fixtures.multipleMedia.cache);
-  let counts = instance.getCounts();
-  t.equal(fenwick.query(counts, 0), 3);
-  t.equal(fenwick.query(counts, 1), 4);
-  instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
-  counts = instance.getCounts();
-  t.equal(fenwick.query(counts, 0), 3);
-  t.equal(fenwick.query(counts, 1), 5);
+  const decls = [
+    {prop: 'color', val: 'red'},
+    {prop: 'color', val: 'blue'},
+    {prop: 'color', val: 'blue', media: '(max-width: 333px)'},
+    {prop: 'color', val: 'green'},
+    {prop: 'color', val: 'red', media: 'screen and (max-width: 400px)'},
+    {prop: 'color', val: 'purple'}
+  ];
+  decls.forEach(decl => instance.injectDeclaration(decl));
+  t.equal(element.sheet.rules.length, 0, 'no rules added');
+  t.deepEqual(instance.getCache(), fixtures.simple.cache, 'cache still hydrated');
   t.end();
 });
-
 
 test('rule insertion order', t => {
   const element = createStyleElement('');
