@@ -13,7 +13,7 @@
     "test": "node lib/test/index.js"
   },
   "dependencies": {
-    "styletron-core": "*"
+    "styletron-core": "^2.0.0"
   },
   "devDependencies": {
     "buble": "^0.12.5",

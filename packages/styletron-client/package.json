@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "fenwick-tree": "0.0.0",
-    "styletron-core": "*"
+    "styletron-core": "^2.0.0"
   },
   "devDependencies": {
     "buble": "^0.12.5",

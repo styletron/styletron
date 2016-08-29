@@ -13,7 +13,7 @@
     "test": "unitest --browser=lib/test/browser.js"
   },
   "dependencies": {
-    "styletron-utils": "*"
+    "styletron-utils": "^2.0.0"
   },
   "peerDependencies": {
     "react": "0.14.x - 15.x"

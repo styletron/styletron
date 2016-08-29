@@ -9,7 +9,7 @@
     "serve-static": "static static"
   },
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "aphrodite": "^0.5.0",
     "browserify": "^13.1.0",
