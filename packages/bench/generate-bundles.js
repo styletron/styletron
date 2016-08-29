@@ -42,7 +42,7 @@ function generateAphroditeBundle(name, hydrate) {
   return (
 `const aphrodite = require('aphrodite');
 ${hydrateSrc}
-const aphroditeApp = require('../app/airbnb.aphrodite');
+const aphroditeApp = require('../app/${name}.aphrodite');
 aphroditeApp();
 `);
 }
