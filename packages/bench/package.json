@@ -1,7 +1,7 @@
 {
   "name": "bench",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0-beta.0",
   "description": "Benchmarks for styletron",
   "main": "index.js",
   "scripts": {
@@ -22,8 +22,8 @@
     "postcss-safe-parser": "^1.0.7",
     "pwmetrics": "^1.0.0",
     "randomcolor": "^0.4.4",
-    "styletron-client": "*",
-    "styletron-server": "*",
-    "styletron-utils": "*"
+    "styletron-client": "^2.0.0-beta.0",
+    "styletron-server": "^2.0.0-beta.0",
+    "styletron-utils": "^2.0.0-beta.0"
   }
 }
