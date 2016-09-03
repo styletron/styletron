@@ -16,6 +16,8 @@ const variants = fs
 
 let entries = [];
 
+let resultsArr = [];
+
 variants.forEach(variant => {
   const variantDir = path.join(staticDir, variant);
 
@@ -48,11 +50,33 @@ function test(remaining) {
     p.then((results) => {
       console.log(urls[remaining]);
       console.log(results);
+      resultsArr.push(JSON.parse(results));
       test(remaining - 1);
     });
   } else {
-    process.exit(0);
+    summary();
   }
+}
+
+
+
+function summary() {
+  const totals = resultsArr.reduce((acc, result, i) => {
+    const reversed = entries.reverse();
+    const entry = reversed[i];
+    const wut = {
+      app: entry.app,
+      variant: entry.variant,
+      library: path.parse(entry.file).name,
+      tti: result.timings[5].value
+    };
+    acc.push(wut);
+    return acc;
+  }, []);
+  console.log('SUMMARY');
+  console.log('===========');
+  console.log(JSON.stringify(totals, null, 2));
+  process.exit(0);
 }
 
 setTimeout(_ => test(urls.length - 1), 3000);
