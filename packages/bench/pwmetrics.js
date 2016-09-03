@@ -10,23 +10,35 @@ const PWMetrics = require('pwmetrics');
 
 const staticDir = path.join(__dirname, 'static');
 
-const apps = fs
+const variants = fs
   .readdirSync(staticDir)
-  .filter(filename => path.parse(filename).ext === '');
+  .filter(filename => path.parse(filename).ext === '' && filename[0] !== '.');
 
-const appEntries = apps.map(app => {
-  return fs
-    .readdirSync(path.join(staticDir, app))
-    .filter(filename => path.parse(filename).ext === '.html')
-    .map(filename => ({
-      app: app,
-      file: filename
-    }));
+let entries = [];
+
+variants.forEach(variant => {
+  const variantDir = path.join(staticDir, variant);
+
+  const apps = fs
+    .readdirSync(variantDir)
+    .filter(filename => path.parse(filename).ext === '' && filename[0] !== '.');
+
+  const appEntries = apps.map(app => {
+    return fs
+      .readdirSync(path.join(variantDir, app))
+      .filter(filename => path.parse(filename).ext === '.html')
+      .map(filename => ({
+        app: app,
+        variant: variant,
+        file: filename
+      }));
+  });
+
+  let partial = appEntries.reduce((acc, arr) => {
+    return acc.concat(arr);
+  }, []);
+  entries = entries.concat(partial);
 });
-
-const entries = appEntries.reduce((acc, arr) => {
-  return acc.concat(arr);
-}, [])
 
 const urls = entries.map(url);
 
@@ -45,6 +57,6 @@ function test(remaining) {
 
 setTimeout(_ => test(urls.length - 1), 3000);
 
-function url({app, file}) {
-  return path.join('http://localhost:8080', app, file);
+function url({app, file, variant}) {
+  return path.join('http://localhost:8080', variant, app, file);
 }

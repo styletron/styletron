@@ -8,6 +8,7 @@ module.exports = (invertedSheet, synthetic) => {
   jssInstance.use(camelCase());
   const jssSheet = jssInstance.createStyleSheet(invertedSheet);
   const first = jssSheet.classes[keys[0]];
+  const middle = jssSheet.classes['c1000'];
   const last = jssSheet.classes[keys[len - 1]];
   jssSheet.attach();
   const jsscss = jssInstance.sheets.toString();
@@ -28,6 +29,7 @@ ${styleElement}
 <body>
 <div>foo</div>
 <div class="${first}">bar</div>
+<div class="${middle}">qux</div>
 <div class="${last}">baz</div>
 <script src="jss-bundle.js"></script>
 </body>

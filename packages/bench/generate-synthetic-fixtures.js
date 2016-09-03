@@ -3,7 +3,7 @@ const path = require('path');
 const randColor = require('randomcolor');
 
 function generateFixture(ruleCount, declGetters, pctUnique = 1) {
-  let result = {};
+  let result = [];
   let modulus = ruleCount * pctUnique;
   for (let i = 0; i < ruleCount; i++) {
     let rule = {};
@@ -11,7 +11,7 @@ function generateFixture(ruleCount, declGetters, pctUnique = 1) {
     declGetters.forEach(getDecl => {
       Object.assign(rule, getDecl(j));
     });
-    result['c' + i] = rule;
+    result.push(rule);
   }
   return result;
 }

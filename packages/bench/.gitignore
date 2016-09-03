@@ -1,5 +1,6 @@
-app/
-bundles/
-static/
+app/*.js
+bundles/*.js
+static/*/*/*.js
+static/*/*/*.html
 results/
-styles/
+styles/*

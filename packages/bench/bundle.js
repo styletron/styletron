@@ -10,8 +10,8 @@ const sources = fs
   .filter(filename => path.parse(filename).ext === '.js');
 
 sources.forEach(filename => {
-  const [name, type] = filename.split('.');
-  const dest = path.join(__dirname, 'static', name, `${type}-bundle.js`);
+  const [variant, name, type] = filename.split('.');
+  const dest = path.join(__dirname, 'static', variant, name, `${type}-bundle.js`);
 
   browserify(path.join(bundlesDir, filename))
     .bundle()

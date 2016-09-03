@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const HYDRATED_APPS = ['uber', 'airbnb'];
-
 const appsDir = path.join(__dirname, 'app');
 
 const sources = fs
@@ -20,9 +18,10 @@ sources.forEach(source => {
     jss: generateJssBundle
   }[type];
 
-  let hydrate = HYDRATED_APPS.indexOf(name) !== -1;
-  const src = generator(name, hydrate);
-  fs.writeFileSync(path.join(bundlesDir, `${name}.${type}.js`), src, 'utf8');
+  const hydrated = generator(name, true);
+  fs.writeFileSync(path.join(bundlesDir, `hydrate.${name}.${type}.js`), hydrated, 'utf8');
+  const clientOnly = generator(name, false);
+  fs.writeFileSync(path.join(bundlesDir, `client-only.${name}.${type}.js`), clientOnly, 'utf8');
 });
 
 function generateStyletronBundle(name) {

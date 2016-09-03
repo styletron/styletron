@@ -4,6 +4,7 @@ module.exports = (sheet, synthetic) => {
   const keys = Object.keys(sheet);
   const len = keys.length;
   let first;
+  let middle;
   let last;
   let {css} = aphrodite.StyleSheetServer.renderStatic(() => {
     let aphroditeStyles = aphrodite.StyleSheet.create(sheet);
@@ -11,7 +12,11 @@ module.exports = (sheet, synthetic) => {
       let className = aphrodite.css(aphroditeStyles[keys[i]]);
       if (i === 0) {
         first = className;
-      } else if (i === len - 1) {
+      }
+      else if (keys[i] === 'c1000') {
+        middle = className;
+      }
+      else if (i === len - 1) {
         last = className;
       }
     }
@@ -37,6 +42,7 @@ ${styleElement}
 <body>
 <div>foo</div>
 <div class="${first}">bar</div>
+<div class="${middle}">qux</div>
 <div class="${last}">baz</div>
 ${hydrationSrc}
 <script src="aphrodite-bundle.js"></script>

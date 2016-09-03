@@ -6,7 +6,9 @@ const safeParser = require('postcss-safe-parser');
 module.exports = function cssToJs(src) {
   const root = postcss().process(src, {parser: safeParser}).root;
 
-  // normal media nesting (aphrodite, styletron, radium, etc)
+  const raw = [];
+
+  // normal media nesting (aphrodite, radium, etc)
   const result = {};
   // inverted media nesting (jss)
   const inverted = {};
@@ -24,6 +26,7 @@ module.exports = function cssToJs(src) {
           ruleResult[camelcase(decl.prop)] = decl.value;
         });
         const key = getKey(count);
+        raw.push(ruleResult);
         result[key] = {[media]: ruleResult};
         inverted[media][key] = ruleResult;
         count++;
@@ -35,13 +38,14 @@ module.exports = function cssToJs(src) {
         ruleResult[camelcase(decl.prop)] = decl.value;
       });
       const key = getKey(count);
+      raw.push(ruleResult);
       result[key] = ruleResult;
       inverted[key] = ruleResult;
       count++;
     }
   });
 
-  return {result, inverted};
+  return {result, inverted, raw};
 }
 
 function getKey(count) {

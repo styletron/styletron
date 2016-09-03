@@ -1,17 +1,21 @@
 const StyletronServer = require('styletron-server');
 const StyletronUtils = require('styletron-utils');
 
-module.exports = (sheet, synthetic) => {
-  const keys = Object.keys(sheet);
-  const len = keys.length;
+module.exports = (rules, synthetic) => {
+  const len = rules.length;
   let first;
   let last;
+  let middle;
   const styletron = new StyletronServer();
   for (let i = 0; i < len; i++) {
-    let className = StyletronUtils.injectStyle(styletron, sheet[keys[i]]);
+    let className = StyletronUtils.injectStyle(styletron, rules[i]);
     if (i === 0) {
       first = className;
-    } else if (i === len - 1) {
+    }
+    else if (i === 1000) {
+      middle = className;
+    }
+    else if (i === len - 1) {
       last = className;
     }
   }
@@ -34,6 +38,7 @@ ${styleElement}
 <body>
 <div>foo</div>
 <div class="${first}">bar</div>
+<div class="${middle}">qux</div>
 <div class="${last}">baz</div>
 <script src="styletron-bundle.js"></script>
 </body>
