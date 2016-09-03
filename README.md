@@ -6,18 +6,22 @@
 
 Universal, high-performance JavaScript styles.
 
-Styletron is designed for high performance in two ways:
+**[API documentation: http://styletron.js.org](http://styletron.js.org)**
+
+## What is Styletron?
+
+Styletron is a universal CSS-in-JS engine built from the ground up for high-performance. Features include:
 
 #### Advanced critical rendering path optimization of server-rendered pages
-- Generation of critical stylesheets with minimum possible size and parse times
-  - Dynamic elimination of unused CSS for each render
-  - Automatic generation of atomic CSS with declaration-level deduplication
+- Dynamic generation of inlineable critical stylesheets with minimum possible size and parse times
+  - Automatic generation of maximally compressed "atomic" critical CSS via declaration-level deduplication
+  - Automatic declaration-level dead CSS elimination - only *actually used* declarations get included in output
 - Native media query support for full critical CSS without JavaScript
 
 #### Efficient dynamic client-side styles
 - Hyper-granular memoization to avoid making unnecessary modifications to stylesheet
-- Cache hydration of server-rendered styles 
-- Use of `CSSStyleSheet` API to inject styles to ensure *only* newly added styles get parsed
+- Fast cache hydration of server-rendered styles to prevent re-rendering of server-rendered styles
+- Use of `CSSStyleSheet` rule injection ensuring *only* new styles get parsed
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
