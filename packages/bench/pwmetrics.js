@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const series = require('run-series');
 const {spawn, exec} = require('child_process');
 
 const chromepath = require('chrome-location');
@@ -42,45 +43,48 @@ variants.forEach(variant => {
   entries = entries.concat(partial);
 });
 
-const urls = entries.map(url);
-
-function test(remaining) {
-  if (remaining >= 0) {
-    const p = new PWMetrics(urls[remaining], {json: true});
-    p.then((results) => {
-      console.log(urls[remaining]);
-      console.log(results);
-      resultsArr.push(JSON.parse(results));
-      test(remaining - 1);
-    });
-  } else {
-    summary();
-  }
-}
-
-
-
-function summary() {
-  const totals = resultsArr.reduce((acc, result, i) => {
-    const reversed = entries.reverse();
-    const entry = reversed[i];
-    const wut = {
+const tests = entries.map(entry => callback => {
+  const url = getUrl(entry);
+  console.log(url);
+  const p = new PWMetrics(url, {json: true});
+  p.then((results) => {
+    console.log(results);
+    const parsed = JSON.parse(results);
+    resultsArr.push({
+      res: parsed,
       app: entry.app,
       variant: entry.variant,
       library: path.parse(entry.file).name,
-      tti: result.timings[5].value
-    };
-    acc.push(wut);
-    return acc;
-  }, []);
-  console.log('SUMMARY');
-  console.log('===========');
-  console.log(JSON.stringify(totals, null, 2));
-  process.exit(0);
+      tti: parsed.timings[5].value,
+      fmp: parsed.timings[1].value,
+      v100: parsed.timings[4].value 
+    });
+    callback(null, 'ok');
+  });
+});
+
+function start() {
+  series(tests, function() {
+    console.log('SUMMARY');
+    console.log('===========');
+    let summary = {};
+
+    resultsArr.forEach((item) => {
+      summary[item.variant] = summary[item.variant] || {};
+      summary[item.variant][item.library] = summary[item.variant][item.library] || {};
+      summary[item.variant][item.library][item.app] = {
+        tti: item.tti,
+        fmp: item.fmp,
+        v100: item.v100
+      };
+    });
+    console.log(JSON.stringify(summary, null, 2));
+    process.exit(0);
+  });
 }
 
-setTimeout(_ => test(urls.length - 1), 3000);
+setTimeout(start, 3000);
 
-function url({app, file, variant}) {
+function getUrl({app, file, variant}) {
   return path.join('http://localhost:8080', variant, app, file);
 }
