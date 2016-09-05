@@ -69,12 +69,26 @@ test('test injection prefixed', function (t) {
     }
   };
   const classString = injectStylePrefixed(spy, {
+    width: 'calc(100%)',
+    height: ['min-content', 'calc(50%)'],
     boxSizing: 'border-box'
   });
-  t.equal(classString, ' 1 2');
+  t.equal(classString, ' 1 2 3 4 5 6 7 8 9 10 11 12 13 14');
   t.deepEqual(decls, [
-    {prop: 'box-sizing', val: 'border-box', media: undefined, pseudo: undefined},
-    {prop: '-moz-box-sizing', val: 'border-box', media: undefined, pseudo: undefined}
+    {prop: 'width', val: '-webkit-calc(100%)', media: undefined, pseudo: undefined},
+    {prop: 'width', val: '-moz-calc(100%)', media: undefined, pseudo: undefined},
+    {prop: 'width', val: 'calc(100%)', media: undefined, pseudo: undefined},
+    {prop: 'width', val: 'calc(100%)', media: undefined, pseudo: undefined},
+    {prop: 'height', val: '-webkit-min-content', media: undefined, pseudo: undefined},
+    {prop: 'height', val: '-moz-min-content', media: undefined, pseudo: undefined},
+    {prop: 'height', val: 'min-content', media: undefined, pseudo: undefined},
+    {prop: 'height', val: 'min-content', media: undefined, pseudo: undefined},
+    {prop: 'height', val: '-webkit-calc(50%)', media: undefined, pseudo: undefined},
+    {prop: 'height', val: '-moz-calc(50%)', media: undefined, pseudo: undefined},
+    {prop: 'height', val: 'calc(50%)', media: undefined, pseudo: undefined},
+    {prop: 'height', val: 'calc(50%)', media: undefined, pseudo: undefined},
+    {prop: '-moz-box-sizing', val: 'border-box', media: undefined, pseudo: undefined},
+    {prop: 'box-sizing', val: 'border-box', media: undefined, pseudo: undefined}
   ]);
   t.end();
 });
