@@ -1,6 +1,7 @@
 const StyletronServer = require('styletron-server');
 const aphrodite = require('aphrodite');
 const jss = require('jss');
+const StyletronUtils = require('styletron-utils');
 
 const uberApp = {
   jss: require('./app/uber.jss'),
@@ -82,6 +83,25 @@ suite
     const jssInstance = jss.create();
     halfUniqueApp.jss(jssInstance);
     jssInstance.sheets.toString();
+  })
+  .add('aphrodite (vendor prefix)', function() {
+    aphrodite.StyleSheetServer.renderStatic(_ => {
+      const sheet = aphrodite.StyleSheet.create({a: {
+      width: 'calc(100%)',
+      height: ['min-content', 'calc(50%)'],
+      boxSizing: 'border-box'
+    }});
+    aphrodite.css(sheet.a);
+    });
+  })
+  .add('styletron (vendor prefix)', function() {
+    let styletron = new StyletronServer();
+    StyletronUtils.injectStylePrefixed(styletron, {
+      width: 'calc(100%)',
+      height: ['min-content', 'calc(50%)'],
+      boxSizing: 'border-box'
+    });
+    styletron.getCss();
   })
   .on('cycle', event => {
     console.log(String(event.target));
