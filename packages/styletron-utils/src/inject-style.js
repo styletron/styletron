@@ -11,6 +11,13 @@ function injectStyle(styletron, styles, media, pseudo) {
       classString += ' ' + styletron.injectDeclaration({prop: hyphenate(key), val, media, pseudo});
       continue;
     }
+    if (Array.isArray(val)) {
+      for (let i = 0; i < val.length; i++) {
+        const hyphenated = hyphenate(key);
+        classString += ' ' + styletron.injectDeclaration({prop: hyphenated, val: val[i], media, pseudo});
+      }
+      continue;
+    }
     if (valType === 'object') {
       if (key[0] === ':') {
         classString += injectStyle(styletron, val, media, key);
