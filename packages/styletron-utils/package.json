@@ -12,6 +12,9 @@
     "pretest": "npm run transpile",
     "test": "node lib/test/index.js"
   },
+  "dependencies": {
+    "inline-style-prefixer": "^2.0.1"
+  },
   "devDependencies": {
     "buble": "^0.12.5"
   },
