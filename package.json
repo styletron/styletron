@@ -15,8 +15,10 @@
     "predeploy-docs": "rm -rf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
   },
+  "dependencies": {},
   "devDependencies": {
     "@rtsao/docdash": "^0.4.0",
+    "benchmark": "^2.1.1"
     "jsdoc": "^3.4.0",
     "lerna": "2.0.0-beta.26",
     "push-dir": "^0.2.2",
@@ -25,8 +27,5 @@
     "react-dom": "^15.3.0",
     "tape": "^4.6.0"
   },
-  "license": "MIT",
-  "dependencies": {
-    "benchmark": "^2.1.1"
-  }
+  "license": "MIT"
 }
