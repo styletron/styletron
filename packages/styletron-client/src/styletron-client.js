@@ -5,6 +5,7 @@ const StyletronCore = require('styletron-core');
 /**
  * StyletronClient
  * @extends StyletronCore
+ * @packagename styletron-client
  * @example
  * const styleElement = document.querySelector('style');
  * const styletron = new StyletronClient(styleElement);
@@ -62,11 +63,11 @@ class StyletronClient extends StyletronCore {
    * // <style id="styletron">.c0{color:red}</style>
    * const styletron = new StyletronClient(document.getElementById('styletron'));
    * styletron.injectDeclaration({prop: 'color', val: 'blue'});
-   * // ➜ 'c1'
+   * // → 'c1'
    * styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
-   * // ➜ 'c2'
+   * // → 'c2'
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // ➜ 'c0'
+   * // → 'c0'
    */
   injectDeclaration(decl) {
     const oldCount = this.counter;

@@ -3,6 +3,7 @@ const StyletronCore = require('styletron-core');
 
 /**
  * StyletronServer
+ * @packagename styletron-server
  * @extends StyletronCore
  */
 class StyletronServer extends StyletronCore {
@@ -26,9 +27,9 @@ class StyletronServer extends StyletronCore {
    * const styletron = new StyletronServer();
    *
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // ➜ 'c0'
+   * // → 'c0'
    * styletron.getCss();
-   * // ➜ '.c0{color:red}'
+   * // → '.c0{color:red}'
    */
   getCss() {
     return cacheToCss(this.cache);

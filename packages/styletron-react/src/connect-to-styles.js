@@ -5,6 +5,7 @@ module.exports = connectToStyles;
 
 /**
  * Higher-order component for presentational components
+ * @packagename styletron-react
  * @param  {function} styleFn Styler function
  * @return {function}         Higher order component
  * @example

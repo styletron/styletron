@@ -2,6 +2,7 @@ const React = require('react');
 
 /**
  * @class StyletronProvider
+ * @packagename styletron-react
  * @description React component
  * @example
  * const Styletron = require('styletron');
