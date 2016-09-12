@@ -21,7 +21,7 @@
   "devDependencies": {
     "buble": "^0.12.5",
     "styletron-server": "^2.0.0-beta.0",
-    "unitest": "^0.10.3"
+    "unitest": "^0.12.0"
   },
   "license": "MIT"
 }
