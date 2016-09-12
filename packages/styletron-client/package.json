@@ -19,7 +19,7 @@
   "devDependencies": {
     "buble": "^0.12.5",
     "test-fixtures": "*",
-    "unitest": "^0.12.0"
+    "unitest": "^0.12.1"
   },
   "license": "MIT"
 }
