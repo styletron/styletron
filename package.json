@@ -25,7 +25,7 @@
     "inferno-dom": "^0.7.27",
     "inferno-server": "^0.7.27",
     "jsdoc": "^3.4.0",
-    "lerna": "2.0.0-beta.26",
+    "lerna": "2.0.0-beta.28",
     "push-dir": "^0.2.2",
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
