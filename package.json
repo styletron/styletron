@@ -19,6 +19,11 @@
   "devDependencies": {
     "@rtsao/docdash": "^0.4.2",
     "benchmark": "^2.1.1",
+    "inferno": "^0.7.27",
+    "inferno-component": "^0.7.27",
+    "inferno-create-element": "^0.7.27",
+    "inferno-dom": "^0.7.27",
+    "inferno-server": "^0.7.27",
     "jsdoc": "^3.4.0",
     "lerna": "2.0.0-beta.26",
     "push-dir": "^0.2.2",
