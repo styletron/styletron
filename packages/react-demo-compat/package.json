@@ -22,6 +22,7 @@
     "serve-static": "^1.11.1",
     "safe-string": "^1.0.0",
     "legacy-react-component": "^2.0.0-beta.1",
+    "compat-react-component": "^2.0.0-beta.1",
     "styletron-client": "^2.0.0-beta.1",
     "styletron-react": "^2.0.0-beta.1",
     "styletron-legacy": "^2.0.0-beta.1",

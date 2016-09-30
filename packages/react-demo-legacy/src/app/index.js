@@ -17,9 +17,6 @@ class App extends React.Component {
       this.state.color = urlColor;
     }
   }
-  logRules() {
-    console.log(document.querySelector('style').sheet.cssRules);
-  }
   render() {
     return (
       <Container {...this.state}>
@@ -38,7 +35,6 @@ class App extends React.Component {
             onChange={e => this.setState({size: Number(e.target.value)})}
           />
         </div>
-        <button onClick={this.logRules}>log sheet rules</button>
         <h4>Legacy Component</h4>
         <LegacyComponent/>
         <h4>Compat Component</h4>

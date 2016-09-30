@@ -3,6 +3,7 @@ const React = require('react');
 
 const Header = require('./header');
 const Container = require('./container');
+const CompatComponent = require('compat-react-component');
 
 class App extends React.Component {
   constructor(props) {
@@ -37,6 +38,8 @@ class App extends React.Component {
           />
         </div>
         <button onClick={this.logRules}>log sheet rules</button>
+        <h4>Compat Component</h4>
+        <CompatComponent/>
       </Container>
     );
   }

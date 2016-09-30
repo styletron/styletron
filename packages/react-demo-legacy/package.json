@@ -1,5 +1,5 @@
 {
-  "name": "react-demo",
+  "name": "react-demo-legacy",
   "version": "2.0.0-beta.1",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
@@ -20,11 +20,11 @@
     "compression": "^1.6.2",
     "connect": "^3.4.1",
     "serve-static": "^1.11.1",
+    "safe-string": "^1.0.0",
     "compat-react-component": "^2.0.0-beta.1",
-    "styletron-client": "^2.0.0-beta.1",
-    "styletron-react": "^2.0.0-beta.1",
-    "styletron-server": "^2.0.0-beta.1",
-    "styletron-utils": "^2.0.0-beta.1"
+    "legacy-react-component": "^2.0.0-beta.1",
+    "styletron": "^1.0.0",
+    "styletron-server": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
