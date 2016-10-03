@@ -1,6 +1,6 @@
 {
   "name": "compat-react-component",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.3",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "styletron-client": "^2.0.0-beta.1",
-    "styletron-legacy": "^2.0.0-beta.1"
+    "styletron-legacy": "^2.0.0-beta.3"
   },
   "devDependencies": {},
   "license": "MIT",
