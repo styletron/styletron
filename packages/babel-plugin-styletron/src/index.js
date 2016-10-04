@@ -1,16 +1,20 @@
 module.exports = function ({types: t}) {
   return {
     visitor: {
-      JSXAttribute(path) {
-        if (path.node.name.name === 'style') {
-          path.node.name.name = 'className';
-          path.node.value = t.JSXExpressionContainer(
-            t.CallExpression(
-              t.MemberExpression(
-                t.Identifier('Styletron'),
-                t.Identifier('injectStyles')),
-              [t.Identifier('styletron'), path.node.value.expression])
-          );
+      JSXElement: {
+        enter(path) {
+          path.node.openingElement.attributes.forEach(node => {
+            if (node.name.name === 'style') {
+              node.name.name = 'className';
+              node.value = t.JSXExpressionContainer(
+                t.CallExpression(
+                  t.MemberExpression(
+                    t.Identifier('Styletron'),
+                    t.Identifier('injectStyles')),
+                  [t.Identifier('styletron'), node.value.expression])
+              );
+            }
+          });
         }
       }
     }
