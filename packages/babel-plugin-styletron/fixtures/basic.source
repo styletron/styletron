@@ -1,1 +1,1 @@
-const basic = <h1 style={{color: 'red'}}/>;
+const basic = <h1 style={{ color: 'red' }}></h1>;

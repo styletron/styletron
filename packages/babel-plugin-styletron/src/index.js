@@ -4,7 +4,7 @@ module.exports = function ({types: t}) {
       JSXElement: {
         enter(path) {
           path.node.openingElement.attributes.forEach(node => {
-            if (node.name.name === 'style') {
+            if (node.name.name === 'style' && path.scope.hasBinding('styletron')) {
               node.name.name = 'className';
               node.value = t.JSXExpressionContainer(
                 t.CallExpression(
