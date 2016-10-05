@@ -105,5 +105,4 @@ function declarationToRule(className, {prop, val, pseudo}) {
     selector += pseudo;
   }
   return `${selector}{${decl}}`;
-  // return media ? `@media ${media}{${rule}}` : rule;
 }
