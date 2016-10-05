@@ -1,4 +1,5 @@
 const cacheToCss = require('./cache-to-css');
+const cacheToStylesheets = require('./cache-to-stylesheets');
 const StyletronCore = require('styletron-core');
 
 /**
@@ -18,6 +19,10 @@ class StyletronServer extends StyletronCore {
   injectDeclaration(decl) {
     this.injectionCount++;
     return super.injectDeclaration(decl);
+  }
+
+  getStylesheets() {
+    return cacheToStylesheets(this.cache);
   }
 
   /**

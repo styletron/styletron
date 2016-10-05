@@ -22,9 +22,24 @@ test('test toCss', t => {
   t.end();
 });
 
-test('test toCss method', t => {
+test('test getCss method', t => {
   const instance = new StyletronTest();
   instance.setCache(fixtures.basic.cache);
   t.equal(instance.getCss(), fixtures.basic.css);
+  t.end();
+});
+
+test('test getStylesheets method', t => {
+  const instance = new StyletronTest();
+  instance.setCache(fixtures.basic.cache);
+  t.deepEqual(instance.getStylesheets(), [
+    {
+      css: '.c4:hover{display:none}.c0{color:red}.c1{color:green}'
+    },
+    {
+      media: '(max-width: 800px)',
+      css: '.c3:hover{color:green}.c2{color:green}'
+    }
+  ]);
   t.end();
 });
