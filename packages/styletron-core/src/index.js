@@ -12,7 +12,7 @@ class StyletronCore {
       media: {},
       pseudo: {}
     };
-    this.counter = 0;
+    this.uniqueCount = 0;
   }
 
   static assignDecl(target, decl, className) {
@@ -52,8 +52,8 @@ class StyletronCore {
     if (cached) {
       return cached;
     }
-    const className = `c${this.counter.toString(36)}`;
-    this.counter++;
+    const className = `c${this.uniqueCount.toString(36)}`;
+    this.uniqueCount++;
     StyletronCore.assignDecl(this.cache, decl, className);
     return className;
   }

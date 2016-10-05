@@ -13,7 +13,6 @@
     "test": "unitest --browser=lib/test/browser.js"
   },
   "dependencies": {
-    "fenwick-tree": "0.0.0",
     "styletron-core": "^2.0.0-beta.1"
   },
   "devDependencies": {

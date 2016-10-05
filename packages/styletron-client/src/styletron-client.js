@@ -1,4 +1,4 @@
-const fenwick = require('fenwick-tree');
+const DECL_REGEX = /.(c\d+)(:[^{]+)?{([^:]+):([^}]+)}/g;
 
 const StyletronCore = require('styletron-core');
 
@@ -13,47 +13,48 @@ const StyletronCore = require('styletron-core');
 class StyletronClient extends StyletronCore {
   /**
    * Create a new StyletronClient instance
-   * @param {HTMLStyleElement} styleElement - Style element
+   * @param {NodeList|HTMLCollection|HTMLStyleElement[]} serverStyles - List of server style elements
    */
-  constructor(styleElement) {
+  constructor(serverStyles) {
     super();
-    if (!styleElement) {
-      throw Error('no stylesheet');
+    if (!serverStyles) {
+      throw Error('No stylesheet');
     }
-    const serverCount = styleElement.getAttribute('data-count');
-    if (serverCount) {
-      this.serverCount = parseInt(serverCount, 10);
-      this.clientCount = 0;
+    this.uniqueCount = 0;
+    this.mediaSheets = {};
+    for (let i = 0; i < serverStyles.length; i++) {
+      const element = serverStyles[i];
+      if (element.media) {
+        this.mediaSheets[element.media] = element;
+      } else {
+        this.mainSheet = element;
+      }
+      this.hydrateCacheFromCssString(element.textContent, element.media);
     }
-    this.counts = fenwick([0, 0]);
-    this.styleElement = styleElement;
-    this.hydrateCacheFromCssRules(styleElement.sheet.rules);
   }
 
   /*
-   * Hydrate the cache from a CSSRuleList
-   * @param {CSSRuleList} ruleList The rule list
+   * Hydrate the cache from a css string and media string
+   * @param {string} css   - The stylesheet css content
+   * @param {string} media - The stylesheet media string
    */
-  hydrateCacheFromCssRules(ruleList) {
-    let mediaCount = 0;
-    let count = 0;
-    for (let i = 0; i < ruleList.length; i++) {
-      const rule = ruleList[i];
-      if (rule instanceof CSSStyleRule) {
-        count++;
-        assignRule(this.cache, cacheInfoFromCSSStyleRule(rule));
-      } else if (rule instanceof CSSMediaRule) {
-        const media = rule.media.mediaText;
-        mediaCount++;
-        for (let i = 0; i < rule.cssRules.length; i++) {
-          const info = cacheInfoFromCSSStyleRule(rule.cssRules[i]);
-          info.media = media;
-          assignRule(this.cache, info);
-        }
-      }
+  hydrateCacheFromCssString(css, media) {
+    let decl;
+    // {
+    //  1: className,
+    //  2: pseudo,
+    //  3: prop,
+    //  4: val
+    // }
+    while (decl = DECL_REGEX.exec(css)) {
+      this.uniqueCount++;
+      StyletronCore.assignDecl(this.cache, {
+        pseudo: decl[2],
+        prop: decl[3],
+        val: decl[4],
+        media
+      }, decl[1]);
     }
-    this.counts = fenwick([count, mediaCount]);
-    this.counter = ruleList.length;
   }
 
   /**
@@ -70,86 +71,39 @@ class StyletronClient extends StyletronCore {
    * // → 'c0'
    */
   injectDeclaration(decl) {
-    const oldCount = this.counter;
+    const oldCount = this.uniqueCount;
     const className = super.injectDeclaration(decl);
-    if (this.serverCount && this.clientCount < this.serverCount) {
-      this.clientCount++;
-      return className;
-    }
-    if (oldCount !== this.counter) {
-      let index;
-      if (!decl.media) {
-        fenwick.update(this.counts, 0, 1);
-        index = fenwick.query(this.counts, 0);
-      } else {
-        fenwick.update(this.counts, 1, 1);
-        index = fenwick.query(this.counts, 1);
-      }
+    if (oldCount !== this.uniqueCount) {
       const rule = declarationToRule(className, decl);
-      this.styleElement.sheet.insertRule(rule, index - 1);
+      let sheet;
+      if (decl.media) {
+        if (!this.mediaSheets[decl.media]) {
+          const mediaSheet = document.createElement('style');
+          this.mediaSheets[decl.media] = mediaSheet;
+          this.mainSheet.parentNode.appendChild(mediaSheet);
+        }
+        sheet = this.mediaSheets[decl.media].sheet;
+      } else {
+        sheet = this.mainSheet.sheet;
+      }
+      sheet.insertRule(rule, sheet.rules.length);
     }
     return className;
   }
-
 }
 
 module.exports = StyletronClient;
 
 /*
- * Hydration helpers
- */
-
-function assignRule(target, ruleInfo) {
-  let pseudo;
-  let className;
-  const index = ruleInfo.selector.indexOf(':');
-  if (index !== -1) {
-    pseudo = ruleInfo.selector.slice(index);
-    className = getClassName(ruleInfo.selector.slice(0, index));
-  } else {
-    className = getClassName(ruleInfo.selector);
-  }
-  const decl = {
-    prop: ruleInfo.prop,
-    val: ruleInfo.val,
-    media: ruleInfo.media,
-    pseudo: pseudo
-  };
-  StyletronCore.assignDecl(target, decl, className);
-}
-
-function cacheInfoFromCSSStyleRule(rule) {
-  let prop;
-  let val;
-  if (rule.style.length > 1) {
-    const idx = rule.style.cssText.indexOf(': ');
-    prop = rule.style.cssText.substring(0, idx);
-    val = rule.style.cssText.substring(idx + 2, rule.style.cssText.length - 1);
-  } else {
-    prop = rule.style[0];
-    val = rule.style[prop]
-  }
-  return {
-    prop,
-    val,
-    selector: rule.selectorText
-  };
-}
-
-function getClassName(classSelector) {
-  return classSelector.substr(1);
-}
-
-/*
  * Injection helpers
  */
 
-function declarationToRule(className, {prop, val, media, pseudo}) {
+function declarationToRule(className, {prop, val, pseudo}) {
   const decl = `${prop}:${val}`;
   let selector = `.${className}`;
   if (pseudo) {
     selector += pseudo;
   }
-  const rule = `${selector}{${decl}}`;
-  return media ? `@media ${media}{${rule}}` : rule;
+  return `${selector}{${decl}}`;
+  // return media ? `@media ${media}{${rule}}` : rule;
 }
