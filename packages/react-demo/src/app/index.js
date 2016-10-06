@@ -17,7 +17,7 @@ class App extends React.Component {
     }
   }
   logRules() {
-    console.log(document.querySelector('style').sheet.cssRules);
+    console.log(document.querySelector('.styletron').sheet.cssRules);
   }
   render() {
     return (
