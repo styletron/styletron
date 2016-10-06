@@ -1,4 +1,4 @@
-const DECL_REGEX = /.(c\d+)(:[^{]+)?{([^:]+):([^}]+)}/g;
+const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
 
 const StyletronCore = require('styletron-core');
 
