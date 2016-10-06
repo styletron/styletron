@@ -1,6 +1,6 @@
 {
   "name": "react-demo-compat",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.1-beta.0",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -22,11 +22,11 @@
     "serve-static": "^1.11.1",
     "safe-string": "^1.0.0",
     "legacy-react-component": "^2.0.0-beta.1",
-    "compat-react-component": "^2.0.0-beta.3",
-    "styletron-client": "^2.0.0-beta.1",
-    "styletron-react": "^2.0.0-beta.1",
+    "compat-react-component": "^2.0.1-beta.0",
+    "styletron-client": "^2.0.1-beta.0",
+    "styletron-react": "^2.0.1-beta.0",
     "styletron-legacy": "^2.0.0-beta.3",
-    "styletron-server": "^2.0.0-beta.1",
+    "styletron-server": "^2.0.1-beta.0",
     "styletron-server-legacy": "^2.0.0-beta.3",
     "styletron-utils": "^2.0.0-beta.1"
   },
