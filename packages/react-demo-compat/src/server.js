@@ -16,7 +16,7 @@ const server = connect();
 server.use(compression());
 server.use(serve('static', {index: false}));
 
-const getMarkup = (bodyContent, cssContent, count, legacyCss, hydrationSrc) =>
+const getMarkup = (bodyContent, cssContent, legacyCss, hydrationSrc) =>
 `<!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +24,7 @@ const getMarkup = (bodyContent, cssContent, count, legacyCss, hydrationSrc) =>
 <title>Styletron React Demo</title>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <style data-styletron>${legacyCss}</style>
-<style id="styletron" data-count="${count}"">${cssContent}</style>
+${cssContent}
 </head>
 <body>
 <div id="app">${bodyContent}</div>
@@ -42,11 +42,10 @@ server.use((req, res) => {
     return renderToString(app);
   });
   
-  const modernCss = styletron.getCss();
-  const count = styletron.getInjectionCount();
+  const modernCss = styletron.getStylesheetsHtml();
   const hydrationSrc = generateHydrationScriptSrc(injectedKeys);
 
-  res.end(getMarkup(html, modernCss, count, css, hydrationSrc));
+  res.end(getMarkup(html, modernCss, css, hydrationSrc));
 });
 
 http.createServer(server).listen(3000, () => {
