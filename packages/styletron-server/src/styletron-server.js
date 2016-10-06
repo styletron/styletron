@@ -26,8 +26,8 @@ class StyletronServer extends StyletronCore {
     return cacheToStylesheets(this.cache);
   }
 
-  getStylesheetsHtml() {
-    return generateHtmlString(this.getStylesheets());
+  getStylesheetsHtml(className = 'styletron') {
+    return generateHtmlString(this.getStylesheets(), className);
   }
 
   /**

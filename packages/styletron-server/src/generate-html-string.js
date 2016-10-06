@@ -1,11 +1,11 @@
 module.exports = generateHtmlString;
 
-function generateHtmlString(sheets) {
+function generateHtmlString(sheets, className) {
   let html = '';
   for (let i = 0; i < sheets.length; i++) {
     const sheet = sheets[i];
     const mediaAttr = sheet.media ? ` media="${sheet.media}"` : '';
-    html += `<style class="styletron"${mediaAttr}>${sheet.css}</style>`;
+    html += `<style class="${className}"${mediaAttr}>${sheet.css}</style>`;
   }
   return html;
 }
