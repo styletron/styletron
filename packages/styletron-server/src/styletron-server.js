@@ -1,5 +1,6 @@
 const cacheToCss = require('./cache-to-css');
 const cacheToStylesheets = require('./cache-to-stylesheets');
+const generateHtmlString = require('./generate-html-string');
 const StyletronCore = require('styletron-core');
 
 /**
@@ -23,6 +24,10 @@ class StyletronServer extends StyletronCore {
 
   getStylesheets() {
     return cacheToStylesheets(this.cache);
+  }
+
+  getStylesheetsHtml() {
+    return generateHtmlString(this.getStylesheets());
   }
 
   /**
