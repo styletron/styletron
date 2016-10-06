@@ -17,7 +17,7 @@ class StyletronTest extends Styletron {
   getMediaSheets() {
     return this.mediaSheets;
   }
-  getuniqueCount() {
+  getUniqueDeclarationCount() {
     return this.uniqueCount;
   }
 }
@@ -31,7 +31,7 @@ test('hydration basic', t => {
   }]);
   const instance = new StyletronTest(elements);
   t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
-  t.equal(instance.getuniqueCount(), 5, 'count correctly hyrdated');
+  t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
   const newClass = instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
   t.equal(newClass, 'c5', 'new class with correct count');
   t.end();
