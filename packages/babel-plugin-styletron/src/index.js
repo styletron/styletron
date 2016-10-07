@@ -10,7 +10,7 @@ module.exports = function ({types: t}) {
                 t.CallExpression(
                   t.MemberExpression(
                     t.Identifier('Styletron'),
-                    t.Identifier('injectStyles')),
+                    t.Identifier('injectStyle')),
                   [t.Identifier('styletron'), node.value.expression])
               );
             }
