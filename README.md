@@ -39,7 +39,7 @@ styletron.getCss();
 // ➜ '.c0{background-color:red}.c1{font-size:12px}'
 ```
 
-Of course, this would be an inconvient API to use directly, so there's a `styletron-utils` package provides a more convient way to inject style objects in an interface that should be very familiar:
+Of course, this would be an inconvenient API to use directly, so there's a `styletron-utils` package provides a more convient way to inject style objects in an interface that should be very familiar:
 ```js
 import Styletron from 'styletron/server';
 import {injectStyle} from 'styletron-utils';
