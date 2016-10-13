@@ -1,3 +1,5 @@
+const getClassName = require('./class-name');
+
 /**
  * The core styletron module
  * @packagename styletron-core
@@ -52,7 +54,7 @@ class StyletronCore {
     if (cached) {
       return cached;
     }
-    const className = `c${this.uniqueCount.toString(36)}`;
+    const className = getClassName(this.uniqueCount);
     this.uniqueCount++;
     StyletronCore.assignDecl(this.cache, decl, className);
     return className;
