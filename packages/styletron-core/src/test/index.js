@@ -41,7 +41,7 @@ test('test injection', t => {
   t.end();
 });
 
-test('getClassName', t => {
+test('className', t => {
   t.equal(getClassName(0), 'a');
   t.equal(getClassName(1), 'b');
   t.equal(getClassName(2), 'c');
