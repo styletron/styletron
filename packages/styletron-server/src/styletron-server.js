@@ -14,11 +14,9 @@ class StyletronServer extends StyletronCore {
    */
   constructor() {
     super();
-    this.injectionCallCount = 0;
   }
 
   injectDeclaration(decl) {
-    this.injectionCount++;
     return super.injectDeclaration(decl);
   }
 
@@ -43,10 +41,6 @@ class StyletronServer extends StyletronCore {
    */
   getCss() {
     return cacheToCss(this.cache);
-  }
-
-  getInjectionCallCount() {
-    return this.injectionCallCount;
   }
 
 }
