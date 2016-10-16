@@ -1,6 +1,6 @@
 {
-  "name": "compat-react-component",
-  "version": "2.0.1-beta.1",
+  "name": "demo-fixtures",
+  "version": "2.0.1-beta.4",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -11,6 +11,7 @@
     "react": "^15.3.0"
   },
   "dependencies": {
+    "styletron": "1.x",
     "styletron-client": "^2.0.1-beta.1",
     "styletron-legacy": "^2.0.0-beta.3"
   },

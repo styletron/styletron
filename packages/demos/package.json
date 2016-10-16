@@ -1,16 +1,21 @@
 {
-  "name": "react-demo-compat",
+  "name": "demos",
   "version": "2.0.1-beta.1",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "lib/index.js",
   "scripts": {
-    "bundle-client": "mkdir -p static && browserify src/client.js -o static/bundle.js -t babelify",
-    "prestart": "npm run bundle-client",
-    "start": "babel-node src/server.js"
+    "bundle-client:next": "mkdir -p react-demo/static && browserify react-demo/src/client.js -o react-demo/static/bundle.js -t babelify",
+    "bundle-client:compat": "mkdir -p react-demo-compat/static && browserify react-demo-compat/src/client.js -o react-demo-compat/static/bundle.js -t babelify",
+    "bundle-client:legacy": "mkdir -p react-demo-legacy/static && browserify react-demo-legacy/src/client.js -o react-demo-legacy/static/bundle.js -t babelify",
+    "prestart:next": "npm run bundle-client:next",
+    "prestart:compat": "npm run bundle-client:compat",
+    "prestart:legacy": "npm run bundle-client:legacy",
+    "start:next": "babel-node react-demo/src/server.js",
+    "start:compat": "babel-node react-demo-compat/src/server.js",
+    "start:legacy": "babel-node react-demo-legacy/src/server.js"
   },
   "peerDependencies": {
     "react": "^15.3.0",
@@ -21,8 +26,8 @@
     "connect": "^3.4.1",
     "serve-static": "^1.11.1",
     "safe-string": "^1.0.0",
-    "legacy-react-component": "^2.0.0-beta.1",
-    "compat-react-component": "^2.0.1-beta.1",
+    "demo-fixtures": "^2.0.1-beta.4",
+    "styletron": "1.x",
     "styletron-client": "^2.0.1-beta.1",
     "styletron-react": "^2.0.1-beta.0",
     "styletron-legacy": "^2.0.0-beta.3",

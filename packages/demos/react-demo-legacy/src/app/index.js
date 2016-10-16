@@ -3,8 +3,8 @@ const React = require('react');
 
 const Header = require('./header');
 const Container = require('./container');
-const LegacyComponent = require('legacy-react-component');
-const CompatComponent = require('compat-react-component');
+const LegacyComponent = require('demo-fixtures/legacy');
+const CompatComponent = require('demo-fixtures/compat');
 
 class App extends React.Component {
   constructor(props) {
@@ -16,9 +16,6 @@ class App extends React.Component {
     if (urlColor) {
       this.state.color = urlColor;
     }
-  }
-  logRules() {
-    console.log(document.querySelector('.styletron').sheet.cssRules);
   }
   render() {
     return (
@@ -38,7 +35,6 @@ class App extends React.Component {
             onChange={e => this.setState({size: Number(e.target.value)})}
           />
         </div>
-        <button onClick={this.logRules}>log sheet rules</button>
         <h4>Legacy Component</h4>
         <LegacyComponent/>
         <h4>Compat Component</h4>
