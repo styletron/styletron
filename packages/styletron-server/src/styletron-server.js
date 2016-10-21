@@ -12,8 +12,8 @@ class StyletronServer extends StyletronCore {
   /**
    * Create a new StyletronServer instance
    */
-  constructor() {
-    super();
+  constructor(opts) {
+    super(opts);
   }
 
   injectDeclaration(decl) {

@@ -7,12 +7,13 @@ class StyletronCore {
   /**
    * Create a new StyletronCore instance
    */
-  constructor() {
+  constructor({prefix = 'c'} = {prefix: 'c'}) {
     this.cache = {
       media: {},
       pseudo: {}
     };
     this.uniqueCount = 0;
+    this.prefix = prefix;
   }
 
   static assignDecl(target, decl, className) {
@@ -52,7 +53,7 @@ class StyletronCore {
     if (cached) {
       return cached;
     }
-    const className = `c${this.uniqueCount.toString(36)}`;
+    const className = `${this.prefix}${this.uniqueCount.toString(36)}`;
     this.uniqueCount++;
     StyletronCore.assignDecl(this.cache, decl, className);
     return className;

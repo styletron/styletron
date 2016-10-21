@@ -15,8 +15,8 @@ class StyletronClient extends StyletronCore {
    * Create a new StyletronClient instance
    * @param {NodeList|HTMLCollection|HTMLStyleElement[]} serverStyles - List of server style elements
    */
-  constructor(serverStyles) {
-    super();
+  constructor(serverStyles, opts) {
+    super(opts);
     if (!serverStyles) {
       throw Error('No stylesheet');
     }
