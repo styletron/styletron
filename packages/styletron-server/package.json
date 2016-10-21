@@ -1,6 +1,6 @@
 {
   "name": "styletron-server",
-  "version": "2.0.1-beta.0",
+  "version": "2.0.1-beta.1",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -13,7 +13,7 @@
     "test": "node lib/test/index.js"
   },
   "dependencies": {
-    "styletron-core": "^2.0.1-beta.0"
+    "styletron-core": "^2.0.1-beta.1"
   },
   "devDependencies": {
     "buble": "^0.12.5",
