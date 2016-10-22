@@ -1,9 +1,10 @@
 const test = require('tape');
 const React = require('react');
+const ReactDOM = require('react-dom');
 const ReactTestUtils = require('react-addons-test-utils');
 const Styletron = require('styletron-server');
 
-const connectToStyles = require('../connect-to-styles');
+const styled = require('../styled');
 const Provider = require('../provider');
 
 test('provider provides instance', t => {
@@ -19,22 +20,74 @@ test('provider provides instance', t => {
   t.end();
 });
 
-test('connectToStyles works', t => {
-  t.plan(3);
-  const expectedProps = {prop1: 'red'};
-  const hoc = connectToStyles(props => {
-    t.deepEqual(props, expectedProps, 'props accessible in hoc');
-    return {style1: {color: 'red'}};
+test('props passed to styled function', t => {
+  t.plan(1);
+  const props = {
+    prop1: 'foo'
+  };
+  const Widget = styled('div', props => {
+    t.deepEqual(props, props, 'props accessible in style fn');
+    return {};
   });
-  const MockComponent = props => {
-    t.deepEqual(props.styles, {style1: ' c0'}, 'style props passed');
-    return React.createElement('div');
-  }
-  const Wrapped = hoc(MockComponent);
+  const styletron = new Styletron();
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(Widget, props))
+  );
+});
+
+test('styled applies styles', t => {
+  const Widget = styled('div', props => {
+    return {color: 'red'};
+  });
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron},
-      React.createElement(Wrapped, expectedProps))
+      React.createElement(Widget))
   );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, ' c0', 'styletron classes');
   t.equal(styletron.getCss(), '.c0{color:red}');
+  t.end();
+});
+
+test('styled applies static styles', t => {
+  const Widget = styled('div', {color: 'red'});
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(Widget))
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, ' c0', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.c0{color:red}');
+  t.end();
+});
+
+test('styled passes through valid props', t => {
+  const Widget = styled('div', {color: 'red'});
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(Widget, {
+        'data-bar': 'bar'
+      }))
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.getAttribute('data-bar'), 'bar', 'valid attribute prop passed through');
+  t.end();
+});
+
+test('styled composition', t => {
+  const Widget = styled('div', {color: 'red', 'display': 'inline'});
+  const SuperWidget = styled(Widget, {display: 'block', background: 'black'});
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(SuperWidget))
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, ' c0 c1 c2', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.c0{color:red}.c1{display:block}.c2{background:black}');
+  t.end();
 });
