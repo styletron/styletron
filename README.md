@@ -23,101 +23,90 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 - Fast cache hydration of server-rendered styles to prevent re-rendering of server-rendered styles
 - Use of `CSSStyleSheet` rule injection ensuring *only* new styles get parsed
 
-## Basic usage
+## Using Styletron with React
 
-The core Styletron module is totally unopinonated and works with or without any view-rendering library.
+Styletron comes with an official `styletron-react` package.
 
-```js
-import Styletron from 'styletron/server';
+### Creating styled element components
 
-const styletron = new Styletron();
-styletron.injectDeclaration({prop: 'background-color', val: 'red'}); // returns a class name
-// ➜ 'c0'
-styletron.injectDeclaration({prop: 'font-size', val: '12px'});
-// ➜ 'c1'
-styletron.getCss();
-// ➜ '.c0{background-color:red}.c1{font-size:12px}'
-```
+#### Static styles
+```jsx
+import {styled} from 'styletron-react';
 
-Of course, this would be an inconvenient API to use directly, so there's a `styletron-utils` package provides a more convient way to inject style objects in an interface that should be very familiar:
-```js
-import Styletron from 'styletron/server';
-import {injectStyle} from 'styletron-utils';
-
-const styletron = new Styletron();
-injectStyle(styletron, {
-  backgroundColor: 'red',
+const Panel = styled('div', {
+  backgroundColor: 'lightblue',
   fontSize: '12px'
 });
-// ➜ 'c0 c1'
-styletron.getCss();
-// ➜ '.c0{background-color:red}.c1{font-size:12px}'
+
+<Panel>Hello World</Panel>
 ```
 
-Because the core Styletron API is very unopinionated, it can be integrated into virtually any app or even other CSS-in-JS solutions.
+#### Using props and context in styles
+```jsx
+import {styled} from 'styletron-react';
 
-## Getting started with React
+const Panel = styled('div', (props) => ({
+  backgroundColor: props.alert ? 'orange' : 'lightblue',
+  fontSize: '12px'
+}));
 
-[Full isomorphic demo app](https://github.com/rtsao/styletron/tree/master/packages/react-demo)
-
-There's also slightly more opinionated `styletron-react` package for React applications:
-
-```bash
-npm install styletron-react --save
+<Panel alert>Danger!</Panel>
 ```
 
-```js
-import React from 'react';
-import {connectToStyles} from 'styletron-react';
+#### Extending other styled element components
+```jsx
+import {styled} from 'styletron-react';
 
-const hoc = connectToStyles(props => {
-  return {
-    container: {
-      margin: '0px auto',
-      width: '640px',
-      background: props.color
-    },
-    title: {
-      fontSize: '24px'
-    }
-  }
-});
+const DeluxePanel = styled(Panel, (props) => ({
+  backgroundColor: props.alert ? 'firebrick' : 'rebeccapurple',
+  color: 'white',
+  boxShadow: '3px 3px 3px darkgray'
+}));
 
-class MyComponent extends React.Component {
-  render() {
-    const {styles} = this.props;
-    return (
-      <div className={styles.container}>
-        <h2 className={styles.title}>{this.props.title}</h2>
-      </div>
-    );
-  }
-}
-
-MyComponent.defaultProps = {
-  color: 'green'
-};
-
-export default hoc(MyComponent);
+<DeluxePanel>Bonjour Monde</DeluxePanel>
 ```
 
-```js
-import Styletron from 'styletron/client';
+### App integration and server-side rendering
+
+#### Client-side rendering
+```jsx
+import Styletron from 'styletron-client';
 import {StyletronProvider} from 'styletron-react';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import App from './my-app';
-
-const styleElement = document.body.appendChild(document.createElement('style'));
+const styleElements = document.getElementsByClassName('styletron');
 
 ReactDOM.render(
-  <StyletronProvider styletron={new Styletron(styleElement)}/>
+  <StyletronProvider styletron={new Styletron(styleElements)}>
     <App/>
-  </StyletronProvider>,
-  document.getElementById('app')
+  </StyletronProvider>
 );
 ```
+
+#### Server-side rendering
+
+```jsx
+import Styletron from 'styletron-server';
+import {StyletronProvider} from 'styletron-react';
+
+function render() {
+  const styletron = new Styletron();
+  const appMarkup = ReactDOM.renderToString(
+    <StyletronProvider styletron={styletron}>
+      <App/>
+    </StyletronProvider>
+  );
+
+  const stylesForHead = styletron.getStylesheetsHtml();
+  
+  return `<html><head>${stylesForHead}</head><body>${appMarkup}</body></html>`;
+}
+
+```
+
+
+## For framework and library authors
+
+The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
