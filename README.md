@@ -6,8 +6,6 @@
 
 Universal, high-performance JavaScript styles.
 
-**[API documentation: http://styletron.js.org](http://styletron.js.org)**
-
 ## What is Styletron?
 
 Styletron is a universal CSS-in-JS engine built from the ground up for high-performance. Features include:
@@ -25,7 +23,7 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 
 ## Using Styletron with React
 
-Styletron comes with an official `styletron-react` package.
+The `styletron-react` package provides a convenient way to use Styletron in React applications.
 
 ### Creating styled element components
 
@@ -107,6 +105,8 @@ function render() {
 ## For framework and library authors
 
 The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
+
+**[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
