@@ -19,8 +19,6 @@
     "compression": "^1.6.2",
     "connect": "^3.4.1",
     "serve-static": "^1.11.1",
-    "safe-string": "^1.0.0",
-    "demo-fixtures": "^2.0.1-beta.5",
     "styletron-client": "^2.0.1-beta.2",
     "styletron-react": "^2.0.1-beta.1",
     "styletron-server": "^2.0.1-beta.1",
