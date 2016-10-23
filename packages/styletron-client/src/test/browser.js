@@ -1,8 +1,5 @@
 const Styletron = require('../styletron-client');
 const test = require('tape');
-const util = require('util');
-const fs = require('fs');
-const path = require('path');
 const forEach = Array.prototype.forEach;
 
 const fixtures = require('test-fixtures');

@@ -92,7 +92,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 }
 
 function assign(target, source) {
-  for (key in source) {
+  for (let key in source) {
     target[key] = source[key];
   }
 }

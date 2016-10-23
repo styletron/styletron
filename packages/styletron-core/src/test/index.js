@@ -1,6 +1,5 @@
 const Styletron = require('../');
 const test = require('tape');
-const util = require('util');
 
 class StyletronTest extends Styletron {
 

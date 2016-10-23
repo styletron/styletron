@@ -8,8 +8,9 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
+    "lint": "eslint packages/*/src/**",
     "build-docs": "jsdoc -c jsdoc.json",
-    "pretest": "lerna run pretest",
+    "pretest": "npm run lint && lerna run pretest",
     "test": "lerna run test --concurrency=1",
     "predeploy-docs": "rm -rf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
@@ -18,6 +19,7 @@
   "devDependencies": {
     "@rtsao/docdash": "^0.4.2",
     "benchmark": "^2.1.1",
+    "eslint": "^3.8.1",
     "inferno": "^0.7.27",
     "inferno-component": "^0.7.27",
     "inferno-create-element": "^0.7.27",

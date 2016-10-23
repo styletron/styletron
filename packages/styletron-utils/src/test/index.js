@@ -1,7 +1,6 @@
 const injectStyle = require('../inject-style');
 const injectStylePrefixed = require('../inject-style-prefixed');
 const test = require('tape');
-const util = require('util');
 
 test('test injection', t => {
   const decls = [];

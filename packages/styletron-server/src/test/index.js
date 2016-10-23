@@ -1,12 +1,8 @@
+const test = require('tape');
+const fixtures = require('test-fixtures');
+
 const cacheToCss = require('../cache-to-css');
 const Styletron = require('../styletron-server');
-
-const fs = require('fs');
-const path = require('path');
-const test = require('tape');
-const util = require('util');
-
-const fixtures = require('test-fixtures');
 
 class StyletronTest extends Styletron {
   constructor(...args) {

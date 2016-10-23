@@ -1,6 +1,5 @@
 const test = require('tape');
 const React = require('react');
-const ReactDOM = require('react-dom');
 const ReactTestUtils = require('react-addons-test-utils');
 const Styletron = require('styletron-server');
 
@@ -37,7 +36,7 @@ test('props passed to styled function', t => {
 });
 
 test('styled applies styles', t => {
-  const Widget = styled('div', props => {
+  const Widget = styled('div', () => {
     return {color: 'red'};
   });
   const styletron = new Styletron();
