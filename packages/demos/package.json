@@ -7,15 +7,9 @@
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
   "scripts": {
-    "bundle-client:next": "mkdir -p react-demo/static && browserify react-demo/src/client.js -o react-demo/static/bundle.js -t babelify",
-    "bundle-client:compat": "mkdir -p react-demo-compat/static && browserify react-demo-compat/src/client.js -o react-demo-compat/static/bundle.js -t babelify",
-    "bundle-client:legacy": "mkdir -p react-demo-legacy/static && browserify react-demo-legacy/src/client.js -o react-demo-legacy/static/bundle.js -t babelify",
-    "prestart:next": "npm run bundle-client:next",
-    "prestart:compat": "npm run bundle-client:compat",
-    "prestart:legacy": "npm run bundle-client:legacy",
-    "start:next": "babel-node react-demo/src/server.js",
-    "start:compat": "babel-node react-demo-compat/src/server.js",
-    "start:legacy": "babel-node react-demo-legacy/src/server.js"
+    "bundle-client": "mkdir -p react-demo/static && browserify react-demo/src/client.js -o react-demo/static/bundle.js -t babelify",
+    "prestart": "npm run bundle-client",
+    "start": "babel-node react-demo/src/server.js"
   },
   "peerDependencies": {
     "react": "^15.3.0",
@@ -27,12 +21,9 @@
     "serve-static": "^1.11.1",
     "safe-string": "^1.0.0",
     "demo-fixtures": "^2.0.1-beta.5",
-    "styletron": "1.x",
     "styletron-client": "^2.0.1-beta.2",
     "styletron-react": "^2.0.1-beta.1",
-    "styletron-legacy": "^2.0.0-beta.3",
     "styletron-server": "^2.0.1-beta.1",
-    "styletron-server-legacy": "^2.0.0-beta.3",
     "styletron-utils": "^2.0.1-beta.2"
   },
   "devDependencies": {

@@ -1,23 +1,16 @@
-const React = require('react');
-const {connectToStyles} = require('styletron-react');
+const {styled} = require('styletron-react');
 
-function Container({styles, children}) {
-  return <div className={styles.container}>{children}</div>;
-}
+const Container = styled('div', props => {
+  return {
+    margin: '0px auto',
+    width: '640px',
+    padding: `${props.size}px`,
+    background: props.color
+  }
+});
 
 Container.defaultProps = {
   color: 'green'
 };
 
-const hoc = connectToStyles(props => {
-  return {
-    container: {
-      margin: '0px auto',
-      width: '640px',
-      padding: `${props.size}px`,
-      background: props.color
-    }
-  }
-});
-
-module.exports = hoc(Container);
+module.exports = Container;
