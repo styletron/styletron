@@ -1,6 +1,6 @@
 {
   "name": "styletron-server-legacy",
-  "version": "2.0.2-beta.0",
+  "version": "2.0.2-beta.1",
   "description": "Legacy package for 1.x styletron-server",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -13,7 +13,7 @@
   "devDependencies": {},
   "dependencies": {
     "safe-string": "^1.0.0",
-    "styletron-legacy": "^2.0.2-beta.0"
+    "styletron-legacy": "^2.0.2-beta.1"
   },
   "license": "MIT"
 }
