@@ -71,7 +71,7 @@ const DeluxePanel = styled(Panel, (props) => ({
 import Styletron from 'styletron-client';
 import {StyletronProvider} from 'styletron-react';
 
-const styleElements = document.getElementsByClassName('styletron');
+const styleElements = document.getElementsByClassName('_styletron_hydrate_');
 
 ReactDOM.render(
   <StyletronProvider styletron={new Styletron(styleElements)}>

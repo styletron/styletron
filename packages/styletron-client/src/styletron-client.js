@@ -62,7 +62,7 @@ class StyletronClient extends StyletronCore {
    * @return {string}      class name
    * @example
    * // <style id="styletron">.c0{color:red}</style>
-   * const styletron = new StyletronClient(document.getElementById('styletron'));
+   * const styletron = new StyletronClient(document.getElementsByClassName('_styletron_hydrate_'));
    * styletron.injectDeclaration({prop: 'color', val: 'blue'});
    * // → 'c1'
    * styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
