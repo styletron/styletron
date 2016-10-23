@@ -9,7 +9,8 @@
   "main": "./lib/node.js",
   "browser": "./lib/browser.js",
   "scripts": {
-    "transpile": "buble -i src -o lib"
+    "transpile": "buble -i src -o lib",
+    "prepublsih": "npm run transpile"
   },
   "dependencies": {
     "styletron-server": "^2.0.2-beta.0",

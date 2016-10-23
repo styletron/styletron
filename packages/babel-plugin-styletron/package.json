@@ -10,7 +10,8 @@
   "scripts": {
     "transpile": "buble -i src -o lib",
     "pretest": "npm run transpile",
-    "test": "node lib/test/index.js"
+    "test": "node lib/test/index.js",
+    "prepublish": "npm run transpile"
   },
   "dependencies": {},
   "devDependencies": {
