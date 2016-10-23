@@ -38,15 +38,17 @@ class StyletronServer extends StyletronCore {
   /**
    * Get a string of style elements for server rendering
    * @return {String} The string of HTML
+   * @param {String} className=_styletron_hydrate_ Class name for style elements
    * @example
    * const styletron = new StyletronServer();
-   *
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
    * // → 'c0'
    * styletron.getStylesheetsHtml();
-   * // → '<style class="styletron">.c0{color:red}</style>'
+   * // → '<style class="_styletron_hydrate_">.c0{color:red}</style>'
+   * styletron.getStylesheetsHtml('custom_class');
+   * // → '<style class="custom_class">.c0{color:red}</style>'
    */
-  getStylesheetsHtml(className = 'styletron') {
+  getStylesheetsHtml(className = '_styletron_hydrate_') {
     return generateHtmlString(this.getStylesheets(), className);
   }
 

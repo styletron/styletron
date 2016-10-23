@@ -47,6 +47,6 @@ test('test getStylesheets method', t => {
 test('test getStylesheetsHtml method', t => {
   const instance = new StyletronTest();
   instance.setCache(fixtures.basic.cache);
-  t.equal(instance.getStylesheetsHtml(), '<style class="styletron">.c4:hover{display:none}.c0{color:red}.c1{color:green}</style><style class="styletron" media="(max-width: 800px)">.c3:hover{color:green}.c2{color:green}</style>');
+  t.equal(instance.getStylesheetsHtml(), '<style class="_styletron_hydrate_">.c4:hover{display:none}.c0{color:red}.c1{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.c3:hover{color:green}.c2{color:green}</style>');
   t.end();
 });
