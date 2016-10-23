@@ -1,6 +1,6 @@
 {
   "name": "demos",
-  "version": "2.0.1-beta.2",
+  "version": "2.0.2-beta.0",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -19,10 +19,10 @@
     "compression": "^1.6.2",
     "connect": "^3.4.1",
     "serve-static": "^1.11.1",
-    "styletron-client": "^2.0.1-beta.2",
-    "styletron-react": "^2.0.1-beta.1",
-    "styletron-server": "^2.0.1-beta.1",
-    "styletron-utils": "^2.0.1-beta.2"
+    "styletron-client": "^2.0.2-beta.0",
+    "styletron-react": "^2.0.2-beta.0",
+    "styletron-server": "^2.0.2-beta.0",
+    "styletron-utils": "^2.0.2-beta.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",

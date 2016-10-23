@@ -1,6 +1,6 @@
 {
   "name": "styletron",
-  "version": "2.0.1-beta.2",
+  "version": "2.0.2-beta.0",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -12,8 +12,8 @@
     "transpile": "buble -i src -o lib"
   },
   "dependencies": {
-    "styletron-server": "^2.0.1-beta.1",
-    "styletron-client": "^2.0.1-beta.2"
+    "styletron-server": "^2.0.2-beta.0",
+    "styletron-client": "^2.0.2-beta.0"
   },
   "devDependencies": {
     "buble": "^0.12.5"
