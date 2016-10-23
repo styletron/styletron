@@ -2,12 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const series = require('run-series');
-const {spawn, exec} = require('child_process');
 
-const chromepath = require('chrome-location');
-spawn(chromepath, ['--remote-debugging-port=9222', '--no-first-run', `--user-data-dir=${path.join(os.tmpdir(), 'temp-profile')}`]);
-
-const PWMetrics = require('pwmetrics');
+const BasePWMetrics = require('pwmetrics');
 
 const staticDir = path.join(__dirname, 'static');
 
@@ -46,21 +42,29 @@ variants.forEach(variant => {
 const tests = entries.map(entry => callback => {
   const url = getUrl(entry);
   console.log(url);
+
+  class PWMetrics extends BasePWMetrics {
+    constructor(...args) {
+      return super(...args);
+    }
+
+    spitJSON(data) {
+      const json = super.spitJSON(data);
+      const parsed = JSON.parse(json);
+      console.log(parsed);
+      resultsArr.push({
+        res: parsed,
+        app: entry.app,
+        variant: entry.variant,
+        library: path.parse(entry.file).name,
+        tti: parsed.timings[3].value,
+        fmp: parsed.timings[1].value
+      });
+      callback(null, 'ok');
+      return json;
+    }
+  }
   const p = new PWMetrics(url, {json: true});
-  p.then((results) => {
-    console.log(results);
-    const parsed = JSON.parse(results);
-    resultsArr.push({
-      res: parsed,
-      app: entry.app,
-      variant: entry.variant,
-      library: path.parse(entry.file).name,
-      tti: parsed.timings[5].value,
-      fmp: parsed.timings[1].value,
-      v100: parsed.timings[4].value 
-    });
-    callback(null, 'ok');
-  });
 });
 
 function start() {
@@ -74,8 +78,7 @@ function start() {
       summary[item.variant][item.library] = summary[item.variant][item.library] || {};
       summary[item.variant][item.library][item.app] = {
         tti: item.tti,
-        fmp: item.fmp,
-        v100: item.v100
+        fmp: item.fmp
       };
     });
     console.log(JSON.stringify(summary, null, 2));
@@ -86,5 +89,5 @@ function start() {
 setTimeout(start, 3000);
 
 function getUrl({app, file, variant}) {
-  return path.join('http://localhost:8080', variant, app, file);
+  return `http://localhost:8080/${path.join(variant, app, file)}`;
 }

@@ -19,12 +19,10 @@ module.exports = (rules, synthetic) => {
       last = className;
     }
   }
-  const css = styletron.getCss();
-  const count = styletron.getInjectionCount();
 
   const styleElement = synthetic
-    ? `<style id="styletron"></style>`
-    : `<style id="styletron" data-count="${count}">${css}</style>`;
+    ? `<style class="styletron"></style>`
+    : styletron.getStylesheetsHtml();
 
   return (
 `<!DOCTYPE html>

@@ -6,21 +6,22 @@
   "main": "index.js",
   "scripts": {
     "prep": "node generate.js",
-    "serve-static": "static static"
+    "serve-static": "static static",
+    "start": "node server.js",
+    "start-browser": "node ./pwmetrics.js"
   },
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "aphrodite": "^0.5.0",
+    "aphrodite": "^1.0.0",
     "browserify": "^13.1.0",
     "camelcase-css": "^1.0.1",
-    "chrome-location": "^1.2.1",
-    "jss": "^5.4.0",
+    "jss": "^5.5.0",
     "jss-camel-case": "^2.0.0",
     "node-static": "^0.7.8",
     "postcss": "^5.1.2",
-    "postcss-safe-parser": "^1.0.7",
-    "pwmetrics": "^1.0.0",
+    "postcss-safe-parser": "^2.0.0",
+    "pwmetrics": "^1.1.0",
     "randomcolor": "^0.4.4",
     "run-series": "^1.1.4",
     "styletron-client": "^2.0.1-beta.2",

@@ -29,7 +29,7 @@ function generateStyletronBundle(name) {
 `const styletronApp = require('../app/${name}.styletron');
 const StyletronClient = require('styletron-client');
 
-const styletron = new StyletronClient(document.getElementById('styletron'));
+const styletron = new StyletronClient(document.getElementsByClassName('styletron'));
 styletronApp(styletron);
 `);
 }
