@@ -1,7 +1,7 @@
 {
   "name": "styletron-server-legacy",
   "version": "2.0.0-beta.3",
-  "description": "A server-rendering helper module for styletron",
+  "description": "Legacy package for 1.x styletron-server",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
