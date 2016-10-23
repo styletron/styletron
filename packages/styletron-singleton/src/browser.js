@@ -5,7 +5,7 @@ const topLevel = typeof window !== 'undefined'
   ? window
   : {};
 
-const instance = topLevel[INSTANCE_KEY];
+let instance = topLevel[INSTANCE_KEY];
 
 if (!instance) {
   const existingStyles = document.getElementsByClassName(ELEMENT_CLASS_NAME);

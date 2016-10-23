@@ -5,7 +5,7 @@ const topLevel = typeof global !== 'undefined'
   ? global
   : {};
 
-const instance = topLevel[INSTANCE_KEY];
+let instance = topLevel[INSTANCE_KEY];
 
 if (!instance) {
   const styletron = new StyletronServer();
