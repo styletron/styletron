@@ -1,6 +1,6 @@
 {
   "name": "styletron-react",
-  "version": "2.0.2-beta.3",
+  "version": "2.0.0",
   "description": "Official React bindings for styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -14,14 +14,14 @@
     "prepublish": "npm run transpile"
   },
   "dependencies": {
-    "styletron-utils": "^2.0.2-beta.3"
+    "styletron-utils": "^2.0.0"
   },
   "peerDependencies": {
     "react": "0.14.x - 15.x"
   },
   "devDependencies": {
     "buble": "^0.12.5",
-    "styletron-server": "^2.0.2-beta.3",
+    "styletron-server": "^2.0.0",
     "unitest": "^0.12.1"
   },
   "license": "MIT"
