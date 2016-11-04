@@ -3,7 +3,7 @@ const fs = require('fs');
 const os = require('os');
 const series = require('run-series');
 
-const BasePWMetrics = require('pwmetrics');
+const PWMetrics = require('pwmetrics');
 
 const staticDir = path.join(__dirname, 'static');
 
@@ -41,30 +41,43 @@ variants.forEach(variant => {
 
 const tests = entries.map(entry => callback => {
   const url = getUrl(entry);
-  console.log(url);
+  // console.log(url);
 
-  class PWMetrics extends BasePWMetrics {
-    constructor(...args) {
-      return super(...args);
-    }
+  // class PWMetrics extends BasePWMetrics {
+  //   constructor(...args) {
+  //     return super(...args);
+  //   }
 
-    spitJSON(data) {
-      const json = super.spitJSON(data);
-      const parsed = JSON.parse(json);
-      console.log(parsed);
-      resultsArr.push({
-        res: parsed,
-        app: entry.app,
-        variant: entry.variant,
-        library: path.parse(entry.file).name,
-        tti: parsed.timings[3].value,
-        fmp: parsed.timings[1].value
-      });
-      callback(null, 'ok');
-      return json;
-    }
-  }
+  //   spitJSON(data) {
+  //     const json = super.spitJSON(data);
+  //     const parsed = JSON.parse(json);
+  //     console.log(parsed);
+  //     resultsArr.push({
+  //       res: parsed,
+  //       app: entry.app,
+  //       variant: entry.variant,
+  //       library: path.parse(entry.file).name,
+  //       tti: parsed.timings[3].value,
+  //       fmp: parsed.timings[1].value
+  //     });
+  //     callback(null, 'ok');
+  //     return json;
+  //   }
+  // }
   const p = new PWMetrics(url, {json: true});
+  p.then(res => {
+    const parsed = res.runs[0];
+    resultsArr.push({
+      res: parsed,
+      app: entry.app,
+      variant: entry.variant,
+      library: path.parse(entry.file).name,
+      tti: parsed.timings[5].value,
+      fmp: parsed.timings[1].value
+    });
+    callback(null, 'ok');
+    return parsed;
+  })
 });
 
 function start() {

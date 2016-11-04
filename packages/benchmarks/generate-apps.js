@@ -20,6 +20,9 @@ keys.forEach(key => {
   const styletronSrc = generateStyletronBundle(key);
   fs.writeFileSync(path.join(bundlesDir, `${key}.styletron.js`), styletronSrc, 'utf8');
 
+  const glamorSrc = generateGlamorBundle(key);
+  fs.writeFileSync(path.join(bundlesDir, `${key}.glamor.js`), glamorSrc, 'utf8');
+
   const aphroditeSrc = generateAphroditeBundle(key);
   fs.writeFileSync(path.join(bundlesDir, `${key}.aphrodite.js`), aphroditeSrc, 'utf8');
 
@@ -39,6 +42,22 @@ module.exports = function (styletronInstance) {
   for (let i = 0; i < len; i++) {
     StyletronUtils.injectStyle(styletronInstance, rules[i])
   }
+}
+`);
+}
+
+function generateGlamorBundle(name) {
+  return (
+`const glamor = require('glamor');
+
+const rules = require('../styles/${name}.glamor');
+const len = rules.length;
+
+module.exports = function () {
+  for (let i = 0; i < len; i++) {
+    glamor.style(rules[i]);
+  }
+  return '<div></div>';
 }
 `);
 }

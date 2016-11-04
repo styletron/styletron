@@ -14,6 +14,7 @@ sources.forEach(source => {
 
   const generator = {
     styletron: generateStyletronBundle,
+    glamor: generateGlamorBundle,
     aphrodite: generateAphroditeBundle,
     jss: generateJssBundle
   }[type];
@@ -43,6 +44,18 @@ function generateAphroditeBundle(name, hydrate) {
 ${hydrateSrc}
 const aphroditeApp = require('../app/${name}.aphrodite');
 aphroditeApp();
+`);
+}
+
+function generateGlamorBundle(name, hydrate) {
+  const hydrateSrc = hydrate ?
+    'glamor.rehydrate(window._glam);' : '';
+
+  return (
+`const glamor = require('glamor');
+${hydrateSrc}
+const glamorApp = require('../app/${name}.glamor');
+glamorApp();
 `);
 }
 

@@ -16,6 +16,7 @@ const sources = fs
 const renderers = {
   styletron: require('./renderers/styletron'),
   aphrodite: require('./renderers/aphrodite'),
+  glamor: require('./renderers/glamor'),
   jss: require('./renderers/jss')
 };
 const keys = Object.keys(renderers);

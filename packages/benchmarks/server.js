@@ -1,30 +1,36 @@
 const StyletronServer = require('styletron-server');
 const aphrodite = require('aphrodite');
 const jss = require('jss');
+const glamor = require('glamor');
+const glamorServer = require('glamor/server');
 const StyletronUtils = require('styletron-utils');
 
 const uberApp = {
   jss: require('./app/uber.jss'),
   styletron: require('./app/uber.styletron'),
-  aphrodite: require('./app/uber.aphrodite')
+  aphrodite: require('./app/uber.aphrodite'),
+  glamor: require('./app/uber.glamor')
 };
 
 const airbnbApp = {
   jss: require('./app/airbnb.jss'),
   styletron: require('./app/airbnb.styletron'),
-  aphrodite: require('./app/airbnb.aphrodite')
+  aphrodite: require('./app/airbnb.aphrodite'),
+  glamor: require('./app/airbnb.glamor')
 }
 
 const allUniqueApp = {
   jss: require('./app/all-unique.jss'),
   styletron: require('./app/all-unique.styletron'),
-  aphrodite: require('./app/all-unique.aphrodite')
+  aphrodite: require('./app/all-unique.aphrodite'),
+  glamor: require('./app/all-unique.glamor')
 }
 
 const halfUniqueApp = {
   jss: require('./app/half-unique.jss'),
   styletron: require('./app/half-unique.styletron'),
-  aphrodite: require('./app/half-unique.aphrodite')
+  aphrodite: require('./app/half-unique.aphrodite'),
+  glamor: require('./app/half-unique.glamor')
 }
 
 const Benchmark = require('benchmark');
@@ -45,6 +51,9 @@ suite
     uberApp.jss(jssInstance);
     jssInstance.sheets.toString();
   })
+  .add('glamor (uber.css)', function() {
+    glamorServer.renderStatic(uberApp.glamor);
+  })
   .add('aphrodite (airbnb.css)', function() {
     aphrodite.StyleSheetServer.renderStatic(airbnbApp.aphrodite);
   })
@@ -57,6 +66,9 @@ suite
     const jssInstance = jss.create();
     airbnbApp.jss(jssInstance);
     jssInstance.sheets.toString();
+  })
+  .add('glamor (airbnb.css)', function() {
+    glamorServer.renderStatic(airbnbApp.glamor);
   })
   .add('aphrodite (all-unique)', function() {
     aphrodite.StyleSheetServer.renderStatic(allUniqueApp.aphrodite);
@@ -71,6 +83,9 @@ suite
     allUniqueApp.jss(jssInstance);
     jssInstance.sheets.toString();
   })
+  .add('glamor (all-unique)', function() {
+    glamorServer.renderStatic(allUniqueApp.glamor);
+  })
   .add('aphrodite (half-unique)', function() {
     aphrodite.StyleSheetServer.renderStatic(halfUniqueApp.aphrodite);
   })
@@ -83,6 +98,9 @@ suite
     const jssInstance = jss.create();
     halfUniqueApp.jss(jssInstance);
     jssInstance.sheets.toString();
+  })
+  .add('glamor (half-unique)', function() {
+    glamorServer.renderStatic(halfUniqueApp.glamor);
   })
   .add('aphrodite (vendor prefix)', function() {
     aphrodite.StyleSheetServer.renderStatic(_ => {
@@ -102,6 +120,16 @@ suite
       boxSizing: 'border-box'
     });
     styletron.getCss();
+  })
+  .add('glamor (vendor prefix)', function() {
+    glamorServer.renderStatic(_ => {
+      glamor.style({
+        width: 'calc(100%)',
+        height: ['min-content', 'calc(50%)'],
+        boxSizing: 'border-box'
+      });
+      return '<div></div>';
+    });
   })
   .on('cycle', event => {
     console.log(String(event.target));

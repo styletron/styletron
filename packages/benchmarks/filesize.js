@@ -64,3 +64,22 @@ function outputJss(jssApp, filename) {
 }
 jssApps.forEach(({app, filename}) => outputJss(app, filename));
 
+// Glamor
+const glamor = require('glamor');
+const glamorServer = require('glamor/server');
+const glamorApps = [
+  {
+    app: require('./app/uber.glamor'),
+    filename: 'uber.glamor.css'
+  }, 
+  {
+    app: require('./app/airbnb.glamor'),
+    filename: 'airbnb.glamor.css'
+  }
+];
+
+function outputGlamor(glamorApp, filename) {
+  const {css} = glamorServer.renderStatic(glamorApp);
+  fs.writeFileSync(path.join(__dirname, 'results', filename), css, 'utf8');
+}
+glamorApps.forEach(({app, filename}) => outputGlamor(app, filename));

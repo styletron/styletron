@@ -13,6 +13,7 @@ sources.forEach(filename => {
   fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.aphrodite.json`), JSON.stringify(result), 'utf8');
   fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.jss.json`), JSON.stringify(inverted), 'utf8');
   fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.styletron.json`), JSON.stringify(raw), 'utf8');
+  fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.glamor.json`), JSON.stringify(raw), 'utf8');
 });
 
 // JSON FIXTURES
@@ -28,6 +29,7 @@ jsonSources.forEach(filename => {
   fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.aphrodite.json`), JSON.stringify(sheet), 'utf8');
   fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.jss.json`), JSON.stringify(sheet), 'utf8');
   fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.styletron.json`), JSON.stringify(json), 'utf8');
+  fs.writeFileSync(path.join(__dirname, 'styles', `${basename}.glamor.json`), JSON.stringify(json), 'utf8');
 });
 
 function declArrayToSheet(arr) {
