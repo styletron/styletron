@@ -21,16 +21,16 @@ class StyletronTest extends Styletron {
 
 test('hydration basic', t => {
   const elements = createFixtures([{
-    css: '.c4:hover{display:none}.c0{color:red}.c1{color:green}',
+    css: '.s4:hover{display:none}.s0{color:red}.s1{color:green}',
   }, {
     media: '(max-width: 800px)',
-    css: '.c3:hover{color:green}.c2{color:green}'
+    css: '.s3:hover{color:green}.s2{color:green}'
   }]);
   const instance = new StyletronTest(elements);
   t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
   t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
   const newClass = instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
-  t.equal(newClass, 'c5', 'new class with correct count');
+  t.equal(newClass, 's5', 'new class with correct count');
   t.end();
 });
 
@@ -48,17 +48,17 @@ test('rule insertion order', t => {
   decls.forEach(decl => instance.injectDeclaration(decl));
   t.equal(element.sheet.rules.length, 4);
   const mainExpected = [
-    '.c0 { color: red; }',
-    '.c1 { color: blue; }',
-    '.c3 { color: green; }',
-    '.c5 { color: purple; }',
+    '.s0 { color: red; }',
+    '.s1 { color: blue; }',
+    '.s3 { color: green; }',
+    '.s5 { color: purple; }',
   ];
   const mediaExpected = {
     '(max-width: 333px)': [
-      '.c2 { color: blue; }'
+      '.s2 { color: blue; }'
     ],
     'screen and (max-width: 400px)': [
-      '.c4 { color: red; }'
+      '.s4 { color: red; }'
     ]
   };
   forEach.call(element.sheet.rules, (rule, i) => {

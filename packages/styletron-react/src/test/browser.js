@@ -45,8 +45,8 @@ test('styled applies styles', t => {
       React.createElement(Widget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
-  t.equal(div.className, ' c0', 'styletron classes');
-  t.equal(styletron.getCss(), '.c0{color:red}');
+  t.equal(div.className, ' s0', 'styletron classes');
+  t.equal(styletron.getCss(), '.s0{color:red}');
   t.end();
 });
 
@@ -58,8 +58,8 @@ test('styled applies static styles', t => {
       React.createElement(Widget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
-  t.equal(div.className, ' c0', 'matches expected styletron classes');
-  t.equal(styletron.getCss(), '.c0{color:red}');
+  t.equal(div.className, ' s0', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.s0{color:red}');
   t.end();
 });
 
@@ -86,7 +86,7 @@ test('styled composition', t => {
       React.createElement(SuperWidget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
-  t.equal(div.className, ' c0 c1 c2', 'matches expected styletron classes');
-  t.equal(styletron.getCss(), '.c0{color:red}.c1{display:block}.c2{background:black}');
+  t.equal(div.className, ' s0 s1 s2', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.s0{color:red}.s1{display:block}.s2{background:black}');
   t.end();
 });

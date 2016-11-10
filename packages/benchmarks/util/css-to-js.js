@@ -49,5 +49,5 @@ module.exports = function cssToJs(src) {
 }
 
 function getKey(count) {
-  return 'c' + count;
+  return 's' + count;
 }

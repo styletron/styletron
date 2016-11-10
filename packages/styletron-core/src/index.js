@@ -7,7 +7,7 @@ class StyletronCore {
   /**
    * Create a new StyletronCore instance
    */
-  constructor({prefix = 'c'} = {prefix: 'c'}) {
+  constructor({prefix = 's'} = {prefix: 's'}) {
     this.cache = {
       media: {},
       pseudo: {}
