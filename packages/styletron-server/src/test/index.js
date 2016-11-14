@@ -46,3 +46,14 @@ test('test getStylesheetsHtml method', t => {
   t.equal(instance.getStylesheetsHtml(), '<style class="_styletron_hydrate_">.s4:hover{display:none}.s0{color:red}.s1{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.s3:hover{color:green}.s2{color:green}</style>');
   t.end();
 });
+
+test('test getStylesheetsOldIE method', t => {
+  const instance = new StyletronTest();
+  for (let i = 0; i <= 4095; i++) {
+    instance.injectDeclaration({prop: 'font-size', val: `${i}px`});
+  }
+  t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
+  instance.injectDeclaration({prop: 'color', val: 'red'});
+  t.equal(instance.getStylesheetsOldIE().length, 2, 'rollover into another sheet');
+  t.end();
+});

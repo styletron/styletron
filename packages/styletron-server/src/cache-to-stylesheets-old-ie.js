@@ -20,13 +20,16 @@ function cacheToStylesheetsOldIE(cacheObj) {
       mediaSheets = getMediaSheets(cacheObj[key]);
       continue;
     }
+    ruleCount += Object.keys(cacheObj[key]).length;
+    mainCss += baseHandler(key, cacheObj[key]);
     if (ruleCount >= IE9_RULE_LIMIT) {
       sheets.push({css: mainCss});
       mainCss = '';
       ruleCount = 0;
     }
-    ruleCount++;
-    mainCss += baseHandler(key, cacheObj[key]);
+  }
+  if (mainCss) {
+    sheets.push({css: mainCss});
   }
   return mediaSheets ? sheets.concat(mediaSheets) : sheets;
 }
