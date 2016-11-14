@@ -55,5 +55,11 @@ test('test getStylesheetsOldIE method', t => {
   t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
   instance.injectDeclaration({prop: 'color', val: 'red'});
   t.equal(instance.getStylesheetsOldIE().length, 2, 'rollover into another sheet');
+  for (let i = 0; i <= 4095; i++) {
+    instance.injectDeclaration({prop: 'font-size', val: `${i}px`, media: '(max-width: 400px)'});
+  }
+  t.equal(instance.getStylesheetsOldIE().length, 3, 'media sheet');
+  instance.injectDeclaration({prop: 'color', val: 'red', media: '(max-width: 400px)'});
+  t.equal(instance.getStylesheetsOldIE().length, 4, 'media sheet rollover');
   t.end();
 });

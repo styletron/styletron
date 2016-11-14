@@ -22,7 +22,8 @@ function cacheToStylesheetsOldIE(cacheObj) {
     }
     ruleCount += Object.keys(cacheObj[key]).length;
     mainCss += baseHandler(key, cacheObj[key]);
-    if (ruleCount >= IE9_RULE_LIMIT) {
+    // TODO: handle case of than 4095 unique values for a single property
+    if (ruleCount > IE9_RULE_LIMIT && mainCss) {
       sheets.push({css: mainCss});
       mainCss = '';
       ruleCount = 0;
@@ -41,18 +42,21 @@ function getMediaSheets(mediaObj) {
     let mediaCss = '';
     let ruleCount = 0;
     for (let key in obj) {
-      if (ruleCount >= IE9_RULE_LIMIT) {
+      ruleCount += Object.keys(obj[key]).length;
+      // TODO: handle case of than 4095 unique values for a single property
+      if (ruleCount > IE9_RULE_LIMIT && mediaCss) {
         stylesheets.push({media: query, css: mediaCss});
         mediaCss = '';
         ruleCount = 0;
       }
-      ruleCount++;
       mediaCss += baseHandler(key, obj[key]);
     }
-    stylesheets.push({
-      media: query,
-      css: mediaCss
-    });
+    if (mediaCss) {
+      stylesheets.push({
+        media: query,
+        css: mediaCss
+      });
+    }
   }
   return stylesheets;
 }

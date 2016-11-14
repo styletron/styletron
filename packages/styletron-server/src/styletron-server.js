@@ -69,7 +69,7 @@ class StyletronServer extends StyletronCore {
   }
 
   /**
-   * Get a string of style elements for server rendering,with ≤IE9 limit of max 4095 rules per sheet
+   * Get a string of style elements for server rendering, with ≤IE9 limit of max 4095 rules per sheet
    * @return {String} The string of HTML
    * @param {String} className=_styletron_hydrate_ Class name for style elements
    * @example
