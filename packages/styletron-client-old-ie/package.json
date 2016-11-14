@@ -1,6 +1,6 @@
 {
   "name": "styletron-client-old-ie",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -14,7 +14,7 @@
     "prepublish": "npm run transpile"
   },
   "dependencies": {
-    "styletron-client": "^2.0.0"
+    "styletron-client": "^2.0.1"
   },
   "devDependencies": {
     "buble": "^0.12.5",
