@@ -11,6 +11,7 @@
     "transpile": "buble -i src -o lib",
     "pretest": "npm run transpile",
     "test": "unitest --browser=lib/test/browser.js",
+    "test-browser": "../../node_modules/.bin/zuul -- test.js",
     "prepublish": "npm run transpile"
   },
   "dependencies": {

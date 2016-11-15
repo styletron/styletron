@@ -12,6 +12,7 @@
     "build-docs": "jsdoc -c jsdoc.json",
     "pretest": "npm run lint && lerna run pretest",
     "test": "lerna run test --concurrency=1",
+    "test-browser": "lerna run test-browser --concurrency=1",
     "predeploy-docs": "rm -rf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
   },
@@ -31,7 +32,8 @@
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "zuul": "^3.11.1"
   },
   "license": "MIT"
 }

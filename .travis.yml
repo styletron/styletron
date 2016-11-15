@@ -1,17 +1,22 @@
 language: node_js
 node_js:
-  - 4
-  - 6
+- 4
+- 6
 addons:
   apt:
     packages:
-      - xvfb
+    - xvfb
 before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm install
-  - node_modules/.bin/lerna bootstrap
+- export DISPLAY=':99.0'
+- Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+- npm install
+- node_modules/.bin/lerna bootstrap
 script:
-  - npm run bootstrap
-  - npm run test
+- npm run bootstrap
+- npm run test
+- npm run test-browser
+env:
+  global:
+  - secure: Vq5O+3QOPUfOPRskXaW27pCmr2alTSt/iUFv7Vgq26eAfOFVlp8O3+C3DrBqHfWSOQ5kirzLdOmz74moAp2iRFcVTvV/YLqdk5GYe7bnrJojuxS5xDP7pE6VSQP6l9Kad+oDqWLZSF1sy1ico/VQGk1ZA5IqVa68EwisD2qAwAQHcQt/dzLkW37n2G0YtmvNGUhFfr5nd1jXO/tBhFEcyZu6khvk/OQOp738ErvYnbkSM0wZ00HFlRrWz6GOYVHOmkT/sLruC0H1/DGeLa55V9LLkZd6wmv3jN4KPDnZh/bFmadJzrVjuCzChsE/Pj/BUK0AHSTQKkcFfBgTE7oxRxwcsUJpU9Du4/diGYdyTP9+xSurH50RATzqW4OaiPtfpkYai794Y1Hbcipm+9MVGOzCx3XdcaSJER1WD57OdfdZL6tvRl2N+J8kJsOyGb/5zhBJ3zWaexmi7WQPNjSbtPiXpJnEtpSL1BQjwTOamNmPWyzed43OrpO1Rp9hGqemAWRB/KH7LmR4TQWVu3973q58kXzUw7pQ4UL5NdT/K3kFMgutmINS5zzR3WMOhoJ7qenfoERGIQE8Nhawf9I86SenmfLgm1s4ZDfuZySn9Wek75Sc0C8yv2TwnIuwWgeFqDd3nIdvaiq1OOLF+tQ1Nvvtf52zkcTH6EOCb725Kzw=
+  - secure: GvFGwIBws93SHa0LlIo87VuwvvPX0NzSJlJT2gwE2CuPmJWj1rXpg2z7UrKf0zg8bKcdQuf+q5O2bkai91ixBIb20q6KI+VzaVktqryawBVn8GewV53U93P1V0VnKvGS8fqozwcG7pR1SVaCKZtctnyrGeOZ/aBXSnoOff4pnLhxiP6WzWZWJj1tQiD/pcocPeTNOM/lMcXlQqAGufWPowsNJ8Qr3+XLfagjUxjHjO0mrFTUjXK/6uWFG7A03faZ+WduC3gO/Uu+k7kzmg2EIQKmQ3s0fE58W1yXNB+T5jMPy0rrYtYPOpVEhkCDx8uz+aCHOdkNfIcP085Swpnca02MOqOgcIlOTZEIfrTnXgV5k4KwTAiktBzNPp6mCcVzahCRn6u9vXzWB8og2YyYT3jrVQtnp7qeWIxk3RoSL50CpFvoSSnpp46ETmy1Z8Zec28CELuzG+25zF68n+Z2xpVoI/Ehyy684gGfc8yeSsUyOCC6WAtB/K1tcf5Gr6lAwnGRBfEc4lp727PXgfJdv4ot3gGJxTxEY0oScPQJ8sXNjsjogLju0fSLOBSG1CzwY0iYowcAC8SehSSTyyliBhE3yQMmmTNHlbsgPP3fOGm/pxoMpdimQwW6Z7OkSDfdOJxPyufFawRNmw0rrRM8bLGmMDlMBTjs9DIruzJ4Bc4=
