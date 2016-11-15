@@ -2,8 +2,6 @@ const Styletron = require('../styletron-client-old-ie');
 const test = require('tape');
 const forEach = Array.prototype.forEach;
 
-const fixtures = require('test-fixtures');
-
 class StyletronTest extends Styletron {
   constructor(...args) {
     super(...args);
@@ -27,7 +25,7 @@ test('hydration basic', t => {
     css: '.s3:hover{color:green}.s2{color:green}'
   }]);
   const instance = new StyletronTest(elements);
-  t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
+  t.deepEqual(instance.getCache(), require('test-fixtures/basic'), 'cache hydrated');
   t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
   const newClass = instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
   t.equal(newClass, 's5', 'new class with correct count');
