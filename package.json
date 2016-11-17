@@ -19,6 +19,7 @@
   "devDependencies": {
     "@rtsao/docdash": "^0.4.2",
     "benchmark": "^2.1.1",
+    "buble": "^0.14.2",
     "eslint": "^3.8.1",
     "inferno": "^0.7.27",
     "inferno-component": "^0.7.27",
@@ -31,7 +32,8 @@
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "unitest": "^0.14.2"
   },
   "license": "MIT"
 }

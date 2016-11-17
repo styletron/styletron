@@ -8,14 +8,12 @@
   "bugs": "https://github.com/rtsao/styletron/issues",
   "main": "./lib/index.js",
   "scripts": {
-    "transpile": "buble -i src -o lib",
+    "transpile": "../../node_modules/.bin/buble -i src -o lib",
     "pretest": "npm run transpile",
     "test": "node lib/test/index.js",
     "prepublish": "npm run transpile"
   },
   "dependencies": {},
-  "devDependencies": {
-    "buble": "^0.12.5"
-  },
+  "devDependencies": {},
   "license": "MIT"
 }

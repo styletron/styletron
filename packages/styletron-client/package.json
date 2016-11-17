@@ -8,18 +8,16 @@
   "bugs": "https://github.com/rtsao/styletron/issues",
   "main": "./lib/styletron-client.js",
   "scripts": {
-    "transpile": "buble -i src -o lib",
+    "transpile": "../../node_modules/.bin/buble -i src -o lib",
     "pretest": "npm run transpile",
-    "test": "unitest --browser=lib/test/browser.js",
+    "test": "../../node_modules/.bin/unitest --browser=lib/test/browser.js",
     "prepublish": "npm run transpile"
   },
   "dependencies": {
     "styletron-core": "^2.0.1"
   },
   "devDependencies": {
-    "buble": "^0.12.5",
-    "test-fixtures": "*",
-    "unitest": "^0.12.1"
+    "test-fixtures": "*"
   },
   "license": "MIT"
 }
