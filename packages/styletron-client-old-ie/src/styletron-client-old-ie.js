@@ -1,5 +1,4 @@
 const IE9_RULE_LIMIT = 4095;
-const hasInsertRule = Boolean(CSSStyleSheet.prototype.insertRule);
 
 const StyletronClient = require('styletron-client');
 
@@ -49,34 +48,7 @@ class StyletronClientOldIE extends StyletronClient {
       this.mainSheet.parentNode.insertBefore(rolloverSheet, this.mainSheet);
       this.mainSheet = rolloverSheet.sheet;
     }
-    // Use insertRule as normal if defined
-    if (hasInsertRule) {
-      return super.injectDeclaration(decl);
-    }
-
-    this.uniqueCount++;
-    const className = `${this.prefix}${this.uniqueCount.toString(36)}`;
-
-    // Otherwise, use addRule for IE8
-    const declString = `${decl.prop}:${decl.val}`;
-    let selector = `.${className}`;
-    if (decl.pseudo) {
-      selector += decl.pseudo;
-    }
-    
-    let sheet;
-    if (decl.media) {
-      if (!this.mediaSheets[decl.media]) {
-        const mediaSheet = document.createElement('style');
-        this.mediaSheets[decl.media] = mediaSheet;
-        this.mainSheet.parentNode.appendChild(mediaSheet);
-      }
-      sheet = this.mediaSheets[decl.media].sheet;
-    } else {
-      sheet = this.mainSheet.sheet;
-    }
-    sheet.addRule(selector, declString);
-    return className;
+    return super.injectDeclaration(decl);
   }
 }
 
