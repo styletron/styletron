@@ -86,7 +86,7 @@ class StyletronClient extends StyletronCore {
       } else {
         sheet = this.mainSheet.sheet;
       }
-      sheet.insertRule(rule, sheet.rules.length);
+      sheet.insertRule(rule, sheet.cssRules.length);
     }
     return className;
   }
