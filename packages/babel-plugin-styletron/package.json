@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-styletron",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Babel plugin for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
