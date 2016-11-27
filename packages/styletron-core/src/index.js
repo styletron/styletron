@@ -7,13 +7,16 @@ class StyletronCore {
   /**
    * Create a new StyletronCore instance
    */
-  constructor({prefix = 's'} = {prefix: 's'}) {
+  constructor({prefix = false} = {prefix: false}) {
     this.cache = {
       media: {},
       pseudo: {}
     };
-    this.uniqueCount = 0;
     this.prefix = prefix;
+    this.uniqueCount = 0;
+    this.offset = 10; // skip 0-9
+    this.msb = 35;
+    this.power = 1
   }
 
   static assignDecl(target, decl, className) {
@@ -53,9 +56,15 @@ class StyletronCore {
     if (cached) {
       return cached;
     }
-    const className = `${this.prefix}${this.uniqueCount.toString(36)}`;
-    this.uniqueCount++;
+    const virtualCount = this.uniqueCount + this.offset;
+    const hash = virtualCount.toString(36);
+    if (virtualCount === this.msb) {
+        this.offset += (this.msb + 1) * 9;
+        this.msb = Math.pow(36, ++this.power) - 1;
+    }
+    const className = this.prefix ? this.prefix + hash : hash;
     StyletronCore.assignDecl(this.cache, decl, className);
+    this.uniqueCount++;
     return className;
   }
 

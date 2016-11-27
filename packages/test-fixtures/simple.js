@@ -3,21 +3,21 @@ module.exports = {
     '(max-width: 333px)': {
       pseudo: {},
       color: {
-        blue: 's2'
+        blue: 'c'
       }
     },
     'screen and (max-width: 400px)': {
       pseudo: {},
       color: {
-        red: 's4'
+        red: 'e'
       }
     }
   },
   pseudo: {},
   color: {
-    red: 's0',
-    blue: 's1',
-    green: 's3',
-    purple: 's5'
+    red: 'a',
+    blue: 'b',
+    green: 'd',
+    purple: 'f'
   }
 };
