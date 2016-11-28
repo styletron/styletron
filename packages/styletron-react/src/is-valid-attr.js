@@ -151,7 +151,7 @@ const reactProps = {
   onAnimationEndCapture: true,
   onAnimationIterationCapture: true,
   onTransitionEndCapture: true,
-}
+};
 
 /* From HTMLDOMPropertyConfig */
 const htmlProps = {
@@ -332,7 +332,7 @@ const htmlProps = {
   security: true,
   // IE-only attribute that controls focus behavior
   unselectable: 0,
-}
+};
 
 const svgProps = {
   accentHeight: true,

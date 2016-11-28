@@ -16,7 +16,7 @@ class StyletronCore {
     this.uniqueCount = 0;
     this.offset = 10; // skip 0-9
     this.msb = 35;
-    this.power = 1
+    this.power = 1;
   }
 
   static assignDecl(target, decl, className) {

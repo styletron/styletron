@@ -248,7 +248,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "semi": "off",
+        "semi": "error",
         "semi-spacing": [
             "error",
             {
