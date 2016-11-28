@@ -47,7 +47,7 @@ class StyletronClient extends StyletronCore {
     //  4: val
     // }
     while (decl = DECL_REGEX.exec(css)) {
-      this.uniqueCount++;
+      super.incrementVirtualCount();
       StyletronCore.assignDecl(this.cache, {
         pseudo: decl[2],
         prop: decl[3],

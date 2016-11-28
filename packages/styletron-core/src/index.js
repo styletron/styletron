@@ -56,16 +56,26 @@ class StyletronCore {
     if (cached) {
       return cached;
     }
-    const virtualCount = this.uniqueCount + this.offset;
+    const virtualCount = this.incrementVirtualCount();
     const hash = virtualCount.toString(36);
-    if (virtualCount === this.msb) {
-        this.offset += (this.msb + 1) * 9;
-        this.msb = Math.pow(36, ++this.power) - 1;
-    }
     const className = this.prefix ? this.prefix + hash : hash;
     StyletronCore.assignDecl(this.cache, decl, className);
-    this.uniqueCount++;
     return className;
+  }
+
+  /**
+   * Get the next virtual class number, while setting
+   * the uniqueCount, offset, and msb counters appropriately.
+   * @return {number} The virtual class count
+   */
+  incrementVirtualCount() {
+    const virtualCount = this.uniqueCount + this.offset;
+    if (virtualCount === this.msb) {
+      this.offset += (this.msb + 1) * 9;
+      this.msb = Math.pow(36, ++this.power) - 1;
+    }
+    this.uniqueCount++;
+    return virtualCount;
   }
 
   /*

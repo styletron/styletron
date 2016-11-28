@@ -1,4 +1,4 @@
-const Styletron = require('../styletron-client-old-ie');
+const Styletron = require('../styletron-client-ie9');
 const test = require('tape');
 const forEach = Array.prototype.forEach;
 
