@@ -21,9 +21,17 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 - Fast cache hydration of server-rendered styles to prevent re-rendering of server-rendered styles
 - Use of `CSSStyleSheet` rule injection ensuring *only* new styles get parsed
 
+## For framework and library authors
+
+The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
+
+**[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
+
 ## Using Styletron with React
 
-The `styletron-react` package provides a convenient way to use Styletron in React applications.
+The `styletron-react` package provides a convenient way to use Styletron in React applications. The API is inspired by the wonderful [styled-components library](https://github.com/styled-components/styled-components), except with style objects instead of template strings.
+
+**Note: this is just one high-level interface, many others are possible with Styletron.**
 
 ### Creating styled element components
 
@@ -100,13 +108,6 @@ function render() {
 }
 
 ```
-
-
-## For framework and library authors
-
-The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
-
-**[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
