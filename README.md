@@ -27,28 +27,29 @@ The core Styletron module is a small, generic utility that is entirely independe
 
 #### Core API overview
 ```js
-import Styletron from 'styletron-server';
+import Styletron from 'styletron'; // either styletron-server or styletron-client (package.json browser field)
 const styletron = new Styletron();
-styletron.injectDeclaration({prop: 'color', val: 'blue'});
+styletron.injectDeclaration({prop: 'color', val: 'red'});
 // → 'a'
 styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
 // → 'b'
-styletron.injectDeclaration({prop: 'color', val: 'green'});
+styletron.injectDeclaration({prop: 'color', val: 'blue'});
 // → 'c'
 ```
 #### Injecting style objects
+The styletron-utils packages includes some convenient helper functions that make working with the core API easier.
 ```js
 import {injectStyle} from 'styletron-utils';
 injectStyle(styletron, {
   color: 'red',
   display: 'inline-block'
 });
-// → 'a b'
+// → 'a d'
 injectStyle(styletron, {
   color: 'red',
   fontSize: '1.6em'
 });
-// → 'a c'
+// → 'a e'
 ```
 
 **[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
