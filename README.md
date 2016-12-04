@@ -25,6 +25,32 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 
 The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
 
+#### Core API overview
+```js
+import Styletron from 'styletron-server';
+const styletron = new Styletron();
+styletron.injectDeclaration({prop: 'color', val: 'blue'});
+// → 'a'
+styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
+// → 'b'
+styletron.injectDeclaration({prop: 'color', val: 'green'});
+// → 'c'
+```
+#### Injecting style objects
+```js
+import {injectStyle} from 'styletron-utils';
+injectStyle(styletron, {
+  color: 'red',
+  display: 'inline-block'
+});
+// → 'a b'
+injectStyle(styletron, {
+  color: 'red',
+  fontSize: '1.6em'
+});
+// → 'a c'
+```
+
 **[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
 
 ## Using Styletron with React
