@@ -7,8 +7,8 @@ const StyletronCore = require('styletron-core');
  * @extends StyletronCore
  * @packagename styletron-client
  * @example
- * const styleElement = document.querySelector('style');
- * const styletron = new StyletronClient(styleElement);
+ * const elements = document.getElementsByClassName('_styletron_hydrate_');
+ * const styletron = new StyletronClient(elements);
  */
 class StyletronClient extends StyletronCore {
   /**
@@ -61,14 +61,14 @@ class StyletronClient extends StyletronCore {
    * Inject declaration into the stylesheet and return the unique class name
    * @return {string}      class name
    * @example
-   * // <style id="styletron">.c0{color:red}</style>
+   * // <style id="styletron">.a{color:red}</style>
    * const styletron = new StyletronClient(document.getElementsByClassName('_styletron_hydrate_'));
    * styletron.injectDeclaration({prop: 'color', val: 'blue'});
-   * // → 'c1'
+   * // → 'b'
    * styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
-   * // → 'c2'
+   * // → 'c'
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'c0'
+   * // → 'a'
    */
   injectDeclaration(decl) {
     const oldCount = this.uniqueCount;

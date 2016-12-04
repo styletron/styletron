@@ -64,6 +64,7 @@ class StyletronCore {
   }
 
   /**
+   * @private
    * Get the next virtual class number, while setting
    * the uniqueCount, offset, and msb counters appropriately.
    * @return {number} The virtual class count
@@ -78,7 +79,8 @@ class StyletronCore {
     return virtualCount;
   }
 
-  /*
+  /**
+   * @private
    * Gets the class name for an already injected declaration
    * @param  {object} decl          The CSS declaration object
    * @param  {string} decl.prop     The property name

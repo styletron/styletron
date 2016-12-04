@@ -28,9 +28,9 @@ class StyletronServer extends StyletronCore {
    * const styletron = new StyletronServer();
    *
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'c0'
+   * // → 'a'
    * styletron.getStylesheets();
-   * // → [{css: '.c0{color:red}'}]
+   * // → [{css: '.a{color:red}'}]
    */
   getStylesheets() {
     return cacheToStylesheets(this.cache);
@@ -43,9 +43,9 @@ class StyletronServer extends StyletronCore {
    * const styletron = new StyletronServer();
    *
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'c0'
+   * // → 'a'
    * styletron.getStylesheetsOldIE();
-   * // → [{css: '.c0{color:red}'}]
+   * // → [{css: '.a{color:red}'}]
    */
   getStylesheetsOldIE() {
     return cacheToStylesheetsOldIE(this.cache);
@@ -58,11 +58,11 @@ class StyletronServer extends StyletronCore {
    * @example
    * const styletron = new StyletronServer();
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'c0'
+   * // → 'a'
    * styletron.getStylesheetsHtml();
-   * // → '<style class="_styletron_hydrate_">.c0{color:red}</style>'
+   * // → '<style class="_styletron_hydrate_">.a{color:red}</style>'
    * styletron.getStylesheetsHtml('custom_class');
-   * // → '<style class="custom_class">.c0{color:red}</style>'
+   * // → '<style class="custom_class">.a{color:red}</style>'
    */
   getStylesheetsHtml(className = '_styletron_hydrate_') {
     return generateHtmlString(this.getStylesheets(), className);
@@ -75,11 +75,11 @@ class StyletronServer extends StyletronCore {
    * @example
    * const styletron = new StyletronServer();
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'c0'
+   * // → 'a'
    * styletron.getStylesheetsHtml();
-   * // → '<style class="_styletron_hydrate_">.c0{color:red}</style>'
+   * // → '<style class="_styletron_hydrate_">.a{color:red}</style>'
    * styletron.getStylesheetsHtml('custom_class');
-   * // → '<style class="custom_class">.c0{color:red}</style>'
+   * // → '<style class="custom_class">.a{color:red}</style>'
    */
   getStylesheetsHtmlOldIE(className = '_styletron_hydrate_') {
     return generateHtmlString(this.getStylesheetsOldIE(), className);
@@ -93,9 +93,9 @@ class StyletronServer extends StyletronCore {
    * const styletron = new StyletronServer();
    *
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'c0'
+   * // → 'a'
    * styletron.getCss();
-   * // → '.c0{color:red}'
+   * // → '.a{color:red}'
    */
   getCss() {
     return cacheToCss(this.cache);
