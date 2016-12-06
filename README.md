@@ -14,7 +14,7 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 - Dynamic generation of inlineable critical stylesheets with minimum possible size and parse times
   - Automatic generation of maximally compressed "atomic" critical CSS via declaration-level deduplication
   - Automatic declaration-level dead CSS elimination - only *actually used* declarations get included in output
-- Native media query support for full critical CSS without JavaScript
+- Native media query and pseudo selector support for full critical CSS without JavaScript
 
 #### Efficient dynamic client-side styles
 - Hyper-granular memoization to avoid making unnecessary modifications to stylesheet
