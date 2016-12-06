@@ -21,6 +21,8 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 - Fast cache hydration of server-rendered styles to prevent re-rendering of server-rendered styles
 - Use of `CSSStyleSheet` rule injection ensuring *only* new styles get parsed
 
+**[Check out the introductory blog post to learn more](https://ryantsao.com/blog/virtual-css-with-styletron)**
+
 ## For framework and library authors
 
 The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
