@@ -40,6 +40,7 @@ class StyletronClientIE9 extends StyletronClient {
     if (decl.media) {
       if (this.mediaSheets[decl.media] && this.mediaSheets[decl.media].sheet.cssRules.length >= IE9_RULE_LIMIT) {
         const mediaRollover = document.createElement('style');
+        mediaRollover.media = decl.media;
         this.mediaSheets[decl.media].parentNode.insertBefore(mediaRollover, this.mediaSheets[decl.media]);
         this.mediaSheets[decl.media] = mediaRollover.sheet;
       }

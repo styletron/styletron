@@ -79,6 +79,7 @@ class StyletronClient extends StyletronCore {
       if (decl.media) {
         if (!this.mediaSheets[decl.media]) {
           const mediaSheet = document.createElement('style');
+          mediaSheet.media = decl.media;
           this.mediaSheets[decl.media] = mediaSheet;
           this.mainSheet.parentNode.appendChild(mediaSheet);
         }
