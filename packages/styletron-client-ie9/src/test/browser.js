@@ -74,6 +74,10 @@ test('rule insertion order', t => {
       t.equal(rule.cssText, mediaExpected[mediaKey][i], 'media decl matches');
     });
   });
+  Object.keys(mediaSheets).forEach(function (mediaKey) {
+    var mediaSheet = mediaSheets[mediaKey];
+    t.equal(mediaSheet.media, mediaKey, 'media attribute matches');
+  });
   t.end();
 });
 
