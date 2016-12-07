@@ -14,6 +14,7 @@ class StyletronClient extends StyletronCore {
   /**
    * Create a new StyletronClient instance
    * @param {NodeList|HTMLCollection|HTMLStyleElement[]} serverStyles - List of server style elements
+   * @param {object} [opts] - StyletronCore options
    */
   constructor(serverStyles, opts) {
     super(opts);

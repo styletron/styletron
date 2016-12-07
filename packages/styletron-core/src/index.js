@@ -6,8 +6,8 @@ class StyletronCore {
 
   /**
    * Create a new StyletronCore instance
-   * @param {object} [options]           An object containing options
-   * @param {string} [options.prefix=''] A prefix for generated CSS class names
+   * @param {object} [opts]           An object containing options
+   * @param {string} [opts.prefix=''] A prefix for generated CSS class names
    */
   constructor({prefix = ''} = {}) {
     this.cache = {
