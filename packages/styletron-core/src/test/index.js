@@ -38,3 +38,21 @@ test('test injection', t => {
   t.equal(instance.getCount(), 5, 'ends with 4 unique declarations');
   t.end();
 });
+
+test('test constructor', t => {
+  const instance = new Styletron();
+  t.equal(instance.prefix, false, 'prefix defaults to false');
+  t.end();
+});
+
+test('test injection with prefix', t => {
+  const instance = new StyletronTest({prefix: 'qq'});
+  t.equal(instance.prefix, 'qq', 'prefix is set on instance');
+  t.equal(instance.getCount(), 0, 'starts with 0 declarations');
+  const decl1 = {prop: 'color', val: 'red'};
+  instance.injectDeclaration(decl1);
+  t.equal(instance.getCache().color.red, 'qqa');
+  t.equal(instance.getCachedDeclaration(decl1), 'qqa');
+  t.equal(instance.getCount(), 1, 'unique count incremented');
+  t.end();
+});

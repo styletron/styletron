@@ -6,13 +6,15 @@ class StyletronCore {
 
   /**
    * Create a new StyletronCore instance
+   * @param {object} [opts]           An object containing options
+   * @param {string} [opts.prefix=''] A prefix for generated CSS class names
    */
-  constructor({prefix = false} = {prefix: false}) {
+  constructor({prefix = ''} = {}) {
     this.cache = {
       media: {},
       pseudo: {}
     };
-    this.prefix = prefix;
+    this.prefix = prefix === '' ? false : prefix;
     this.uniqueCount = 0;
     this.offset = 10; // skip 0-9
     this.msb = 35;
