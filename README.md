@@ -132,7 +132,7 @@ function render() {
   );
 
   const stylesForHead = styletron.getStylesheetsHtml();
-  
+
   return `<html><head>${stylesForHead}</head><body>${appMarkup}</body></html>`;
 }
 
@@ -140,7 +140,7 @@ function render() {
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
-[deps-badge]: https://david-dm.org/rtsao/styletron.svg
-[deps-href]: https://david-dm.org/rtsao/styletron
+[deps-badge]: https://david-dm.org/rtsao/styletron/dev-status.svg
+[deps-href]: https://david-dm.org/rtsao/styletron?type=dev
 [npm-badge]: https://badge.fury.io/js/styletron.svg
 [npm-href]: https://www.npmjs.com/package/styletron
