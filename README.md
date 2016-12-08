@@ -21,7 +21,7 @@ Styletron is a universal CSS-in-JS engine built from the ground up for high-perf
 - Fast cache hydration of server-rendered styles to prevent re-rendering of server-rendered styles
 - Use of `CSSStyleSheet` rule injection ensuring *only* new styles get parsed
 
-**[Check out the introductory blog post to learn more](https://ryantsao.com/blog/virtual-css-with-styletron)**
+### [Check out the introductory blog post to learn more](https://ryantsao.com/blog/virtual-css-with-styletron)
 
 ## For framework and library authors
 
