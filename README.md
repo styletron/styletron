@@ -58,6 +58,8 @@ injectStyle(styletron, {
 
 ## Using Styletron with React
 
+**[Live Demo](http://www.webpackbin.com/N12fnIW7G)**
+
 The `styletron-react` package provides a convenient way to use Styletron in React applications. The API is inspired by the wonderful [styled-components library](https://github.com/styled-components/styled-components), except with style objects instead of template strings.
 
 **Note: this is just one high-level interface, many others are possible with Styletron.**
