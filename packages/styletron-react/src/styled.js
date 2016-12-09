@@ -63,26 +63,57 @@ function styled(base, styleArg) {
 
 function createStyledElementComponent(tagName, stylesArray) {
 
-  const StyledElement = (props, context) => {
-    
-    const resolvedStyle = {};
-    StyledElement[STYLES_KEY].forEach(style => {
-      if (typeof style === 'function') {
-        assign(resolvedStyle, style(props, context));
-      } else if (typeof style === 'object') {
-        assign(resolvedStyle, style);
+  class StyledElement extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        elementProps: {},
+      };
+
+      this.generateStyles = this.generateStyles.bind(this);
+    }
+
+    componentWillMount() {
+      this.generateStyles();
+    }
+
+    componentWillReceiveProps() {
+      this.generateStyles();
+    }
+
+    generateStyles() {
+      const resolvedStyle = {};
+      StyledElement[STYLES_KEY].forEach(style => {
+        if (typeof style === 'function') {
+          assign(resolvedStyle, style(this.props, this.context));
+        } else if (typeof style === 'object') {
+          assign(resolvedStyle, style);
+        }
+      });
+
+      const styletronClassName = utils.injectStylePrefixed(this.context.styletron, resolvedStyle);
+
+      const elementProps = omitInvalidProps(this.props);
+      elementProps.className = this.props.className
+        ? `${this.props.className} ${styletronClassName}`
+        : styletronClassName;
+
+      if (this.props.innerRef) {
+        elementProps.ref = this.props.innerRef;
       }
-    });
 
-    const styletronClassName = utils.injectStylePrefixed(context.styletron, resolvedStyle);
+      this.setState({
+        elementProps,
+      });
+    }
 
-    const elementProps = omitInvalidProps(props);
-    elementProps.className = props.className
-      ? `${props.className} ${styletronClassName}`
-      : styletronClassName;
+    render() {
+      const {elementProps} = this.state;
 
-    return React.createElement(StyledElement[TAG_KEY], elementProps);
-  };
+      return React.createElement(StyledElement[TAG_KEY], elementProps);
+    }
+  }
 
   StyledElement[TAG_KEY] = tagName;
   StyledElement[STYLES_KEY] = stylesArray;
