@@ -1,6 +1,6 @@
 {
   "name": "styletron-server",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -14,7 +14,7 @@
     "prepublish": "npm run transpile"
   },
   "dependencies": {
-    "styletron-core": "^2.1.2"
+    "styletron-core": "^2.2.0"
   },
   "devDependencies": {
     "test-fixtures": "*"
