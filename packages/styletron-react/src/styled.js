@@ -64,25 +64,7 @@ function styled(base, styleArg) {
 function createStyledElementComponent(tagName, stylesArray) {
 
   class StyledElement extends React.Component {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        elementProps: {},
-      };
-
-      this.generateStyles = this.generateStyles.bind(this);
-    }
-
-    componentWillMount() {
-      this.generateStyles();
-    }
-
-    componentWillReceiveProps() {
-      this.generateStyles();
-    }
-
-    generateStyles() {
+    render() {
       const resolvedStyle = {};
       StyledElement[STYLES_KEY].forEach(style => {
         if (typeof style === 'function') {
@@ -102,14 +84,6 @@ function createStyledElementComponent(tagName, stylesArray) {
       if (this.props.innerRef) {
         elementProps.ref = this.props.innerRef;
       }
-
-      this.setState({
-        elementProps,
-      });
-    }
-
-    render() {
-      const {elementProps} = this.state;
 
       return React.createElement(StyledElement[TAG_KEY], elementProps);
     }

@@ -90,3 +90,28 @@ test('styled composition', t => {
   t.equal(styletron.getCss(), '.a{color:red}.b{display:block}.c{background:black}');
   t.end();
 });
+
+test('innerRef works', t => {
+  t.plan(1);
+  
+  const Widget = styled('button', {color: 'red'});
+  const styletron = new Styletron();
+
+  class TestComponent extends React.Component {
+    componentDidMount() {
+      t.ok(this.widgetInner instanceof HTMLButtonElement, 'is button');
+      t.end();
+    }
+
+    render() {
+      return React.createElement(Widget, {innerRef: c => {
+        this.widgetInner = c;
+      }});
+    }
+  }
+
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(TestComponent))
+  );
+});
