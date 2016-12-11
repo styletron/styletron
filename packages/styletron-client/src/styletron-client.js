@@ -88,7 +88,11 @@ class StyletronClient extends StyletronCore {
       } else {
         sheet = this.mainSheet.sheet;
       }
-      sheet.insertRule(rule, sheet.cssRules.length);
+      if (sheet.styleSheet) {
+        sheet.styleSheet.cssText += rule;
+      } else {
+        sheet.appendChild(document.createTextNode(rule));
+      }
     }
     return className;
   }
