@@ -68,6 +68,7 @@ function injectStyle(styletron, styles, media, pseudo) {
 
 function injectWithPlugins(styletron, prop, val, media, pseudo) {
   let classString = '';
+  const baseHyphenated = hyphenate(prop);
   for (let i = 0; i < plugins.length; i++) {
     const plugin = plugins[i];
     const res = plugin(prop, val);
@@ -75,17 +76,20 @@ function injectWithPlugins(styletron, prop, val, media, pseudo) {
       for (let key in res) {
         const resVal = res[key];
         const hyphenated = hyphenate(key);
+        const propIsDifferent = hyphenated !== baseHyphenated;
         if (Array.isArray(resVal)) {
           for (let j = 0; j < resVal.length; j++) {
-            classString += ' ' + styletron.injectDeclaration({prop: hyphenated, val: resVal[j], media, pseudo});
+            if (propIsDifferent || resVal[j] !== val) {
+              classString += ' ' + styletron.injectDeclaration({prop: hyphenated, val: resVal[j], media, pseudo});
+            }
           }
-        } else {
+        } else if (propIsDifferent || resVal !== val) {
           classString += ' ' + styletron.injectDeclaration({prop: hyphenated, val: resVal, media, pseudo});
         }
       }
     }
   }
   // inject original last
-  classString += ' ' + styletron.injectDeclaration({prop: hyphenate(prop), val, media, pseudo});
+  classString += ' ' + styletron.injectDeclaration({prop: baseHyphenated, val, media, pseudo});
   return classString;
 }
