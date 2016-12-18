@@ -7,6 +7,7 @@
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
   "main": "./lib/index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "transpile": "../../node_modules/.bin/buble -i src -o lib",
     "pretest": "npm run transpile",
