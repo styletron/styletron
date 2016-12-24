@@ -46,12 +46,12 @@ injectStyle(styletron, {
   color: 'red',
   display: 'inline-block'
 });
-// → 'a d'
+// → 'a b'
 injectStyle(styletron, {
   color: 'red',
   fontSize: '1.6em'
 });
-// → 'a e'
+// → 'a c'
 ```
 
 **[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
