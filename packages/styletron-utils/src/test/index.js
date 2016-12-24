@@ -20,7 +20,7 @@ test('test injection', t => {
       background: 'orange'
     }
   });
-  t.equal(classString, ' 1 2 3 4');
+  t.equal(classString, '1 2 3 4');
   t.deepEqual(decls, [
     {prop: 'color', val: 'red', media: undefined, pseudo: undefined},
     {prop: 'background-color', val: 'blue', media: undefined, pseudo: undefined},
@@ -47,7 +47,7 @@ test('test injection array', function (t) {
       color: ['green', 'yellow']
     }
   });
-  t.equal(classString, ' 1 2 3 4 5 6');
+  t.equal(classString, '1 2 3 4 5 6');
   t.deepEqual(decls, [
     {prop: 'color', val: 'red', media: undefined, pseudo: undefined},
     {prop: 'color', val: 'blue', media: undefined, pseudo: undefined},
@@ -72,7 +72,7 @@ test('test injection prefixed', function (t) {
     height: ['min-content', 'calc(50%)'],
     boxSizing: 'border-box'
   });
-  t.equal(classString, ' 1 2 3 4 5 6 7 8 9 10 11');
+  t.equal(classString, '1 2 3 4 5 6 7 8 9 10 11');
   t.deepEqual(decls, [
     {prop: 'width', val: '-webkit-calc(100%)', media: undefined, pseudo: undefined},
     {prop: 'width', val: '-moz-calc(100%)', media: undefined, pseudo: undefined},
