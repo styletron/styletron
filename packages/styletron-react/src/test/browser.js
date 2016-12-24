@@ -45,7 +45,7 @@ test('styled applies styles', t => {
       React.createElement(Widget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
-  t.equal(div.className, ' a', 'styletron classes');
+  t.equal(div.className, 'a', 'styletron classes');
   t.equal(styletron.getCss(), '.a{color:red}');
   t.end();
 });
@@ -58,7 +58,7 @@ test('styled applies static styles', t => {
       React.createElement(Widget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
-  t.equal(div.className, ' a', 'matches expected styletron classes');
+  t.equal(div.className, 'a', 'matches expected styletron classes');
   t.equal(styletron.getCss(), '.a{color:red}');
   t.end();
 });
@@ -86,14 +86,14 @@ test('styled composition', t => {
       React.createElement(SuperWidget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
-  t.equal(div.className, ' a b c', 'matches expected styletron classes');
+  t.equal(div.className, 'a b c', 'matches expected styletron classes');
   t.equal(styletron.getCss(), '.a{color:red}.b{display:block}.c{background:black}');
   t.end();
 });
 
 test('innerRef works', t => {
   t.plan(1);
-  
+
   const Widget = styled('button', {color: 'red'});
   const styletron = new Styletron();
 

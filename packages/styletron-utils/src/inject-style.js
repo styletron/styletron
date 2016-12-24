@@ -20,14 +20,15 @@ function injectStyle(styletron, styles, media, pseudo) {
     }
     if (valType === 'object') {
       if (key[0] === ':') {
-        classString += injectStyle(styletron, val, media, key);
+        classString += ' ' + injectStyle(styletron, val, media, key);
         continue;
       }
       if (key.substring(0, 6) === '@media') {
-        classString += injectStyle(styletron, val, key.substr(7), pseudo);
+        classString += ' ' + injectStyle(styletron, val, key.substr(7), pseudo);
         continue;
       }
     }
   }
-  return classString;
+  // remove leading space on way out
+  return classString.slice(1);
 }
