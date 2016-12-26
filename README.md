@@ -115,7 +115,8 @@ const styleElements = document.getElementsByClassName('_styletron_hydrate_');
 ReactDOM.render(
   <StyletronProvider styletron={new Styletron(styleElements)}>
     <App/>
-  </StyletronProvider>
+  </StyletronProvider>,
+  document.getElementById('app')
 );
 ```
 
