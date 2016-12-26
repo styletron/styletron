@@ -13,24 +13,27 @@ const StyletronCore = require('styletron-core');
 class StyletronClient extends StyletronCore {
   /**
    * Create a new StyletronClient instance
-   * @param {NodeList|HTMLCollection|HTMLStyleElement[]} serverStyles - List of server style elements
+   * @param {NodeList|HTMLCollection|HTMLStyleElement[]} [serverStyles] - List of server style elements
    * @param {object} [opts] - StyletronCore options
    */
   constructor(serverStyles, opts) {
     super(opts);
-    if (!serverStyles) {
-      throw Error('No stylesheet');
-    }
     this.uniqueCount = 0;
     this.mediaSheets = {};
-    for (let i = 0; i < serverStyles.length; i++) {
-      const element = serverStyles[i];
-      if (element.media) {
-        this.mediaSheets[element.media] = element;
-      } else {
-        this.mainSheet = element;
+    if (serverStyles) {
+      for (let i = 0; i < serverStyles.length; i++) {
+        const element = serverStyles[i];
+        if (element.media) {
+          this.mediaSheets[element.media] = element;
+        } else {
+          this.mainSheet = element;
+        }
+        this.hydrateCacheFromCssString(element.textContent, element.media);
       }
-      this.hydrateCacheFromCssString(element.textContent, element.media);
+    } else {
+      const styleSheet = document.createElement('style');
+      document.head.appendChild(styleSheet);
+      this.mainSheet = styleSheet;
     }
   }
 
