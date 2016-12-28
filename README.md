@@ -54,6 +54,24 @@ injectStyle(styletron, {
 // → 'a e'
 ```
 
+#### Pseudo classes and media queries
+The object literal syntax supported by Styletron also supports pseudo classes and media queries.
+```jsx
+import {styled} from 'styletron-react';
+
+const Button = styled('button', (props) => ({
+  paddingLeft: '80px',
+  '@media (max-width: 768px)': {
+    paddingLeft: '40px'
+  },
+  ':hover': {
+    backgroundColor: 'papayawhip'
+  }
+}));
+
+<Button>Bonjour Monde</Button>
+```
+
 **[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
 
 ## Using Styletron with React
