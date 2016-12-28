@@ -41,7 +41,10 @@ styletron.injectDeclaration({prop: 'color', val: 'blue'});
 #### Injecting style objects
 The styletron-utils packages includes some convenient helper functions that make working with the core API easier.
 ```js
+import Styletron from 'styletron';
 import {injectStyle} from 'styletron-utils';
+
+const styletron = new Styletron();
 injectStyle(styletron, {
   color: 'red',
   display: 'inline-block'
