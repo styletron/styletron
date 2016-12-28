@@ -60,9 +60,9 @@ The object literal syntax supported by Styletron also supports pseudo classes an
 import {styled} from 'styletron-react';
 
 const Button = styled('button', (props) => ({
-  paddingLeft: '80px',
+  fontSize: '36px',
   '@media (max-width: 768px)': {
-    paddingLeft: '40px'
+    fontSize: '24px'
   },
   ':hover': {
     backgroundColor: 'papayawhip'
