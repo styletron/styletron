@@ -1,6 +1,6 @@
 {
   "name": "styletron-singleton",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "styletron-server": "^2.3.0",
-    "styletron-client": "^2.3.0"
+    "styletron-client": "^2.4.0"
   },
   "devDependencies": {},
   "license": "MIT"

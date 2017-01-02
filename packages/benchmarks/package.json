@@ -1,7 +1,7 @@
 {
   "name": "benchmarks",
   "private": true,
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Benchmarks for styletron",
   "main": "index.js",
   "scripts": {
@@ -24,9 +24,9 @@
     "pwmetrics": "^1.2.0",
     "randomcolor": "^0.4.4",
     "run-series": "^1.1.4",
-    "styletron-client": "^2.3.0",
+    "styletron-client": "^2.4.0",
     "styletron-server": "^2.3.0",
-    "styletron-utils": "^2.3.0"
+    "styletron-utils": "^2.4.0"
   },
   "devDependencies": {
     "glamor": "^2.17.14"
