@@ -44,18 +44,18 @@ module.exports = styled;
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
 function styled(base, styleArg) {
-  if (typeof base === 'string') {
-    // Element
-    return createStyledElementComponent(
-      base,
-      [styleArg]
-    );
-  }
   if (typeof base === 'function' && base[TAG_KEY] && base[STYLES_KEY]) {
-    // Component
+    // Styled component
     return createStyledElementComponent(
       base[TAG_KEY],
       base[STYLES_KEY].concat(styleArg)
+    );
+  }
+  if (typeof base === 'string' || typeof base === 'function') {
+    // Tag name or non-styled component
+    return createStyledElementComponent(
+      base,
+      [styleArg]
     );
   }
   throw Error('Must pass in element or component');
@@ -76,7 +76,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 
       const styletronClassName = utils.injectStylePrefixed(this.context.styletron, resolvedStyle);
 
-      const elementProps = omitInvalidProps(this.props);
+      const elementProps = typeof StyledElement[TAG_KEY] === 'string' ? omitInvalidProps(this.props) : assign({}, this.props);
       elementProps.className = this.props.className
         ? `${this.props.className} ${styletronClassName}`
         : styletronClassName;
@@ -100,6 +100,7 @@ function assign(target, source) {
   for (let key in source) {
     target[key] = source[key];
   }
+  return target;
 }
 
 function omitInvalidProps(props) {
