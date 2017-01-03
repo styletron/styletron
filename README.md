@@ -116,6 +116,21 @@ const DeluxePanel = styled(Panel, (props) => ({
 
 <DeluxePanel>Bonjour Monde</DeluxePanel>
 ```
+#### Styling third party components
+```jsx
+import {styled} from 'styletron-react';
+
+// third party components must consume a `className` prop
+const ThirdParty = ({className, href, children}) =>
+  <a className={className} href={href}>{children}</a>
+
+const StyledThirdParty = styled(ThirdParty, (props) => ({
+  color: 'gold'
+}));
+
+<StyledThirdParty href="/foo">Foo</StyledThirdParty>
+```
+
 
 ### App integration and server-side rendering
 
