@@ -8,7 +8,16 @@ declare namespace StyletronReact {
   interface StyledComponent<TProps, TElement> extends ComponentClass<TProps & React.HTMLAttributes<TElement> & {
     innerRef?: (el: TElement) => any;
   }> {}
-  type Style<TProps> = CSSProperties | ((props: TProps) => CSSProperties);
+
+  // This is not entierly true, but extending `CSSProperties` enables
+  // autocompletion of CSS properties of plain objects and not only
+  // for the return object of a function
+  interface StyleFunction<TProps> extends CSSProperties {
+    (props: TProps): CSSProperties;
+  }
+
+  type Style<TProps> = CSSProperties | StyleFunction<TProps>;
+
   export function styled<TProps, TInnerProps, TElement>(base: StyledComponent<TInnerProps, TElement>, style: Style<TProps>): StyledComponent<TInnerProps & TProps, TElement>;
 
   export function styled<TProps>(base: "a", style: Style<TProps>): StyledComponent<TProps, HTMLAnchorElement>;
