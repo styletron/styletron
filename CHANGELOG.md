@@ -1,3 +1,7 @@
+## 2.5.0
+
+- Allow styled to pass a className to regular components ([#64](https://github.com/rtsao/styletron/pull/64))
+
 ## 2.4.0
 
 - Make stylesheets optional in StyletronClient constructor ([#59](https://github.com/rtsao/styletron/pull/59))
