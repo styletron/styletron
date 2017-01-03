@@ -91,6 +91,20 @@ test('styled composition', t => {
   t.end();
 });
 
+test('styled component', t => {
+  const Widget = ({className}) => React.createElement('div', {className});
+  const SuperWidget = styled(Widget, {color: 'red'});
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(SuperWidget))
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, 'a', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.a{color:red}');
+  t.end();
+});
+
 test('innerRef works', t => {
   t.plan(1);
 
