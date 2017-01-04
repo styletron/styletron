@@ -30,7 +30,8 @@ declare namespace StyletronReact {
 
   type Style<TProps> = CSSProperties | StyleFunction<TProps>;
 
-  export function styled<TProps, TInnerProps, TElement extends Element>(base: StyledElement<TInnerProps, TElement>, style: Style<TProps>): StyledElement<TInnerProps & TProps, TElement>;
+  export function styled<TElement extends Element, TProps>(base: string, style: Style<TProps>): StyledElement<TProps, TElement>;
+  export function styled<TElement extends Element, TProps, TInnerProps>(base: StyledElement<TInnerProps, TElement>, style: Style<TProps>): StyledElement<TInnerProps & TProps, TElement>;
   export function styled<TProps, TInnerProps>(base: StatelessComponent<TInnerProps> | StyledStatelessComponent<TInnerProps>, style: Style<TProps>): StyledStatelessComponent<TInnerProps & TProps>;
   export function styled<TProps, TInnerProps>(base: ComponentClass<TInnerProps> | StyledComponentClass<TInnerProps>, style: Style<TProps>): StyledComponentClass<TInnerProps & TProps>;
 
