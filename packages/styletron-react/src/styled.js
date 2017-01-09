@@ -43,19 +43,19 @@ module.exports = styled;
  *
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
-function styled(base, styleArg) {
+function styled(base, ...styleArgs) {
   if (typeof base === 'function' && base[TAG_KEY] && base[STYLES_KEY]) {
     // Styled component
     return createStyledElementComponent(
       base[TAG_KEY],
-      base[STYLES_KEY].concat(styleArg)
+      base[STYLES_KEY].concat(styleArgs)
     );
   }
   if (typeof base === 'string' || typeof base === 'function') {
     // Tag name or non-styled component
     return createStyledElementComponent(
       base,
-      [styleArg]
+      styleArgs
     );
   }
   throw Error('Must pass in element or component');
