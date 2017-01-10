@@ -10,15 +10,15 @@ declare namespace StyletronReact {
   };
 
   interface StyledElement<TProps, TElement extends Element> extends ComponentClass<TProps & HTMLAttributes<TElement> & InnerRef<TElement>> {
-    render(): DOMElement<HTMLAttributes<TElement>, TElement>
+    __STYLED_ELEMENT: void;
   }
 
   interface StyledStatelessComponent<TProps> extends ComponentClass<TProps> {
-    render(): SFCElement<TProps>
+    __STYLED_STATELESS_COMPONENT: void;
   }
 
   interface StyledComponentClass<TProps> extends ComponentClass<TProps & InnerRef<Component<TProps, ComponentState>>> {
-    render(): ComponentElement<TProps, Component<TProps, ComponentState>>
+    __STYLED_COMPONENT_CLASS: void;
   }
 
   // This is not entierly true, but extending `CSSProperties` enables
