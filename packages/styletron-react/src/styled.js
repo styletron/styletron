@@ -65,10 +65,13 @@ function createStyledElementComponent(tagName, stylesArray) {
 
   class StyledElement extends React.Component {
     render() {
+      const restProps = assign({}, this.props);
+      delete restProps.innerRef;
+
       const resolvedStyle = {};
       StyledElement[STYLES_KEY].forEach(style => {
         if (typeof style === 'function') {
-          assign(resolvedStyle, style(this.props, this.context));
+          assign(resolvedStyle, style(restProps, this.context));
         } else if (typeof style === 'object') {
           assign(resolvedStyle, style);
         }
@@ -76,9 +79,9 @@ function createStyledElementComponent(tagName, stylesArray) {
 
       const styletronClassName = utils.injectStylePrefixed(this.context.styletron, resolvedStyle);
 
-      const elementProps = typeof StyledElement[TAG_KEY] === 'string' ? omitInvalidProps(this.props) : assign({}, this.props);
-      elementProps.className = this.props.className
-        ? `${this.props.className} ${styletronClassName}`
+      const elementProps = typeof StyledElement[TAG_KEY] === 'string' ? omitInvalidProps(restProps) : restProps;
+      elementProps.className = restProps.className
+        ? `${restProps.className} ${styletronClassName}`
         : styletronClassName;
 
       if (this.props.innerRef) {
