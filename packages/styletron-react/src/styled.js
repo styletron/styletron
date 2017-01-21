@@ -1,8 +1,6 @@
 const React = require('react');
 const utils = require('styletron-utils');
 
-const isValidAttr = require('./is-valid-attr');
-
 const STYLES_KEY = '__STYLETRON_STYLES';
 const TAG_KEY = '__STYLETRON_TAG';
 
@@ -76,7 +74,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 
       const styletronClassName = utils.injectStylePrefixed(this.context.styletron, resolvedStyle);
 
-      const elementProps = typeof StyledElement[TAG_KEY] === 'string' ? omitInvalidProps(this.props) : assign({}, this.props);
+      const elementProps = assign({}, this.props);
       elementProps.className = this.props.className
         ? `${this.props.className} ${styletronClassName}`
         : styletronClassName;
@@ -99,16 +97,6 @@ function createStyledElementComponent(tagName, stylesArray) {
 function assign(target, source) {
   for (let key in source) {
     target[key] = source[key];
-  }
-  return target;
-}
-
-function omitInvalidProps(props) {
-  let target = {};
-  for (let attr in props) {
-    if (isValidAttr(attr)) {
-      target[attr] = props[attr];
-    }
   }
   return target;
 }
