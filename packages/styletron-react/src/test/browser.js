@@ -91,6 +91,19 @@ test('styled composition', t => {
   t.end();
 });
 
+test('styled merges style args', t => {
+  const Widget = styled('div', {color: 'red', 'display': 'inline'}, {display: 'block', background: 'black'});
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(Widget))
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, 'a b c', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.a{color:red}.b{display:block}.c{background:black}');
+  t.end();
+});
+
 test('styled component', t => {
   const Widget = ({className}) => React.createElement('div', {className});
   const SuperWidget = styled(Widget, {color: 'red'});
