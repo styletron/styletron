@@ -114,13 +114,52 @@ test('innerRef works', t => {
   class TestComponent extends React.Component {
     componentDidMount() {
       t.ok(this.widgetInner instanceof HTMLButtonElement, 'is button');
-      t.end();
     }
 
     render() {
       return React.createElement(Widget, {innerRef: c => {
         this.widgetInner = c;
       }});
+    }
+  }
+
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(TestComponent))
+  );
+});
+
+test('innerRef not passed', t => {
+  t.plan(2);
+
+  class InnerComponent extends React.Component {
+    render() {
+      t.deepEqual(this.props, {
+        className: 'a',
+        foo: 'bar'
+      }, 'props match expected');
+      return <button>InnerComponent</button>;
+    }
+  }
+
+  const Widget = styled(InnerComponent, {color: 'red'});
+  const styletron = new Styletron();
+
+  class TestComponent extends React.Component {
+    componentDidMount() {
+      t.ok(
+        ReactTestUtils.isCompositeComponentWithType(this.widgetInner, InnerComponent),
+        'is InnerComponent'
+      );
+    }
+
+    render() {
+      return React.createElement(Widget, {
+        foo: 'bar',
+        innerRef: c => {
+          this.widgetInner = c;
+        }
+      });
     }
   }
 
