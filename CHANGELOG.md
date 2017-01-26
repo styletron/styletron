@@ -1,6 +1,6 @@
 ## 2.5.2
 
-- Don't pass `innerRef` in styletron-react ([80](https://github.com/rtsao/styletron/pull/80)) Thanks [@faddee](https://github.com/faddee)!
+- Don't pass `innerRef` in styletron-react ([#80](https://github.com/rtsao/styletron/pull/80)) Thanks [@faddee](https://github.com/faddee)!
 - Improvements to TypeScript definition ([#79](https://github.com/rtsao/styletron/pull/79)) Thanks [@faddee](https://github.com/faddee)!
 
 ## 2.5.1
