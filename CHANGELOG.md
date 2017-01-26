@@ -4,7 +4,7 @@
 
 ## 2.5.1
 
-- Improvements to TypeScript definition ([#65](https://github.com/rtsao/styletron/pull/79)) Thanks [@faddee](https://github.com/faddee)!
+- Improvements to TypeScript definition ([#65](https://github.com/rtsao/styletron/pull/65)) Thanks [@faddee](https://github.com/faddee)!
 - Fix READMEs on npm (Upstream registry fix when used by Lerna)
 
 ## 2.5.0
