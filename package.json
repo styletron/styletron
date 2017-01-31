@@ -29,7 +29,7 @@
     "react-dom": "^15.3.0",
     "rimraf": "^2.5.4",
     "tape": "^4.6.0",
-    "unitest": "^0.14.2"
+    "unitest": "^1.0.0"
   },
   "license": "MIT"
 }
