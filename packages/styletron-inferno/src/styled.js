@@ -3,8 +3,8 @@ const {injectStylePrefixed} = require('styletron-utils');
 const {
   assign,
   isNil,
-  isString,
   isObject,
+  isString,
   isFunction
 } = require('./utils');
 
@@ -87,7 +87,7 @@ function createStyledComponent(name, stylesArray) {
 
 function resolveStyles(stylesArray, props, context) {
   const resolvedStyles = {};
-  for (let styles, i = 0, l = stylesArray.length; i < l; i++) {
+  for (let i = 0, l = stylesArray.length, styles; i < l; i++) {
     styles = stylesArray[i];
     if (!isNil(styles)) {
       if (isFunction(styles)) {

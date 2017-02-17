@@ -161,7 +161,7 @@ test('innerRef works', (t) => {
         innerRef: styledDiv => {
           t.ok(styledDiv instanceof HTMLDivElement, 'element ref passed');
           t.equal(styledDiv.className, 'a', 'matches expected className');
-          this.styledDiv = styledDiv
+          this.styledDiv = styledDiv;
         }
       });
     }
@@ -196,7 +196,7 @@ test('innerRef not passed', (t) => {
         foo: 'bar',
         innerRef: innerComponent => {
           t.ok(InfernoTestUtils.isRenderedClassComponentOfType(innerComponent, InnerComponent), 'is InnerComponent');
-          this.innerComponent = innerComponent
+          this.innerComponent = innerComponent;
         }
       });
     }
