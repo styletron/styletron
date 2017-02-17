@@ -1,0 +1,30 @@
+{
+  "name": "styletron-inferno",
+  "version": "2.5.0",
+  "description": "Inferno bindings for Styletron",
+  "author": "Matthew Wagerfield <matthew@wagerfield.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "main": "./lib/index.js",
+  "scripts": {
+    "transpile": "../../node_modules/.bin/buble -i src -o lib",
+    "pretest": "npm run transpile",
+    "test": "../../node_modules/.bin/unitest --browser=lib/test/browser.js",
+    "prepublish": "npm run transpile"
+  },
+  "dependencies": {
+    "styletron-client": "^2.5.1",
+    "styletron-server": "^2.5.1",
+    "styletron-utils": "^2.5.1"
+  },
+  "peerDependencies": {
+    "inferno": "^1.3.0-rc.3",
+    "inferno-component": "^1.3.0-rc.3",
+    "inferno-create-element": "^1.3.0-rc.3"
+  },
+  "devDependencies": {
+    "inferno-test-utils": "^1.3.0-rc.3"
+  },
+  "license": "MIT"
+}
