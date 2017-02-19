@@ -1,6 +1,5 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const utils = require('styletron-utils');
 
 const isValidAttr = require('./is-valid-attr');
 
@@ -70,10 +69,7 @@ function createStyledElementComponent(tagName, stylesArray) {
       }
     });
 
-    const styletronClassName = utils.injectStylePrefixed(
-      context.styletron,
-      resolvedStyle
-    );
+    const styletronClassName = context.injectStyle(context.styletron, resolvedStyle);
 
     const elementProps = typeof StyledElement[STYLETRON_KEY].tag === 'string'
       ? omitInvalidProps(restProps)
@@ -95,7 +91,10 @@ function createStyledElementComponent(tagName, stylesArray) {
     tag: tagName,
     styles: stylesArray
   };
-  StyledElement.contextTypes = {styletron: PropTypes.object};
+  StyledElement.contextTypes = {
+    styletron: PropTypes.object.isRequired,
+    injectStyle: PropTypes.func.isRequired
+  };
 
   return StyledElement;
 }

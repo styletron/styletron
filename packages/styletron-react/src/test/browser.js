@@ -7,32 +7,59 @@ const Styletron = require('styletron-server');
 const styled = require('../styled');
 const Provider = require('../provider');
 
-test('provider provides instance', t => {
+test('provider provides instance and function', t => {
   const mockInstance = {};
+  const mockFunc = () => true;
   const MockComponent = (props, context) => {
-    t.equal(context.styletron, mockInstance, 'styletron instance override provided');
+    t.equal(context.styletron, mockInstance, 'styletron instance provided');
+    t.equal(context.injectStyle, mockFunc, 'inject style function provided');
     return React.createElement('div');
   };
-  MockComponent.contextTypes = {styletron: PropTypes.object};
-  ReactTestUtils.renderIntoDocument(React.createElement(Provider, {
-    styletron: mockInstance
-  }, React.createElement(MockComponent)));
+  MockComponent.contextTypes = {
+    styletron: PropTypes.object,
+    injectStyle: PropTypes.func
+  };
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron: mockInstance, injectStyle: mockFunc},
+      React.createElement(MockComponent))
+  );
+  t.end();
+});
+
+test('provider overrides function', t => {
+  const mockInstance = {};
+  const mockFunc1 = () => true;
+  const mockFunc2 = () => true;
+  const MockComponent = (props, context) => {
+    t.equal(context.styletron, mockInstance, 'styletron instance passed');
+    t.equal(context.injectStyle, mockFunc2, 'inject style function overrided');
+    return React.createElement('div');
+  };
+  MockComponent.contextTypes = {
+    styletron: React.PropTypes.object,
+    injectStyle: React.PropTypes.func
+  };
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron: mockInstance, injectStyle: mockFunc1},
+      React.createElement(Provider, {injectStyle: mockFunc2},
+        React.createElement(MockComponent)))
+  );
   t.end();
 });
 
 test('props passed to styled function', t => {
   t.plan(1);
-  const props = {
+  const mockProps = {
     prop1: 'foo'
   };
   const Widget = styled('div', props => {
-    t.deepEqual(props, props, 'props accessible in style fn');
+    t.deepEqual(props, mockProps, 'props accessible in style fn');
     return {};
   });
   const styletron = new Styletron();
   ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron},
-      React.createElement(Widget, props))
+      React.createElement(Widget, mockProps))
   );
 });
 
@@ -69,9 +96,7 @@ test('styled passes through valid props', t => {
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron},
-      React.createElement(Widget, {
-        'data-bar': 'bar'
-      }))
+      React.createElement(Widget, {'data-bar': 'bar'}))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.getAttribute('data-bar'), 'bar', 'valid attribute prop passed through');
