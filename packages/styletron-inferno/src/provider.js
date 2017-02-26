@@ -1,4 +1,4 @@
-const Component = require('inferno-component');
+const InfernoComponent = require('inferno-component');
 
 /**
  * @class Provider
@@ -54,7 +54,7 @@ const Component = require('inferno-component');
  * @property {InfernoElement} children Child nodes
  * @extends InfernoComponent
  */
-class Provider extends Component {
+class StyletronProvider extends InfernoComponent {
   getChildContext() {
     return {styletron: this.styletron};
   }
@@ -67,4 +67,4 @@ class Provider extends Component {
   }
 }
 
-module.exports = Provider;
+module.exports = StyletronProvider;
