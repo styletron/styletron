@@ -4,4 +4,3 @@ npm-debug.log.*
 htmldocs/
 lerna-debug.log
 lib/
-.DS_Store
