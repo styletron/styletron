@@ -6,15 +6,17 @@ class StyletronCore {
 
   /**
    * Create a new StyletronCore instance
-   * @param {object} [opts]           An object containing options
-   * @param {string} [opts.prefix=''] A prefix for generated CSS class names
+   * @param {object} [opts]                           An object containing options
+   * @param {string} [opts.prefix='']                 A prefix for generated CSS class names
+   * @param {boolean} [opts.readableClassNames=false] Use readable class names
    */
-  constructor({prefix = ''} = {}) {
+  constructor({prefix = '', readableClassNames = false} = {}) {
     this.cache = {
       media: {},
       pseudo: {}
     };
     this.prefix = prefix === '' ? false : prefix;
+    this.readableClassNames = readableClassNames;
     this.uniqueCount = 0;
     this.offset = 10; // skip 0-9
     this.msb = 35;
@@ -59,7 +61,8 @@ class StyletronCore {
       return cached;
     }
     const virtualCount = this.incrementVirtualCount();
-    const hash = virtualCount.toString(36);
+    const readableClassName = decl.prop + '-' + decl.val;
+    const hash = this.readableClassNames ? readableClassName : virtualCount.toString(36);
     const className = this.prefix ? this.prefix + hash : hash;
     StyletronCore.assignDecl(this.cache, decl, className);
     return className;
