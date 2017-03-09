@@ -72,7 +72,11 @@ function createStyledComponent(name, stylesArray) {
     const newProps = assign({}, props);
     const styles = resolveStyles(stylesArray, props, context);
     const className = injectStylePrefixed(context.styletron, styles);
-    newProps.className = mergeClassNames(props.className, className);
+
+    newProps.className = props.className
+      ? `${props.className} ${className}`
+      : className;
+
     if (isFunction(props.innerRef)) {
       newProps.ref = props.innerRef;
       delete newProps.innerRef;
@@ -98,27 +102,4 @@ function resolveStyles(stylesArray, props, context) {
     }
   }
   return resolvedStyles;
-}
-
-const SPACE_REGEX = /\s+/;
-
-function mergeClassNames(classNameA, classNameB) {
-  const a = isString(classNameA) ? classNameA : '';
-  const b = isString(classNameB) ? classNameB : '';
-
-  // Join class name strings then split on whitespace
-  const classNames = (`${a} ${b}`).trim().split(SPACE_REGEX);
-  const classNameCache = {};
-  const uniqueClasses = [];
-
-  // Deduplicate and remove empty class names
-  for (let className, i = 0, l = classNames.length; i < l; i++) {
-    className = classNames[i];
-    if (!classNameCache[className]) {
-      classNameCache[className] = true;
-      uniqueClasses.push(className);
-    }
-  }
-
-  return uniqueClasses.join(' ');
 }
