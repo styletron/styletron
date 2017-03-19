@@ -1,4 +1,5 @@
 language: node_js
+sudo: false
 node_js:
   - 4
   - 6
@@ -6,11 +7,17 @@ addons:
   apt:
     packages:
       - xvfb
-before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+cache:
+  yarn: true
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
 install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm install
+  - yarn install
 script:
-  - npm run bootstrap
-  - npm run test
+  - yarn run lint
+  - lerna bootstrap --ignore={benchmarks,demos} --concurrency=1
+  - lerna run pretest --ignore={benchmarks,demos}
+  - lerna run test --ignore={benchmarks,demos} --concurrency=1
