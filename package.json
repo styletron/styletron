@@ -22,7 +22,7 @@
     "buble": "^0.15.0",
     "eslint": "^3.8.1",
     "jsdoc": "^3.4.0",
-    "lerna": "2.0.0-beta.37",
+    "lerna": "2.0.0-beta.38",
     "push-dir": "^0.4.0",
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
