@@ -87,7 +87,7 @@ function generateJssBundle(name) {
 module.exports = function (jssInstance) {
   const jssSheet = jssInstance.createStyleSheet(sheet);
   jssSheet.attach();
+  return jssSheet;
 }
 `);
 }
-

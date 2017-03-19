@@ -1,6 +1,7 @@
 const StyletronServer = require('styletron-server');
 const aphrodite = require('aphrodite');
-const jss = require('jss');
+const JSScreate = require('jss').create;
+const JSSSheetsRegistry = require('jss').SheetsRegistry;
 const glamor = require('glamor');
 const glamorServer = require('glamor/server');
 const StyletronUtils = require('styletron-utils');
@@ -47,9 +48,10 @@ suite
     styletron.getCss();
   })
   .add('jss (uber.css)', function() {
-    const jssInstance = jss.create();
-    uberApp.jss(jssInstance);
-    jssInstance.sheets.toString();
+    const jssInstance = JSScreate();
+    const registry = new JSSSheetsRegistry();
+    registry.add(uberApp.jss(jssInstance));
+    registry.toString();
   })
   .add('glamor (uber.css)', function() {
     glamorServer.renderStatic(uberApp.glamor);
@@ -63,9 +65,10 @@ suite
     styletron.getCss();
   })
   .add('jss (airbnb.css)', function() {
-    const jssInstance = jss.create();
-    airbnbApp.jss(jssInstance);
-    jssInstance.sheets.toString();
+    const jssInstance = JSScreate();
+    const registry = new JSSSheetsRegistry();
+    registry.add(airbnbApp.jss(jssInstance));
+    registry.toString();
   })
   .add('glamor (airbnb.css)', function() {
     glamorServer.renderStatic(airbnbApp.glamor);
@@ -79,9 +82,10 @@ suite
     styletron.getCss();
   })
   .add('jss (all-unique)', function() {
-    const jssInstance = jss.create();
-    allUniqueApp.jss(jssInstance);
-    jssInstance.sheets.toString();
+    const jssInstance = JSScreate();
+    const registry = new JSSSheetsRegistry();
+    registry.add(allUniqueApp.jss(jssInstance));
+    registry.toString();
   })
   .add('glamor (all-unique)', function() {
     glamorServer.renderStatic(allUniqueApp.glamor);
@@ -95,9 +99,10 @@ suite
     styletron.getCss();
   })
   .add('jss (half-unique)', function() {
-    const jssInstance = jss.create();
-    halfUniqueApp.jss(jssInstance);
-    jssInstance.sheets.toString();
+    const jssInstance = JSScreate();
+    const registry = new JSSSheetsRegistry();
+    registry.add(halfUniqueApp.jss(jssInstance));
+    registry.toString();
   })
   .add('glamor (half-unique)', function() {
     glamorServer.renderStatic(halfUniqueApp.glamor);

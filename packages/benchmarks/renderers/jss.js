@@ -1,17 +1,21 @@
-const jss = require('jss');
+const create = require('jss').create;
+const SheetsRegistry = require('jss').SheetsRegistry;
+
 const camelCase = require('jss-camel-case').default;
 
 module.exports = (invertedSheet, synthetic) => {
   const keys = Object.keys(invertedSheet);
   const len = keys.length;
-  const jssInstance = jss.create();
+  const jssInstance = create();
   jssInstance.use(camelCase());
+  const sheets = new SheetsRegistry();
   const jssSheet = jssInstance.createStyleSheet(invertedSheet);
   const first = jssSheet.classes[keys[0]];
   const middle = jssSheet.classes['c1000'];
   const last = jssSheet.classes[keys[len - 1]];
+  sheets.add(jssSheet);
   jssSheet.attach();
-  const jsscss = jssInstance.sheets.toString();
+  const jsscss = sheets.toString();
 
   const styleElement = synthetic
     ? ''

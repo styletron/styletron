@@ -66,10 +66,10 @@ function generateJssBundle(name, hydrate) {
 ssStyles.parentNode.removeChild(ssStyles);`
 ) : '';
   return (
-`const jss = require('jss');
+`const create = require('jss').create;
 const camelCase = require('jss-camel-case').default;
 const jssApp = require('../app/${name}.jss');
-const jssInstance = jss.create();
+const jssInstance = create();
 jssInstance.use(camelCase());
 jssApp(jssInstance);
 ${hydrateSrc}
