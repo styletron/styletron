@@ -6,16 +6,17 @@
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "./lib/index.js",
+  "main": "./dist/bundle.cjs.js",
+  "module": "./dist/bundle.es.js",
   "scripts": {
     "transpile": "../../node_modules/.bin/buble -i src -o lib",
+    "bundle": "../../node_modules/.bin/rollup -c",
     "pretest": "npm run transpile",
     "test": "node lib/test/index.js",
-    "prepublish": "npm run transpile"
+    "prepublish": "npm run bundle"
   },
   "dependencies": {
     "inline-style-prefixer": "^2.0.1"
   },
-  "devDependencies": {},
   "license": "MIT"
 }
