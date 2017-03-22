@@ -12,6 +12,7 @@ class StyletronCore {
     this.cache = {
       media: {},
       pseudo: {},
+      keyframes: {},
     };
     this.prefix = prefix === '' ? false : prefix;
     this.uniqueCount = 0;
@@ -39,6 +40,17 @@ class StyletronCore {
     }
     if (!targetEntry[prop]) {
       targetEntry[prop] = {};
+    }
+    if (['animationName', 'animation-name'].indexOf(prop) >= 0) {
+      const stringVal = JSON.stringify(val);
+      let animationName = className;
+      if (target.keyframes.hasOwnProperty(stringVal)) {
+        animationName = target.keyframes[stringVal];
+      } else {
+        target.keyframes[stringVal] = animationName;
+      }
+      targetEntry[prop][animationName] = className;
+      return;
     }
     targetEntry[prop][val] = className;
   }
@@ -105,6 +117,13 @@ class StyletronCore {
       if (!entry) {
         return false;
       }
+    }
+    if (['animationName', 'animation-name'].indexOf(prop) >= 0) {
+      const stringValue = JSON.stringify(val);
+      val =
+        this.cache.keyframes &&
+        this.cache.keyframes.hasOwnProperty(stringValue) &&
+        this.cache.keyframes[stringValue];
     }
     return entry[prop] && entry[prop].hasOwnProperty(val) && entry[prop][val];
   }

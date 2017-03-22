@@ -24,7 +24,7 @@ class StyletronTest extends Styletron {
 test('hydration basic', t => {
   const elements = createFixtures([
     {
-      css: '.e:hover{display:none}.a{color:red}.b{color:green}',
+      css: '@keyframes f{0%{border-bottom:1px;margin-left:0}100%{border-bottom:10px;margin-left:10px}}.f{animation-name:f}.e:hover{display:none}.a{color:red}.b{color:green}',
     },
     {
       media: '(max-width: 800px)',
@@ -33,13 +33,13 @@ test('hydration basic', t => {
   ]);
   const instance = new StyletronTest(elements);
   t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
-  t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
+  t.equal(instance.getUniqueDeclarationCount(), 6, 'count correctly hyrdated');
   const newClass = instance.injectDeclaration({
     prop: 'color',
     val: 'purple',
     media: '(max-width: 800px)',
   });
-  t.equal(newClass, 'f', 'new class with correct count');
+  t.equal(newClass, 'g', 'new class with correct count');
   t.end();
 });
 

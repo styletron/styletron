@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
-const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
+const DECL_REGEX = /\.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
+const KEYFRAMES_REGEX = '{([^{]+{[^}]+})+?}';
 
 import StyletronCore from 'styletron-core';
 
@@ -54,6 +55,14 @@ class StyletronClient extends StyletronCore {
     // }
     while ((decl = DECL_REGEX.exec(css))) {
       super.incrementVirtualCount();
+
+      const keyRegex = `@keyframes ${decl[4]}${KEYFRAMES_REGEX}`;
+      const reg = new RegExp(keyRegex);
+      const keyMatches = reg.exec(css);
+      if (keyMatches) {
+        decl[4] = keyframeStringToJSObject(keyMatches[0]);
+      }
+
       StyletronCore.assignDecl(
         this.cache,
         {
@@ -110,10 +119,58 @@ export default StyletronClient;
  */
 
 function declarationToRule(className, {prop, val, pseudo}) {
+  if (['animationName', 'animation-name'].indexOf(prop) >= 0) {
+    const keyframes = [];
+    for (const kf in val) {
+      if (val.hasOwnProperty(kf)) {
+        const properties = [];
+        for (const pr in val[kf]) {
+          if (val[kf].hasOwnProperty(pr)) {
+            properties.push(`${pr}:${val[kf[pr]]}`);
+          }
+        }
+        keyframes.push(`${kf}{${properties.join(';')}}`);
+      }
+    }
+    return `@keyframes ${className}{${keyframes.join('')}}.${className}{animation-name:${className}}`;
+  }
+
   const decl = `${prop}:${val}`;
   let selector = `.${className}`;
   if (pseudo) {
     selector += pseudo;
   }
   return `${selector}{${decl}}`;
+}
+
+/**
+ * This will turn a @keyframe animation-name{...} into an object
+ * @param keyframeString
+ * @returns {*}
+ */
+function keyframeStringToJSObject(keyframeString) {
+  return (
+    keyframeString
+      .replace(/^[^{]+{/g, '') // remove '@keyframe animation-name{' from the beginning
+      .slice(0, -2) // remove last 2 occurrences of '}'
+      .split('}') // split by keyframes
+      .map(keyframe => {
+        const key = keyframe.split('{'); // separate keyframe value from rules
+
+        // handle multiple rules
+        const rules = key[1]
+          .split(';')
+          .map(rule => {
+            // return {prop: value} object
+            const prop = rule.split(':');
+            return {[prop[0]]: prop[1]};
+          })
+          .reduce((ruleSet, rule) => Object.assign(ruleSet, rule), {}); // combine array of rules into a single object
+
+        // return rules for current keyframe
+        return {[key[0]]: rules};
+      })
+      // combine array of keyframes into a single object
+      .reduce((keySet, keyframe) => Object.assign(keySet, keyframe), {})
+  );
 }
