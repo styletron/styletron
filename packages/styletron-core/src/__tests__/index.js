@@ -55,6 +55,7 @@ test('test injection', t => {
   });
   t.equal(instance.getCache().pseudo[':hover'].display.none, 'e');
 
+<<<<<<< HEAD:packages/styletron-core/src/__tests__/index.js
   const keyframes = {
     '0%': {
       borderBottom: '1px',
@@ -63,6 +64,9 @@ test('test injection', t => {
       borderBottom: '10px',
     },
   };
+=======
+  const keyframes = {'0%': {'borderBottom': '1px'}, '100%': {'borderBottom': '10px'}};
+>>>>>>> brushed the code to silence the linter:packages/styletron-core/src/test/index.js
   instance.injectDeclaration({prop: 'animationName', val: keyframes});
   t.equal(instance.getCache().keyframes[JSON.stringify(keyframes)], 'f');
   t.equal(instance.getCache().animationName.f, 'f');

@@ -49,10 +49,17 @@ function keyframeObjToCss(keyframeObj) {
       css += `@keyframes ${keyframeObj[keyframes]}{`;
 
       keyframes = JSON.parse(keyframes);
+<<<<<<< HEAD
       for (const key in keyframes) {
         if (keyframes.hasOwnProperty(key)) {
           css += `${key}{`;
           for (const prop in keyframes[key]) {
+=======
+      for (let key in keyframes) {
+        if (keyframes.hasOwnProperty(key)) {
+          css += `${key}{`;
+          for (let prop in keyframes[key]) {
+>>>>>>> brushed the code to silence the linter
             if (keyframes[key].hasOwnProperty(prop)) {
               css += `${prop}:${keyframes[key][prop]};`;
             }

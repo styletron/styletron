@@ -103,7 +103,8 @@ class StyletronCore {
    * @private
    */
   getCachedDeclaration({prop, val, media, pseudo}) {
-    let entry;
+    let entry,
+        value = val;
     if (media) {
       entry = this.cache.media[media];
       if (!entry) {
@@ -120,12 +121,16 @@ class StyletronCore {
     }
     if (['animationName', 'animation-name'].indexOf(prop) >= 0) {
       const stringValue = JSON.stringify(val);
+<<<<<<< HEAD
       val =
         this.cache.keyframes &&
         this.cache.keyframes.hasOwnProperty(stringValue) &&
         this.cache.keyframes[stringValue];
+=======
+        value = this.cache.keyframes && this.cache.keyframes.hasOwnProperty(stringValue) && this.cache.keyframes[stringValue];
+>>>>>>> brushed the code to silence the linter
     }
-    return entry[prop] && entry[prop].hasOwnProperty(val) && entry[prop][val];
+    return entry[prop] && entry[prop].hasOwnProperty(value) && entry[prop][value];
   }
 }
 

@@ -131,6 +131,10 @@ function declarationToRule(className, {prop, val, pseudo}) {
         }
         keyframes.push(`${kf}{${properties.join(';')}}`);
       }
+<<<<<<< HEAD:packages/styletron-client/src/index.js
+=======
+      keyframes.push(`${kf}{${properties.join(';')}}`);
+>>>>>>> brushed the code to silence the linter:packages/styletron-client/src/styletron-client.js
     }
     return `@keyframes ${className}{${keyframes.join('')}}.${className}{animation-name:${className}}`;
   }
@@ -157,6 +161,7 @@ function keyframeStringToJSObject(keyframeString) {
       .map(keyframe => {
         const key = keyframe.split('{'); // separate keyframe value from rules
 
+<<<<<<< HEAD:packages/styletron-client/src/index.js
         // handle multiple rules
         const rules = key[1]
           .split(';')
@@ -173,4 +178,19 @@ function keyframeStringToJSObject(keyframeString) {
       // combine array of keyframes into a single object
       .reduce((keySet, keyframe) => Object.assign(keySet, keyframe), {})
   );
+=======
+      // handle multiple rules
+      const rules = key[1].split(';').map(rule => {
+        // return {prop: value} object
+        const prop = rule.split(':');
+        return {[prop[0]]: prop[1]};
+      })
+      .reduce((ruleSet, rule) => Object.assign(ruleSet, rule), {}); // combine array of rules into a single object
+
+      // return rules for current keyframe
+      return {[key[0]]: rules};
+    })
+    // combine array of keyframes into a single object
+    .reduce((keySet, keyframe) => Object.assign(keySet, keyframe), {});
+>>>>>>> brushed the code to silence the linter:packages/styletron-client/src/styletron-client.js
 }
