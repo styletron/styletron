@@ -1,0 +1,15 @@
+{
+  "name": "styletron-devtools",
+  "private": true,
+  "version": "2.5.3",
+  "description": "Inferno bindings for Styletron",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "scripts": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}

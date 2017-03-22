@@ -53,7 +53,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "consistent-return": "error",
+        "consistent-return": "off",
         "consistent-this": "error",
         "curly": "error",
         "default-case": "error",
@@ -193,7 +193,7 @@ module.exports = {
         "no-trailing-spaces": "off",
         "no-undef-init": "error",
         "no-undefined": "off",
-        "no-underscore-dangle": "error",
+        "no-underscore-dangle": "off",
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
         "no-unsafe-negation": "error",

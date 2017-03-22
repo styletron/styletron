@@ -1,0 +1,8 @@
+{
+  "name":"styletron-devtools",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Inspect styletron styles",
+  "permissions": [],
+  "devtools_page": "devtools_page.html"
+}

@@ -6,6 +6,18 @@ const isValidAttr = require('./is-valid-attr');
 const STYLES_KEY = '__STYLETRON_STYLES';
 const TAG_KEY = '__STYLETRON_TAG';
 
+if (typeof window !== 'undefined' && !window.__STYLETRON_DEVTOOLS__) {
+  const stylesMap = new WeakMap();
+  window.__STYLETRON_DEVTOOLS__ = {
+    stylesMap,
+    getStyles: (element) => {
+      if (stylesMap.has(element)) {
+        return stylesMap.get(element);
+      }
+    }
+  };
+}
+
 module.exports = styled;
 
 /**
@@ -86,6 +98,18 @@ function createStyledElementComponent(tagName, stylesArray) {
 
       if (this.props.innerRef) {
         elementProps.ref = this.props.innerRef;
+      }
+
+      if (typeof window !== 'undefined') {
+        const existingRef = elementProps.ref;
+        elementProps.ref = (element) => {
+          if (element) {
+            window.__STYLETRON_DEVTOOLS__.stylesMap.set(element, resolvedStyle);
+          }
+          if (existingRef) {
+            return existingRef(element);
+          }
+        };
       }
 
       return React.createElement(StyledElement[TAG_KEY], elementProps);
