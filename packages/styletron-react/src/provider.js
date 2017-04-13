@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 /**
  * @class StyletronProvider
@@ -33,12 +34,12 @@ class StyletronProvider extends React.Component {
 }
 
 StyletronProvider.PropTypes = {
-  styletron: React.PropTypes.object.isRequired,
-  children: React.PropTypes.element.isRequired
+  styletron: PropTypes.object.isRequired,
+  children: PropTypes.element.isRequired
 };
 
 StyletronProvider.childContextTypes = {
-  styletron: React.PropTypes.object.isRequired
+  styletron: PropTypes.object.isRequired
 };
 
 module.exports = StyletronProvider;
