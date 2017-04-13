@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const utils = require('styletron-utils');
 
 const isValidAttr = require('./is-valid-attr');
@@ -94,7 +95,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 
   StyledElement[TAG_KEY] = tagName;
   StyledElement[STYLES_KEY] = stylesArray;
-  StyledElement.contextTypes = {styletron: React.PropTypes.object};
+  StyledElement.contextTypes = {styletron: PropTypes.object};
 
   return StyledElement;
 }
