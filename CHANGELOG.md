@@ -1,3 +1,10 @@
+## 2.5.4
+- Add prop-types package for React 15.5 compatibility ([#116](https://github.com/rtsao/styletron/pull/116)) Thanks [@jbellsey](https://github.com/jbellsey)!
+
+## 2.5.3
+
+- Added bindings for Inferno ([#90](https://github.com/rtsao/styletron/pull/90)) Thanks [@wagerfield](https://github.com/wagerfield)!
+
 ## 2.5.2
 
 - Don't pass `innerRef` in styletron-react ([#80](https://github.com/rtsao/styletron/pull/80)) Thanks [@faddee](https://github.com/faddee)!
