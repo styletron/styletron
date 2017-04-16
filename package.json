@@ -25,9 +25,8 @@
     "lerna": "2.0.0-rc.2",
     "prop-types": "^15.5.8",
     "push-dir": "^0.4.0",
-    "react": "^15.3.0",
-    "react-addons-test-utils": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "rimraf": "^2.5.4",
     "tape": "^4.6.0",
     "unitest": "^1.0.0"

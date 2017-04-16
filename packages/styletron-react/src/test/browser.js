@@ -1,7 +1,7 @@
 const test = require('tape');
 const React = require('react');
 const PropTypes = require('prop-types');
-const ReactTestUtils = require('react-addons-test-utils');
+const ReactTestUtils = require('react-dom/test-utils');
 const Styletron = require('styletron-server');
 
 const styled = require('../styled');
