@@ -3,4 +3,6 @@ npm-debug.log
 npm-debug.log.*
 htmldocs/
 lerna-debug.log
+yarn-error.log
 lib/
+dist/
