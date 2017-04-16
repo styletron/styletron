@@ -1,5 +1,6 @@
 const test = require('tape');
 const React = require('react');
+const PropTypes = require('prop-types');
 const ReactTestUtils = require('react-addons-test-utils');
 const Styletron = require('styletron-server');
 
@@ -12,7 +13,7 @@ test('provider provides instance', t => {
     t.equal(context.styletron, mockInstance, 'styletron instance override provided');
     return React.createElement('div');
   };
-  MockComponent.contextTypes = {styletron: React.PropTypes.object};
+  MockComponent.contextTypes = {styletron: PropTypes.object};
   ReactTestUtils.renderIntoDocument(React.createElement(Provider, {
     styletron: mockInstance
   }, React.createElement(MockComponent)));
