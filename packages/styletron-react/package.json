@@ -24,8 +24,5 @@
   "peerDependencies": {
     "react": "0.14.x - 15.x"
   },
-  "devDependencies": {
-    "styletron-server": "^2.5.1"
-  },
   "license": "MIT"
 }
