@@ -1,6 +1,6 @@
 {
   "name": "demos",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -20,7 +20,7 @@
     "connect": "^3.4.1",
     "serve-static": "^1.11.1",
     "styletron-client": "^2.5.1",
-    "styletron-react": "^2.5.4",
+    "styletron-react": "^2.5.5",
     "styletron-server": "^2.5.1",
     "styletron-utils": "^2.5.4"
   },
