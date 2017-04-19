@@ -4,8 +4,7 @@ const utils = require('styletron-utils');
 
 const isValidAttr = require('./is-valid-attr');
 
-const STYLES_KEY = '__STYLETRON_STYLES';
-const TAG_KEY = '__STYLETRON_TAG';
+const STYLETRON_KEY = '__STYLETRON';
 
 module.exports = styled;
 
@@ -45,56 +44,57 @@ module.exports = styled;
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
 function styled(base, styleArg) {
-  if (typeof base === 'function' && base[TAG_KEY] && base[STYLES_KEY]) {
+  if (typeof base === 'function' && base[STYLETRON_KEY]) {
+    const {tag, styles} = base[STYLETRON_KEY];
     // Styled component
-    return createStyledElementComponent(
-      base[TAG_KEY],
-      base[STYLES_KEY].concat(styleArg)
-    );
+    return createStyledElementComponent(tag, styles.concat(styleArg));
   }
   if (typeof base === 'string' || typeof base === 'function') {
     // Tag name or non-styled component
-    return createStyledElementComponent(
-      base,
-      [styleArg]
-    );
+    return createStyledElementComponent(base, [styleArg]);
   }
   throw Error('Must pass in element or component');
 }
 
 function createStyledElementComponent(tagName, stylesArray) {
+  const StyledElement = (props, context) => {
+    const restProps = assign({}, props);
+    delete restProps.innerRef;
 
-  class StyledElement extends React.Component {
-    render() {
-      const restProps = assign({}, this.props);
-      delete restProps.innerRef;
-
-      const resolvedStyle = {};
-      StyledElement[STYLES_KEY].forEach(style => {
-        if (typeof style === 'function') {
-          assign(resolvedStyle, style(restProps, this.context));
-        } else if (typeof style === 'object') {
-          assign(resolvedStyle, style);
-        }
-      });
-
-      const styletronClassName = utils.injectStylePrefixed(this.context.styletron, resolvedStyle);
-
-      const elementProps = typeof StyledElement[TAG_KEY] === 'string' ? omitInvalidProps(restProps) : restProps;
-      elementProps.className = restProps.className
-        ? `${restProps.className} ${styletronClassName}`
-        : styletronClassName;
-
-      if (this.props.innerRef) {
-        elementProps.ref = this.props.innerRef;
+    const resolvedStyle = {};
+    StyledElement[STYLETRON_KEY].styles.forEach(style => {
+      if (typeof style === 'function') {
+        assign(resolvedStyle, style(restProps, context));
+      } else if (typeof style === 'object') {
+        assign(resolvedStyle, style);
       }
+    });
 
-      return React.createElement(StyledElement[TAG_KEY], elementProps);
+    const styletronClassName = utils.injectStylePrefixed(
+      context.styletron,
+      resolvedStyle
+    );
+
+    const elementProps = typeof StyledElement[STYLETRON_KEY].tag === 'string'
+      ? omitInvalidProps(restProps)
+      : restProps;
+    elementProps.className = restProps.className
+      ? `${restProps.className} ${styletronClassName}`
+      : styletronClassName;
+
+    if (props.innerRef) {
+      elementProps.ref = props.innerRef;
     }
-  }
 
-  StyledElement[TAG_KEY] = tagName;
-  StyledElement[STYLES_KEY] = stylesArray;
+    return React.createElement(
+      StyledElement[STYLETRON_KEY].tag,
+      elementProps
+    );
+  }
+  StyledElement[STYLETRON_KEY] = {
+    tag: tagName,
+    styles: stylesArray
+  };
   StyledElement.contextTypes = {styletron: PropTypes.object};
 
   return StyledElement;
