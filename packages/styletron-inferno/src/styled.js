@@ -63,7 +63,7 @@ function styled(name, styles) {
     return createStyledComponent(name, [styles]);
   }
 
-  throw new Error('Must pass a tag name or component');
+  throw new Error('`styled` takes either a DOM element name or a component');
 }
 
 function createStyledComponent(name, stylesArray) {
