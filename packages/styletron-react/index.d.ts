@@ -9,12 +9,9 @@ declare namespace StyletronReact {
     innerRef?: (instance: TInstance) => any;
   };
 
-  // This is not entierly true, but extending `CSSProperties` enables
-  // autocompletion for CSS properties as plain objects and not only
-  // for function return objects
-  interface StyleFunction<TProps> extends React.CSSProperties {
-    (props: TProps): React.CSSProperties;
-  }
+  // Intersecting `CSSProperties` enables autocompletion for CSS properties as
+  // plain objects and not only for function return objects
+  type StyleFunction<TProps> = React.CSSProperties & ((props: TProps) => React.CSSProperties);
 
   type Style<TProps> = React.CSSProperties | StyleFunction<TProps>;
 
