@@ -1,6 +1,6 @@
 {
   "name": "styletron-preact",
-  "version": "2.5.6",
+  "version": "2.5.7",
   "description": "Official Preact bindings for styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -15,8 +15,8 @@
     "prepublish": "npm run transpile"
   },
   "dependencies": {
-    "styletron-client": "^2.5.1",
-    "styletron-server": "^2.5.1",
+    "styletron-client": "^2.5.7",
+    "styletron-server": "^2.5.7",
     "styletron-utils": "^2.5.4"
   },
   "peerDependencies": {

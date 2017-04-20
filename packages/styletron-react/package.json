@@ -1,6 +1,6 @@
 {
   "name": "styletron-react",
-  "version": "2.5.6",
+  "version": "2.5.7",
   "description": "Official React bindings for styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -17,8 +17,8 @@
   "dependencies": {
     "@types/react": "*",
     "prop-types": "^15.5.8",
-    "styletron-client": "^2.5.1",
-    "styletron-server": "^2.5.1",
+    "styletron-client": "^2.5.7",
+    "styletron-server": "^2.5.7",
     "styletron-utils": "^2.5.4"
   },
   "peerDependencies": {

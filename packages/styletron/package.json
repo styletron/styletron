@@ -1,6 +1,6 @@
 {
   "name": "styletron",
-  "version": "2.5.1",
+  "version": "2.5.7",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -13,8 +13,8 @@
     "prepublish": "npm run transpile"
   },
   "dependencies": {
-    "styletron-server": "^2.5.1",
-    "styletron-client": "^2.5.1"
+    "styletron-client": "^2.5.7",
+    "styletron-server": "^2.5.7"
   },
   "devDependencies": {},
   "license": "MIT"
