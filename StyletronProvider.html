@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>StyletronProvider - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>styletron-core</h3><ul><li><a href="StyletronCore.html">StyletronCore</a><ul class='methods'><li data-type='method'><a href="StyletronCore.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-client</h3><ul><li><a href="StyletronClient.html">StyletronClient</a><ul class='methods'><li data-type='method'><a href="StyletronClient.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-server</h3><ul><li><a href="StyletronServer.html">StyletronServer</a><ul class='methods'><li data-type='method'><a href="StyletronServer.html#getStylesheets">getStylesheets</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsOldIE">getStylesheetsOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtml">getStylesheetsHtml</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtmlOldIE">getStylesheetsHtmlOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getCss">getCss</a></li><li data-type='method'><a href="StyletronServer.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-react</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-inferno</h3><ul><li><a href="Provider.html">Provider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-preact</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">StyletronProvider</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        StyletronProvider
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    
+    
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="styletron-react_src_provider.js.html">styletron-react/src/provider.js</a>, <a href="styletron-react_src_provider.js.html#line4">line 4</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>styletron</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Styletron instance</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>children</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReactElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>children</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>Provides a Styletron instance to descendant styled components via context</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const Styletron = require('styletron');
+
+function render() {
+  return React.renderToString(
+    &lt;StyletronProvider styletron={new Styletron()}>
+      &lt;App/>
+    &lt;/StyletronProvider>
+  );
+}</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>ReactClass</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        StyletronProvider
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    
+    
+    <h4 class="name" id="StyletronProvider"><span class="type-signature"></span>new StyletronProvider<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="styletron-preact_src_provider.js.html">styletron-preact/src/provider.js</a>, <a href="styletron-preact_src_provider.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>styletron</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Styletron instance</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>children</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PreactElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>children</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    <p>Provides a Styletron instance to descendant styled components via context</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const Styletron = require('styletron');
+const renderToString = require('preact-render-to-string');
+
+function render() {
+  return renderToString(
+    &lt;StyletronProvider styletron={new Styletron()}>
+      &lt;App/>
+    &lt;/StyletronProvider>
+  );
+}</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>PreactClass</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83207746-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

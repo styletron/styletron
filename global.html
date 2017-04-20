@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Global - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>styletron-core</h3><ul><li><a href="StyletronCore.html">StyletronCore</a><ul class='methods'><li data-type='method'><a href="StyletronCore.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-client</h3><ul><li><a href="StyletronClient.html">StyletronClient</a><ul class='methods'><li data-type='method'><a href="StyletronClient.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-server</h3><ul><li><a href="StyletronServer.html">StyletronServer</a><ul class='methods'><li data-type='method'><a href="StyletronServer.html#getStylesheets">getStylesheets</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsOldIE">getStylesheetsOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtml">getStylesheetsHtml</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtmlOldIE">getStylesheetsHtmlOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getCss">getCss</a></li><li data-type='method'><a href="StyletronServer.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-react</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-inferno</h3><ul><li><a href="Provider.html">Provider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-preact</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Global</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+    
+    
+    <h4 class="name" id="styled"><span class="type-signature"></span>styled<span class="signature">(base, styleFn)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="styletron-react_src_styled.js.html">styletron-react/src/styled.js</a>, <a href="styletron-react_src_styled.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Helper function to create styled element components</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>import {styled} from 'styletron-react';
+
+const Panel = styled('div', {
+  backgroundColor: 'lightblue',
+  fontSize: '12px'
+});
+
+&lt;Panel>Hello World&lt;/Panel></code></pre>
+
+    <pre class="prettyprint"><code>import {styled} from 'styletron-react';
+
+const Panel = styled('div', (props) => ({
+  backgroundColor: props.alert ? 'orange' : 'lightblue',
+  fontSize: '12px'
+}));
+
+&lt;Panel alert>Danger!&lt;/Panel></code></pre>
+
+    <pre class="prettyprint"><code>import {styled} from 'styletron-react';
+
+const DeluxePanel = styled(Panel, (props) => ({
+  backgroundColor: props.alert ? 'firebrick' : 'rebeccapurple',
+  color: 'white',
+  boxShadow: '3px 3px 3px darkgray'
+}));
+
+&lt;DeluxePanel>Bonjour Monde&lt;/DeluxePanel></code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>base</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Tag name or styled element component</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>styleFn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Style object or function that returns a style object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Styled element component</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+    
+    
+    <h4 class="name" id="styled"><span class="type-signature"></span>styled<span class="signature">(name, styles)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="styletron-inferno_src_styled.js.html">styletron-inferno/src/styled.js</a>, <a href="styletron-inferno_src_styled.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Helper function to create styled components</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>import { styled } from 'styletron-inferno';
+
+const Panel = styled('div', {
+  backgroundColor: 'lightblue',
+  fontSize: '12px'
+});
+
+&lt;Panel>Hello World&lt;/Panel></code></pre>
+
+    <pre class="prettyprint"><code>import { styled } from 'styletron-inferno';
+
+const Panel = styled('div', (props) => ({
+  backgroundColor: props.alert ? 'orange' : 'lightblue',
+  fontSize: '12px'
+}));
+
+&lt;Panel alert>Danger!&lt;/Panel></code></pre>
+
+    <pre class="prettyprint"><code>import { styled } from 'styletron-inferno';
+
+const DeluxePanel = styled(Panel, (props) => ({
+  backgroundColor: props.alert ? 'red' : 'lime',
+  boxShadow: '3px 3px 3px darkgray',
+  color: 'white'
+}));
+
+&lt;DeluxePanel>Bonjour Monde&lt;/DeluxePanel></code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Tag name or component function/class</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>styles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Style object or function that returns a style object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Styled component</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+    
+    
+    <h4 class="name" id="styled"><span class="type-signature"></span>styled<span class="signature">(base, styleFn)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="styletron-preact_src_styled.js.html">styletron-preact/src/styled.js</a>, <a href="styletron-preact_src_styled.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Helper function to create styled element components</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>import {styled} from 'styletron-preact';
+
+const Panel = styled('div', {
+  backgroundColor: 'lightblue',
+  fontSize: '12px'
+});
+
+&lt;Panel>Hello World&lt;/Panel></code></pre>
+
+    <pre class="prettyprint"><code>import {styled} from 'styletron-preact';
+
+const Panel = styled('div', (props) => ({
+  backgroundColor: props.alert ? 'orange' : 'lightblue',
+  fontSize: '12px'
+}));
+
+&lt;Panel alert>Danger!&lt;/Panel></code></pre>
+
+    <pre class="prettyprint"><code>import {styled} from 'styletron-preact';
+
+const DeluxePanel = styled(Panel, (props) => ({
+  backgroundColor: props.alert ? 'firebrick' : 'rebeccapurple',
+  color: 'white',
+  boxShadow: '3px 3px 3px darkgray'
+}));
+
+&lt;DeluxePanel>Bonjour Monde&lt;/DeluxePanel></code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>base</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Tag name or styled element component</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>styleFn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Style object or function that returns a style object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Styled element component</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83207746-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

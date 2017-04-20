@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>styletron-core/src/index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>styletron-core</h3><ul><li><a href="StyletronCore.html">StyletronCore</a><ul class='methods'><li data-type='method'><a href="StyletronCore.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-client</h3><ul><li><a href="StyletronClient.html">StyletronClient</a><ul class='methods'><li data-type='method'><a href="StyletronClient.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-server</h3><ul><li><a href="StyletronServer.html">StyletronServer</a><ul class='methods'><li data-type='method'><a href="StyletronServer.html#getStylesheets">getStylesheets</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsOldIE">getStylesheetsOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtml">getStylesheetsHtml</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtmlOldIE">getStylesheetsHtmlOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getCss">getCss</a></li><li data-type='method'><a href="StyletronServer.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-react</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-inferno</h3><ul><li><a href="Provider.html">Provider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-preact</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">styletron-core/src/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The core styletron module
+ * @packagename styletron-core
+ */
+class StyletronCore {
+
+  /**
+   * Create a new StyletronCore instance
+   * @param {object} [opts]           An object containing options
+   * @param {string} [opts.prefix=''] A prefix for generated CSS class names
+   */
+  constructor({prefix = ''} = {}) {
+    this.cache = {
+      media: {},
+      pseudo: {}
+    };
+    this.prefix = prefix === '' ? false : prefix;
+    this.uniqueCount = 0;
+    this.offset = 10; // skip 0-9
+    this.msb = 35;
+    this.power = 1;
+  }
+
+  static assignDecl(target, decl, className) {
+    const {prop, val, media, pseudo} = decl;
+    let targetEntry;
+    if (media) {
+      if (!target.media[media]) {
+        target.media[media] = {pseudo: {}};
+      }
+      targetEntry = target.media[media];
+    } else {
+      targetEntry = target;
+    }
+    if (pseudo) {
+      if (!targetEntry.pseudo[pseudo]) {
+        targetEntry.pseudo[pseudo] = {};
+      }
+      targetEntry = targetEntry.pseudo[pseudo];
+    }
+    if (!targetEntry[prop]) {
+      targetEntry[prop] = {};
+    }
+    targetEntry[prop][val] = className;
+  }
+
+  /**
+   * Injects a declaration (if not already injected) and returns a class name
+   * @param  {object} decl          The CSS declaration object
+   * @param  {string} decl.prop     The property name
+   * @param  {string} decl.val      The property value
+   * @param  {string} [decl.media]  The media query
+   * @param  {string} [decl.pseudo] The pseudo selector
+   * @return {string|undefined}     The class name for the declaration
+   */
+  injectDeclaration(decl) {
+    const cached = this.getCachedDeclaration(decl);
+    if (cached) {
+      return cached;
+    }
+    const virtualCount = this.incrementVirtualCount();
+    const hash = virtualCount.toString(36);
+    const className = this.prefix ? this.prefix + hash : hash;
+    StyletronCore.assignDecl(this.cache, decl, className);
+    return className;
+  }
+
+  /**
+   * Get the next virtual class number, while setting
+   * the uniqueCount, offset, and msb counters appropriately.
+   * @return {number} The virtual class count
+   * @private
+   */
+  incrementVirtualCount() {
+    const virtualCount = this.uniqueCount + this.offset;
+    if (virtualCount === this.msb) {
+      this.offset += (this.msb + 1) * 9;
+      this.msb = Math.pow(36, ++this.power) - 1;
+    }
+    this.uniqueCount++;
+    return virtualCount;
+  }
+
+  /**
+   * Gets the class name for an already injected declaration
+   * @param  {object} decl          The CSS declaration object
+   * @param  {string} decl.prop     The property name
+   * @param  {string} decl.val      The property value
+   * @param  {string} [decl.media]  The media query
+   * @param  {string} [decl.pseudo] The pseudo selector
+   * @return {string|undefined}     The class name for the declaration
+   * @private
+   */
+  getCachedDeclaration({prop, val, media, pseudo}) {
+    let entry;
+    if (media) {
+      entry = this.cache.media[media];
+      if (!entry) {
+        return false;
+      }
+    } else {
+      entry = this.cache;
+    }
+    if (pseudo) {
+      entry = entry.pseudo[pseudo];
+      if (!entry) {
+        return false;
+      }
+    }
+    return entry[prop] &amp;&amp; entry[prop].hasOwnProperty(val) &amp;&amp; entry[prop][val];
+  }
+
+}
+
+module.exports = StyletronCore;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83207746-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

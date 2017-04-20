@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>styletron-client/src/styletron-client.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>styletron-core</h3><ul><li><a href="StyletronCore.html">StyletronCore</a><ul class='methods'><li data-type='method'><a href="StyletronCore.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-client</h3><ul><li><a href="StyletronClient.html">StyletronClient</a><ul class='methods'><li data-type='method'><a href="StyletronClient.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-server</h3><ul><li><a href="StyletronServer.html">StyletronServer</a><ul class='methods'><li data-type='method'><a href="StyletronServer.html#getStylesheets">getStylesheets</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsOldIE">getStylesheetsOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtml">getStylesheetsHtml</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtmlOldIE">getStylesheetsHtmlOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getCss">getCss</a></li><li data-type='method'><a href="StyletronServer.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-react</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-inferno</h3><ul><li><a href="Provider.html">Provider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-preact</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">styletron-client/src/styletron-client.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
+
+const StyletronCore = require('styletron-core');
+
+/**
+ * A Styletron class for rendering styles in the browser
+ * @extends StyletronCore
+ * @packagename styletron-client
+ * @example
+ * const elements = document.getElementsByClassName('_styletron_hydrate_');
+ * const styletron = new StyletronClient(elements);
+ */
+class StyletronClient extends StyletronCore {
+  /**
+   * Create a new StyletronClient instance
+   * @param {NodeList|HTMLCollection|HTMLStyleElement[]} [serverStyles] - List of server style elements
+   * @param {object} [opts] - StyletronCore options
+   */
+  constructor(serverStyles, opts) {
+    super(opts);
+    this.uniqueCount = 0;
+    this.mediaSheets = {};
+    if (serverStyles) {
+      for (let i = 0; i &lt; serverStyles.length; i++) {
+        const element = serverStyles[i];
+        if (element.media) {
+          this.mediaSheets[element.media] = element;
+        } else {
+          this.mainSheet = element;
+        }
+        this.hydrateCacheFromCssString(element.textContent, element.media);
+      }
+    } else {
+      const styleSheet = document.createElement('style');
+      document.head.appendChild(styleSheet);
+      this.mainSheet = styleSheet;
+    }
+  }
+
+  /*
+   * Hydrate the cache from a css string and media string
+   * @param {string} css   - The stylesheet css content
+   * @param {string} media - The stylesheet media string
+   */
+  hydrateCacheFromCssString(css, media) {
+    let decl;
+    // {
+    //  1: className,
+    //  2: pseudo,
+    //  3: prop,
+    //  4: val
+    // }
+    while (decl = DECL_REGEX.exec(css)) {
+      super.incrementVirtualCount();
+      StyletronCore.assignDecl(this.cache, {
+        pseudo: decl[2],
+        prop: decl[3],
+        val: decl[4],
+        media
+      }, decl[1]);
+    }
+  }
+
+  /**
+   * Inject declaration into the stylesheet and return the unique class name
+   * @return {string}      class name
+   * @example
+   * // &lt;style id="styletron">.a{color:red}&lt;/style>
+   * const styletron = new StyletronClient(document.getElementsByClassName('_styletron_hydrate_'));
+   * styletron.injectDeclaration({prop: 'color', val: 'blue'});
+   * // → 'b'
+   * styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
+   * // → 'c'
+   * styletron.injectDeclaration({prop: 'color', val: 'red'});
+   * // → 'a'
+   */
+  injectDeclaration(decl) {
+    const oldCount = this.uniqueCount;
+    const className = super.injectDeclaration(decl);
+    if (oldCount !== this.uniqueCount) {
+      const rule = declarationToRule(className, decl);
+      let sheet;
+      if (decl.media) {
+        if (!this.mediaSheets[decl.media]) {
+          const mediaSheet = document.createElement('style');
+          mediaSheet.media = decl.media;
+          this.mediaSheets[decl.media] = mediaSheet;
+          this.mainSheet.parentNode.appendChild(mediaSheet);
+        }
+        sheet = this.mediaSheets[decl.media].sheet;
+      } else {
+        sheet = this.mainSheet.sheet;
+      }
+      sheet.insertRule(rule, sheet.cssRules.length);
+    }
+    return className;
+  }
+}
+
+module.exports = StyletronClient;
+
+/*
+ * Injection helpers
+ */
+
+function declarationToRule(className, {prop, val, pseudo}) {
+  const decl = `${prop}:${val}`;
+  let selector = `.${className}`;
+  if (pseudo) {
+    selector += pseudo;
+  }
+  return `${selector}{${decl}}`;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83207746-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

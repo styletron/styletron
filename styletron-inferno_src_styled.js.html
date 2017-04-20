@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>styletron-inferno/src/styled.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>styletron-core</h3><ul><li><a href="StyletronCore.html">StyletronCore</a><ul class='methods'><li data-type='method'><a href="StyletronCore.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-client</h3><ul><li><a href="StyletronClient.html">StyletronClient</a><ul class='methods'><li data-type='method'><a href="StyletronClient.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-server</h3><ul><li><a href="StyletronServer.html">StyletronServer</a><ul class='methods'><li data-type='method'><a href="StyletronServer.html#getStylesheets">getStylesheets</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsOldIE">getStylesheetsOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtml">getStylesheetsHtml</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtmlOldIE">getStylesheetsHtmlOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getCss">getCss</a></li><li data-type='method'><a href="StyletronServer.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-react</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-inferno</h3><ul><li><a href="Provider.html">Provider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-preact</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">styletron-inferno/src/styled.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const createElement = require('inferno-create-element');
+const {injectStylePrefixed} = require('styletron-utils');
+const {
+  assign,
+  isNil,
+  isObject,
+  isString,
+  isFunction
+} = require('./utils');
+
+const STYLETRON_KEY = '__STYLETRON';
+
+module.exports = styled;
+
+/**
+ * Helper function to create styled components
+ * @packagename styletron-inferno
+ * @param  {string|function} name   Tag name or component function/class
+ * @param  {function|object} styles Style object or function that returns a style object
+ * @return {function}               Styled component
+ *
+ * @example
+ * import { styled } from 'styletron-inferno';
+ *
+ * const Panel = styled('div', {
+ *   backgroundColor: 'lightblue',
+ *   fontSize: '12px'
+ * });
+ *
+ * &lt;Panel>Hello World&lt;/Panel>
+ *
+ * @example
+ * import { styled } from 'styletron-inferno';
+ *
+ * const Panel = styled('div', (props) => ({
+ *   backgroundColor: props.alert ? 'orange' : 'lightblue',
+ *   fontSize: '12px'
+ * }));
+ *
+ * &lt;Panel alert>Danger!&lt;/Panel>
+ *
+ * @example
+ * import { styled } from 'styletron-inferno';
+ *
+ * const DeluxePanel = styled(Panel, (props) => ({
+ *   backgroundColor: props.alert ? 'red' : 'lime',
+ *   boxShadow: '3px 3px 3px darkgray',
+ *   color: 'white'
+ * }));
+ *
+ * &lt;DeluxePanel>Bonjour Monde&lt;/DeluxePanel>
+ */
+function styled(name, styles) {
+
+  // Styled component
+  if (name &amp;&amp; name.hasOwnProperty(STYLETRON_KEY)) {
+    const component = name[STYLETRON_KEY];
+    const stylesArray = component.stylesArray.concat(styles);
+    return createStyledComponent(component.name, stylesArray);
+
+  // Tag name or non-styled component
+  } else if (isString(name) || isFunction(name)) {
+    return createStyledComponent(name, [styles]);
+  }
+
+  throw new Error('`styled` takes either a DOM element name or a component');
+}
+
+function createStyledComponent(name, stylesArray) {
+
+  function StyledComponent(props, context) {
+    const newProps = assign({}, props);
+    const styles = resolveStyles(stylesArray, props, context);
+    const className = injectStylePrefixed(context.styletron, styles);
+
+    newProps.className = props.className
+      ? `${props.className} ${className}`
+      : className;
+
+    if (isFunction(props.innerRef)) {
+      newProps.ref = props.innerRef;
+      delete newProps.innerRef;
+    }
+    return createElement(name, newProps);
+  }
+
+  StyledComponent[STYLETRON_KEY] = {name, stylesArray};
+
+  return StyledComponent;
+}
+
+function resolveStyles(stylesArray, props, context) {
+  const resolvedStyles = {};
+  for (let i = 0, l = stylesArray.length, styles; i &lt; l; i++) {
+    styles = stylesArray[i];
+    if (!isNil(styles)) {
+      if (isFunction(styles)) {
+        assign(resolvedStyles, styles(props, context));
+      } else if (isObject(styles)) {
+        assign(resolvedStyles, styles);
+      }
+    }
+  }
+  return resolvedStyles;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83207746-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

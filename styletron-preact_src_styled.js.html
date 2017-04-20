@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>styletron-preact/src/styled.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>styletron-core</h3><ul><li><a href="StyletronCore.html">StyletronCore</a><ul class='methods'><li data-type='method'><a href="StyletronCore.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-client</h3><ul><li><a href="StyletronClient.html">StyletronClient</a><ul class='methods'><li data-type='method'><a href="StyletronClient.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-server</h3><ul><li><a href="StyletronServer.html">StyletronServer</a><ul class='methods'><li data-type='method'><a href="StyletronServer.html#getStylesheets">getStylesheets</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsOldIE">getStylesheetsOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtml">getStylesheetsHtml</a></li><li data-type='method'><a href="StyletronServer.html#getStylesheetsHtmlOldIE">getStylesheetsHtmlOldIE</a></li><li data-type='method'><a href="StyletronServer.html#getCss">getCss</a></li><li data-type='method'><a href="StyletronServer.html#injectDeclaration">injectDeclaration</a></li></ul></li></ul><h3>styletron-react</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-inferno</h3><ul><li><a href="Provider.html">Provider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul><h3>styletron-preact</h3><ul><li><a href="StyletronProvider.html">StyletronProvider</a></li></ul><ul><li><a href="global.html#styled">styled</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">styletron-preact/src/styled.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Preact = require('preact');
+const utils = require('styletron-utils');
+
+const STYLETRON_KEY = '__STYLETRON';
+
+module.exports = styled;
+
+/**
+ * Helper function to create styled element components
+ * @packagename styletron-preact
+ * @param  {String|function} base     Tag name or styled element component
+ * @param  {function|object} styleFn  Style object or function that returns a style object
+ * @return {function}                 Styled element component
+ * @example
+ * import {styled} from 'styletron-preact';
+ *
+ * const Panel = styled('div', {
+ *   backgroundColor: 'lightblue',
+ *   fontSize: '12px'
+ * });
+ *
+ * &lt;Panel>Hello World&lt;/Panel>
+ * @example
+ * import {styled} from 'styletron-preact';
+ *
+ * const Panel = styled('div', (props) => ({
+ *   backgroundColor: props.alert ? 'orange' : 'lightblue',
+ *   fontSize: '12px'
+ * }));
+ *
+ * &lt;Panel alert>Danger!&lt;/Panel>
+ * @example
+ * import {styled} from 'styletron-preact';
+ *
+ * const DeluxePanel = styled(Panel, (props) => ({
+ *   backgroundColor: props.alert ? 'firebrick' : 'rebeccapurple',
+ *   color: 'white',
+ *   boxShadow: '3px 3px 3px darkgray'
+ * }));
+ *
+ * &lt;DeluxePanel>Bonjour Monde&lt;/DeluxePanel>
+ */
+function styled(base, styleArg) {
+  if (typeof base === 'function' &amp;&amp; base[STYLETRON_KEY]) {
+    const {tag, styles} = base[STYLETRON_KEY];
+    // Styled component
+    return createStyledElementComponent(tag, styles.concat(styleArg));
+  }
+  if (typeof base === 'string' || typeof base === 'function') {
+    // Tag name or non-styled component
+    return createStyledElementComponent(base, [styleArg]);
+  }
+  throw new Error('`styled` takes either a DOM element name or a component');
+}
+
+function createStyledElementComponent(tagName, stylesArray) {
+  const StyledElement = (props, context) => {
+    const restProps = assign({}, props);
+    delete restProps.innerRef;
+
+    const resolvedStyle = {};
+    StyledElement[STYLETRON_KEY].styles.forEach(style => {
+      if (typeof style === 'function') {
+        assign(resolvedStyle, style(restProps, context));
+      } else if (typeof style === 'object') {
+        assign(resolvedStyle, style);
+      }
+    });
+
+    const styletronClassName = utils.injectStylePrefixed(
+      context.styletron,
+      resolvedStyle
+    );
+
+    restProps.className = restProps.className
+      ? `${restProps.className} ${styletronClassName}`
+      : styletronClassName;
+
+    if (props.innerRef) {
+      restProps.ref = props.innerRef;
+    }
+
+    return Preact.h(
+      StyledElement[STYLETRON_KEY].tag,
+      restProps
+    );
+  };
+  StyledElement[STYLETRON_KEY] = {
+    tag: tagName,
+    styles: stylesArray
+  };
+
+  return StyledElement;
+}
+
+function assign(target, source) {
+  for (let key in source) {
+    target[key] = source[key];
+  }
+  return target;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83207746-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
