@@ -17,8 +17,8 @@ const Preact = require('preact');
  * }
  * 
  * @property {object} styletron - Styletron instance
- * @property {ReactElement} children - children
- * @extends ReactClass
+ * @property {PreactElement} children - children
+ * @extends PreactClass
  */
 class StyletronProvider extends Preact.Component {
   getChildContext() {

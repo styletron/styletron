@@ -3,7 +3,7 @@ const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
 const StyletronCore = require('styletron-core');
 
 /**
- * StyletronClient
+ * A Styletron class for rendering styles in the browser
  * @extends StyletronCore
  * @packagename styletron-client
  * @example

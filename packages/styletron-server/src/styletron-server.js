@@ -5,7 +5,7 @@ const generateHtmlString = require('./generate-html-string');
 const StyletronCore = require('styletron-core');
 
 /**
- * StyletronServer
+ * A Styletron class for extracting styles during server-side rendering
  * @packagename styletron-server
  * @extends StyletronCore
  */

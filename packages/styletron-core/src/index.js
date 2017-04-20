@@ -66,10 +66,10 @@ class StyletronCore {
   }
 
   /**
-   * @private
    * Get the next virtual class number, while setting
    * the uniqueCount, offset, and msb counters appropriately.
    * @return {number} The virtual class count
+   * @private
    */
   incrementVirtualCount() {
     const virtualCount = this.uniqueCount + this.offset;
@@ -82,7 +82,6 @@ class StyletronCore {
   }
 
   /**
-   * @private
    * Gets the class name for an already injected declaration
    * @param  {object} decl          The CSS declaration object
    * @param  {string} decl.prop     The property name
@@ -90,6 +89,7 @@ class StyletronCore {
    * @param  {string} [decl.media]  The media query
    * @param  {string} [decl.pseudo] The pseudo selector
    * @return {string|undefined}     The class name for the declaration
+   * @private
    */
   getCachedDeclaration({prop, val, media, pseudo}) {
     let entry;

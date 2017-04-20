@@ -9,7 +9,8 @@
             "packages/styletron-client/src",
             "packages/styletron-server/src",
             "packages/styletron-react/src",
-            "packages/styletron-inferno/src"
+            "packages/styletron-inferno/src",
+            "packages/styletron-preact/src"
         ],
         "includePattern": ".js$"
     },
