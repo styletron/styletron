@@ -1,0 +1,26 @@
+{
+  "name": "styletron-preact",
+  "version": "2.5.6",
+  "description": "Official Preact bindings for styletron",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "main": "./lib/index.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "transpile": "../../node_modules/.bin/buble -i src -o lib",
+    "pretest": "npm run transpile",
+    "test": "../../node_modules/.bin/unitest --browser=lib/test/browser.js",
+    "prepublish": "npm run transpile"
+  },
+  "dependencies": {
+    "styletron-client": "^2.5.1",
+    "styletron-server": "^2.5.1",
+    "styletron-utils": "^2.5.4"
+  },
+  "peerDependencies": {
+    "preact": "*"
+  },
+  "license": "MIT"
+}

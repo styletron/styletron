@@ -1,8 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+const Preact = require('preact');
 const utils = require('styletron-utils');
-
-const isValidAttr = require('./is-valid-attr');
 
 const STYLETRON_KEY = '__STYLETRON';
 
@@ -10,12 +7,12 @@ module.exports = styled;
 
 /**
  * Helper function to create styled element components
- * @packagename styletron-react
+ * @packagename styletron-preact
  * @param  {String|function} base     Tag name or styled element component
  * @param  {function|object} styleFn  Style object or function that returns a style object
  * @return {function}                 Styled element component
  * @example
- * import {styled} from 'styletron-react';
+ * import {styled} from 'styletron-preact';
  *
  * const Panel = styled('div', {
  *   backgroundColor: 'lightblue',
@@ -24,7 +21,7 @@ module.exports = styled;
  *
  * <Panel>Hello World</Panel>
  * @example
- * import {styled} from 'styletron-react';
+ * import {styled} from 'styletron-preact';
  *
  * const Panel = styled('div', (props) => ({
  *   backgroundColor: props.alert ? 'orange' : 'lightblue',
@@ -33,7 +30,7 @@ module.exports = styled;
  *
  * <Panel alert>Danger!</Panel>
  * @example
- * import {styled} from 'styletron-react';
+ * import {styled} from 'styletron-preact';
  *
  * const DeluxePanel = styled(Panel, (props) => ({
  *   backgroundColor: props.alert ? 'firebrick' : 'rebeccapurple',
@@ -75,27 +72,23 @@ function createStyledElementComponent(tagName, stylesArray) {
       resolvedStyle
     );
 
-    const elementProps = typeof StyledElement[STYLETRON_KEY].tag === 'string'
-      ? omitInvalidProps(restProps)
-      : restProps;
-    elementProps.className = restProps.className
+    restProps.className = restProps.className
       ? `${restProps.className} ${styletronClassName}`
       : styletronClassName;
 
     if (props.innerRef) {
-      elementProps.ref = props.innerRef;
+      restProps.ref = props.innerRef;
     }
 
-    return React.createElement(
+    return Preact.h(
       StyledElement[STYLETRON_KEY].tag,
-      elementProps
+      restProps
     );
   };
   StyledElement[STYLETRON_KEY] = {
     tag: tagName,
     styles: stylesArray
   };
-  StyledElement.contextTypes = {styletron: PropTypes.object};
 
   return StyledElement;
 }
@@ -103,16 +96,6 @@ function createStyledElementComponent(tagName, stylesArray) {
 function assign(target, source) {
   for (let key in source) {
     target[key] = source[key];
-  }
-  return target;
-}
-
-function omitInvalidProps(props) {
-  let target = {};
-  for (let attr in props) {
-    if (isValidAttr(attr)) {
-      target[attr] = props[attr];
-    }
   }
   return target;
 }
