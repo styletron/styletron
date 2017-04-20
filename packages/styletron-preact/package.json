@@ -20,7 +20,7 @@
     "styletron-utils": "^2.5.4"
   },
   "peerDependencies": {
-    "preact": "*"
+    "preact": "6.x"
   },
   "license": "MIT"
 }
