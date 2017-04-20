@@ -3,7 +3,7 @@ const Preact = require('preact');
 /**
  * @class StyletronProvider
  * @packagename styletron-preact
- * @description React component
+ * @description Provides a Styletron instance to descendant styled components via context
  * @example
  * const Styletron = require('styletron');
  * const renderToString = require('preact-render-to-string');

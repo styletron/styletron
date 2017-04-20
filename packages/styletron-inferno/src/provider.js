@@ -3,7 +3,7 @@ const InfernoComponent = require('inferno-component');
 /**
  * @class Provider
  * @packagename styletron-inferno
- * @description Inferno component
+ * @description Provides a Styletron instance to descendant styled components via context
  *
  * @example
  * // Server

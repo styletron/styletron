@@ -4,7 +4,7 @@ const PropTypes = require('prop-types');
 /**
  * @class StyletronProvider
  * @packagename styletron-react
- * @description React component
+ * @description Provides a Styletron instance to descendant styled components via context
  * @example
  * const Styletron = require('styletron');
  *
