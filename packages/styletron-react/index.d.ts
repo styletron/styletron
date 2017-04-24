@@ -1,9 +1,14 @@
 import * as React from "react";
 import StyletronServer from "styletron-server";
 import StyletronClient from "styletron-client";
+import {InjectStyle} from 'styletron-utils';
 
 declare namespace StyletronReact {
-  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, void> {}
+  type ProviderPropType = {
+    styletron?: StyletronServer | StyletronClient;
+    injectStyle?: InjectStyle;
+  };
+  export class StyletronProvider extends React.Component<ProviderPropType, void> {}
 
   type InnerRef<TInstance> = {
     innerRef?: (instance: TInstance) => any;
