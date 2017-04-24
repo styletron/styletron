@@ -110,4 +110,4 @@ class StyletronCore {
   }
 }
 
-module.exports = StyletronCore;
+export default StyletronCore;

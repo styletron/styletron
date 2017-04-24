@@ -1,6 +1,6 @@
-const hyphenate = require('./hyphenate-style-name');
+import hyphenate from './hyphenate-style-name';
 
-module.exports = injectStyle;
+export default injectStyle;
 
 function injectStyle(styletron, styles, media, pseudo) {
   let classString = '';

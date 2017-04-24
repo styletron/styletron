@@ -136,4 +136,4 @@ for (let shorthand in SHORTHANDS) {
   assign(shorthand);
 }
 
-module.exports = dict;
+export default dict;

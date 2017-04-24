@@ -1,10 +1,10 @@
-const createElement = require('inferno-create-element');
-const {injectStylePrefixed} = require('styletron-utils');
-const {assign, isNil, isObject, isString, isFunction} = require('./utils');
+import createElement from 'inferno-create-element';
+import {injectStylePrefixed} from 'styletron-utils';
+import {assign, isNil, isObject, isString, isFunction} from './utils';
 
 const STYLETRON_KEY = '__STYLETRON';
 
-module.exports = styled;
+export default styled;
 
 /**
  * Helper function to create styled components

@@ -1,8 +1,7 @@
-const test = require('tape');
-const fixtures = require('test-fixtures');
-
-const cacheToCss = require('../cache-to-css');
-const Styletron = require('../styletron-server');
+import test from 'tape';
+import fixtures from 'test-fixtures';
+import cacheToCss from '../cache-to-css';
+import Styletron from '../styletron-server';
 
 class StyletronTest extends Styletron {
   constructor(...args) {

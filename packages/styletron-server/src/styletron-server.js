@@ -1,8 +1,8 @@
-const cacheToCss = require('./cache-to-css');
-const cacheToStylesheets = require('./cache-to-stylesheets');
-const cacheToStylesheetsOldIE = require('./cache-to-stylesheets-old-ie');
-const generateHtmlString = require('./generate-html-string');
-const StyletronCore = require('styletron-core');
+import cacheToCss from './cache-to-css';
+import cacheToStylesheets from './cache-to-stylesheets';
+import cacheToStylesheetsOldIE from './cache-to-stylesheets-old-ie';
+import generateHtmlString from './generate-html-string';
+import StyletronCore from 'styletron-core';
 
 /**
  * A Styletron class for extracting styles during server-side rendering
@@ -102,4 +102,4 @@ class StyletronServer extends StyletronCore {
   }
 }
 
-module.exports = StyletronServer;
+export default StyletronServer;

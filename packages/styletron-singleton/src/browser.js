@@ -1,5 +1,5 @@
-const {INSTANCE_KEY, ELEMENT_CLASS_NAME} = require('./constants');
-const StyletronClient = require('styletron-client');
+import {INSTANCE_KEY, ELEMENT_CLASS_NAME} from './constants';
+import StyletronClient from 'styletron-client';
 
 const topLevel = typeof window !== 'undefined' ? window : {};
 
@@ -14,7 +14,7 @@ if (!instance) {
   instance = topLevel[INSTANCE_KEY] = styletron;
 }
 
-module.exports = instance;
+export default instance;
 
 function createStyleElement() {
   const styleElement = document.createElement('style');

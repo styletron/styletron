@@ -2,7 +2,7 @@ const uppercasePattern = /[A-Z]/g;
 const msPattern = /^ms-/;
 const cache = {};
 
-module.exports = hyphenateStyleName;
+export default hyphenateStyleName;
 
 function hyphenateStyleName(prop) {
   return prop in cache

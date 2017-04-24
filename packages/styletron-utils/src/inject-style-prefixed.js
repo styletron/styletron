@@ -1,16 +1,18 @@
-const prefixProperties = require('inline-style-prefixer/lib/static/prefixProps');
-const capitalizeString = require('inline-style-prefixer/lib/utils/capitalizeString');
+import prefixProperties from 'inline-style-prefixer/lib/static/prefixProps';
+import capitalizeString from 'inline-style-prefixer/lib/utils/capitalizeString';
 const prefixPropertiesArray = Object.keys(prefixProperties);
 
-const calc = require('inline-style-prefixer/lib/static/plugins/calc');
-const cursor = require('inline-style-prefixer/lib/static/plugins/cursor');
-const flex = require('inline-style-prefixer/lib/static/plugins/flex');
-const sizing = require('inline-style-prefixer/lib/static/plugins/sizing');
-const gradient = require('inline-style-prefixer/lib/static/plugins/gradient');
-const transition = require('inline-style-prefixer/lib/static/plugins/transition');
+import calc from 'inline-style-prefixer/lib/static/plugins/calc';
+import cursor from 'inline-style-prefixer/lib/static/plugins/cursor';
+import flex from 'inline-style-prefixer/lib/static/plugins/flex';
+import sizing from 'inline-style-prefixer/lib/static/plugins/sizing';
+import gradient from 'inline-style-prefixer/lib/static/plugins/gradient';
+import transition from 'inline-style-prefixer/lib/static/plugins/transition';
+
 // special flexbox specifications
-const flexboxIE = require('inline-style-prefixer/lib/static/plugins/flexboxIE');
-const flexboxOld = require('inline-style-prefixer/lib/static/plugins/flexboxOld');
+import flexboxIE from 'inline-style-prefixer/lib/static/plugins/flexboxIE';
+
+import flexboxOld from 'inline-style-prefixer/lib/static/plugins/flexboxOld';
 
 const plugins = [
   calc,
@@ -23,9 +25,9 @@ const plugins = [
   flex,
 ];
 
-const hyphenate = require('./hyphenate-style-name');
+import hyphenate from './hyphenate-style-name';
 
-module.exports = injectStyle;
+export default injectStyle;
 
 function injectStyle(styletron, styles, media, pseudo) {
   let classString = '';

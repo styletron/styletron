@@ -1,6 +1,6 @@
-const injectStyle = require('../inject-style');
-const injectStylePrefixed = require('../inject-style-prefixed');
-const test = require('tape');
+import injectStyle from '../inject-style';
+import injectStylePrefixed from '../inject-style-prefixed';
+import test from 'tape';
 
 test('test injection', t => {
   const decls = [];

@@ -586,7 +586,7 @@ const isCustomAttribute = RegExp.prototype.test.bind(
 
 const hasOwnProperty = {}.hasOwnProperty;
 
-module.exports = name =>
+export default name =>
   hasOwnProperty.call(htmlProps, name) ||
   hasOwnProperty.call(svgProps, name) ||
   isCustomAttribute(name.toLowerCase()) ||
