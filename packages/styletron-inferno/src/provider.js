@@ -1,4 +1,4 @@
-const InfernoComponent = require('inferno-component');
+import InfernoComponent from 'inferno-component';
 
 /**
  * @class Provider
@@ -67,4 +67,4 @@ class StyletronProvider extends InfernoComponent {
   }
 }
 
-module.exports = StyletronProvider;
+export default StyletronProvider;

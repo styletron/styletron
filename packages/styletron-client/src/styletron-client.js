@@ -1,6 +1,6 @@
 const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
 
-const StyletronCore = require('styletron-core');
+import StyletronCore from 'styletron-core';
 
 /**
  * A Styletron class for rendering styles in the browser
@@ -101,7 +101,7 @@ class StyletronClient extends StyletronCore {
   }
 }
 
-module.exports = StyletronClient;
+export default StyletronClient;
 
 /*
  * Injection helpers

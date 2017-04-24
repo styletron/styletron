@@ -25,7 +25,7 @@ function assign(target, source) {
   return target;
 }
 
-module.exports = {
+export default {
   isFunction,
   isObject,
   isString,

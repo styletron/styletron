@@ -1,9 +1,8 @@
-const test = require('tape');
-const Preact = require('preact');
-const Styletron = require('styletron-server');
-
-const styled = require('../styled');
-const Provider = require('../provider');
+import test from 'tape';
+import Preact from 'preact';
+import Styletron from 'styletron-server';
+import styled from '../styled';
+import Provider from '../provider';
 
 test('provider provides instance', t => {
   const mockInstance = {};

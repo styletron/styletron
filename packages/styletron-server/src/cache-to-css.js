@@ -1,6 +1,6 @@
-const baseHandler = require('./base-obj-to-css');
+import baseHandler from './base-obj-to-css';
 
-module.exports = cacheObjToCss;
+export default cacheObjToCss;
 
 /*
  * Converts cache object to a CSS string

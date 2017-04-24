@@ -1,4 +1,4 @@
-module.exports = baseHandler;
+export default baseHandler;
 
 function baseHandler(key, valueObj) {
   return key === 'pseudo'

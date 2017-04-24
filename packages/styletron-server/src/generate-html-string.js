@@ -1,4 +1,4 @@
-module.exports = generateHtmlString;
+export default generateHtmlString;
 
 function generateHtmlString(sheets, className) {
   let html = '';

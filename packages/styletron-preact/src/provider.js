@@ -1,4 +1,4 @@
-const Preact = require('preact');
+import Preact from 'preact';
 
 /**
  * @class StyletronProvider
@@ -33,4 +33,4 @@ class StyletronProvider extends Preact.Component {
   }
 }
 
-module.exports = StyletronProvider;
+export default StyletronProvider;

@@ -1,12 +1,11 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const utils = require('styletron-utils');
-
-const isValidAttr = require('./is-valid-attr');
+import React from 'react';
+import PropTypes from 'prop-types';
+import utils from 'styletron-utils';
+import isValidAttr from './is-valid-attr';
 
 const STYLETRON_KEY = '__STYLETRON';
 
-module.exports = styled;
+export default styled;
 
 /**
  * Helper function to create styled element components

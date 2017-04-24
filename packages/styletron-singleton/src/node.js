@@ -1,5 +1,5 @@
-const {INSTANCE_KEY} = require('./constants');
-const StyletronServer = require('styletron-server');
+import {INSTANCE_KEY} from './constants';
+import StyletronServer from 'styletron-server';
 
 const topLevel = typeof global !== 'undefined' ? global : {};
 
@@ -10,4 +10,4 @@ if (!instance) {
   instance = topLevel[INSTANCE_KEY] = styletron;
 }
 
-module.exports = instance;
+export default instance;

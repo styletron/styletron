@@ -1,9 +1,9 @@
-const Preact = require('preact');
-const utils = require('styletron-utils');
+import Preact from 'preact';
+import utils from 'styletron-utils';
 
 const STYLETRON_KEY = '__STYLETRON';
 
-module.exports = styled;
+export default styled;
 
 /**
  * Helper function to create styled element components

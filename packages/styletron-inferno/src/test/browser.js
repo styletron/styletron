@@ -1,10 +1,10 @@
-const test = require('tape');
-const createElement = require('inferno-create-element');
-const InfernoComponent = require('inferno-component');
-const InfernoTestUtils = require('inferno-test-utils');
-const StyletronServer = require('styletron-server');
-const Provider = require('../provider');
-const styled = require('../styled');
+import test from 'tape';
+import createElement from 'inferno-create-element';
+import InfernoComponent from 'inferno-component';
+import InfernoTestUtils from 'inferno-test-utils';
+import StyletronServer from 'styletron-server';
+import Provider from '../provider';
+import styled from '../styled';
 
 test('Provider provides Styletron instance on component context', t => {
   t.plan(1);

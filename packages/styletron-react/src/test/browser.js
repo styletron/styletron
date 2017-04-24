@@ -1,11 +1,10 @@
-const test = require('tape');
-const React = require('react');
-const PropTypes = require('prop-types');
-const ReactTestUtils = require('react-dom/test-utils');
-const Styletron = require('styletron-server');
-
-const styled = require('../styled');
-const Provider = require('../provider');
+import test from 'tape';
+import React from 'react';
+import PropTypes from 'prop-types';
+import ReactTestUtils from 'react-dom/test-utils';
+import Styletron from 'styletron-server';
+import styled from '../styled';
+import Provider from '../provider';
 
 test('provider provides instance', t => {
   const mockInstance = {};

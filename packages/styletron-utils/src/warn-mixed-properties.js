@@ -1,7 +1,7 @@
-const shorthandMap = require('./shorthand-map');
-const hyphenate = require('./hyphenate-style-name');
+import shorthandMap from './shorthand-map';
+import hyphenate from './hyphenate-style-name';
 
-module.exports = function warnMixedProperties(stylesObject) {
+export default function warnMixedProperties(stylesObject) {
   let hyphenated = {};
   Object.keys(stylesObject).forEach(prop => {
     if (typeof stylesObject[prop] === 'string') {
@@ -26,4 +26,4 @@ module.exports = function warnMixedProperties(stylesObject) {
       }
     }
   });
-};
+}

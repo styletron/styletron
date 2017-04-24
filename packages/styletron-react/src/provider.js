@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * @class StyletronProvider
@@ -42,4 +42,4 @@ StyletronProvider.childContextTypes = {
   styletron: PropTypes.object.isRequired,
 };
 
-module.exports = StyletronProvider;
+export default StyletronProvider;

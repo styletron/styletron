@@ -1,5 +1,5 @@
-const Styletron = require('../');
-const test = require('tape');
+import Styletron from '../';
+import test from 'tape';
 
 class StyletronTest extends Styletron {
   constructor(...args) {

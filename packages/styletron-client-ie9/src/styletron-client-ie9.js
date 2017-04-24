@@ -1,6 +1,6 @@
 const IE9_RULE_LIMIT = 4095;
 
-const StyletronClient = require('styletron-client');
+import StyletronClient from 'styletron-client';
 
 /**
  * StyletronClientIE9
@@ -62,4 +62,4 @@ class StyletronClientIE9 extends StyletronClient {
   }
 }
 
-module.exports = StyletronClientIE9;
+export default StyletronClientIE9;

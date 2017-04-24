@@ -1,9 +1,9 @@
-const baseHandler = require('./base-obj-to-css');
+import baseHandler from './base-obj-to-css';
 
 // https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/
 const IE9_RULE_LIMIT = 4095;
 
-module.exports = cacheToStylesheetsOldIE;
+export default cacheToStylesheetsOldIE;
 
 /*
  * Converts cache object to a CSS string

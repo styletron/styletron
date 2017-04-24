@@ -1,8 +1,8 @@
-const Styletron = require('../styletron-client');
-const test = require('tape');
+import Styletron from '../styletron-client';
+import test from 'tape';
 const forEach = Array.prototype.forEach;
 
-const fixtures = require('test-fixtures');
+import fixtures from 'test-fixtures';
 
 class StyletronTest extends Styletron {
   constructor(...args) {
