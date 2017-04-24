@@ -10,33 +10,33 @@ const uberApp = {
   jss: require('./app/uber.jss'),
   styletron: require('./app/uber.styletron'),
   aphrodite: require('./app/uber.aphrodite'),
-  glamor: require('./app/uber.glamor')
+  glamor: require('./app/uber.glamor'),
 };
 
 const airbnbApp = {
   jss: require('./app/airbnb.jss'),
   styletron: require('./app/airbnb.styletron'),
   aphrodite: require('./app/airbnb.aphrodite'),
-  glamor: require('./app/airbnb.glamor')
-}
+  glamor: require('./app/airbnb.glamor'),
+};
 
 const allUniqueApp = {
   jss: require('./app/all-unique.jss'),
   styletron: require('./app/all-unique.styletron'),
   aphrodite: require('./app/all-unique.aphrodite'),
-  glamor: require('./app/all-unique.glamor')
-}
+  glamor: require('./app/all-unique.glamor'),
+};
 
 const halfUniqueApp = {
   jss: require('./app/half-unique.jss'),
   styletron: require('./app/half-unique.styletron'),
   aphrodite: require('./app/half-unique.aphrodite'),
-  glamor: require('./app/half-unique.glamor')
-}
+  glamor: require('./app/half-unique.glamor'),
+};
 
 const Benchmark = require('benchmark');
 
-const suite = new Benchmark.Suite;
+const suite = new Benchmark.Suite();
 
 suite
   .add('aphrodite (uber.css)', function() {
@@ -109,12 +109,14 @@ suite
   })
   .add('aphrodite (vendor prefix)', function() {
     aphrodite.StyleSheetServer.renderStatic(_ => {
-      const sheet = aphrodite.StyleSheet.create({a: {
-      width: 'calc(100%)',
-      height: ['min-content', 'calc(50%)'],
-      boxSizing: 'border-box'
-    }});
-    aphrodite.css(sheet.a);
+      const sheet = aphrodite.StyleSheet.create({
+        a: {
+          width: 'calc(100%)',
+          height: ['min-content', 'calc(50%)'],
+          boxSizing: 'border-box',
+        },
+      });
+      aphrodite.css(sheet.a);
     });
   })
   .add('styletron (vendor prefix)', function() {
@@ -122,7 +124,7 @@ suite
     StyletronUtils.injectStylePrefixed(styletron, {
       width: 'calc(100%)',
       height: ['min-content', 'calc(50%)'],
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
     });
     styletron.getCss();
   })
@@ -131,7 +133,7 @@ suite
       glamor.style({
         width: 'calc(100%)',
         height: ['min-content', 'calc(50%)'],
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
       });
       return '<div></div>';
     });
@@ -142,4 +144,4 @@ suite
   .on('complete', function() {
     console.log('Fastest is ' + this.filter('fastest').map('name'));
   })
-  .run({'async': false});
+  .run({async: false});

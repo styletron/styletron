@@ -38,13 +38,22 @@ class StyletronClientIE9 extends StyletronClient {
       return cached;
     }
     if (decl.media) {
-      if (this.mediaSheets[decl.media] && this.mediaSheets[decl.media].sheet.cssRules.length >= IE9_RULE_LIMIT) {
+      if (
+        this.mediaSheets[decl.media] &&
+        this.mediaSheets[decl.media].sheet.cssRules.length >= IE9_RULE_LIMIT
+      ) {
         const mediaRollover = document.createElement('style');
         mediaRollover.media = decl.media;
-        this.mediaSheets[decl.media].parentNode.insertBefore(mediaRollover, this.mediaSheets[decl.media]);
+        this.mediaSheets[decl.media].parentNode.insertBefore(
+          mediaRollover,
+          this.mediaSheets[decl.media]
+        );
         this.mediaSheets[decl.media] = mediaRollover.sheet;
       }
-    } else if (this.mainSheet && this.mainSheet.sheet.cssRules.length >= IE9_RULE_LIMIT) {
+    } else if (
+      this.mainSheet &&
+      this.mainSheet.sheet.cssRules.length >= IE9_RULE_LIMIT
+    ) {
       const rolloverSheet = document.createElement('style');
       this.mainSheet.parentNode.insertBefore(rolloverSheet, this.mainSheet);
       this.mainSheet = rolloverSheet.sheet;

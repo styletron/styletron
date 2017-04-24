@@ -1,9 +1,7 @@
 const {INSTANCE_KEY, ELEMENT_CLASS_NAME} = require('./constants');
 const StyletronClient = require('styletron-client');
 
-const topLevel = typeof window !== 'undefined'
-  ? window
-  : {};
+const topLevel = typeof window !== 'undefined' ? window : {};
 
 let instance = topLevel[INSTANCE_KEY];
 

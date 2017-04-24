@@ -1,9 +1,7 @@
 const {INSTANCE_KEY} = require('./constants');
 const StyletronServer = require('styletron-server');
 
-const topLevel = typeof global !== 'undefined'
-  ? global
-  : {};
+const topLevel = typeof global !== 'undefined' ? global : {};
 
 let instance = topLevel[INSTANCE_KEY];
 

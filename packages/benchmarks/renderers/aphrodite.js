@@ -12,11 +12,9 @@ module.exports = (sheet, synthetic) => {
       let className = aphrodite.css(aphroditeStyles[keys[i]]);
       if (i === 0) {
         first = className;
-      }
-      else if (keys[i] === 'c1000') {
+      } else if (keys[i] === 'c1000') {
         middle = className;
-      }
-      else if (i === len - 1) {
+      } else if (i === len - 1) {
         last = className;
       }
     }
@@ -30,8 +28,7 @@ module.exports = (sheet, synthetic) => {
     ? ''
     : `<script>window.renderedClassNames = ${JSON.stringify(css.renderedClassNames)};</script>`;
 
-  return (
-`<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -47,5 +44,5 @@ ${styleElement}
 ${hydrationSrc}
 <script src="aphrodite-bundle.js"></script>
 </body>
-</html>`);
-}
+</html>`;
+};

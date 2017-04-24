@@ -7,9 +7,9 @@ const fixturesDir = path.resolve(__dirname, '../../fixtures');
 
 const pluginPath = require.resolve('../');
 
-test('no styletron binding', (t) => {
+test('no styletron binding', t => {
   var output = babel.transformFileSync(fixturesDir + '/basic.source', {
-    plugins: ['syntax-jsx', pluginPath]
+    plugins: ['syntax-jsx', pluginPath],
   });
 
   var expected = fs.readFileSync(fixturesDir + '/basic.expected', 'utf-8');
@@ -18,9 +18,9 @@ test('no styletron binding', (t) => {
   t.end();
 });
 
-test('styletron in context', (t) => {
+test('styletron in context', t => {
   var output = babel.transformFileSync(fixturesDir + '/context.source', {
-    plugins: ['syntax-jsx', pluginPath]
+    plugins: ['syntax-jsx', pluginPath],
   });
 
   var expected = fs.readFileSync(fixturesDir + '/context.expected', 'utf-8');

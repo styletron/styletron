@@ -2,7 +2,6 @@ const Styletron = require('../');
 const test = require('tape');
 
 class StyletronTest extends Styletron {
-
   constructor(...args) {
     super(...args);
   }
@@ -14,7 +13,6 @@ class StyletronTest extends Styletron {
   getCount() {
     return this.uniqueCount;
   }
-
 }
 
 test('test injection', t => {
@@ -26,14 +24,35 @@ test('test injection', t => {
   t.equal(instance.getCachedDeclaration(decl1), 'a');
   t.equal(instance.getCount(), 1, 'unique count incremented');
   instance.injectDeclaration(decl1);
-  t.equal(instance.getCount(), 1, 'unique count not incremented after repeat injection');
+  t.equal(
+    instance.getCount(),
+    1,
+    'unique count not incremented after repeat injection'
+  );
   instance.injectDeclaration({prop: 'color', val: 'green'});
   t.equal(instance.getCache().color.green, 'b');
-  instance.injectDeclaration({prop: 'color', val: 'green', media: '(max-width: 800px)'});
+  instance.injectDeclaration({
+    prop: 'color',
+    val: 'green',
+    media: '(max-width: 800px)',
+  });
   t.equal(instance.getCache().media['(max-width: 800px)'].color.green, 'c');
-  instance.injectDeclaration({prop: 'color', val: 'green', media: '(max-width: 800px)', pseudo: ':hover'});
-  t.equal(instance.getCache().media['(max-width: 800px)'].pseudo[':hover'].color.green, 'd');
-  instance.injectDeclaration({prop: 'display', val: 'none', pseudo: ':hover'});
+  instance.injectDeclaration({
+    prop: 'color',
+    val: 'green',
+    media: '(max-width: 800px)',
+    pseudo: ':hover',
+  });
+  t.equal(
+    instance.getCache().media['(max-width: 800px)'].pseudo[':hover'].color
+      .green,
+    'd'
+  );
+  instance.injectDeclaration({
+    prop: 'display',
+    val: 'none',
+    pseudo: ':hover',
+  });
   t.equal(instance.getCache().pseudo[':hover'].display.none, 'e');
   t.equal(instance.getCount(), 5, 'ends with 4 unique declarations');
   t.end();

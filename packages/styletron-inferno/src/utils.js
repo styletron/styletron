@@ -30,5 +30,5 @@ module.exports = {
   isObject,
   isString,
   isNil,
-  assign
+  assign,
 };

@@ -86,14 +86,11 @@ function createStyledElementComponent(tagName, stylesArray) {
       elementProps.ref = props.innerRef;
     }
 
-    return React.createElement(
-      StyledElement[STYLETRON_KEY].tag,
-      elementProps
-    );
+    return React.createElement(StyledElement[STYLETRON_KEY].tag, elementProps);
   };
   StyledElement[STYLETRON_KEY] = {
     tag: tagName,
-    styles: stylesArray
+    styles: stylesArray,
   };
   StyledElement.contextTypes = {styletron: PropTypes.object};
 

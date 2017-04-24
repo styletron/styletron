@@ -29,7 +29,7 @@ variants.forEach(variant => {
       .map(filename => ({
         app: app,
         variant: variant,
-        file: filename
+        file: filename,
       }));
   });
 
@@ -73,11 +73,11 @@ const tests = entries.map(entry => callback => {
       variant: entry.variant,
       library: path.parse(entry.file).name,
       tti: parsed.timings[5].value,
-      fmp: parsed.timings[1].value
+      fmp: parsed.timings[1].value,
     });
     callback(null, 'ok');
     return parsed;
-  })
+  });
 });
 
 function start() {
@@ -86,12 +86,14 @@ function start() {
     console.log('===========');
     let summary = {};
 
-    resultsArr.forEach((item) => {
+    resultsArr.forEach(item => {
       summary[item.variant] = summary[item.variant] || {};
-      summary[item.variant][item.library] = summary[item.variant][item.library] || {};
+      summary[item.variant][item.library] = summary[item.variant][
+        item.library
+      ] || {};
       summary[item.variant][item.library][item.app] = {
         tti: item.tti,
-        fmp: item.fmp
+        fmp: item.fmp,
       };
     });
     console.log(JSON.stringify(summary, null, 2));

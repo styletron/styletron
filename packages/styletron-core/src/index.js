@@ -3,7 +3,6 @@
  * @packagename styletron-core
  */
 class StyletronCore {
-
   /**
    * Create a new StyletronCore instance
    * @param {object} [opts]           An object containing options
@@ -12,7 +11,7 @@ class StyletronCore {
   constructor({prefix = ''} = {}) {
     this.cache = {
       media: {},
-      pseudo: {}
+      pseudo: {},
     };
     this.prefix = prefix === '' ? false : prefix;
     this.uniqueCount = 0;
@@ -109,7 +108,6 @@ class StyletronCore {
     }
     return entry[prop] && entry[prop].hasOwnProperty(val) && entry[prop][val];
   }
-
 }
 
 module.exports = StyletronCore;

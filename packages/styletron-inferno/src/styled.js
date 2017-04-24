@@ -1,12 +1,6 @@
 const createElement = require('inferno-create-element');
 const {injectStylePrefixed} = require('styletron-utils');
-const {
-  assign,
-  isNil,
-  isObject,
-  isString,
-  isFunction
-} = require('./utils');
+const {assign, isNil, isObject, isString, isFunction} = require('./utils');
 
 const STYLETRON_KEY = '__STYLETRON';
 
@@ -51,14 +45,13 @@ module.exports = styled;
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
 function styled(name, styles) {
-
   // Styled component
   if (name && name.hasOwnProperty(STYLETRON_KEY)) {
     const component = name[STYLETRON_KEY];
     const stylesArray = component.stylesArray.concat(styles);
     return createStyledComponent(component.name, stylesArray);
 
-  // Tag name or non-styled component
+    // Tag name or non-styled component
   } else if (isString(name) || isFunction(name)) {
     return createStyledComponent(name, [styles]);
   }
@@ -67,7 +60,6 @@ function styled(name, styles) {
 }
 
 function createStyledComponent(name, stylesArray) {
-
   function StyledComponent(props, context) {
     const newProps = assign({}, props);
     const styles = resolveStyles(stylesArray, props, context);

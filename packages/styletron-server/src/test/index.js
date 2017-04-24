@@ -30,12 +30,12 @@ test('test getStylesheets method', t => {
   instance.setCache(fixtures.basic.cache);
   t.deepEqual(instance.getStylesheets(), [
     {
-      css: '.e:hover{display:none}.a{color:red}.b{color:green}'
+      css: '.e:hover{display:none}.a{color:red}.b{color:green}',
     },
     {
       media: '(max-width: 800px)',
-      css: '.d:hover{color:green}.c{color:green}'
-    }
+      css: '.d:hover{color:green}.c{color:green}',
+    },
   ]);
   t.end();
 });
@@ -43,7 +43,10 @@ test('test getStylesheets method', t => {
 test('test getStylesheetsHtml method', t => {
   const instance = new StyletronTest();
   instance.setCache(fixtures.basic.cache);
-  t.equal(instance.getStylesheetsHtml(), '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>');
+  t.equal(
+    instance.getStylesheetsHtml(),
+    '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>'
+  );
   t.end();
 });
 
@@ -54,12 +57,24 @@ test('test getStylesheetsOldIE method', t => {
   }
   t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
   instance.injectDeclaration({prop: 'color', val: 'red'});
-  t.equal(instance.getStylesheetsOldIE().length, 2, 'rollover into another sheet');
+  t.equal(
+    instance.getStylesheetsOldIE().length,
+    2,
+    'rollover into another sheet'
+  );
   for (let i = 0; i <= 4095; i++) {
-    instance.injectDeclaration({prop: 'font-size', val: `${i}px`, media: '(max-width: 400px)'});
+    instance.injectDeclaration({
+      prop: 'font-size',
+      val: `${i}px`,
+      media: '(max-width: 400px)',
+    });
   }
   t.equal(instance.getStylesheetsOldIE().length, 3, 'media sheet');
-  instance.injectDeclaration({prop: 'color', val: 'red', media: '(max-width: 400px)'});
+  instance.injectDeclaration({
+    prop: 'color',
+    val: 'red',
+    media: '(max-width: 400px)',
+  });
   t.equal(instance.getStylesheetsOldIE().length, 4, 'media sheet rollover');
   t.end();
 });
