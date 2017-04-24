@@ -100,7 +100,6 @@ class StyletronServer extends StyletronCore {
   getCss() {
     return cacheToCss(this.cache);
   }
-
 }
 
 module.exports = StyletronServer;

@@ -1,4 +1,4 @@
 module.exports = {
   StyletronProvider: require('./provider'),
-  styled: require('./styled')
+  styled: require('./styled'),
 };

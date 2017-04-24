@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      size: 10
+      size: 10,
     };
     const urlColor = path.basename(props.path);
     if (urlColor) {
@@ -21,7 +21,7 @@ class App extends React.Component {
   render() {
     return (
       <Container {...this.state}>
-        <Header/>
+        <Header />
         <div>
           <label>color</label>
           <input

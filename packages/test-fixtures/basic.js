@@ -4,24 +4,24 @@ module.exports = {
       pseudo: {
         ':hover': {
           color: {
-            green: 'd'
-          }
-        }
+            green: 'd',
+          },
+        },
       },
       color: {
-        green: 'c'
-      }
-    }
+        green: 'c',
+      },
+    },
   },
   pseudo: {
     ':hover': {
       display: {
-        none: 'e'
-      }
-    }
+        none: 'e',
+      },
+    },
   },
   color: {
     red: 'a',
-    green: 'b'
-  }
+    green: 'b',
+  },
 };

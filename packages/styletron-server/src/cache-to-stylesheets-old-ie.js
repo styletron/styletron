@@ -54,7 +54,7 @@ function getMediaSheets(mediaObj) {
     if (mediaCss) {
       stylesheets.push({
         media: query,
-        css: mediaCss
+        css: mediaCss,
       });
     }
   }

@@ -1,4 +1,4 @@
 module.exports = {
   injectStyle: require('./inject-style'),
-  injectStylePrefixed: require('./inject-style-prefixed')
+  injectStylePrefixed: require('./inject-style-prefixed'),
 };

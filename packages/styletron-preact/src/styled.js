@@ -80,14 +80,11 @@ function createStyledElementComponent(tagName, stylesArray) {
       restProps.ref = props.innerRef;
     }
 
-    return Preact.h(
-      StyledElement[STYLETRON_KEY].tag,
-      restProps
-    );
+    return Preact.h(StyledElement[STYLETRON_KEY].tag, restProps);
   };
   StyledElement[STYLETRON_KEY] = {
     tag: tagName,
-    styles: stylesArray
+    styles: stylesArray,
   };
 
   return StyledElement;

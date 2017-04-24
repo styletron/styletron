@@ -35,11 +35,11 @@ class StyletronProvider extends React.Component {
 
 StyletronProvider.PropTypes = {
   styletron: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };
 
 StyletronProvider.childContextTypes = {
-  styletron: PropTypes.object.isRequired
+  styletron: PropTypes.object.isRequired,
 };
 
 module.exports = StyletronProvider;

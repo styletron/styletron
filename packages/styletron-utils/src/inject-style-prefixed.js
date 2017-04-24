@@ -20,7 +20,7 @@ const plugins = [
   transition,
   flexboxIE,
   flexboxOld,
-  flex
+  flex,
 ];
 
 const hyphenate = require('./hyphenate-style-name');
@@ -39,16 +39,20 @@ function injectStyle(styletron, styles, media, pseudo) {
         const properties = prefixProperties[prefix];
         if (properties[key]) {
           const prefixedPropName = prefix + capitalizeString(key);
-          classString += ' ' + injectWithPlugins(styletron, prefixedPropName, val, media, pseudo);
+          classString +=
+            ' ' +
+            injectWithPlugins(styletron, prefixedPropName, val, media, pseudo);
         }
       }
       // handle un-prefixed
-      classString += ' ' + injectWithPlugins(styletron, key, val, media, pseudo);
+      classString +=
+        ' ' + injectWithPlugins(styletron, key, val, media, pseudo);
       continue;
     }
     if (Array.isArray(val)) {
       for (let i = 0; i < val.length; i++) {
-        classString += ' ' + injectWithPlugins(styletron, key, val[i], media, pseudo);
+        classString +=
+          ' ' + injectWithPlugins(styletron, key, val[i], media, pseudo);
       }
       continue;
     }
@@ -81,17 +85,33 @@ function injectWithPlugins(styletron, prop, val, media, pseudo) {
         if (Array.isArray(resVal)) {
           for (let j = 0; j < resVal.length; j++) {
             if (propIsDifferent || resVal[j] !== val) {
-              classString += ' ' + styletron.injectDeclaration({prop: hyphenated, val: resVal[j], media, pseudo});
+              classString +=
+                ' ' +
+                styletron.injectDeclaration({
+                  prop: hyphenated,
+                  val: resVal[j],
+                  media,
+                  pseudo,
+                });
             }
           }
         } else if (propIsDifferent || resVal !== val) {
-          classString += ' ' + styletron.injectDeclaration({prop: hyphenated, val: resVal, media, pseudo});
+          classString +=
+            ' ' +
+            styletron.injectDeclaration({
+              prop: hyphenated,
+              val: resVal,
+              media,
+              pseudo,
+            });
         }
       }
     }
   }
   // inject original last
-  classString += ' ' + styletron.injectDeclaration({prop: baseHyphenated, val, media, pseudo});
+  classString +=
+    ' ' +
+    styletron.injectDeclaration({prop: baseHyphenated, val, media, pseudo});
   // remove leading space on way out
   return classString.slice(1);
 }

@@ -18,7 +18,7 @@ function cacheToStylesheets(cacheObj) {
     mainCss += baseHandler(key, cacheObj[key]);
   }
   const mainSheet = {
-    css: mainCss
+    css: mainCss,
   };
   return mediaSheets ? [mainSheet].concat(mediaSheets) : [mainSheet];
 }
@@ -33,7 +33,7 @@ function getMediaSheets(mediaObj) {
     }
     stylesheets.push({
       media: query,
-      css: mediaCss
+      css: mediaCss,
     });
   }
   return stylesheets;

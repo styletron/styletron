@@ -20,16 +20,23 @@ class StyletronTest extends Styletron {
 }
 
 test('hydration basic', t => {
-  const elements = createFixtures([{
-    css: '.e:hover{display:none}.a{color:red}.b{color:green}',
-  }, {
-    media: '(max-width: 800px)',
-    css: '.d:hover{color:green}.c{color:green}'
-  }]);
+  const elements = createFixtures([
+    {
+      css: '.e:hover{display:none}.a{color:red}.b{color:green}',
+    },
+    {
+      media: '(max-width: 800px)',
+      css: '.d:hover{color:green}.c{color:green}',
+    },
+  ]);
   const instance = new StyletronTest(elements);
   t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
   t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
-  const newClass = instance.injectDeclaration({prop: 'color', val: 'purple', media: '(max-width: 800px)'});
+  const newClass = instance.injectDeclaration({
+    prop: 'color',
+    val: 'purple',
+    media: '(max-width: 800px)',
+  });
   t.equal(newClass, 'f', 'new class with correct count');
   t.end();
 });
@@ -43,7 +50,7 @@ test('rule insertion order', t => {
     {prop: 'color', val: 'blue', media: '(max-width: 333px)'},
     {prop: 'color', val: 'green'},
     {prop: 'color', val: 'red', media: 'screen and (max-width: 400px)'},
-    {prop: 'color', val: 'purple'}
+    {prop: 'color', val: 'purple'},
   ];
   decls.forEach(decl => instance.injectDeclaration(decl));
   t.equal(element.sheet.rules.length, 4);
@@ -54,12 +61,8 @@ test('rule insertion order', t => {
     '.f { color: purple; }',
   ];
   const mediaExpected = {
-    '(max-width: 333px)': [
-      '.c { color: blue; }'
-    ],
-    'screen and (max-width: 400px)': [
-      '.e { color: red; }'
-    ]
+    '(max-width: 333px)': ['.c { color: blue; }'],
+    'screen and (max-width: 400px)': ['.e { color: red; }'],
   };
   forEach.call(element.sheet.rules, (rule, i) => {
     t.equal(rule.cssText, mainExpected[i]);
@@ -67,7 +70,7 @@ test('rule insertion order', t => {
   const mediaSheets = instance.getMediaSheets();
   t.deepEqual(Object.keys(mediaSheets), [
     '(max-width: 333px)',
-    'screen and (max-width: 400px)'
+    'screen and (max-width: 400px)',
   ]);
   Object.keys(mediaExpected).forEach(mediaKey => {
     forEach.call(mediaSheets[mediaKey].sheet.rules, (rule, i) => {

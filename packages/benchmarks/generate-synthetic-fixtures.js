@@ -18,11 +18,23 @@ function generateFixture(ruleCount, declGetters, pctUnique = 1) {
 
 const getters = {
   fontSize: i => ({fontSize: `${i + 10}px`}),
-  color: i => ({color: randColor({seed: i + 1})})
+  color: i => ({color: randColor({seed: i + 1})}),
 };
 
 const allUnique = generateFixture(3000, [getters.color, getters.fontSize]);
-const halfUnique = generateFixture(3000, [getters.color, getters.fontSize], 0.5);
+const halfUnique = generateFixture(
+  3000,
+  [getters.color, getters.fontSize],
+  0.5
+);
 
-fs.writeFileSync(path.join(__dirname, 'fixtures', 'json', 'all-unique.json'), JSON.stringify(allUnique), 'utf8');
-fs.writeFileSync(path.join(__dirname, 'fixtures', 'json', 'half-unique.json'), JSON.stringify(halfUnique), 'utf8');
+fs.writeFileSync(
+  path.join(__dirname, 'fixtures', 'json', 'all-unique.json'),
+  JSON.stringify(allUnique),
+  'utf8'
+);
+fs.writeFileSync(
+  path.join(__dirname, 'fixtures', 'json', 'half-unique.json'),
+  JSON.stringify(halfUnique),
+  'utf8'
+);

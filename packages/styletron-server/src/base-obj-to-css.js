@@ -1,8 +1,9 @@
 module.exports = baseHandler;
 
 function baseHandler(key, valueObj) {
-  return key === 'pseudo' ?
-    pseudoObjToCss(valueObj) : valsObjToCss(key, valueObj);
+  return key === 'pseudo'
+    ? pseudoObjToCss(valueObj)
+    : valsObjToCss(key, valueObj);
 }
 
 function pseudoObjToCss(pseudoObj) {

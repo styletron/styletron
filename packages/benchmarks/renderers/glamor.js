@@ -13,27 +13,22 @@ module.exports = (rules, synthetic) => {
       let className = style(rules[i]).toString();
       if (i === 0) {
         first = className;
-      }
-      else if (i === 1000) {
+      } else if (i === 1000) {
         middle = className;
-      }
-      else if (i === len - 1) {
+      } else if (i === len - 1) {
         last = className;
       }
     }
     return '<div></div>';
   });
 
-  const styleElement = synthetic
-    ? '<style></style>'
-    : `<style>${css}</style>`
+  const styleElement = synthetic ? '<style></style>' : `<style>${css}</style>`;
 
   const hydrationSrc = synthetic
     ? ''
     : `<script>window._glam = ${JSON.stringify(ids)}</script>`;
 
-  return (
-`<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -49,5 +44,5 @@ ${styleElement}
 ${hydrationSrc}
 <script src="glamor-bundle.js"></script>
 </body>
-</html>`);
-}
+</html>`;
+};

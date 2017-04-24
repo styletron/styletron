@@ -18,22 +18,32 @@ const bundlesDir = path.join(__dirname, 'app');
 
 keys.forEach(key => {
   const styletronSrc = generateStyletronBundle(key);
-  fs.writeFileSync(path.join(bundlesDir, `${key}.styletron.js`), styletronSrc, 'utf8');
+  fs.writeFileSync(
+    path.join(bundlesDir, `${key}.styletron.js`),
+    styletronSrc,
+    'utf8'
+  );
 
   const glamorSrc = generateGlamorBundle(key);
-  fs.writeFileSync(path.join(bundlesDir, `${key}.glamor.js`), glamorSrc, 'utf8');
+  fs.writeFileSync(
+    path.join(bundlesDir, `${key}.glamor.js`),
+    glamorSrc,
+    'utf8'
+  );
 
   const aphroditeSrc = generateAphroditeBundle(key);
-  fs.writeFileSync(path.join(bundlesDir, `${key}.aphrodite.js`), aphroditeSrc, 'utf8');
+  fs.writeFileSync(
+    path.join(bundlesDir, `${key}.aphrodite.js`),
+    aphroditeSrc,
+    'utf8'
+  );
 
   const jssSrc = generateJssBundle(key);
   fs.writeFileSync(path.join(bundlesDir, `${key}.jss.js`), jssSrc, 'utf8');
-
 });
 
 function generateStyletronBundle(name) {
-  return (
-`const StyletronUtils = require('styletron-utils');
+  return `const StyletronUtils = require('styletron-utils');
 
 const rules = require('../styles/${name}.styletron');
 const len = rules.length;
@@ -43,12 +53,11 @@ module.exports = function (styletronInstance) {
     StyletronUtils.injectStyle(styletronInstance, rules[i])
   }
 }
-`);
+`;
 }
 
 function generateGlamorBundle(name) {
-  return (
-`const glamor = require('glamor');
+  return `const glamor = require('glamor');
 
 const rules = require('../styles/${name}.glamor');
 const len = rules.length;
@@ -59,12 +68,11 @@ module.exports = function () {
   }
   return '<div></div>';
 }
-`);
+`;
 }
 
 function generateAphroditeBundle(name) {
-  return (
-`const aphrodite = require('aphrodite');
+  return `const aphrodite = require('aphrodite');
 
 const sheet = require('../styles/${name}.aphrodite');
 const keys = Object.keys(sheet);
@@ -77,17 +85,16 @@ module.exports = function () {
   }
 }
 
-`);
+`;
 }
 
 function generateJssBundle(name) {
-  return (
-`const sheet = require('../styles/${name}.jss');
+  return `const sheet = require('../styles/${name}.jss');
 
 module.exports = function (jssInstance) {
   const jssSheet = jssInstance.createStyleSheet(sheet);
   jssSheet.attach();
   return jssSheet;
 }
-`);
+`;
 }
