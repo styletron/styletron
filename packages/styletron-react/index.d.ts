@@ -15,16 +15,23 @@ declare namespace StyletronReact {
 
   type Style<TProps> = React.CSSProperties | StyleFunction<TProps>;
 
-  class CStyledHTMLElement<TProps, TElement extends HTMLElement> extends React.Component<TProps & React.HTMLAttributes<TElement> & InnerRef<TElement>, void> {
-    // We define the render method to force a difference between all styled
-    // components, otherwise TypeScript thinks that any component passed as
-    // base argument to `styled` is a `StyledHTMLElement` since it's the first
-    // one matching
-    render(): React.DOMElement<React.HTMLAttributes<TElement>, TElement>
+  // Since we can't rest types (yet) we need to copy parts of `React.ComponentClass` instead
+  interface StyledBaseComponentClass<TProps> {
+    propTypes?: React.ValidationMap<TProps>;
+    contextTypes?: React.ValidationMap<any>;
+    childContextTypes?: React.ValidationMap<any>;
+    defaultProps?: Partial<TProps>;
+    displayName?: string;
   }
 
-  interface StyledHTMLElement<TProps, TElement extends HTMLElement> {
-    new (): CStyledHTMLElement<TProps, TElement>;
+  // We define the render method to force a difference between all styled
+  // components, otherwise TypeScript thinks that any component passed as
+  // base argument to `styled` is a `StyledHTMLElement` since it's the first
+  // one matching
+  type StyledBaseComponent<TTotalProps, TRender> = React.Component<TTotalProps, void> & { render(): TRender };
+
+  interface StyledHTMLElement<TProps, TElement extends HTMLElement> extends StyledBaseComponentClass<TProps> {
+    new (): StyledBaseComponent<TProps & React.HTMLAttributes<TElement> & InnerRef<TElement>, React.DOMElement<React.HTMLAttributes<TElement>, TElement>>;
   }
 
   export function styled<TElement extends HTMLElement, TProps>(base: string, style: Style<TProps>): StyledHTMLElement<TProps, TElement>;
@@ -145,12 +152,8 @@ declare namespace StyletronReact {
   export function styled<TProps>(base: "video", style: Style<TProps>): StyledHTMLElement<TProps, HTMLVideoElement>;
   export function styled<TProps>(base: "wbr", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
 
-  class CStyledSVGElement<TProps, TElement extends SVGElement> extends React.Component<TProps & React.SVGAttributes<TElement> & InnerRef<TElement>, void> {
-    render(): React.DOMElement<React.HTMLAttributes<TElement>, TElement>
-  }
-
-  interface StyledSVGElement<TProps, TElement extends SVGElement> {
-    new (): CStyledSVGElement<TProps, TElement>;
+  interface StyledSVGElement<TProps, TElement extends SVGElement> extends StyledBaseComponentClass<TProps> {
+    new (): StyledBaseComponent<TProps & React.SVGAttributes<TElement> & InnerRef<TElement>, React.DOMElement<React.HTMLAttributes<TElement>, TElement>>;
   }
 
   export function styled<TElement extends SVGElement, TProps>(base: string, style: Style<TProps>): StyledSVGElement<TProps, TElement>;
@@ -210,12 +213,8 @@ declare namespace StyletronReact {
   export function styled<TProps>(base: "use", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
   export function styled<TProps>(base: "view", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
 
-  class CStyledStatelessComponent<TProps> extends React.Component<TProps, void> {
-    render(): React.SFCElement<TProps>
-  }
-
-  interface StyledStatelessComponent<TProps> {
-    new (): CStyledStatelessComponent<TProps>;
+  interface StyledStatelessComponent<TProps> extends StyledBaseComponentClass<TProps> {
+    new (): StyledBaseComponent<TProps, React.SFCElement<TProps>>;
   }
 
   export function styled<TProps>(
@@ -223,12 +222,8 @@ declare namespace StyletronReact {
     style: Style<TProps>
   ): StyledStatelessComponent<TProps>;
 
-  class CStyledComponentClass<TProps, TComponent extends React.Component<TProps, React.ComponentState>> extends React.Component<TProps & InnerRef<TComponent>, void> {
-    render(): React.ComponentElement<TProps, TComponent>
-  }
-
-  interface StyledComponentClass<TProps, TComponent extends React.Component<TProps, React.ComponentState>> {
-    new (): CStyledComponentClass<TProps, TComponent>;
+  interface StyledComponentClass<TProps, TComponent extends React.Component<TProps, React.ComponentState>> extends StyledBaseComponentClass<TProps> {
+    new (): StyledBaseComponent<TProps & InnerRef<TComponent>, React.ComponentElement<TProps, TComponent>>;
   }
 
   export function styled<TProps, TComponent extends React.Component<TProps, React.ComponentState>>(
