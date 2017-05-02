@@ -1,5 +1,5 @@
 {
   "lerna": "2.0.0-beta-rc.3",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "npmClient": "yarn"
 }
