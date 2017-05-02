@@ -106,6 +106,20 @@ test('styled component', t => {
   t.end();
 });
 
+test('styled component with readable class names', t => {
+  const Widget = ({className}) => React.createElement('div', {className});
+  const SuperWidget = styled(Widget, {color: 'red'});
+  const styletron = new Styletron({readableClassNames: true});
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(Provider, {styletron},
+      React.createElement(SuperWidget))
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, 'color-red', 'matches expected styletron classes');
+  t.equal(styletron.getCss(), '.color-red{color:red}');
+  t.end();
+});
+
 test('innerRef works', t => {
   t.plan(1);
 

@@ -56,3 +56,20 @@ test('test injection with prefix', t => {
   t.equal(instance.getCount(), 1, 'unique count incremented');
   t.end();
 });
+
+test('test injection with readable class names', t => {
+  const instance = new StyletronTest({readableClassNames: true});
+  t.equal(instance.readableClassNames, true, 'readableClassNames is set on instance');
+  t.equal(instance.getCount(), 0, 'starts with 0 declarations');
+  const decl1 = {prop: 'color', val: 'red'};
+  instance.injectDeclaration(decl1);
+  t.equal(instance.getCache().color.red, 'color-red');
+  t.equal(instance.getCachedDeclaration(decl1), 'color-red');
+  t.equal(instance.getCount(), 1, 'unique count incremented');
+  const decl2 = {prop: 'backgroundColor', val: 'orange'};
+  instance.injectDeclaration(decl2);
+  t.equal(instance.getCache().backgroundColor.orange, 'backgroundColor-orange');
+  t.equal(instance.getCachedDeclaration(decl2), 'backgroundColor-orange');
+  t.equal(instance.getCount(), 2, 'ends with 2 unique declarations');
+  t.end();
+});
