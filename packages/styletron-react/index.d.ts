@@ -6,7 +6,7 @@ declare namespace StyletronReact {
   export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, void> {}
 
   type InnerRef<TInstance> = {
-    innerRef?: (instance: TInstance) => any;
+    innerRef?: React.Ref<TInstance>;
   };
 
   // Intersecting `CSSProperties` enables autocompletion for CSS properties as
