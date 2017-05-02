@@ -9,8 +9,9 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "lint": "eslint packages/*/src/**",
+    "tsc": "tsc",
     "build-docs": "jsdoc -c jsdoc.json",
-    "pretest": "npm run lint && lerna run pretest",
+    "pretest": "npm run lint && npm run tsc && lerna run pretest",
     "test": "lerna run test --concurrency=1",
     "predeploy-docs": "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
@@ -30,6 +31,7 @@
     "react-dom": "^15.5.4",
     "rimraf": "^2.5.4",
     "tape": "^4.6.0",
+    "typescript": "^2.3.2",
     "unitest": "^1.0.0"
   },
   "license": "MIT"

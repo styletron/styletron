@@ -21,3 +21,4 @@ script:
   - lerna bootstrap --ignore={benchmarks,demos} --concurrency=1
   - lerna run pretest --ignore={benchmarks,demos}
   - lerna run test --ignore={benchmarks,demos} --concurrency=1
+  - yarn run tsc
