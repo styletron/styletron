@@ -11,7 +11,7 @@ declare namespace StyletronReact {
 
   // Intersecting `CSSProperties` enables autocompletion for CSS properties as
   // plain objects and not only for function return objects
-  type StyleFunction<TProps> = React.CSSProperties & ((props: TProps) => React.CSSProperties);
+  type StyleFunction<TProps> = React.CSSProperties & ((props: TProps, context?: any) => React.CSSProperties);
 
   type Style<TProps> = React.CSSProperties | StyleFunction<TProps>;
 
