@@ -1,4 +1,4 @@
-const {styled} = require('styletron-react');
+const { styled } = require('styletron-react');
 
 const Container = styled('div', props => {
   return {

@@ -19,7 +19,7 @@ function isNil(value) {
 }
 
 function assign(target, source) {
-  for (let key in source) {
+  for (const key in source) {
     target[key] = source[key];
   }
   return target;

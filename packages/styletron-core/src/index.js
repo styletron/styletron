@@ -8,7 +8,7 @@ class StyletronCore {
    * @param {object} [opts]           An object containing options
    * @param {string} [opts.prefix=''] A prefix for generated CSS class names
    */
-  constructor({prefix = ''} = {}) {
+  constructor({ prefix = '' } = {}) {
     this.cache = {
       media: {},
       pseudo: {},
@@ -21,11 +21,11 @@ class StyletronCore {
   }
 
   static assignDecl(target, decl, className) {
-    const {prop, val, media, pseudo} = decl;
+    const { prop, val, media, pseudo } = decl;
     let targetEntry;
     if (media) {
       if (!target.media[media]) {
-        target.media[media] = {pseudo: {}};
+        target.media[media] = { pseudo: {} };
       }
       targetEntry = target.media[media];
     } else {
@@ -90,7 +90,7 @@ class StyletronCore {
    * @return {string|undefined}     The class name for the declaration
    * @private
    */
-  getCachedDeclaration({prop, val, media, pseudo}) {
+  getCachedDeclaration({ prop, val, media, pseudo }) {
     let entry;
     if (media) {
       entry = this.cache.media[media];

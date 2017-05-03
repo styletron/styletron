@@ -16,7 +16,7 @@ test('provider provides instance', t => {
     );
     return React.createElement('div');
   };
-  MockComponent.contextTypes = {styletron: PropTypes.object};
+  MockComponent.contextTypes = { styletron: PropTypes.object };
   ReactTestUtils.renderIntoDocument(
     React.createElement(
       Provider,
@@ -42,7 +42,7 @@ test('props passed to styled function', t => {
   ReactTestUtils.renderIntoDocument(
     React.createElement(
       Provider,
-      {styletron},
+      { styletron },
       React.createElement(Widget, props)
     )
   );
@@ -50,11 +50,11 @@ test('props passed to styled function', t => {
 
 test('styled applies styles', t => {
   const Widget = styled('div', () => {
-    return {color: 'red'};
+    return { color: 'red' };
   });
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
-    React.createElement(Provider, {styletron}, React.createElement(Widget))
+    React.createElement(Provider, { styletron }, React.createElement(Widget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'styletron classes');
@@ -63,10 +63,10 @@ test('styled applies styles', t => {
 });
 
 test('styled applies static styles', t => {
-  const Widget = styled('div', {color: 'red'});
+  const Widget = styled('div', { color: 'red' });
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
-    React.createElement(Provider, {styletron}, React.createElement(Widget))
+    React.createElement(Provider, { styletron }, React.createElement(Widget))
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'matches expected styletron classes');
@@ -75,12 +75,12 @@ test('styled applies static styles', t => {
 });
 
 test('styled passes through valid props', t => {
-  const Widget = styled('div', {color: 'red'});
+  const Widget = styled('div', { color: 'red' });
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(
       Provider,
-      {styletron},
+      { styletron },
       React.createElement(Widget, {
         'data-bar': 'bar',
       })
@@ -96,11 +96,15 @@ test('styled passes through valid props', t => {
 });
 
 test('styled composition', t => {
-  const Widget = styled('div', {color: 'red', display: 'inline'});
-  const SuperWidget = styled(Widget, {display: 'block', background: 'black'});
+  const Widget = styled('div', { color: 'red', display: 'inline' });
+  const SuperWidget = styled(Widget, { display: 'block', background: 'black' });
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
-    React.createElement(Provider, {styletron}, React.createElement(SuperWidget))
+    React.createElement(
+      Provider,
+      { styletron },
+      React.createElement(SuperWidget)
+    )
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a b c', 'matches expected styletron classes');
@@ -112,11 +116,15 @@ test('styled composition', t => {
 });
 
 test('styled component', t => {
-  const Widget = ({className}) => React.createElement('div', {className});
-  const SuperWidget = styled(Widget, {color: 'red'});
+  const Widget = ({ className }) => React.createElement('div', { className });
+  const SuperWidget = styled(Widget, { color: 'red' });
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
-    React.createElement(Provider, {styletron}, React.createElement(SuperWidget))
+    React.createElement(
+      Provider,
+      { styletron },
+      React.createElement(SuperWidget)
+    )
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'matches expected styletron classes');
@@ -127,7 +135,7 @@ test('styled component', t => {
 test('innerRef works', t => {
   t.plan(1);
 
-  const Widget = styled('button', {color: 'red'});
+  const Widget = styled('button', { color: 'red' });
   const styletron = new Styletron();
 
   class TestComponent extends React.Component {
@@ -147,7 +155,7 @@ test('innerRef works', t => {
   ReactTestUtils.renderIntoDocument(
     React.createElement(
       Provider,
-      {styletron},
+      { styletron },
       React.createElement(TestComponent)
     )
   );
@@ -170,7 +178,7 @@ test('innerRef not passed', t => {
     }
   }
 
-  const Widget = styled(InnerComponent, {color: 'red'});
+  const Widget = styled(InnerComponent, { color: 'red' });
   const styletron = new Styletron();
 
   class TestComponent extends React.Component {
@@ -197,7 +205,7 @@ test('innerRef not passed', t => {
   ReactTestUtils.renderIntoDocument(
     React.createElement(
       Provider,
-      {styletron},
+      { styletron },
       React.createElement(TestComponent)
     )
   );

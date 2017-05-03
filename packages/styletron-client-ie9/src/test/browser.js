@@ -45,12 +45,12 @@ test('rule insertion order', t => {
   const element = createStyleElement('');
   const instance = new StyletronTest([element]);
   const decls = [
-    {prop: 'color', val: 'red'},
-    {prop: 'color', val: 'blue'},
-    {prop: 'color', val: 'blue', media: '(max-width: 333px)'},
-    {prop: 'color', val: 'green'},
-    {prop: 'color', val: 'red', media: 'screen and (max-width: 400px)'},
-    {prop: 'color', val: 'purple'},
+    { prop: 'color', val: 'red' },
+    { prop: 'color', val: 'blue' },
+    { prop: 'color', val: 'blue', media: '(max-width: 333px)' },
+    { prop: 'color', val: 'green' },
+    { prop: 'color', val: 'red', media: 'screen and (max-width: 400px)' },
+    { prop: 'color', val: 'purple' },
   ];
   decls.forEach(decl => instance.injectDeclaration(decl));
   t.equal(element.sheet.rules.length, 4);

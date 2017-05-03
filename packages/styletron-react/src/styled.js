@@ -44,7 +44,7 @@ export default styled;
  */
 function styled(base, styleArg) {
   if (typeof base === 'function' && base[STYLETRON_KEY]) {
-    const {tag, styles} = base[STYLETRON_KEY];
+    const { tag, styles } = base[STYLETRON_KEY];
     // Styled component
     return createStyledElementComponent(tag, styles.concat(styleArg));
   }
@@ -91,21 +91,21 @@ function createStyledElementComponent(tagName, stylesArray) {
     tag: tagName,
     styles: stylesArray,
   };
-  StyledElement.contextTypes = {styletron: PropTypes.object};
+  StyledElement.contextTypes = { styletron: PropTypes.object };
 
   return StyledElement;
 }
 
 function assign(target, source) {
-  for (let key in source) {
+  for (const key in source) {
     target[key] = source[key];
   }
   return target;
 }
 
 function omitInvalidProps(props) {
-  let target = {};
-  for (let attr in props) {
+  const target = {};
+  for (const attr in props) {
     if (isValidAttr(attr)) {
       target[attr] = props[attr];
     }

@@ -8,9 +8,9 @@ function baseHandler(key, valueObj) {
 
 function pseudoObjToCss(pseudoObj) {
   let css = '';
-  for (let pseudoClass in pseudoObj) {
+  for (const pseudoClass in pseudoObj) {
     const propsObj = pseudoObj[pseudoClass];
-    for (let prop in propsObj) {
+    for (const prop in propsObj) {
       css += valsObjToCss(prop, propsObj[prop], pseudoClass);
     }
   }
@@ -19,7 +19,7 @@ function pseudoObjToCss(pseudoObj) {
 
 function valsObjToCss(prop, valsObj, pseudo) {
   let css = '';
-  for (let val in valsObj) {
+  for (const val in valsObj) {
     const className = valsObj[val];
     css += declToCss(prop, val, className, pseudo);
   }

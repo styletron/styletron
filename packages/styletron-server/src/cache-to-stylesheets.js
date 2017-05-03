@@ -10,7 +10,7 @@ export default cacheToStylesheets;
 function cacheToStylesheets(cacheObj) {
   let mediaSheets;
   let mainCss = '';
-  for (let key in cacheObj) {
+  for (const key in cacheObj) {
     if (key === 'media') {
       mediaSheets = getMediaSheets(cacheObj[key]);
       continue;
@@ -25,10 +25,10 @@ function cacheToStylesheets(cacheObj) {
 
 function getMediaSheets(mediaObj) {
   const stylesheets = [];
-  for (let query in mediaObj) {
+  for (const query in mediaObj) {
     const obj = mediaObj[query];
     let mediaCss = '';
-    for (let key in obj) {
+    for (const key in obj) {
       mediaCss += baseHandler(key, obj[key]);
     }
     stylesheets.push({

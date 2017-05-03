@@ -52,10 +52,10 @@ test('test getStylesheetsHtml method', t => {
 test('test getStylesheetsOldIE method', t => {
   const instance = new StyletronTest();
   for (let i = 0; i <= 4095; i++) {
-    instance.injectDeclaration({prop: 'font-size', val: `${i}px`});
+    instance.injectDeclaration({ prop: 'font-size', val: `${i}px` });
   }
   t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
-  instance.injectDeclaration({prop: 'color', val: 'red'});
+  instance.injectDeclaration({ prop: 'color', val: 'red' });
   t.equal(
     instance.getStylesheetsOldIE().length,
     2,
