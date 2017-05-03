@@ -42,7 +42,7 @@ export default styled;
  */
 function styled(base, styleArg) {
   if (typeof base === 'function' && base[STYLETRON_KEY]) {
-    const {tag, styles} = base[STYLETRON_KEY];
+    const { tag, styles } = base[STYLETRON_KEY];
     // Styled component
     return createStyledElementComponent(tag, styles.concat(styleArg));
   }
@@ -91,7 +91,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 }
 
 function assign(target, source) {
-  for (let key in source) {
+  for (const key in source) {
     target[key] = source[key];
   }
   return target;

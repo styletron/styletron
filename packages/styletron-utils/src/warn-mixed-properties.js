@@ -2,7 +2,7 @@ import shorthandMap from './shorthand-map';
 import hyphenate from './hyphenate-style-name';
 
 export default function warnMixedProperties(stylesObject) {
-  let hyphenated = {};
+  const hyphenated = {};
   Object.keys(stylesObject).forEach(prop => {
     if (typeof stylesObject[prop] === 'string') {
       hyphenated[hyphenate(prop)] = prop;
@@ -13,7 +13,7 @@ export default function warnMixedProperties(stylesObject) {
     const match = shorthandMap[prop];
     if (match) {
       // TODO: maybe change this to an array?
-      for (let key in match) {
+      for (const key in match) {
         if (hyphenated[key]) {
           const original = hyphenated[prop];
           const problem = hyphenated[key];

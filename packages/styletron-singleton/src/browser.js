@@ -1,4 +1,4 @@
-import {INSTANCE_KEY, ELEMENT_CLASS_NAME} from './constants';
+import { INSTANCE_KEY, ELEMENT_CLASS_NAME } from './constants';
 import StyletronClient from 'styletron-client';
 
 const topLevel = typeof window !== 'undefined' ? window : {};

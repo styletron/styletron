@@ -15,7 +15,7 @@ function cacheToStylesheetsOldIE(cacheObj) {
   let mediaSheets;
   let mainCss = '';
   let ruleCount = 0;
-  for (let key in cacheObj) {
+  for (const key in cacheObj) {
     if (key === 'media') {
       mediaSheets = getMediaSheets(cacheObj[key]);
       continue;
@@ -24,28 +24,28 @@ function cacheToStylesheetsOldIE(cacheObj) {
     mainCss += baseHandler(key, cacheObj[key]);
     // TODO: handle case of than 4095 unique values for a single property
     if (ruleCount > IE9_RULE_LIMIT && mainCss) {
-      sheets.push({css: mainCss});
+      sheets.push({ css: mainCss });
       mainCss = '';
       ruleCount = 0;
     }
   }
   if (mainCss) {
-    sheets.push({css: mainCss});
+    sheets.push({ css: mainCss });
   }
   return mediaSheets ? sheets.concat(mediaSheets) : sheets;
 }
 
 function getMediaSheets(mediaObj) {
   const stylesheets = [];
-  for (let query in mediaObj) {
+  for (const query in mediaObj) {
     const obj = mediaObj[query];
     let mediaCss = '';
     let ruleCount = 0;
-    for (let key in obj) {
+    for (const key in obj) {
       ruleCount += Object.keys(obj[key]).length;
       // TODO: handle case of than 4095 unique values for a single property
       if (ruleCount > IE9_RULE_LIMIT && mediaCss) {
-        stylesheets.push({media: query, css: mediaCss});
+        stylesheets.push({ media: query, css: mediaCss });
         mediaCss = '';
         ruleCount = 0;
       }

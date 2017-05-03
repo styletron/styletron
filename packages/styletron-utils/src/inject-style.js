@@ -4,7 +4,7 @@ export default injectStyle;
 
 function injectStyle(styletron, styles, media, pseudo) {
   let classString = '';
-  for (let key in styles) {
+  for (const key in styles) {
     const val = styles[key];
     const valType = typeof val;
     if (valType === 'string' || valType === 'number') {

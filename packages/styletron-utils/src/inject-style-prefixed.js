@@ -31,7 +31,7 @@ export default injectStyle;
 
 function injectStyle(styletron, styles, media, pseudo) {
   let classString = '';
-  for (let key in styles) {
+  for (const key in styles) {
     const val = styles[key];
     const valType = typeof val;
     if (valType === 'string' || valType === 'number') {
@@ -80,7 +80,7 @@ function injectWithPlugins(styletron, prop, val, media, pseudo) {
     const plugin = plugins[i];
     const res = plugin(prop, val);
     if (res) {
-      for (let key in res) {
+      for (const key in res) {
         const resVal = res[key];
         const hyphenated = hyphenate(key);
         const propIsDifferent = hyphenated !== baseHyphenated;
@@ -113,7 +113,7 @@ function injectWithPlugins(styletron, prop, val, media, pseudo) {
   // inject original last
   classString +=
     ' ' +
-    styletron.injectDeclaration({prop: baseHyphenated, val, media, pseudo});
+    styletron.injectDeclaration({ prop: baseHyphenated, val, media, pseudo });
   // remove leading space on way out
   return classString.slice(1);
 }

@@ -56,7 +56,7 @@ import InfernoComponent from 'inferno-component';
  */
 class StyletronProvider extends InfernoComponent {
   getChildContext() {
-    return {styletron: this.styletron};
+    return { styletron: this.styletron };
   }
   constructor(props, context) {
     super(props, context);

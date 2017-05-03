@@ -10,7 +10,7 @@ export default cacheObjToCss;
 function cacheObjToCss(cacheObj) {
   let mediaCss = '';
   let css = '';
-  for (let key in cacheObj) {
+  for (const key in cacheObj) {
     if (key === 'media') {
       mediaCss += mediaObjToCss(cacheObj[key]);
       continue;
@@ -22,10 +22,10 @@ function cacheObjToCss(cacheObj) {
 
 function mediaObjToCss(mediaObj) {
   let css = '';
-  for (let query in mediaObj) {
+  for (const query in mediaObj) {
     const obj = mediaObj[query];
     let mediaCss = '';
-    for (let key in obj) {
+    for (const key in obj) {
       mediaCss += baseHandler(key, obj[key]);
     }
     css += `@media ${query}{${mediaCss}}`;

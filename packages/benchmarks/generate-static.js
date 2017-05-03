@@ -9,7 +9,7 @@ const sources = fs
   .reduce((acc, filename) => {
     const base = path.parse(filename).name;
     const [app, lib] = base.split('.');
-    acc.push({app, lib, style: require(path.join(stylesDir, filename))});
+    acc.push({ app, lib, style: require(path.join(stylesDir, filename)) });
     return acc;
   }, []);
 
@@ -23,7 +23,7 @@ const keys = Object.keys(renderers);
 
 const staticDir = path.join(__dirname, 'static');
 
-sources.forEach(({app, lib, style}) => {
+sources.forEach(({ app, lib, style }) => {
   const renderer = renderers[lib];
   // hydrated
   const hydrated = renderer(style, false);

@@ -123,7 +123,7 @@ function assign(shorthand) {
     result[longhand] = true;
     if (SHORTHANDS[longhand]) {
       const nested = assign(longhand);
-      for (let nestedProp in nested) {
+      for (const nestedProp in nested) {
         result[nestedProp] = true;
       }
     }
@@ -132,7 +132,7 @@ function assign(shorthand) {
   return result;
 }
 
-for (let shorthand in SHORTHANDS) {
+for (const shorthand in SHORTHANDS) {
   assign(shorthand);
 }
 

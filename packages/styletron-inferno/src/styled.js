@@ -1,6 +1,6 @@
 import createElement from 'inferno-create-element';
-import {injectStylePrefixed} from 'styletron-utils';
-import {assign, isNil, isObject, isString, isFunction} from './utils';
+import { injectStylePrefixed } from 'styletron-utils';
+import { assign, isNil, isObject, isString, isFunction } from './utils';
 
 const STYLETRON_KEY = '__STYLETRON';
 
@@ -76,7 +76,7 @@ function createStyledComponent(name, stylesArray) {
     return createElement(name, newProps);
   }
 
-  StyledComponent[STYLETRON_KEY] = {name, stylesArray};
+  StyledComponent[STYLETRON_KEY] = { name, stylesArray };
 
   return StyledComponent;
 }

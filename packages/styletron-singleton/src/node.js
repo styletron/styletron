@@ -1,4 +1,4 @@
-import {INSTANCE_KEY} from './constants';
+import { INSTANCE_KEY } from './constants';
 import StyletronServer from 'styletron-server';
 
 const topLevel = typeof global !== 'undefined' ? global : {};

@@ -22,7 +22,7 @@ test('test injection', t => {
   });
   t.equal(classString, '1 2 3 4');
   t.deepEqual(decls, [
-    {prop: 'color', val: 'red', media: undefined, pseudo: undefined},
+    { prop: 'color', val: 'red', media: undefined, pseudo: undefined },
     {
       prop: 'background-color',
       val: 'blue',
@@ -35,7 +35,7 @@ test('test injection', t => {
       media: '(max-width: 500px)',
       pseudo: undefined,
     },
-    {prop: 'background', val: 'orange', media: undefined, pseudo: ':hover'},
+    { prop: 'background', val: 'orange', media: undefined, pseudo: ':hover' },
   ]);
   t.end();
 });
@@ -59,8 +59,8 @@ test('test injection array', function(t) {
   });
   t.equal(classString, '1 2 3 4 5 6');
   t.deepEqual(decls, [
-    {prop: 'color', val: 'red', media: undefined, pseudo: undefined},
-    {prop: 'color', val: 'blue', media: undefined, pseudo: undefined},
+    { prop: 'color', val: 'red', media: undefined, pseudo: undefined },
+    { prop: 'color', val: 'blue', media: undefined, pseudo: undefined },
     {
       prop: 'color',
       val: 'purple',
@@ -73,8 +73,8 @@ test('test injection array', function(t) {
       media: '(max-width: 500px)',
       pseudo: undefined,
     },
-    {prop: 'color', val: 'green', media: undefined, pseudo: ':hover'},
-    {prop: 'color', val: 'yellow', media: undefined, pseudo: ':hover'},
+    { prop: 'color', val: 'green', media: undefined, pseudo: ':hover' },
+    { prop: 'color', val: 'yellow', media: undefined, pseudo: ':hover' },
   ]);
   t.end();
 });
@@ -106,7 +106,7 @@ test('test injection prefixed', function(t) {
       media: undefined,
       pseudo: undefined,
     },
-    {prop: 'width', val: 'calc(100%)', media: undefined, pseudo: undefined},
+    { prop: 'width', val: 'calc(100%)', media: undefined, pseudo: undefined },
     {
       prop: 'height',
       val: '-webkit-min-content',
@@ -119,7 +119,7 @@ test('test injection prefixed', function(t) {
       media: undefined,
       pseudo: undefined,
     },
-    {prop: 'height', val: 'min-content', media: undefined, pseudo: undefined},
+    { prop: 'height', val: 'min-content', media: undefined, pseudo: undefined },
     {
       prop: 'height',
       val: '-webkit-calc(50%)',
@@ -132,7 +132,7 @@ test('test injection prefixed', function(t) {
       media: undefined,
       pseudo: undefined,
     },
-    {prop: 'height', val: 'calc(50%)', media: undefined, pseudo: undefined},
+    { prop: 'height', val: 'calc(50%)', media: undefined, pseudo: undefined },
     {
       prop: '-moz-box-sizing',
       val: 'border-box',
