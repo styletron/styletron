@@ -22,7 +22,7 @@ import Preact from 'preact';
  */
 class StyletronProvider extends Preact.Component {
   getChildContext() {
-    return { styletron: this.styletron };
+    return {styletron: this.styletron};
   }
   constructor(props, context) {
     super(props, context);

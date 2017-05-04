@@ -18,7 +18,7 @@ class StyletronTest extends Styletron {
 test('test injection', t => {
   const instance = new StyletronTest();
   t.equal(instance.getCount(), 0, 'starts with 0 declarations');
-  const decl1 = { prop: 'color', val: 'red' };
+  const decl1 = {prop: 'color', val: 'red'};
   instance.injectDeclaration(decl1);
   t.equal(instance.getCache().color.red, 'a');
   t.equal(instance.getCachedDeclaration(decl1), 'a');
@@ -27,9 +27,9 @@ test('test injection', t => {
   t.equal(
     instance.getCount(),
     1,
-    'unique count not incremented after repeat injection'
+    'unique count not incremented after repeat injection',
   );
-  instance.injectDeclaration({ prop: 'color', val: 'green' });
+  instance.injectDeclaration({prop: 'color', val: 'green'});
   t.equal(instance.getCache().color.green, 'b');
   instance.injectDeclaration({
     prop: 'color',
@@ -46,7 +46,7 @@ test('test injection', t => {
   t.equal(
     instance.getCache().media['(max-width: 800px)'].pseudo[':hover'].color
       .green,
-    'd'
+    'd',
   );
   instance.injectDeclaration({
     prop: 'display',
@@ -65,10 +65,10 @@ test('test constructor', t => {
 });
 
 test('test injection with prefix', t => {
-  const instance = new StyletronTest({ prefix: 'qq' });
+  const instance = new StyletronTest({prefix: 'qq'});
   t.equal(instance.prefix, 'qq', 'prefix is set on instance');
   t.equal(instance.getCount(), 0, 'starts with 0 declarations');
-  const decl1 = { prop: 'color', val: 'red' };
+  const decl1 = {prop: 'color', val: 'red'};
   instance.injectDeclaration(decl1);
   t.equal(instance.getCache().color.red, 'qqa');
   t.equal(instance.getCachedDeclaration(decl1), 'qqa');

@@ -113,7 +113,7 @@ function injectWithPlugins(styletron, prop, val, media, pseudo) {
   // inject original last
   classString +=
     ' ' +
-    styletron.injectDeclaration({ prop: baseHyphenated, val, media, pseudo });
+    styletron.injectDeclaration({prop: baseHyphenated, val, media, pseudo});
   // remove leading space on way out
   return classString.slice(1);
 }
