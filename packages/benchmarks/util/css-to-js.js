@@ -4,7 +4,7 @@ const camelcase = require('camelcase-css');
 const safeParser = require('postcss-safe-parser');
 
 module.exports = function cssToJs(src) {
-  const root = postcss().process(src, { parser: safeParser }).root;
+  const root = postcss().process(src, {parser: safeParser}).root;
 
   const raw = [];
 
@@ -27,7 +27,7 @@ module.exports = function cssToJs(src) {
         });
         const key = getKey(count);
         raw.push(ruleResult);
-        result[key] = { [media]: ruleResult };
+        result[key] = {[media]: ruleResult};
         inverted[media][key] = ruleResult;
         count++;
       });
@@ -45,7 +45,7 @@ module.exports = function cssToJs(src) {
     }
   });
 
-  return { result, inverted, raw };
+  return {result, inverted, raw};
 };
 
 function getKey(count) {

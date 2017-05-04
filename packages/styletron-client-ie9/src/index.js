@@ -48,7 +48,7 @@ class StyletronClientIE9 extends StyletronClient {
         mediaRollover.media = decl.media;
         this.mediaSheets[decl.media].parentNode.insertBefore(
           mediaRollover,
-          this.mediaSheets[decl.media],
+          this.mediaSheets[decl.media]
         );
         this.mediaSheets[decl.media] = mediaRollover.sheet;
       }

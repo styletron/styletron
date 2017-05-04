@@ -17,8 +17,8 @@ function generateFixture(ruleCount, declGetters, pctUnique = 1) {
 }
 
 const getters = {
-  fontSize: i => ({ fontSize: `${i + 10}px` }),
-  color: i => ({ color: randColor({ seed: i + 1 }) }),
+  fontSize: i => ({fontSize: `${i + 10}px`}),
+  color: i => ({color: randColor({seed: i + 1})}),
 };
 
 const allUnique = generateFixture(3000, [getters.color, getters.fontSize]);

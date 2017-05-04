@@ -15,7 +15,7 @@ const aphroditeApps = [
 ];
 
 function outputAphrodite(aphroditeApp, filename) {
-  const { css } = aphrodite.StyleSheetServer.renderStatic(aphroditeApp);
+  const {css} = aphrodite.StyleSheetServer.renderStatic(aphroditeApp);
   fs.writeFileSync(
     path.join(__dirname, 'results', filename),
     css.content,
@@ -23,7 +23,7 @@ function outputAphrodite(aphroditeApp, filename) {
   );
 }
 
-aphroditeApps.forEach(({ app, filename }) => outputAphrodite(app, filename));
+aphroditeApps.forEach(({app, filename}) => outputAphrodite(app, filename));
 
 // Styletron
 const StyletronServer = require('styletron-server');
@@ -49,7 +49,7 @@ function outputStyletron(styletronApp, filename) {
   );
 }
 
-styletronApps.forEach(({ app, filename }) => outputStyletron(app, filename));
+styletronApps.forEach(({app, filename}) => outputStyletron(app, filename));
 
 // JSS
 const jss = require('jss');
@@ -70,7 +70,7 @@ function outputJss(jssApp, filename) {
   const jsscss = jssInstance.sheets.toString();
   fs.writeFileSync(path.join(__dirname, 'results', filename), jsscss, 'utf8');
 }
-jssApps.forEach(({ app, filename }) => outputJss(app, filename));
+jssApps.forEach(({app, filename}) => outputJss(app, filename));
 
 // Glamor
 const glamor = require('glamor');
@@ -87,7 +87,7 @@ const glamorApps = [
 ];
 
 function outputGlamor(glamorApp, filename) {
-  const { css } = glamorServer.renderStatic(glamorApp);
+  const {css} = glamorServer.renderStatic(glamorApp);
   fs.writeFileSync(path.join(__dirname, 'results', filename), css, 'utf8');
 }
-glamorApps.forEach(({ app, filename }) => outputGlamor(app, filename));
+glamorApps.forEach(({app, filename}) => outputGlamor(app, filename));

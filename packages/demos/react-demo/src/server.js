@@ -5,14 +5,14 @@ const serve = require('serve-static');
 const path = require('path');
 
 const StyletronServer = require('styletron-server');
-const { createElement } = require('react');
-const { renderToString } = require('react-dom/server');
-const { StyletronProvider } = require('styletron-react');
+const {createElement} = require('react');
+const {renderToString} = require('react-dom/server');
+const {StyletronProvider} = require('styletron-react');
 const App = require('./app');
 
 const server = connect();
 server.use(compression());
-server.use(serve(path.resolve(__dirname, '../static'), { index: false }));
+server.use(serve(path.resolve(__dirname, '../static'), {index: false}));
 
 const getMarkup = (bodyContent, cssContent) =>
   `<!DOCTYPE html>
@@ -33,7 +33,7 @@ server.use((req, res) => {
   const styletron = new StyletronServer();
   const app = createElement(
     StyletronProvider,
-    { styletron },
+    {styletron},
     createElement(App, {
       path: req.url,
     })

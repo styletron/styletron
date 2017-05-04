@@ -64,7 +64,7 @@ const tests = entries.map(entry => callback => {
   //     return json;
   //   }
   // }
-  const p = new PWMetrics(url, { json: true });
+  const p = new PWMetrics(url, {json: true});
   p.then(res => {
     const parsed = res.runs[0];
     resultsArr.push({
@@ -103,6 +103,6 @@ function start() {
 
 setTimeout(start, 3000);
 
-function getUrl({ app, file, variant }) {
+function getUrl({app, file, variant}) {
   return `http://localhost:8080/${path.join(variant, app, file)}`;
 }

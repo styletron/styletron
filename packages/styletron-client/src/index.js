@@ -62,7 +62,7 @@ class StyletronClient extends StyletronCore {
           val: decl[4],
           media,
         },
-        decl[1],
+        decl[1]
       );
     }
   }
