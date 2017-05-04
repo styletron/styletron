@@ -1,4 +1,4 @@
-import Styletron from '../';
+import Styletron from '../index.js';
 import test from 'tape';
 
 class StyletronTest extends Styletron {

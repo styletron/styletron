@@ -15,7 +15,7 @@
   "scripts": {
     "transpile": "cup build",
     "pretest": "cup build-tests",
-    "test": "node dist-tests/node.js",
+    "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js",
     "prepublish": "npm run transpile"
   },
   "dependencies": {

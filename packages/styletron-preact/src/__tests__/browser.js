@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import test from 'tape';
 import Preact from 'preact';
 import Styletron from 'styletron-server';
@@ -28,15 +30,21 @@ test('provider provides instance', t => {
 
 test('props passed to styled function', t => {
   t.plan(1);
-  const props = {
+  const expected = {
     prop1: 'foo',
   };
   const Widget = styled('div', props => {
-    t.deepEqual(props, props, 'props accessible in style fn');
+    t.deepEqual(
+      props,
+      Object.assign({children: []}, expected),
+      'props accessible in style fn',
+    );
     return {};
   });
   const styletron = new Styletron();
-  renderIntoDocument(Preact.h(Provider, {styletron}, Preact.h(Widget, props)));
+  renderIntoDocument(
+    Preact.h(Provider, {styletron}, Preact.h(Widget, expected)),
+  );
 });
 
 test('styled applies styles', t => {

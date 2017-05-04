@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import test from 'tape';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -31,11 +33,11 @@ test('provider provides instance', t => {
 
 test('props passed to styled function', t => {
   t.plan(1);
-  const props = {
+  const expected = {
     prop1: 'foo',
   };
   const Widget = styled('div', props => {
-    t.deepEqual(props, props, 'props accessible in style fn');
+    t.deepEqual(props, expected, 'props accessible in style fn');
     return {};
   });
   const styletron = new Styletron();
@@ -43,7 +45,7 @@ test('props passed to styled function', t => {
     React.createElement(
       Provider,
       {styletron},
-      React.createElement(Widget, props),
+      React.createElement(Widget, expected),
     ),
   );
 });

@@ -1,34 +1,26 @@
-function isType(value, type) {
+export function isType(value, type) {
   return typeof value === type;
 }
 
-function isFunction(value) {
+export function isFunction(value) {
   return isType(value, 'function');
 }
 
-function isObject(value) {
+export function isObject(value) {
   return isType(value, 'object');
 }
 
-function isString(value) {
+export function isString(value) {
   return isType(value, 'string');
 }
 
-function isNil(value) {
-  return value === null || value === undefined;
+export function isNil(value) {
+  return value === null || value === undefined; // eslint-disable-line no-undefined
 }
 
-function assign(target, source) {
+export function assign(target, source) {
   for (const key in source) {
     target[key] = source[key];
   }
   return target;
 }
-
-export default {
-  isFunction,
-  isObject,
-  isString,
-  isNil,
-  assign,
-};
