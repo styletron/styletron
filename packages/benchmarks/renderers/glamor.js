@@ -8,7 +8,7 @@ module.exports = (rules, synthetic) => {
   let first;
   let last;
   let middle;
-  let { css, ids } = glamorServer.renderStatic(() => {
+  let {css, ids} = glamorServer.renderStatic(() => {
     for (let i = 0; i < len; i++) {
       let className = style(rules[i]).toString();
       if (i === 0) {

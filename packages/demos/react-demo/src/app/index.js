@@ -27,13 +27,13 @@ class App extends React.Component {
           <input
             type="text"
             value={this.state.color}
-            onChange={e => this.setState({ color: e.target.value })}
+            onChange={e => this.setState({color: e.target.value})}
           />
           <label>size</label>
           <input
             type="number"
             value={this.state.size}
-            onChange={e => this.setState({ size: Number(e.target.value) })}
+            onChange={e => this.setState({size: Number(e.target.value)})}
           />
         </div>
         <button onClick={this.logRules}>log sheet rules</button>

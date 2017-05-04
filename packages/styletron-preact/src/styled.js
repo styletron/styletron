@@ -69,7 +69,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 
     const styletronClassName = utils.injectStylePrefixed(
       context.styletron,
-      resolvedStyle,
+      resolvedStyle
     );
 
     restProps.className = restProps.className

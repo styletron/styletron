@@ -6,7 +6,7 @@ module.exports = (sheet, synthetic) => {
   let first;
   let middle;
   let last;
-  let { css } = aphrodite.StyleSheetServer.renderStatic(() => {
+  let {css} = aphrodite.StyleSheetServer.renderStatic(() => {
     let aphroditeStyles = aphrodite.StyleSheet.create(sheet);
     for (let i = 0; i < len; i++) {
       let className = aphrodite.css(aphroditeStyles[keys[i]]);

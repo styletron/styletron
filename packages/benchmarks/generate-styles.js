@@ -11,7 +11,7 @@ sources.forEach(filename => {
     .readFileSync(path.join(cssDir, filename), 'utf8')
     .toString()
     .trim();
-  const { result, inverted, raw } = convert(css);
+  const {result, inverted, raw} = convert(css);
   const basename = path.parse(filename).name;
   fs.writeFileSync(
     path.join(__dirname, 'styles', `${basename}.aphrodite.json`),

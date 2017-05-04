@@ -44,7 +44,7 @@ test('test getStylesheetsHtml method', t => {
   instance.setCache(fixtures.basic.cache);
   t.equal(
     instance.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>',
+    '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>'
   );
   t.end();
 });
@@ -59,7 +59,7 @@ test('test getStylesheetsOldIE method', t => {
   t.equal(
     instance.getStylesheetsOldIE().length,
     2,
-    'rollover into another sheet',
+    'rollover into another sheet'
   );
   for (let i = 0; i <= 4095; i++) {
     instance.injectDeclaration({

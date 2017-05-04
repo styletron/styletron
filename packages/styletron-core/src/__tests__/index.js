@@ -27,7 +27,7 @@ test('test injection', t => {
   t.equal(
     instance.getCount(),
     1,
-    'unique count not incremented after repeat injection',
+    'unique count not incremented after repeat injection'
   );
   instance.injectDeclaration({prop: 'color', val: 'green'});
   t.equal(instance.getCache().color.green, 'b');
@@ -46,7 +46,7 @@ test('test injection', t => {
   t.equal(
     instance.getCache().media['(max-width: 800px)'].pseudo[':hover'].color
       .green,
-    'd',
+    'd'
   );
   instance.injectDeclaration({
     prop: 'display',

@@ -12,7 +12,7 @@ test('provider provides instance', t => {
     t.equal(
       context.styletron,
       mockInstance,
-      'styletron instance override provided',
+      'styletron instance override provided'
     );
     return Preact.h('div');
   };
@@ -22,8 +22,8 @@ test('provider provides instance', t => {
       {
         styletron: mockInstance,
       },
-      Preact.h(MockComponent),
-    ),
+      Preact.h(MockComponent)
+    )
   );
   t.end();
 });
@@ -37,13 +37,13 @@ test('props passed to styled function', t => {
     t.deepEqual(
       props,
       Object.assign({children: []}, expected),
-      'props accessible in style fn',
+      'props accessible in style fn'
     );
     return {};
   });
   const styletron = new Styletron();
   renderIntoDocument(
-    Preact.h(Provider, {styletron}, Preact.h(Widget, expected)),
+    Preact.h(Provider, {styletron}, Preact.h(Widget, expected))
   );
 });
 
@@ -53,7 +53,7 @@ test('styled applies styles', t => {
   });
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, {styletron}, Preact.h(Widget)),
+    Preact.h(Provider, {styletron}, Preact.h(Widget))
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'styletron classes');
@@ -65,7 +65,7 @@ test('styled applies static styles', t => {
   const Widget = styled('div', {color: 'red'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, {styletron}, Preact.h(Widget)),
+    Preact.h(Provider, {styletron}, Preact.h(Widget))
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'matches expected styletron classes');
@@ -82,14 +82,14 @@ test('styled passes through valid props', t => {
       {styletron},
       Preact.h(Widget, {
         'data-bar': 'bar',
-      }),
-    ),
+      })
+    )
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(
     div.getAttribute('data-bar'),
     'bar',
-    'valid attribute prop passed through',
+    'valid attribute prop passed through'
   );
   t.end();
 });
@@ -99,13 +99,13 @@ test('styled composition', t => {
   const SuperWidget = styled(Widget, {display: 'block', background: 'black'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, {styletron}, Preact.h(SuperWidget)),
+    Preact.h(Provider, {styletron}, Preact.h(SuperWidget))
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a b c', 'matches expected styletron classes');
   t.equal(
     styletron.getCss(),
-    '.a{color:red}.b{display:block}.c{background:black}',
+    '.a{color:red}.b{display:block}.c{background:black}'
   );
   t.end();
 });
@@ -115,7 +115,7 @@ test('styled component', t => {
   const SuperWidget = styled(Widget, {color: 'red'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, {styletron}, Preact.h(SuperWidget)),
+    Preact.h(Provider, {styletron}, Preact.h(SuperWidget))
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'matches expected styletron classes');
@@ -164,7 +164,7 @@ test('innerRef not passed', t => {
     componentDidMount() {
       t.ok(
         isCompositeComponentWithType(this.widgetInner, InnerComponent),
-        'is InnerComponent',
+        'is InnerComponent'
       );
     }
 

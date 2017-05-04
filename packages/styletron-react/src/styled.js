@@ -71,7 +71,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 
     const styletronClassName = utils.injectStylePrefixed(
       context.styletron,
-      resolvedStyle,
+      resolvedStyle
     );
 
     const elementProps = typeof StyledElement[STYLETRON_KEY].tag === 'string'

@@ -16,7 +16,7 @@ test('Provider provides Styletron instance on component context', t => {
     t.equal(
       context.styletron,
       mockStyletronInstance,
-      'Styletron instance on component context',
+      'Styletron instance on component context'
     );
     return createElement('div');
   };
@@ -27,8 +27,8 @@ test('Provider provides Styletron instance on component context', t => {
       {
         styletron: mockStyletronInstance,
       },
-      createElement(MockComponent),
-    ),
+      createElement(MockComponent)
+    )
   );
 });
 
@@ -46,8 +46,8 @@ test('props passed to styled function', t => {
     createElement(
       Provider,
       {styletron},
-      createElement(StyledComponent, mockProps),
-    ),
+      createElement(StyledComponent, mockProps)
+    )
   );
 });
 
@@ -57,7 +57,7 @@ test('styled applies styles object', t => {
   const StyledComponent = styled('div', {color: 'red'});
 
   const result = InfernoTestUtils.renderIntoDocument(
-    createElement(Provider, {styletron}, createElement(StyledComponent)),
+    createElement(Provider, {styletron}, createElement(StyledComponent))
   );
 
   const element = InfernoTestUtils.findRenderedDOMElementWithTag(result, 'div');
@@ -81,8 +81,8 @@ test('styled applies styles function', t => {
       createElement(StyledComponent, {
         property: 'color',
         value: 'red',
-      }),
-    ),
+      })
+    )
   );
 
   const element = InfernoTestUtils.findRenderedDOMElementWithTag(result, 'div');
@@ -103,8 +103,8 @@ test('styled passes through valid props', t => {
       {styletron},
       createElement(StyledComponent, {
         'data-bar': 'bar',
-      }),
-    ),
+      })
+    )
   );
 
   const element = InfernoTestUtils.findRenderedDOMElementWithTag(result, 'div');
@@ -112,7 +112,7 @@ test('styled passes through valid props', t => {
   t.equal(
     element.getAttribute('data-bar'),
     'bar',
-    'valid attribute prop passed through',
+    'valid attribute prop passed through'
   );
   t.end();
 });
@@ -131,7 +131,7 @@ test('styled composition', t => {
   });
 
   const result = InfernoTestUtils.renderIntoDocument(
-    createElement(Provider, {styletron}, createElement(SuperStyledComponent)),
+    createElement(Provider, {styletron}, createElement(SuperStyledComponent))
   );
 
   const element = InfernoTestUtils.findRenderedDOMElementWithTag(result, 'div');
@@ -140,7 +140,7 @@ test('styled composition', t => {
   t.equal(
     styletron.getCss(),
     '.a{display:block}.b{color:red}.c{background:black}',
-    'matches expected CSS',
+    'matches expected CSS'
   );
   t.end();
 });
@@ -152,7 +152,7 @@ test('styled component', t => {
   const StyledComponent = styled(BaseComponent, {color: 'red'});
 
   const result = InfernoTestUtils.renderIntoDocument(
-    createElement(Provider, {styletron}, createElement(StyledComponent)),
+    createElement(Provider, {styletron}, createElement(StyledComponent))
   );
 
   const element = InfernoTestUtils.findRenderedDOMElementWithTag(result, 'div');
@@ -185,7 +185,7 @@ test('innerRef works', t => {
   }
 
   InfernoTestUtils.renderIntoDocument(
-    createElement(Provider, {styletron}, createElement(ClassComponent)),
+    createElement(Provider, {styletron}, createElement(ClassComponent))
   );
 });
 
@@ -198,7 +198,7 @@ test('innerRef not passed', t => {
       t.deepEqual(
         this.props,
         {className: 'a', foo: 'bar'},
-        'matches expected props',
+        'matches expected props'
       );
       return createElement('div');
     }
@@ -211,9 +211,9 @@ test('innerRef not passed', t => {
       t.ok(
         InfernoTestUtils.isRenderedClassComponentOfType(
           this.innerComponent,
-          InnerComponent,
+          InnerComponent
         ),
-        'is InnerComponent',
+        'is InnerComponent'
       );
     }
     render() {
@@ -223,9 +223,9 @@ test('innerRef not passed', t => {
           t.ok(
             InfernoTestUtils.isRenderedClassComponentOfType(
               innerComponent,
-              InnerComponent,
+              InnerComponent
             ),
-            'is InnerComponent',
+            'is InnerComponent'
           );
           this.innerComponent = innerComponent;
         },
@@ -234,6 +234,6 @@ test('innerRef not passed', t => {
   }
 
   InfernoTestUtils.renderIntoDocument(
-    createElement(Provider, {styletron}, createElement(ClassComponent)),
+    createElement(Provider, {styletron}, createElement(ClassComponent))
   );
 });
