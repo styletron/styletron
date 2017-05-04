@@ -10,7 +10,7 @@ test('provider provides instance', t => {
     t.equal(
       context.styletron,
       mockInstance,
-      'styletron instance override provided'
+      'styletron instance override provided',
     );
     return Preact.h('div');
   };
@@ -20,8 +20,8 @@ test('provider provides instance', t => {
       {
         styletron: mockInstance,
       },
-      Preact.h(MockComponent)
-    )
+      Preact.h(MockComponent),
+    ),
   );
   t.end();
 });
@@ -36,18 +36,16 @@ test('props passed to styled function', t => {
     return {};
   });
   const styletron = new Styletron();
-  renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(Widget, props))
-  );
+  renderIntoDocument(Preact.h(Provider, {styletron}, Preact.h(Widget, props)));
 });
 
 test('styled applies styles', t => {
   const Widget = styled('div', () => {
-    return { color: 'red' };
+    return {color: 'red'};
   });
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(Widget))
+    Preact.h(Provider, {styletron}, Preact.h(Widget)),
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'styletron classes');
@@ -56,10 +54,10 @@ test('styled applies styles', t => {
 });
 
 test('styled applies static styles', t => {
-  const Widget = styled('div', { color: 'red' });
+  const Widget = styled('div', {color: 'red'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(Widget))
+    Preact.h(Provider, {styletron}, Preact.h(Widget)),
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'matches expected styletron classes');
@@ -68,48 +66,48 @@ test('styled applies static styles', t => {
 });
 
 test('styled passes through valid props', t => {
-  const Widget = styled('div', { color: 'red' });
+  const Widget = styled('div', {color: 'red'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
     Preact.h(
       Provider,
-      { styletron },
+      {styletron},
       Preact.h(Widget, {
         'data-bar': 'bar',
-      })
-    )
+      }),
+    ),
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(
     div.getAttribute('data-bar'),
     'bar',
-    'valid attribute prop passed through'
+    'valid attribute prop passed through',
   );
   t.end();
 });
 
 test('styled composition', t => {
-  const Widget = styled('div', { color: 'red', display: 'inline' });
-  const SuperWidget = styled(Widget, { display: 'block', background: 'black' });
+  const Widget = styled('div', {color: 'red', display: 'inline'});
+  const SuperWidget = styled(Widget, {display: 'block', background: 'black'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(SuperWidget))
+    Preact.h(Provider, {styletron}, Preact.h(SuperWidget)),
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a b c', 'matches expected styletron classes');
   t.equal(
     styletron.getCss(),
-    '.a{color:red}.b{display:block}.c{background:black}'
+    '.a{color:red}.b{display:block}.c{background:black}',
   );
   t.end();
 });
 
 test('styled component', t => {
-  const Widget = ({ className }) => Preact.h('div', { className });
-  const SuperWidget = styled(Widget, { color: 'red' });
+  const Widget = ({className}) => Preact.h('div', {className});
+  const SuperWidget = styled(Widget, {color: 'red'});
   const styletron = new Styletron();
   const output = renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(SuperWidget))
+    Preact.h(Provider, {styletron}, Preact.h(SuperWidget)),
   );
   const div = findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'a', 'matches expected styletron classes');
@@ -120,7 +118,7 @@ test('styled component', t => {
 test('innerRef works', t => {
   t.plan(1);
 
-  const Widget = styled('button', { color: 'red' });
+  const Widget = styled('button', {color: 'red'});
   const styletron = new Styletron();
 
   class TestComponent extends Preact.Component {
@@ -137,9 +135,7 @@ test('innerRef works', t => {
     }
   }
 
-  renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(TestComponent))
-  );
+  renderIntoDocument(Preact.h(Provider, {styletron}, Preact.h(TestComponent)));
 });
 
 test('innerRef not passed', t => {
@@ -153,14 +149,14 @@ test('innerRef not passed', t => {
     }
   }
 
-  const Widget = styled(InnerComponent, { color: 'red' });
+  const Widget = styled(InnerComponent, {color: 'red'});
   const styletron = new Styletron();
 
   class TestComponent extends Preact.Component {
     componentDidMount() {
       t.ok(
         isCompositeComponentWithType(this.widgetInner, InnerComponent),
-        'is InnerComponent'
+        'is InnerComponent',
       );
     }
 
@@ -174,9 +170,7 @@ test('innerRef not passed', t => {
     }
   }
 
-  renderIntoDocument(
-    Preact.h(Provider, { styletron }, Preact.h(TestComponent))
-  );
+  renderIntoDocument(Preact.h(Provider, {styletron}, Preact.h(TestComponent)));
 });
 
 function renderIntoDocument(tree) {

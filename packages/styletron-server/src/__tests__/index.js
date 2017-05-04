@@ -1,7 +1,7 @@
 import test from 'tape';
 import fixtures from 'test-fixtures';
-import cacheToCss from '../cache-to-css';
-import Styletron from '../styletron-server';
+import cacheToCss from '../cache-to-css.js';
+import Styletron from '../index.js';
 
 class StyletronTest extends Styletron {
   constructor(...args) {
@@ -44,7 +44,7 @@ test('test getStylesheetsHtml method', t => {
   instance.setCache(fixtures.basic.cache);
   t.equal(
     instance.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>'
+    '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>',
   );
   t.end();
 });
@@ -52,14 +52,14 @@ test('test getStylesheetsHtml method', t => {
 test('test getStylesheetsOldIE method', t => {
   const instance = new StyletronTest();
   for (let i = 0; i <= 4095; i++) {
-    instance.injectDeclaration({ prop: 'font-size', val: `${i}px` });
+    instance.injectDeclaration({prop: 'font-size', val: `${i}px`});
   }
   t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
-  instance.injectDeclaration({ prop: 'color', val: 'red' });
+  instance.injectDeclaration({prop: 'color', val: 'red'});
   t.equal(
     instance.getStylesheetsOldIE().length,
     2,
-    'rollover into another sheet'
+    'rollover into another sheet',
   );
   for (let i = 0; i <= 4095; i++) {
     instance.injectDeclaration({

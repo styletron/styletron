@@ -60,7 +60,7 @@ class StyletronClient extends StyletronCore {
           val: decl[4],
           media,
         },
-        decl[1]
+        decl[1],
       );
     }
   }
@@ -107,7 +107,7 @@ export default StyletronClient;
  * Injection helpers
  */
 
-function declarationToRule(className, { prop, val, pseudo }) {
+function declarationToRule(className, {prop, val, pseudo}) {
   const decl = `${prop}:${val}`;
   let selector = `.${className}`;
   if (pseudo) {

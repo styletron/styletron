@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
  */
 class StyletronProvider extends React.Component {
   getChildContext() {
-    return { styletron: this.styletron };
+    return {styletron: this.styletron};
   }
   constructor(props, context) {
     super(props, context);

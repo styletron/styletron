@@ -42,7 +42,7 @@ export default styled;
  */
 function styled(base, styleArg) {
   if (typeof base === 'function' && base[STYLETRON_KEY]) {
-    const { tag, styles } = base[STYLETRON_KEY];
+    const {tag, styles} = base[STYLETRON_KEY];
     // Styled component
     return createStyledElementComponent(tag, styles.concat(styleArg));
   }
@@ -69,7 +69,7 @@ function createStyledElementComponent(tagName, stylesArray) {
 
     const styletronClassName = utils.injectStylePrefixed(
       context.styletron,
-      resolvedStyle
+      resolvedStyle,
     );
 
     restProps.className = restProps.className

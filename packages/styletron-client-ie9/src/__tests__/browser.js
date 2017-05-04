@@ -1,4 +1,4 @@
-import Styletron from '../styletron-client';
+import Styletron from '../index.js';
 import test from 'tape';
 const forEach = Array.prototype.forEach;
 
@@ -45,12 +45,12 @@ test('rule insertion order', t => {
   const element = createStyleElement('');
   const instance = new StyletronTest([element]);
   const decls = [
-    { prop: 'color', val: 'red' },
-    { prop: 'color', val: 'blue' },
-    { prop: 'color', val: 'blue', media: '(max-width: 333px)' },
-    { prop: 'color', val: 'green' },
-    { prop: 'color', val: 'red', media: 'screen and (max-width: 400px)' },
-    { prop: 'color', val: 'purple' },
+    {prop: 'color', val: 'red'},
+    {prop: 'color', val: 'blue'},
+    {prop: 'color', val: 'blue', media: '(max-width: 333px)'},
+    {prop: 'color', val: 'green'},
+    {prop: 'color', val: 'red', media: 'screen and (max-width: 400px)'},
+    {prop: 'color', val: 'purple'},
   ];
   decls.forEach(decl => instance.injectDeclaration(decl));
   t.equal(element.sheet.rules.length, 4);
@@ -77,8 +77,8 @@ test('rule insertion order', t => {
       t.equal(rule.cssText, mediaExpected[mediaKey][i], 'media decl matches');
     });
   });
-  Object.keys(mediaSheets).forEach(mediaKey => {
-    const mediaSheet = mediaSheets[mediaKey];
+  Object.keys(mediaSheets).forEach(function(mediaKey) {
+    var mediaSheet = mediaSheets[mediaKey];
     t.equal(mediaSheet.media, mediaKey, 'media attribute matches');
   });
   t.end();
