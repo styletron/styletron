@@ -1,4 +1,4 @@
-export default {
-  StyletronProvider: require('./provider'),
-  styled: require('./styled'),
-};
+import StyletronProvider from './provider';
+import styled from './styled';
+
+export {StyletronProvider, styled};

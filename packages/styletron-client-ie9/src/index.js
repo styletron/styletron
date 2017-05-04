@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 const IE9_RULE_LIMIT = 4095;
 
 import StyletronClient from 'styletron-client';

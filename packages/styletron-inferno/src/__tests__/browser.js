@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import test from 'tape';
 import createElement from 'inferno-create-element';
 import InfernoComponent from 'inferno-component';

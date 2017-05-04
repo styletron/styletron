@@ -15,7 +15,7 @@
   "scripts": {
     "transpile": "cup build",
     "pretest": "cup build-tests",
-    "test": "node dist-tests/index.js",
+    "test": "node dist-tests/node.js",
     "prepublish": "npm run transpile"
   },
   "dependencies": {

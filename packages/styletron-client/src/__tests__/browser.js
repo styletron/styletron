@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import Styletron from '../index.js';
 import test from 'tape';
 const forEach = Array.prototype.forEach;
