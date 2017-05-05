@@ -1,8 +1,6 @@
 import hyphenate from './hyphenate-style-name';
 
-export default injectStyle;
-
-function injectStyle(styletron, styles, media, pseudo) {
+export default function injectStyle(styletron, styles, media, pseudo) {
   let classString = '';
   for (const key in styles) {
     const val = styles[key];
