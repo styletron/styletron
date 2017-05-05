@@ -19,7 +19,7 @@
     "prepublish": "npm run transpile"
   },
   "dependencies": {
-    "inline-style-prefixer": "^2.0.1"
+    "inline-style-prefixer": "^3.0.3"
   },
   "devDependencies": {
     "babel-preset-cup": "^1.0.0-rc.2",
