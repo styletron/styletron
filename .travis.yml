@@ -17,7 +17,8 @@ install:
   - yarn install
 script:
   - yarn run lint
-  - lerna bootstrap --ignore={benchmarks,demos} --concurrency=1
+  - lerna bootstrap --ignore={benchmarks,demos}
   - lerna run pretest --ignore={benchmarks,demos}
   - lerna run test --ignore={benchmarks,demos} --concurrency=1
   - yarn run tsc
+  - lerna run prepublish --ignore={benchmarks,demos}
