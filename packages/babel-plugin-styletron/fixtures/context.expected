@@ -1,1 +1,0 @@
-const H1 = (_, { styletron }) => <h1 className={Styletron.injectStyle(styletron, { color: 'red' })} />;
