@@ -1,66 +1,78 @@
 import * as React from 'react';
 import {
   styled,
-  StyledHTMLElement,
-  StyledSVGElement,
-  StyledStatelessComponent,
-  StyledComponentClass,
 } from './';
 
-type PropType = {
-  prop: boolean;
+
+type PropType1 = {
+  prop1: boolean;
 };
 
+type PropType2 = {
+  prop2: number;
+};
 
-const PrettyHtmlElement: StyledHTMLElement<PropType, HTMLDivElement> = styled('div', (props: PropType) => ({}));
-
-<PrettyHtmlElement prop={false} className="" innerRef={(el: HTMLDivElement) => {}} />
-
-const ComposedHtmlElement: StyledHTMLElement<PropType, HTMLDivElement> = styled(PrettyHtmlElement, {});
-
-<ComposedHtmlElement prop={false} className="" innerRef={(el: HTMLDivElement) => {}} />
-
-
-const PrettySvgElement: StyledSVGElement<PropType, SVGElement> = styled('svg', (props: PropType) => ({}));
-
-<PrettySvgElement prop={false} className="" innerRef={(el: SVGElement) => {}} />
-
-const ComposedSvgElement: StyledSVGElement<PropType, SVGElement> = styled(PrettySvgElement, {});
-
-<ComposedSvgElement prop={false} className="" innerRef={(el: SVGElement) => {}} />
-
-
-function StatelessComponent(props: PropType) {
+function StatelessComponent(props: PropType1) {
   return <div />;
 }
 
-const PrettyStatelessComponentWithStyleFunc: StyledStatelessComponent<PropType> = styled(StatelessComponent, (props: PropType) => ({}));
-
-<PrettyStatelessComponentWithStyleFunc prop={false} />
-
-const PrettyStatelessComponentWithStyleObject: StyledStatelessComponent<PropType> = styled(StatelessComponent, {});
-
-<PrettyStatelessComponentWithStyleObject prop={false} />
-
-const ComposedStatelessComponent: StyledStatelessComponent<PropType> = styled(PrettyStatelessComponentWithStyleFunc, {});
-
-<ComposedStatelessComponent prop={false} />
-
-
-class StatefullComponent extends React.Component<PropType, void> {
+class StatefullComponent extends React.Component<PropType1, void> {
   render() {
     return <div />;
   }
 }
 
-const PrettyStatefullComponentWithStyleFunc: StyledComponentClass<PropType, StatefullComponent> = styled(StatefullComponent, (props: PropType) => ({}));
 
-<PrettyStatefullComponentWithStyleFunc prop={false} innerRef={(c: StatefullComponent) => {}} />
+const WithStyleObject = styled('button', {
+  color: 'green',
+  ':hover': {
+    color: 'blue',
+  },
+  '@media print': {
+    color: 'silver',
+  }
+});
 
-const PrettyStatefullComponentWithStyleObject: StyledComponentClass<PropType, StatefullComponent> = styled(StatefullComponent, {});
 
-<PrettyStatefullComponentWithStyleObject prop={false} innerRef={(c: StatefullComponent) => {}} />
+const PrettyHtmlElement = styled('button', (props: PropType1) => ({}));
 
-const ComposedStatefullComponent: StyledComponentClass<PropType, StatefullComponent> = styled(PrettyStatefullComponentWithStyleFunc, {});
+<PrettyHtmlElement type="" prop1={false} innerRef={(el: HTMLButtonElement) => {}} />
 
-<ComposedStatefullComponent prop={false} innerRef={(c: StatefullComponent) => {}} />
+const ComposedHtmlElement = styled(PrettyHtmlElement, (props: PropType2) => ({}));
+
+<ComposedHtmlElement type="" prop1={false} prop2={0} innerRef={(el: HTMLButtonElement) => {}} />
+
+
+const PrettySvgElement = styled('svg', (props: PropType1) => ({}));
+
+<PrettySvgElement fill="" prop1={false} innerRef={(el: SVGElement) => {}} />
+
+const ComposedSvgElement = styled(PrettySvgElement, (props: PropType2) => ({}));
+
+<ComposedSvgElement fill="" prop1={false} prop2={0} innerRef={(el: SVGElement) => {}} />
+
+
+const PrettyStatelessComponentWithStyleFunc = styled(StatelessComponent, (props: PropType1) => ({}));
+
+<PrettyStatelessComponentWithStyleFunc prop1={false} />
+
+const PrettyStatelessComponentWithStyleObject = styled(StatelessComponent, {});
+
+<PrettyStatelessComponentWithStyleObject prop1={false} />
+
+const ComposedStatelessComponent = styled(PrettyStatelessComponentWithStyleFunc, {});
+
+<ComposedStatelessComponent prop1={false} />
+
+
+const PrettyStatefullComponentWithStyleFunc = styled(StatefullComponent, (props: PropType1) => ({}));
+
+<PrettyStatefullComponentWithStyleFunc prop1={false} innerRef={(c: StatefullComponent) => {}} />
+
+const PrettyStatefullComponentWithStyleObject = styled(StatefullComponent, {});
+
+<PrettyStatefullComponentWithStyleObject prop1={false} innerRef={(c: StatefullComponent) => {}} />
+
+const ComposedStatefullComponent = styled(PrettyStatefullComponentWithStyleFunc, {});
+
+<ComposedStatefullComponent prop1={false} innerRef={(c: StatefullComponent) => {}} />
