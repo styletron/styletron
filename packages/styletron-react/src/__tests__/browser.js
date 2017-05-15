@@ -5,6 +5,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTestUtils from 'react-dom/test-utils';
 import Styletron from 'styletron-server';
+import {injectStylePrefixed} from 'styletron-utils';
+import core from '../core';
 import styled from '../styled';
 import Provider from '../provider';
 
@@ -201,6 +203,52 @@ test('innerRef not passed', t => {
       Provider,
       {styletron},
       React.createElement(TestComponent)
+    )
+  );
+});
+
+test('core passes props', t => {
+  t.plan(2);
+
+  class InnerComponent extends React.Component {
+    render() {
+      t.deepEqual(
+        this.props,
+        {
+          styleProps: {className: 'a'},
+          ownProps: {foo: 'bar'},
+        },
+        'matches merged props'
+      );
+      return <button>InnerComponent</button>;
+    }
+  }
+
+  function mapStyleToProps(styletron, styleResult) {
+    return {className: injectStylePrefixed(styletron, styleResult)};
+  }
+  function mergeProps(styleProps, ownProps) {
+    t.deepEqual(styleProps, {className: 'a'}, 'matches mapped style props');
+    return {
+      styleProps,
+      ownProps,
+    };
+  }
+  const Widget = core(
+    InnerComponent,
+    {color: 'red'},
+    mapStyleToProps,
+    mergeProps
+  );
+  const styletron = new Styletron();
+
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement(Widget, {
+        foo: 'bar',
+      })
     )
   );
 });

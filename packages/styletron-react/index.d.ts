@@ -32,6 +32,61 @@ declare namespace StyletronReact {
     base: string,
     style: Style<TProps>): Component<SVGProps<TProps, TElement>>;
 
+  export function core<TProps>(
+    base: React.StatelessComponent<TProps>,
+    style: Style<TProps>,
+    mapStyleToProps: MapStyleToPartialProps<TProps>): Component<TProps>;
+
+  export function core<TInnerProps, TOuterProps, TStyleProps>(
+    base: React.StatelessComponent<TInnerProps>,
+    style: Style<TOuterProps>,
+    mapStyleToProps: MapStyleToProps<TInnerProps, TStyleProps>,
+    mergeProps: MergeProps<TInnerProps, TOuterProps, TStyleProps>): Component<TOuterProps>;
+
+  export function core<TProps, TComponent extends React.Component<TProps, React.ComponentState>>(
+    base: React.ClassType<TProps, TComponent, React.ComponentClass<TProps>>,
+    style: Style<TProps>,
+    mapStyleToProps: MapStyleToPartialProps<TProps>): Component<ClassProps<TProps, TComponent>>;
+
+  export function core<TInnerProps, TOuterProps, TStyleProps, TComponent extends React.Component<TInnerProps, React.ComponentState>>(
+    base: React.ClassType<TInnerProps, TComponent, React.ComponentClass<TInnerProps>>,
+    style: Style<TOuterProps>,
+    mapStyleToProps: MapStyleToProps<TInnerProps, TStyleProps>,
+    mergeProps: MergeProps<TInnerProps, TOuterProps, TStyleProps>): Component<ClassProps<TOuterProps, TComponent>>;
+
+  export function core<TProps, TBase extends keyof BasePropsMap<TProps>>(
+    base: TBase,
+    style: Style<TProps>,
+    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>): Component<BasePropsMap<TProps>[TBase]>;
+
+  export function core<TInnerProps, TOuterProps, TBase extends keyof BasePropsMap<TInnerProps>>(
+    base: TBase,
+    style: Style<TOuterProps>,
+    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>,
+    mergeProps: MergeProps<TInnerProps, TOuterProps, ClassNameProp>): Component<BasePropsMap<TOuterProps>[TBase]>;
+
+  export function core<TElement extends HTMLElement, TProps>(
+    base: string,
+    style: Style<TProps>,
+    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>): Component<HTMLProps<TProps, TElement>>;
+
+  export function core<TElement extends HTMLElement, TInnerProps, TOuterProps>(
+    base: string,
+    style: Style<TOuterProps>,
+    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>,
+    mergeProps: MergeProps<TInnerProps, TOuterProps, ClassNameProp>): Component<HTMLProps<TOuterProps, TElement>>;
+
+  export function core<TElement extends SVGElement, TProps>(
+    base: string,
+    style: Style<TProps>,
+    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>): Component<SVGProps<TProps, TElement>>;
+
+  export function core<TElement extends SVGElement, TInnerProps, TOuterProps>(
+    base: string,
+    style: Style<TOuterProps>,
+    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>,
+    mergeProps: MergeProps<TInnerProps, TOuterProps, ClassNameProp>): Component<SVGProps<TOuterProps, TElement>>;
+
   type Component<TProps> = React.StatelessComponent<TProps>;
 
   type ClassProps<TProps, TComponent extends React.Component<{}, React.ComponentState>> = TProps & InnerRef<TComponent>;
@@ -49,6 +104,12 @@ declare namespace StyletronReact {
   type StyleFunction<TProps> = React.CSSProperties & ((props: TProps, context?: any) => React.CSSProperties);
 
   type Style<TProps> = React.CSSProperties | StyleFunction<TProps>;
+
+  type MapStyleToPartialProps<TProps> = (styletron: StyletronServer | StyletronClient, style: React.CSSProperties, props?: TProps) => Partial<TProps>;
+
+  type MapStyleToProps<TProps, TStyleProps> = (styletron: StyletronServer | StyletronClient, style: React.CSSProperties, props?: TProps) => TStyleProps;
+
+  type MergeProps<TInnerProps, TOuterProps, TStyleProps> = (styleProps: TStyleProps, ownProps: TOuterProps) => TInnerProps;
 
   type ClassNameProp = {className?: string};
 

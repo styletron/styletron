@@ -1,11 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import utils from 'styletron-utils';
-import isValidAttr from './is-valid-attr';
-
-const STYLETRON_KEY = '__STYLETRON';
-
-export default styled;
+import core from './core';
+import {injectStylePrefixed} from 'styletron-utils';
 
 /**
  * Helper function to create styled element components
@@ -42,73 +36,15 @@ export default styled;
  *
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
-function styled(base, styleArg) {
-  if (typeof base === 'function' && base[STYLETRON_KEY]) {
-    const {tag, styles} = base[STYLETRON_KEY];
-    // Styled component
-    return createStyledElementComponent(tag, styles.concat(styleArg));
-  }
-  if (typeof base === 'string' || typeof base === 'function') {
-    // Tag name or non-styled component
-    return createStyledElementComponent(base, [styleArg]);
-  }
-  throw new Error('`styled` takes either a DOM element name or a component');
+export default function styled(base, style) {
+  return core(base, style, mapStyleToProps);
 }
 
-function createStyledElementComponent(tagName, stylesArray) {
-  const StyledElement = (props, context) => {
-    const restProps = assign({}, props);
-    delete restProps.innerRef;
-
-    const resolvedStyle = {};
-    StyledElement[STYLETRON_KEY].styles.forEach(style => {
-      if (typeof style === 'function') {
-        assign(resolvedStyle, style(restProps, context));
-      } else if (typeof style === 'object') {
-        assign(resolvedStyle, style);
-      }
-    });
-
-    const styletronClassName = utils.injectStylePrefixed(
-      context.styletron,
-      resolvedStyle
-    );
-
-    const elementProps = typeof StyledElement[STYLETRON_KEY].tag === 'string'
-      ? omitInvalidProps(restProps)
-      : restProps;
-    elementProps.className = restProps.className
-      ? `${restProps.className} ${styletronClassName}`
-      : styletronClassName;
-
-    if (props.innerRef) {
-      elementProps.ref = props.innerRef;
-    }
-
-    return React.createElement(StyledElement[STYLETRON_KEY].tag, elementProps);
+function mapStyleToProps(styletron, styleResult, ownProps) {
+  const styletronClassName = injectStylePrefixed(styletron, styleResult);
+  return {
+    className: ownProps.className
+      ? `${ownProps.className} ${styletronClassName}`
+      : styletronClassName,
   };
-  StyledElement[STYLETRON_KEY] = {
-    tag: tagName,
-    styles: stylesArray,
-  };
-  StyledElement.contextTypes = {styletron: PropTypes.object};
-
-  return StyledElement;
-}
-
-function assign(target, source) {
-  for (const key in source) {
-    target[key] = source[key];
-  }
-  return target;
-}
-
-function omitInvalidProps(props) {
-  const target = {};
-  for (const attr in props) {
-    if (isValidAttr(attr)) {
-      target[attr] = props[attr];
-    }
-  }
-  return target;
 }
