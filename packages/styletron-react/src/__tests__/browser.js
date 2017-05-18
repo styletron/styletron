@@ -10,6 +10,10 @@ import core from '../core';
 import styled from '../styled';
 import Provider from '../provider';
 
+function strictMapStyleToProps(styletron, styleResult) {
+  return {className: injectStylePrefixed(styletron, styleResult)};
+}
+
 test('provider provides instance', t => {
   const mockInstance = {};
   const MockComponent = (props, context) => {
@@ -33,15 +37,19 @@ test('provider provides instance', t => {
   t.end();
 });
 
-test('props passed to styled function', t => {
+test('props passed to core function', t => {
   t.plan(1);
   const expected = {
     prop1: 'foo',
   };
-  const Widget = styled('div', props => {
-    t.deepEqual(props, expected, 'props accessible in style fn');
-    return {};
-  });
+  const Widget = core(
+    'div',
+    props => {
+      t.deepEqual(props, expected, 'props accessible in core fn');
+      return {};
+    },
+    strictMapStyleToProps
+  );
   const styletron = new Styletron();
   ReactTestUtils.renderIntoDocument(
     React.createElement(
@@ -52,10 +60,14 @@ test('props passed to styled function', t => {
   );
 });
 
-test('styled applies styles', t => {
-  const Widget = styled('div', () => {
-    return {color: 'red'};
-  });
+test('core applies styles', t => {
+  const Widget = core(
+    'div',
+    () => {
+      return {color: 'red'};
+    },
+    strictMapStyleToProps
+  );
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron}, React.createElement(Widget))
@@ -66,8 +78,8 @@ test('styled applies styles', t => {
   t.end();
 });
 
-test('styled applies static styles', t => {
-  const Widget = styled('div', {color: 'red'});
+test('core applies static styles', t => {
+  const Widget = core('div', {color: 'red'}, strictMapStyleToProps);
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron}, React.createElement(Widget))
@@ -78,8 +90,8 @@ test('styled applies static styles', t => {
   t.end();
 });
 
-test('styled passes through valid props', t => {
-  const Widget = styled('div', {color: 'red'});
+test('core passes through valid props', t => {
+  const Widget = core('div', {color: 'red'}, strictMapStyleToProps);
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(
@@ -99,9 +111,17 @@ test('styled passes through valid props', t => {
   t.end();
 });
 
-test('styled composition', t => {
-  const Widget = styled('div', {color: 'red', display: 'inline'});
-  const SuperWidget = styled(Widget, {display: 'block', background: 'black'});
+test('core composition', t => {
+  const Widget = core(
+    'div',
+    {color: 'red', display: 'inline'},
+    strictMapStyleToProps
+  );
+  const SuperWidget = core(
+    Widget,
+    {display: 'block', background: 'black'},
+    strictMapStyleToProps
+  );
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron}, React.createElement(SuperWidget))
@@ -115,9 +135,9 @@ test('styled composition', t => {
   t.end();
 });
 
-test('styled component', t => {
+test('core component', t => {
   const Widget = ({className}) => React.createElement('div', {className});
-  const SuperWidget = styled(Widget, {color: 'red'});
+  const SuperWidget = core(Widget, {color: 'red'}, strictMapStyleToProps);
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron}, React.createElement(SuperWidget))
@@ -131,7 +151,7 @@ test('styled component', t => {
 test('innerRef works', t => {
   t.plan(1);
 
-  const Widget = styled('button', {color: 'red'});
+  const Widget = core('button', {color: 'red'}, strictMapStyleToProps);
   const styletron = new Styletron();
 
   class TestComponent extends React.Component {
@@ -174,7 +194,7 @@ test('innerRef not passed', t => {
     }
   }
 
-  const Widget = styled(InnerComponent, {color: 'red'});
+  const Widget = core(InnerComponent, {color: 'red'}, strictMapStyleToProps);
   const styletron = new Styletron();
 
   class TestComponent extends React.Component {
@@ -207,16 +227,17 @@ test('innerRef not passed', t => {
   );
 });
 
-test('core passes props', t => {
-  t.plan(2);
+test('core merges props', t => {
+  t.plan(1);
 
   class InnerComponent extends React.Component {
     render() {
       t.deepEqual(
         this.props,
         {
-          styleProps: {className: 'a'},
-          ownProps: {foo: 'bar'},
+          foo: 'foo',
+          bar: 'bar',
+          className: 'a',
         },
         'matches merged props'
       );
@@ -224,20 +245,13 @@ test('core passes props', t => {
     }
   }
 
-  function mapStyleToProps(styletron, styleResult) {
-    return {className: injectStylePrefixed(styletron, styleResult)};
-  }
   function mergeProps(styleProps, ownProps) {
-    t.deepEqual(styleProps, {className: 'a'}, 'matches mapped style props');
-    return {
-      styleProps,
-      ownProps,
-    };
+    return Object.assign({bar: 'bar'}, styleProps, ownProps);
   }
   const Widget = core(
     InnerComponent,
     {color: 'red'},
-    mapStyleToProps,
+    strictMapStyleToProps,
     mergeProps
   );
   const styletron = new Styletron();
@@ -247,8 +261,23 @@ test('core passes props', t => {
       Provider,
       {styletron},
       React.createElement(Widget, {
-        foo: 'bar',
+        foo: 'foo',
       })
     )
   );
+});
+
+test('styled merges class name prop', t => {
+  const Widget = styled('div', {color: 'red'});
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement(Widget, {className: 'foo'})
+    )
+  );
+  const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
+  t.equal(div.className, 'foo a', 'matches expected classes');
+  t.end();
 });
