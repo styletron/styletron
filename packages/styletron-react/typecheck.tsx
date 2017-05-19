@@ -2,6 +2,8 @@ import * as React from 'react';
 import {
   core,
   styled,
+  withStyle,
+  ClassesProp,
 } from './';
 
 
@@ -77,6 +79,50 @@ const StyledStatefullComponentWithStyleObject = styled(StatefullComponent, {});
 const ComposedStatefullComponent = styled(StyledStatefullComponentWithStyleFunc, {});
 
 <ComposedStatefullComponent prop1={false} innerRef={(c: StatefullComponent) => {}} />
+
+
+const withStyleObject = {
+  a: {},
+  b: {},
+};
+
+type WithStyleObjectType = typeof withStyleObject;
+
+function StatelessWithStyle(props: PropType1 & ClassesProp<WithStyleObjectType>) {
+  return (
+    <div>
+      <span className={props.classes.a} />
+      <span className={props.classes.b} />
+    </div>
+  );
+}
+
+const MultiPrettyStatelessComponentWithStyleFunc = withStyle((props: PropType1) => withStyleObject)(StatelessWithStyle);
+
+<MultiPrettyStatelessComponentWithStyleFunc prop1={false} />
+
+const MultiPrettyStatelessComponentWithStyleObject = withStyle(withStyleObject)(StatelessWithStyle);
+
+<MultiPrettyStatelessComponentWithStyleObject prop1={false} />
+
+class StatefullWithStyle extends React.Component<PropType1 & ClassesProp<WithStyleObjectType>, void> {
+  render() {
+    return (
+      <div>
+        <span className={this.props.classes.a} />
+        <span className={this.props.classes.b} />
+      </div>
+    );
+  }
+}
+
+const MultiPrettyStatefullComponentWithStyleFunc = withStyle((props: PropType1) => withStyleObject)(StatefullWithStyle);
+
+<MultiPrettyStatefullComponentWithStyleFunc prop1={false} innerRef={(c: StatefullWithStyle) => {}} />
+
+const MultiPrettyStatefullWithStyleObject = withStyle(withStyleObject)(StatefullWithStyle);
+
+<MultiPrettyStatefullWithStyleObject prop1={false} innerRef={(c: StatefullWithStyle) => {}} />
 
 
 const PrettyHTMLElement = core(
