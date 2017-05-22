@@ -1,6 +1,6 @@
 {
   "name": "styletron-preact",
-  "version": "2.5.7",
+  "version": "2.5.9",
   "description": "Official Preact bindings for styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
