@@ -8,19 +8,19 @@ import StyletronClient from "styletron-client";
 declare namespace StyletronReact {
   export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, void> {}
 
-  export function styled<TProps extends ClassNameProp>(
-    base: React.StatelessComponent<TProps>,
+  export function styled<TProps>(
+    base: React.StatelessComponent<TProps & ClassNameProp>,
     style: Style<TProps>): Component<TProps>;
 
-  export function styled<TInnerProps extends ClassNameProp, TOuterProps>(
-    base: React.StatelessComponent<TInnerProps>,
-    style: Style<TOuterProps>): Component<TInnerProps & TOuterProps>;
+  export function styled<TInnerProps, TOuterProps>(
+    base: React.StatelessComponent<TInnerProps & ClassNameProp>,
+    style: Style<TOuterProps>): Component<TOuterProps & TInnerProps>;
 
-  export function styled<TProps extends ClassNameProp, TComponent extends React.Component<TProps, React.ComponentState>>(
-    base: React.ClassType<TProps, TComponent, React.ComponentClass<TProps>>,
+  export function styled<TProps, TComponent extends React.Component<TProps, React.ComponentState>>(
+    base: React.ClassType<TProps, TComponent, React.ComponentClass<TProps & ClassNameProp>>,
     style: Style<TProps>): Component<ClassProps<TProps, TComponent>>;
 
-  export function styled<TProps extends ClassNameProp, TBase extends keyof BasePropsMap<TProps>>(
+  export function styled<TProps, TBase extends keyof BasePropsMap<TProps>>(
     base: TBase,
     style: Style<TProps>): Component<BasePropsMap<TProps>[TBase]>;
 
@@ -32,60 +32,32 @@ declare namespace StyletronReact {
     base: string,
     style: Style<TProps>): Component<SVGProps<TProps, TElement>>;
 
-  export function core<TProps>(
-    base: React.StatelessComponent<TProps>,
-    style: Style<TProps>,
-    mapStyleToProps: MapStyleToPartialProps<TProps>): Component<TProps>;
+  type ClassNameProp = {className?: string};
 
-  export function core<TInnerProps, TOuterProps, TStyleProps>(
+  export function core<TOuterProps, TInnerProps>(
     base: React.StatelessComponent<TInnerProps>,
     style: Style<TOuterProps>,
-    mapStyleToProps: MapStyleToProps<TInnerProps, TStyleProps>,
-    mergeProps: MergeProps<TInnerProps, TOuterProps, TStyleProps>): Component<TOuterProps>;
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<TOuterProps>;
 
-  export function core<TProps, TComponent extends React.Component<TProps, React.ComponentState>>(
-    base: React.ClassType<TProps, TComponent, React.ComponentClass<TProps>>,
-    style: Style<TProps>,
-    mapStyleToProps: MapStyleToPartialProps<TProps>): Component<ClassProps<TProps, TComponent>>;
-
-  export function core<TInnerProps, TOuterProps, TStyleProps, TComponent extends React.Component<TInnerProps, React.ComponentState>>(
+  export function core<TOuterProps, TInnerProps, TComponent extends React.Component<TInnerProps, React.ComponentState>>(
     base: React.ClassType<TInnerProps, TComponent, React.ComponentClass<TInnerProps>>,
     style: Style<TOuterProps>,
-    mapStyleToProps: MapStyleToProps<TInnerProps, TStyleProps>,
-    mergeProps: MergeProps<TInnerProps, TOuterProps, TStyleProps>): Component<ClassProps<TOuterProps, TComponent>>;
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<ClassProps<TOuterProps, TComponent>>;
 
-  export function core<TProps, TBase extends keyof BasePropsMap<TProps>>(
-    base: TBase,
-    style: Style<TProps>,
-    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>): Component<BasePropsMap<TProps>[TBase]>;
-
-  export function core<TInnerProps, TOuterProps, TBase extends keyof BasePropsMap<TInnerProps>>(
+  export function core<TOuterProps, TInnerProps, TBase extends keyof BasePropsMap<TInnerProps>>(
     base: TBase,
     style: Style<TOuterProps>,
-    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>,
-    mergeProps: MergeProps<TInnerProps, TOuterProps, ClassNameProp>): Component<BasePropsMap<TOuterProps>[TBase]>;
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<BasePropsMap<TOuterProps>[TBase]>;
 
-  export function core<TElement extends HTMLElement, TProps>(
-    base: string,
-    style: Style<TProps>,
-    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>): Component<HTMLProps<TProps, TElement>>;
-
-  export function core<TElement extends HTMLElement, TInnerProps, TOuterProps>(
+  export function core<TElement extends HTMLElement, TOuterProps, TInnerProps>(
     base: string,
     style: Style<TOuterProps>,
-    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>,
-    mergeProps: MergeProps<TInnerProps, TOuterProps, ClassNameProp>): Component<HTMLProps<TOuterProps, TElement>>;
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<HTMLProps<TOuterProps, TElement>>;
 
-  export function core<TElement extends SVGElement, TProps>(
-    base: string,
-    style: Style<TProps>,
-    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>): Component<SVGProps<TProps, TElement>>;
-
-  export function core<TElement extends SVGElement, TInnerProps, TOuterProps>(
+  export function core<TElement extends SVGElement, TOuterProps, TInnerProps>(
     base: string,
     style: Style<TOuterProps>,
-    mapStyleToProps: MapStyleToPartialProps<ClassNameProp>,
-    mergeProps: MergeProps<TInnerProps, TOuterProps, ClassNameProp>): Component<SVGProps<TOuterProps, TElement>>;
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<SVGProps<TOuterProps, TElement>>;
 
   type Component<TProps> = React.StatelessComponent<TProps>;
 
@@ -99,19 +71,13 @@ declare namespace StyletronReact {
     innerRef?: React.Ref<TInstance>;
   };
 
-  // Intersecting `CSSProperties` enables autocompletion for CSS properties as
-  // plain objects and not only for function return objects
-  type StyleFunction<TProps> = React.CSSProperties & ((props: TProps, context?: any) => React.CSSProperties);
+  type AssignProps<TOuterProps, TInnerProps> = (styletron: StyletronServer | StyletronClient, style: React.CSSProperties, props?: TOuterProps) => TInnerProps;
 
   type Style<TProps> = React.CSSProperties | StyleFunction<TProps>;
 
-  type MapStyleToPartialProps<TProps> = (styletron: StyletronServer | StyletronClient, style: React.CSSProperties, props?: TProps) => Partial<TProps>;
-
-  type MapStyleToProps<TProps, TStyleProps> = (styletron: StyletronServer | StyletronClient, style: React.CSSProperties, props?: TProps) => TStyleProps;
-
-  type MergeProps<TInnerProps, TOuterProps, TStyleProps> = (styleProps: TStyleProps, ownProps: TOuterProps) => TInnerProps;
-
-  type ClassNameProp = {className?: string};
+  // Intersecting `CSSProperties` enables autocompletion for CSS properties as
+  // plain objects and not only for function return objects
+  type StyleFunction<TProps> = React.CSSProperties & ((props: TProps, context?: any) => React.CSSProperties);
 
   interface BasePropsMap<TProps> {
     a: HTMLProps<TProps, HTMLAnchorElement>;
