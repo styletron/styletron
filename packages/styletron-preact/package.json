@@ -24,7 +24,7 @@
     "styletron-utils": "^2.5.4"
   },
   "peerDependencies": {
-    "preact": "6.x"
+    "preact": "6.x - 8.x"
   },
   "devDependencies": {
     "babel-preset-cup": "^1.0.0-rc.2",
