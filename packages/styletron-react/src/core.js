@@ -7,42 +7,26 @@ const STYLETRON_KEY = '__STYLETRON';
 /**
  * Helper function to create styled element components
  * @packagename styletron-react
- * @param  {String|function} base            Tag name or styled element component
- * @param  {function|object} styleFn         Style object or function that returns a style object
- * @param  {function}        mapStyleToProps Function that consumes the style object result and returns an object with class names
- * @param  {function}        mergeProps      Optional function where you can override the merging of props and the returned object from `mapStyleToProps`
- * @return {function}                        Styled element component
+ * @param  {String|function} base        Tag name or component
+ * @param  {function|object} styleFn     Style object or function that returns a style object
+ * @param  {function}        assignProps Function that consumes the style result and props and returns an object with new props
+ * @return {function}                    Component
  * @example
  */
-export default function core(base, style, mapStyleToProps, mergeProps) {
+export default function core(base, style, assignProps) {
   if (typeof base === 'function' && base[STYLETRON_KEY]) {
     const {tag, styles} = base[STYLETRON_KEY];
     // Styled component
-    return createStyledElementComponent(
-      tag,
-      styles.concat(style),
-      mapStyleToProps,
-      mergeProps
-    );
+    return createStyledElementComponent(tag, styles.concat(style), assignProps);
   }
   if (typeof base === 'string' || typeof base === 'function') {
     // Tag name or non-styled component
-    return createStyledElementComponent(
-      base,
-      [style],
-      mapStyleToProps,
-      mergeProps
-    );
+    return createStyledElementComponent(base, [style], assignProps);
   }
   throw new Error('`styled` takes either a DOM element name or a component');
 }
 
-function createStyledElementComponent(
-  tagName,
-  stylesArray,
-  mapStyleToProps,
-  mergeProps
-) {
+function createStyledElementComponent(tagName, stylesArray, assignProps) {
   function StyledElement(props, context) {
     const ownProps = assign({}, props);
     delete ownProps.innerRef;
@@ -56,23 +40,15 @@ function createStyledElementComponent(
       }
     });
 
-    const styleProps = mapStyleToProps(
-      context.styletron,
-      styleResult,
-      ownProps
-    );
-
-    let elementProps = typeof mergeProps === 'function'
-      ? mergeProps(styleProps, ownProps)
-      : assign(ownProps, styleProps);
+    let elementProps = assignProps(context.styletron, styleResult, ownProps);
 
     if (props.innerRef) {
       elementProps.ref = props.innerRef;
     }
 
-    elementProps = typeof StyledElement[STYLETRON_KEY].tag === 'string'
-      ? omitInvalidProps(elementProps)
-      : elementProps;
+    if (typeof StyledElement[STYLETRON_KEY].tag === 'string') {
+      elementProps = omitInvalidProps(elementProps);
+    }
 
     return React.createElement(StyledElement[STYLETRON_KEY].tag, elementProps);
   }

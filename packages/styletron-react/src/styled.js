@@ -37,14 +37,14 @@ import {injectStylePrefixed} from 'styletron-utils';
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
 export default function styled(base, style) {
-  return core(base, style, mapStyleToProps);
+  return core(base, style, assignProps);
 }
 
-function mapStyleToProps(styletron, styleResult, ownProps) {
+function assignProps(styletron, styleResult, ownProps) {
   const styletronClassName = injectStylePrefixed(styletron, styleResult);
-  return {
-    className: ownProps.className
-      ? `${ownProps.className} ${styletronClassName}`
-      : styletronClassName,
-  };
+  // Skipping cloning of `ownProps` since that's already done internally
+  ownProps.className = ownProps.className
+    ? `${ownProps.className} ${styletronClassName}`
+    : styletronClassName;
+  return ownProps;
 }

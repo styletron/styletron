@@ -10,8 +10,10 @@ import core from '../core';
 import styled from '../styled';
 import Provider from '../provider';
 
-function strictMapStyleToProps(styletron, styleResult) {
-  return {className: injectStylePrefixed(styletron, styleResult)};
+function strictAssignProps(styletron, styleResult, ownProps) {
+  return Object.assign({}, ownProps, {
+    className: injectStylePrefixed(styletron, styleResult),
+  });
 }
 
 test('provider provides instance', t => {
@@ -48,7 +50,7 @@ test('props passed to core function', t => {
       t.deepEqual(props, expected, 'props accessible in core fn');
       return {};
     },
-    strictMapStyleToProps
+    strictAssignProps
   );
   const styletron = new Styletron();
   ReactTestUtils.renderIntoDocument(
@@ -66,7 +68,7 @@ test('core applies styles', t => {
     () => {
       return {color: 'red'};
     },
-    strictMapStyleToProps
+    strictAssignProps
   );
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
@@ -79,7 +81,7 @@ test('core applies styles', t => {
 });
 
 test('core applies static styles', t => {
-  const Widget = core('div', {color: 'red'}, strictMapStyleToProps);
+  const Widget = core('div', {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron}, React.createElement(Widget))
@@ -91,7 +93,7 @@ test('core applies static styles', t => {
 });
 
 test('core passes through valid props', t => {
-  const Widget = core('div', {color: 'red'}, strictMapStyleToProps);
+  const Widget = core('div', {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(
@@ -115,12 +117,12 @@ test('core composition', t => {
   const Widget = core(
     'div',
     {color: 'red', display: 'inline'},
-    strictMapStyleToProps
+    strictAssignProps
   );
   const SuperWidget = core(
     Widget,
     {display: 'block', background: 'black'},
-    strictMapStyleToProps
+    strictAssignProps
   );
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
@@ -137,7 +139,7 @@ test('core composition', t => {
 
 test('core component', t => {
   const Widget = ({className}) => React.createElement('div', {className});
-  const SuperWidget = core(Widget, {color: 'red'}, strictMapStyleToProps);
+  const SuperWidget = core(Widget, {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
   const output = ReactTestUtils.renderIntoDocument(
     React.createElement(Provider, {styletron}, React.createElement(SuperWidget))
@@ -151,7 +153,7 @@ test('core component', t => {
 test('innerRef works', t => {
   t.plan(1);
 
-  const Widget = core('button', {color: 'red'}, strictMapStyleToProps);
+  const Widget = core('button', {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
 
   class TestComponent extends React.Component {
@@ -194,7 +196,7 @@ test('innerRef not passed', t => {
     }
   }
 
-  const Widget = core(InnerComponent, {color: 'red'}, strictMapStyleToProps);
+  const Widget = core(InnerComponent, {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
 
   class TestComponent extends React.Component {
@@ -223,46 +225,6 @@ test('innerRef not passed', t => {
       Provider,
       {styletron},
       React.createElement(TestComponent)
-    )
-  );
-});
-
-test('core merges props', t => {
-  t.plan(1);
-
-  class InnerComponent extends React.Component {
-    render() {
-      t.deepEqual(
-        this.props,
-        {
-          foo: 'foo',
-          bar: 'bar',
-          className: 'a',
-        },
-        'matches merged props'
-      );
-      return <button>InnerComponent</button>;
-    }
-  }
-
-  function mergeProps(styleProps, ownProps) {
-    return Object.assign({bar: 'bar'}, styleProps, ownProps);
-  }
-  const Widget = core(
-    InnerComponent,
-    {color: 'red'},
-    strictMapStyleToProps,
-    mergeProps
-  );
-  const styletron = new Styletron();
-
-  ReactTestUtils.renderIntoDocument(
-    React.createElement(
-      Provider,
-      {styletron},
-      React.createElement(Widget, {
-        foo: 'foo',
-      })
     )
   );
 });

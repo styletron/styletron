@@ -35,159 +35,127 @@ const WithStyleObject = styled('button', {
 });
 
 
-const PrettyHtmlElement = styled('button', (props: PropType1) => ({}));
+const StyledHtmlElement = styled('button', (props: PropType1) => ({}));
 
-<PrettyHtmlElement type="" prop1={false} innerRef={(el: HTMLButtonElement) => {}} />
+<StyledHtmlElement type="" prop1={false} innerRef={(el: HTMLButtonElement) => {}} />
 
-const ComposedHtmlElement = styled(PrettyHtmlElement, (props: PropType2) => ({}));
+const ComposedHtmlElement = styled(StyledHtmlElement, (props: PropType2) => ({}));
 
 <ComposedHtmlElement type="" prop1={false} prop2={0} innerRef={(el: HTMLButtonElement) => {}} />
 
 
-const PrettySvgElement = styled('svg', (props: PropType1) => ({}));
+const StyledSvgElement = styled('svg', (props: PropType1) => ({}));
 
-<PrettySvgElement fill="" prop1={false} innerRef={(el: SVGElement) => {}} />
+<StyledSvgElement fill="" prop1={false} innerRef={(el: SVGElement) => {}} />
 
-const ComposedSvgElement = styled(PrettySvgElement, (props: PropType2) => ({}));
+const ComposedSvgElement = styled(StyledSvgElement, (props: PropType2) => ({}));
 
 <ComposedSvgElement fill="" prop1={false} prop2={0} innerRef={(el: SVGElement) => {}} />
 
 
-const PrettyStatelessComponentWithStyleFunc = styled(StatelessComponent, (props: PropType1) => ({}));
+const StyledStatelessComponentWithStyleFunc = styled(StatelessComponent, (props: PropType1) => ({}));
 
-<PrettyStatelessComponentWithStyleFunc prop1={false} />
+<StyledStatelessComponentWithStyleFunc prop1={false} />
 
-const PrettyStatelessComponentWithStyleObject = styled(StatelessComponent, {});
+const StyledStatelessComponentWithStyleObject = styled(StatelessComponent, {});
 
-<PrettyStatelessComponentWithStyleObject prop1={false} />
+<StyledStatelessComponentWithStyleObject prop1={false} />
 
-const ComposedStatelessComponent = styled(PrettyStatelessComponentWithStyleFunc, {});
+const ComposedStatelessComponent = styled(StyledStatelessComponentWithStyleFunc, {});
 
 <ComposedStatelessComponent prop1={false} />
 
 
-const PrettyStatefullComponentWithStyleFunc = styled(StatefullComponent, (props: PropType1) => ({}));
+const StyledStatefullComponentWithStyleFunc = styled(StatefullComponent, (props: PropType1) => ({}));
 
-<PrettyStatefullComponentWithStyleFunc prop1={false} innerRef={(c: StatefullComponent) => {}} />
+<StyledStatefullComponentWithStyleFunc prop1={false} innerRef={(c: StatefullComponent) => {}} />
 
-const PrettyStatefullComponentWithStyleObject = styled(StatefullComponent, {});
+const StyledStatefullComponentWithStyleObject = styled(StatefullComponent, {});
 
-<PrettyStatefullComponentWithStyleObject prop1={false} innerRef={(c: StatefullComponent) => {}} />
+<StyledStatefullComponentWithStyleObject prop1={false} innerRef={(c: StatefullComponent) => {}} />
 
-const ComposedStatefullComponent = styled(PrettyStatefullComponentWithStyleFunc, {});
+const ComposedStatefullComponent = styled(StyledStatefullComponentWithStyleFunc, {});
 
 <ComposedStatefullComponent prop1={false} innerRef={(c: StatefullComponent) => {}} />
 
 
-const CustomPrettyHTMLElement = core(
+const PrettyHTMLElement = core(
   'button',
   (props: PropType1) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''})
+  (styletron, styleResult, ownProps: PropType1) => ({...ownProps, className: ''})
 );
 
-<CustomPrettyHTMLElement type="" prop1={false} innerRef={(el: HTMLButtonElement) => {}} />
+<PrettyHTMLElement type="" prop1={false} innerRef={(el: HTMLButtonElement) => {}} />
 
-const MergedPrettyHTMLElement = core(
-  'button',
-  (props: PropType2) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''}),
-  (styleProps, ownProps: PropType2) => ({prop1: false})
-);
-
-<MergedPrettyHTMLElement type="" prop2={0} innerRef={(el: HTMLButtonElement) => {}} />
-
-
-const CustomPrettySVGElement = core(
+const PrettySVGElement = core(
   'svg',
   (props: PropType1) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''})
+  (styletron, styleResult, ownProps: PropType1) => ({...ownProps, className: ''})
 );
 
-<CustomPrettySVGElement type="" prop1={false} innerRef={(el: SVGElement) => {}} />
+<PrettySVGElement type="" prop1={false} innerRef={(el: SVGElement) => {}} />
 
-const MergedPrettySVGElement = core(
-  'svg',
-  (props: PropType2) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''}),
-  (props: PropType2) => ({prop2: false})
-);
-
-<MergedPrettySVGElement type="" prop2={0} innerRef={(el: SVGElement) => {}} />
-
-
-const CustomPrettyStatelessComponentWithStyleFunc = core(
+const PrettyStatelessComponentWithStyleFunc = core(
   StatelessComponent,
   (props: PropType1) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''})
+  (styletron, styleResult, ownProps: PropType1) => ({...ownProps, className: ''})
 );
 
-<CustomPrettyStatelessComponentWithStyleFunc prop1={false} />
+<PrettyStatelessComponentWithStyleFunc prop1={false} />
 
-const CustomPrettyStatelessComponentWithStyleObject = core(
+const PrettyStatelessComponentWithStyleObject = core(
   StatelessComponent,
   {},
-  (styletron, styleResult, ownProps) => ({className: ''})
+  (styletron, styleResult, ownProps: PropType1) => ({...ownProps, className: ''})
 );
 
-<CustomPrettyStatelessComponentWithStyleObject prop1={false} />
+<PrettyStatelessComponentWithStyleObject prop1={false} />
 
-const MergedPrettyStatelessComponentWithStyleFunc = core(
-  (props: PropType1) => <StatelessComponent {...props} />,
-  (props: PropType2) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''}),
-  (styleProps, ownProps: PropType2) => ({prop1: false})
-);
-
-<MergedPrettyStatelessComponentWithStyleFunc prop2={0} />
-
-const MergedPrettyStatelessComponentWithStyleObject = core(
-  (props: PropType1) => <StatelessComponent {...props} />,
-  {},
-  (styletron, styleResult, ownProps) => ({className: ''}),
-  (styleProps, ownProps: PropType2) => ({prop1: false})
-);
-
-<MergedPrettyStatelessComponentWithStyleObject prop2={0} />
-
-
-const CustomPrettyStatefullComponentWithStyleFunc = core(
+const PrettyStatefullComponentWithStyleFunc = core(
   StatefullComponent,
   (props: PropType1) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''})
+  (styletron, styleResult, ownProps: PropType1) => ({...ownProps, className: ''})
 );
 
-<CustomPrettyStatefullComponentWithStyleFunc prop1={false} />
+<PrettyStatefullComponentWithStyleFunc prop1={false} />
 
-const CustomPrettyStatefullComponentWithStyleObject = core(
+const PrettyStatefullComponentWithStyleObject = core(
   StatefullComponent,
   {},
-  (styletron, styleResult, ownProps) => ({className: ''})
+  (styletron, styleResult, ownProps: PropType1) => ({...ownProps, className: ''})
 );
 
-<CustomPrettyStatefullComponentWithStyleObject prop1={false} />
+<PrettyStatefullComponentWithStyleObject prop1={false} />
 
-const MergedPrettyStatefullComponentWithStyleFunc = core(
-  class extends React.Component<PropType1, void> {
-    render() {
-      return <StatefullComponent {...this.props} />;
-    }
-  },
-  (props: PropType2) => ({}),
-  (styletron, styleResult, ownProps) => ({className: ''}),
-  (styleProps, ownProps: PropType2) => ({prop1: false})
+
+const EmittingPropStatelessComponentWithStyleFunc = core(
+  StatelessComponent,
+  (props: PropType1 & PropType2) => ({}),
+  (styletron, styleResult, {prop2, ...restProps}: PropType1 & PropType2) => ({...restProps, className: ''})
 );
 
-<MergedPrettyStatefullComponentWithStyleFunc prop2={0} />
+<EmittingPropStatelessComponentWithStyleFunc prop1={false} prop2={0} />
 
-const MergedPrettyStatefullComponentWithStyleObject = core(
-  class extends React.Component<PropType1, void> {
-    render() {
-      return <StatefullComponent {...this.props} />;
-    }
-  },
+const EmittingPropStatelessComponentWithStyleObject = core(
+  StatelessComponent,
   {},
-  (styletron, styleResult, ownProps) => ({className: ''}),
-  (styleProps, ownProps: PropType2) => ({prop1: false})
+  (styletron, styleResult, {prop2, ...restProps}: PropType1 & PropType2) => ({...restProps, className: ''})
 );
 
-<MergedPrettyStatefullComponentWithStyleObject prop2={0} />
+<EmittingPropStatelessComponentWithStyleObject prop1={false} prop2={0} />
+
+const EmittingPropStatefullComponentWithStyleFunc = core(
+  StatefullComponent,
+  (props: PropType1 & PropType2) => ({}),
+  (styletron, styleResult, {prop2, ...restProps}: PropType1 & PropType2) => ({...restProps, className: ''})
+);
+
+<EmittingPropStatefullComponentWithStyleFunc prop1={false} prop2={0} />
+
+const EmittingPropStatefullComponentWithStyleObject = core(
+  StatefullComponent,
+  {},
+  (styletron, styleResult, {prop2, ...restProps}: PropType1 & PropType2) => ({...restProps, className: ''})
+);
+
+<EmittingPropStatefullComponentWithStyleObject prop1={false} prop2={0} />
