@@ -24,7 +24,7 @@
   "devDependencies": {
     "babel-preset-cup": "^1.0.0-rc.2",
     "create-universal-package": "^1.0.0-rc.3",
-    "test-fixtures": "*"
+    "test-fixtures": "^0.0.1"
   },
   "license": "MIT"
 }
