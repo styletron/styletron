@@ -34,9 +34,8 @@ test('hydration basic', t => {
   const instance = new StyletronTest(elements);
   t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
   t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
-  const newClass = instance.injectDeclaration({
-    prop: 'color',
-    val: 'purple',
+  const newClass = instance.injectRawDeclaration({
+    block: 'color:purple',
     media: '(max-width: 800px)',
   });
   t.equal(newClass, 'f', 'new class with correct count');
@@ -47,14 +46,14 @@ test('rule insertion order', t => {
   const element = createStyleElement('');
   const instance = new StyletronTest([element]);
   const decls = [
-    {prop: 'color', val: 'red'},
-    {prop: 'color', val: 'blue'},
-    {prop: 'color', val: 'blue', media: '(max-width: 333px)'},
-    {prop: 'color', val: 'green'},
-    {prop: 'color', val: 'red', media: 'screen and (max-width: 400px)'},
-    {prop: 'color', val: 'purple'},
+    {block: 'color:red'},
+    {block: 'color:blue'},
+    {block: 'color:blue', media: '(max-width: 333px)'},
+    {block: 'color:green'},
+    {block: 'color:red', media: 'screen and (max-width: 400px)'},
+    {block: 'color:purple'},
   ];
-  decls.forEach(decl => instance.injectDeclaration(decl));
+  decls.forEach(decl => instance.injectRawDeclaration(decl));
   t.equal(element.sheet.rules.length, 4);
   const mainExpected = [
     '.a { color: red; }',
