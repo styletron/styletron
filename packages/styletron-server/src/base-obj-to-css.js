@@ -1,32 +1,23 @@
 export default baseHandler;
 
-function baseHandler(key, valueObj) {
+function baseHandler(key, objOrClassName) {
   return key === 'pseudo'
-    ? pseudoObjToCss(valueObj)
-    : valsObjToCss(key, valueObj);
+    ? pseudoObjToCss(objOrClassName)
+    : declToCss(key, objOrClassName);
 }
 
 function pseudoObjToCss(pseudoObj) {
   let css = '';
   for (const pseudoClass in pseudoObj) {
     const propsObj = pseudoObj[pseudoClass];
-    for (const prop in propsObj) {
-      css += valsObjToCss(prop, propsObj[prop], pseudoClass);
+    for (const block in propsObj) {
+      css += declToCss(block, propsObj[block], pseudoClass);
     }
   }
   return css;
 }
 
-function valsObjToCss(prop, valsObj, pseudo) {
-  let css = '';
-  for (const val in valsObj) {
-    const className = valsObj[val];
-    css += declToCss(prop, val, className, pseudo);
-  }
-  return css;
-}
-
-function declToCss(prop, val, className, pseudo) {
-  const classString = pseudo ? `${className}${pseudo}` : className;
-  return `.${classString}{${prop}:${val}}`;
+function declToCss(block, className, pseudo) {
+  const selector = pseudo ? `${className}${pseudo}` : className;
+  return `.${selector}{${block}}`;
 }
