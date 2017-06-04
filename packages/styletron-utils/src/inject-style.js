@@ -8,26 +8,29 @@ export default function injectStyle(styletron, styles, media, pseudo) {
     if (valType === 'string' || valType === 'number') {
       classString +=
         ' ' +
-        styletron.injectDeclaration({
-          prop: hyphenate(key),
-          val,
+        styletron.injectRawDeclaration({
+          block: `${hyphenate(key)}:${val}`,
           media,
           pseudo,
         });
       continue;
     }
     if (Array.isArray(val)) {
-      for (let i = 0; i < val.length; i++) {
-        const hyphenated = hyphenate(key);
-        classString +=
-          ' ' +
-          styletron.injectDeclaration({
-            prop: hyphenated,
-            val: val[i],
-            media,
-            pseudo,
-          });
+      if (val.length === 0) {
+        continue;
       }
+      const hyphenated = hyphenate(key);
+      let block = `${hyphenated}:${val[0]}`;
+      for (let i = 1; i < val.length; i++) {
+        block += `;${hyphenated}:${val[i]}`;
+      }
+      classString +=
+        ' ' +
+        styletron.injectRawDeclaration({
+          block,
+          media,
+          pseudo,
+        });
       continue;
     }
     if (valType === 'object') {
