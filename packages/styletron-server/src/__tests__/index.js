@@ -55,7 +55,7 @@ test('test getStylesheetsOldIE method', t => {
     instance.injectRawDeclaration({block: `font-size:${i}px`});
   }
   t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
-  instance.injectRawDeclaration({block: 'color:red'});
+  instance.injectRawDeclaration({block: 'color:red', pseudo: ':hover'});
   t.equal(
     instance.getStylesheetsOldIE().length,
     2,
@@ -71,6 +71,7 @@ test('test getStylesheetsOldIE method', t => {
   instance.injectRawDeclaration({
     block: 'color:red',
     media: '(max-width: 400px)',
+    pseudo: ':hover',
   });
   t.equal(instance.getStylesheetsOldIE().length, 4, 'media sheet rollover');
   t.end();
