@@ -20,7 +20,9 @@ function cacheToStylesheetsOldIE(cacheObj) {
       mediaSheets = getMediaSheets(cacheObj[key]);
       continue;
     }
-    if (typeof cacheObj[key] === 'string') {
+    if (typeof cacheObj[key] === 'object') {
+      ruleCount += Object.keys(cacheObj[key]).length;
+    } else {
       ruleCount++;
     }
     mainCss += baseHandler(key, cacheObj[key]);
@@ -44,7 +46,9 @@ function getMediaSheets(mediaObj) {
     let mediaCss = '';
     let ruleCount = 0;
     for (const key in obj) {
-      if (typeof obj[key] === 'string') {
+      if (typeof obj[key] === 'object') {
+        ruleCount += Object.keys(obj[key]).length;
+      } else {
         ruleCount++;
       }
       mediaCss += baseHandler(key, obj[key]);
