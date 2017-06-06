@@ -77,25 +77,41 @@ test('test injection prefixed', function(t) {
     },
   };
   const classString = injectStylePrefixed(spy, {
-    width: 'calc(100%)',
-    height: ['min-content', 'calc(50%)'],
-    boxSizing: 'border-box',
+    display: 'flex',
+    height: ['min-content', '100%'],
+    transition: 'height 1s',
+    ':hover': {
+      backgroundColor: 'linear-gradient(to bottom, red, green)',
+    },
+    '@media (max-width: 500px)': {
+      flexGrow: 1,
+    },
   });
-  t.equal(classString, '1 2 3');
+  t.equal(classString, '1 2 3 4 5');
   t.deepEqual(decls, [
     {
-      block: 'width:calc(100%)',
+      block: 'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
       media: undefined,
       pseudo: undefined,
     },
     {
-      block: 'height:-webkit-min-content;height:-moz-min-content;height:min-content;height:calc(50%)',
+      block: 'height:-webkit-min-content;height:-moz-min-content;height:min-content;height:100%',
       media: undefined,
       pseudo: undefined,
     },
     {
-      block: 'box-sizing:border-box',
+      block: 'transition:height 1s;-webkit-transition:height 1s;-moz-transition:height 1s',
       media: undefined,
+      pseudo: undefined,
+    },
+    {
+      block: 'background-color:-webkit-linear-gradient(to bottom, red, green);background-color:-moz-linear-gradient(to bottom, red, green);background-color:linear-gradient(to bottom, red, green)',
+      media: undefined,
+      pseudo: ':hover',
+    },
+    {
+      block: 'flex-grow:1;-webkit-flex-grow:1',
+      media: '(max-width: 500px)',
       pseudo: undefined,
     },
   ]);
