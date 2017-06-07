@@ -1,37 +1,52 @@
 import hyphenate from './hyphenate-style-name';
 import prefixAll from 'inline-style-prefixer/static';
 
+const prefixedBlockCache = {};
+
 export default function injectStylePrefixed(styletron, styles, media, pseudo) {
   let classString = '';
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
     const originalValType = typeof originalVal;
-    if (
-      originalValType === 'string' ||
-      originalValType === 'number' ||
-      Array.isArray(originalVal)
-    ) {
-      const prefixed = prefixAll({[originalKey]: originalVal});
+    const isPrimitiveVal =
+      originalValType === 'string' || originalValType === 'number';
+    if (isPrimitiveVal || Array.isArray(originalVal)) {
       let block = '';
-      for (const prefixedKey in prefixed) {
-        const prefixedVal = prefixed[prefixedKey];
-        const prefixedValType = typeof prefixedVal;
-        if (prefixedValType === 'string' || prefixedValType === 'number') {
-          block += `${hyphenate(prefixedKey)}:${prefixedVal};`;
-          continue;
-        }
-        if (Array.isArray(prefixedVal)) {
-          const hyphenated = hyphenate(prefixedKey);
-          for (let i = 0; i < prefixedVal.length; i++) {
-            block += `${hyphenated}:${prefixedVal[i]};`;
+      if (
+        isPrimitiveVal &&
+        prefixedBlockCache.hasOwnProperty(originalKey) &&
+        prefixedBlockCache[originalKey].hasOwnProperty(originalVal)
+      ) {
+        block = prefixedBlockCache[originalKey][originalVal];
+      } else {
+        const prefixed = prefixAll({[originalKey]: originalVal});
+        for (const prefixedKey in prefixed) {
+          const prefixedVal = prefixed[prefixedKey];
+          const prefixedValType = typeof prefixedVal;
+          if (prefixedValType === 'string' || prefixedValType === 'number') {
+            block += `${hyphenate(prefixedKey)}:${prefixedVal};`;
+            continue;
           }
-          continue;
+          if (Array.isArray(prefixedVal)) {
+            const hyphenated = hyphenate(prefixedKey);
+            for (let i = 0; i < prefixedVal.length; i++) {
+              block += `${hyphenated}:${prefixedVal[i]};`;
+            }
+            continue;
+          }
+        }
+        block = block.slice(0, -1); // Remove trailing semicolon
+        if (isPrimitiveVal) {
+          if (!prefixedBlockCache.hasOwnProperty(originalKey)) {
+            prefixedBlockCache[originalKey] = {};
+          }
+          prefixedBlockCache[originalKey][originalVal] = block;
         }
       }
       classString +=
         ' ' +
         styletron.injectRawDeclaration({
-          block: block.slice(0, -1), // Remove trailing semicolon
+          block,
           media,
           pseudo,
         });
