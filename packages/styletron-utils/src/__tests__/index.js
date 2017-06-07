@@ -117,3 +117,39 @@ test('test injection prefixed', function(t) {
   ]);
   t.end();
 });
+
+test('test prefixed cache', function(t) {
+  const decls = [];
+  const spy = {
+    injectRawDeclaration: function(decl) {
+      decls.push(decl);
+      return decls.length;
+    },
+  };
+  const cache = {flexGrow: {1: 'color:red'}};
+  injectStylePrefixed(
+    spy,
+    {
+      display: 'flex',
+      flexGrow: 1,
+    },
+    undefined,
+    undefined,
+    cache
+  );
+  t.deepEqual(cache, {
+    display: {
+      flex: 'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
+    },
+    flexGrow: {1: 'color:red'},
+  });
+  t.deepEqual(decls, [
+    {
+      block: 'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
+      media: undefined,
+      pseudo: undefined,
+    },
+    {block: 'color:red', media: undefined, pseudo: undefined},
+  ]);
+  t.end();
+});
