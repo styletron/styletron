@@ -3,7 +3,13 @@ import prefixAll from 'inline-style-prefixer/static';
 
 const prefixedBlockCache = {};
 
-export default function injectStylePrefixed(styletron, styles, media, pseudo) {
+export default function injectStylePrefixed(
+  styletron,
+  styles,
+  media,
+  pseudo,
+  cache = prefixedBlockCache
+) {
   let classString = '';
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
@@ -14,10 +20,10 @@ export default function injectStylePrefixed(styletron, styles, media, pseudo) {
       let block = '';
       if (
         isPrimitiveVal &&
-        prefixedBlockCache.hasOwnProperty(originalKey) &&
-        prefixedBlockCache[originalKey].hasOwnProperty(originalVal)
+        cache.hasOwnProperty(originalKey) &&
+        cache[originalKey].hasOwnProperty(originalVal)
       ) {
-        block = prefixedBlockCache[originalKey][originalVal];
+        block = cache[originalKey][originalVal];
       } else {
         const prefixed = prefixAll({[originalKey]: originalVal});
         for (const prefixedKey in prefixed) {
@@ -37,10 +43,10 @@ export default function injectStylePrefixed(styletron, styles, media, pseudo) {
         }
         block = block.slice(0, -1); // Remove trailing semicolon
         if (isPrimitiveVal) {
-          if (!prefixedBlockCache.hasOwnProperty(originalKey)) {
-            prefixedBlockCache[originalKey] = {};
+          if (!cache.hasOwnProperty(originalKey)) {
+            cache[originalKey] = {};
           }
-          prefixedBlockCache[originalKey][originalVal] = block;
+          cache[originalKey][originalVal] = block;
         }
       }
       classString +=
@@ -54,7 +60,14 @@ export default function injectStylePrefixed(styletron, styles, media, pseudo) {
     if (originalValType === 'object') {
       if (originalKey[0] === ':') {
         classString +=
-          ' ' + injectStylePrefixed(styletron, originalVal, media, originalKey);
+          ' ' +
+          injectStylePrefixed(
+            styletron,
+            originalVal,
+            media,
+            originalKey,
+            cache
+          );
         continue;
       }
       if (originalKey.substring(0, 6) === '@media') {
@@ -64,7 +77,8 @@ export default function injectStylePrefixed(styletron, styles, media, pseudo) {
             styletron,
             originalVal,
             originalKey.substr(7),
-            pseudo
+            pseudo,
+            cache
           );
         continue;
       }
