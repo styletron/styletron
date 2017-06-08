@@ -17,14 +17,6 @@ class StyletronServer extends StyletronCore {
     super(opts);
   }
 
-  injectDeclaration(decl) {
-    return super.injectDeclaration(decl);
-  }
-
-  injectRawDeclaration(decl) {
-    return super.injectRawDeclaration(decl);
-  }
-
   /**
    * Get an array of stylesheet objects
    * @return {Array} Array of stylesheet objects
