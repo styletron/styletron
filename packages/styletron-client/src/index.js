@@ -49,8 +49,7 @@ class StyletronClient extends StyletronCore {
     // {
     //  1: className,
     //  2: pseudo,
-    //  3: prop,
-    //  4: val
+    //  3: block,
     // }
     while ((decl = DECL_REGEX.exec(css))) {
       super.incrementVirtualCount();
