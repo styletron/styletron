@@ -1,4 +1,5 @@
 module.exports = {
+  keyframes: {},
   media: {
     '(max-width: 333px)': {
       pseudo: {},

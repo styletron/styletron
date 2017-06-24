@@ -1,4 +1,7 @@
 module.exports = {
+  keyframes: {
+    '{"0%":{"border-bottom":"1px","margin-left":"0"},"100%":{"border-bottom":"10px","margin-left":"10px"}}': 'f',
+  },
   media: {
     '(max-width: 800px)': {
       pseudo: {
@@ -23,5 +26,8 @@ module.exports = {
   color: {
     red: 'a',
     green: 'b',
+  },
+  'animation-name': {
+    f: 'f',
   },
 };

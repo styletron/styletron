@@ -29,7 +29,7 @@ test('test getStylesheets method', t => {
   instance.setCache(fixtures.basic.cache);
   t.deepEqual(instance.getStylesheets(), [
     {
-      css: '.e:hover{display:none}.a{color:red}.b{color:green}',
+      css: '@keyframes f{0%{border-bottom:1px;margin-left:0}100%{border-bottom:10px;margin-left:10px}}.e:hover{display:none}.a{color:red}.b{color:green}.f{animation-name:f}',
     },
     {
       media: '(max-width: 800px)',
@@ -44,7 +44,7 @@ test('test getStylesheetsHtml method', t => {
   instance.setCache(fixtures.basic.cache);
   t.equal(
     instance.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_">.e:hover{display:none}.a{color:red}.b{color:green}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>'
+    '<style class="_styletron_hydrate_">@keyframes f{0%{border-bottom:1px;margin-left:0}100%{border-bottom:10px;margin-left:10px}}.e:hover{display:none}.a{color:red}.b{color:green}.f{animation-name:f}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.d:hover{color:green}.c{color:green}</style>'
   );
   t.end();
 });

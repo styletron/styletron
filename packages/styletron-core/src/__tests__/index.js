@@ -54,7 +54,20 @@ test('test injection', t => {
     pseudo: ':hover',
   });
   t.equal(instance.getCache().pseudo[':hover'].display.none, 'e');
-  t.equal(instance.getCount(), 5, 'ends with 4 unique declarations');
+
+  const keyframes = {
+    '0%': {
+      borderBottom: '1px',
+    },
+    '100%': {
+      borderBottom: '10px',
+    },
+  };
+  instance.injectDeclaration({prop: 'animationName', val: keyframes});
+  t.equal(instance.getCache().keyframes[JSON.stringify(keyframes)], 'f');
+  t.equal(instance.getCache().animationName.f, 'f');
+
+  t.equal(instance.getCount(), 6, 'ends with 6 unique declarations');
   t.end();
 });
 
