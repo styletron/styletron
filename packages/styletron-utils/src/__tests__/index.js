@@ -5,7 +5,7 @@ import test from 'tape';
 test('test injection', t => {
   const decls = [];
   const spy = {
-    injectDeclaration: decl => {
+    injectRawDeclaration: decl => {
       decls.push(decl);
       return decls.length;
     },
@@ -22,20 +22,18 @@ test('test injection', t => {
   });
   t.equal(classString, '1 2 3 4');
   t.deepEqual(decls, [
-    {prop: 'color', val: 'red', media: undefined, pseudo: undefined},
+    {block: 'color:red', media: undefined, pseudo: undefined},
     {
-      prop: 'background-color',
-      val: 'blue',
+      block: 'background-color:blue',
       media: undefined,
       pseudo: undefined,
     },
     {
-      prop: 'color',
-      val: 'purple',
+      block: 'color:purple',
       media: '(max-width: 500px)',
       pseudo: undefined,
     },
-    {prop: 'background', val: 'orange', media: undefined, pseudo: ':hover'},
+    {block: 'background:orange', media: undefined, pseudo: ':hover'},
   ]);
   t.end();
 });
@@ -43,7 +41,7 @@ test('test injection', t => {
 test('test injection array', function(t) {
   const decls = [];
   const spy = {
-    injectDeclaration: function(decl) {
+    injectRawDeclaration: function(decl) {
       decls.push(decl);
       return decls.length;
     },
@@ -57,24 +55,15 @@ test('test injection array', function(t) {
       color: ['green', 'yellow'],
     },
   });
-  t.equal(classString, '1 2 3 4 5 6');
+  t.equal(classString, '1 2 3');
   t.deepEqual(decls, [
-    {prop: 'color', val: 'red', media: undefined, pseudo: undefined},
-    {prop: 'color', val: 'blue', media: undefined, pseudo: undefined},
+    {block: 'color:red;color:blue', media: undefined, pseudo: undefined},
     {
-      prop: 'color',
-      val: 'purple',
+      block: 'color:purple;color:orange',
       media: '(max-width: 500px)',
       pseudo: undefined,
     },
-    {
-      prop: 'color',
-      val: 'orange',
-      media: '(max-width: 500px)',
-      pseudo: undefined,
-    },
-    {prop: 'color', val: 'green', media: undefined, pseudo: ':hover'},
-    {prop: 'color', val: 'yellow', media: undefined, pseudo: ':hover'},
+    {block: 'color:green;color:yellow', media: undefined, pseudo: ':hover'},
   ]);
   t.end();
 });
@@ -82,7 +71,7 @@ test('test injection array', function(t) {
 test('test injection prefixed', function(t) {
   const decls = [];
   const spy = {
-    injectDeclaration: function(decl) {
+    injectRawDeclaration: function(decl) {
       decls.push(decl);
       return decls.length;
     },
@@ -92,41 +81,20 @@ test('test injection prefixed', function(t) {
     height: ['min-content', 'calc(50%)'],
     boxSizing: 'border-box',
   });
-  t.equal(classString, '1 2 3 4 5 6');
+  t.equal(classString, '1 2 3');
   t.deepEqual(decls, [
     {
-      prop: 'width',
-      val: 'calc(100%)',
+      block: 'width:calc(100%)',
       media: undefined,
       pseudo: undefined,
     },
     {
-      prop: 'height',
-      val: '-webkit-min-content',
+      block: 'height:-webkit-min-content;height:-moz-min-content;height:min-content;height:calc(50%)',
       media: undefined,
       pseudo: undefined,
     },
     {
-      prop: 'height',
-      val: '-moz-min-content',
-      media: undefined,
-      pseudo: undefined,
-    },
-    {
-      prop: 'height',
-      val: 'min-content',
-      media: undefined,
-      pseudo: undefined,
-    },
-    {
-      prop: 'height',
-      val: 'calc(50%)',
-      media: undefined,
-      pseudo: undefined,
-    },
-    {
-      prop: 'box-sizing',
-      val: 'border-box',
+      block: 'box-sizing:border-box',
       media: undefined,
       pseudo: undefined,
     },

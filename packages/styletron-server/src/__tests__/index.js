@@ -52,27 +52,26 @@ test('test getStylesheetsHtml method', t => {
 test('test getStylesheetsOldIE method', t => {
   const instance = new StyletronTest();
   for (let i = 0; i <= 4095; i++) {
-    instance.injectDeclaration({prop: 'font-size', val: `${i}px`});
+    instance.injectRawDeclaration({block: `font-size:${i}px`});
   }
   t.equal(instance.getStylesheetsOldIE().length, 1, 'only one sheet');
-  instance.injectDeclaration({prop: 'color', val: 'red'});
+  instance.injectRawDeclaration({block: 'color:red', pseudo: ':hover'});
   t.equal(
     instance.getStylesheetsOldIE().length,
     2,
     'rollover into another sheet'
   );
   for (let i = 0; i <= 4095; i++) {
-    instance.injectDeclaration({
-      prop: 'font-size',
-      val: `${i}px`,
+    instance.injectRawDeclaration({
+      block: `font-size:${i}px`,
       media: '(max-width: 400px)',
     });
   }
   t.equal(instance.getStylesheetsOldIE().length, 3, 'media sheet');
-  instance.injectDeclaration({
-    prop: 'color',
-    val: 'red',
+  instance.injectRawDeclaration({
+    block: 'color:red',
     media: '(max-width: 400px)',
+    pseudo: ':hover',
   });
   t.equal(instance.getStylesheetsOldIE().length, 4, 'media sheet rollover');
   t.end();

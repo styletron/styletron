@@ -21,6 +21,10 @@ class StyletronServer extends StyletronCore {
     return super.injectDeclaration(decl);
   }
 
+  injectRawDeclaration(decl) {
+    return super.injectRawDeclaration(decl);
+  }
+
   /**
    * Get an array of stylesheet objects
    * @return {Array} Array of stylesheet objects
@@ -87,7 +91,7 @@ class StyletronServer extends StyletronCore {
 
   /**
    * Get the CSS string. For hydrating styles on the client,
-   * [`getStylesheetsHtml`]{@link StyletronServer#getStylesheetsHtml} or [`getStylesheets`]{@link StyletronServer#getStylesheets} should be used instead. 
+   * [`getStylesheetsHtml`]{@link StyletronServer#getStylesheetsHtml} or [`getStylesheets`]{@link StyletronServer#getStylesheets} should be used instead.
    * @return {String} The string of CSS
    * @example
    * const styletron = new StyletronServer();

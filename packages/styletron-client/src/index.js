@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^:]+):([^}]+)}/g;
+const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^}]+)}/g;
 
 import StyletronCore from 'styletron-core';
 
@@ -57,9 +57,8 @@ class StyletronClient extends StyletronCore {
       StyletronCore.assignDecl(
         this.cache,
         {
+          block: decl[3],
           pseudo: decl[2],
-          prop: decl[3],
-          val: decl[4],
           media,
         },
         decl[1]
@@ -80,9 +79,26 @@ class StyletronClient extends StyletronCore {
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
    * // → 'a'
    */
-  injectDeclaration(decl) {
+  injectDeclaration({prop, val, media, pseudo}) {
+    return this.injectRawDeclaration({block: `${prop}:${val}`, media, pseudo});
+  }
+
+  /**
+   * Inject raw declaration into the stylesheet and return the unique class name
+   * @return {string}      class name
+   * @example
+   * // <style id="styletron">.a{color:red}</style>
+   * const styletron = new StyletronClient(document.getElementsByClassName('_styletron_hydrate_'));
+   * styletron.injectRawDeclaration({block: 'color:blue'});
+   * // → 'b'
+   * styletron.injectRawDeclaration({block: 'color:red', media: '(min-width: 800px)'});
+   * // → 'c'
+   * styletron.injectRawDeclaration({block: 'color:red'});
+   * // → 'a'
+   */
+  injectRawDeclaration(decl) {
     const oldCount = this.uniqueCount;
-    const className = super.injectDeclaration(decl);
+    const className = super.injectRawDeclaration(decl);
     if (oldCount !== this.uniqueCount) {
       const rule = declarationToRule(className, decl);
       let sheet;
@@ -109,11 +125,10 @@ export default StyletronClient;
  * Injection helpers
  */
 
-function declarationToRule(className, {prop, val, pseudo}) {
-  const decl = `${prop}:${val}`;
+function declarationToRule(className, {block, pseudo}) {
   let selector = `.${className}`;
   if (pseudo) {
     selector += pseudo;
   }
-  return `${selector}{${decl}}`;
+  return `${selector}{${block}}`;
 }
