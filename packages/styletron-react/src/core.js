@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isValidAttr from './is-valid-attr';
 
 const STYLETRON_KEY = '__STYLETRON';
 
@@ -40,14 +39,19 @@ function createStyledElementComponent(tagName, stylesArray, assignProps) {
       }
     });
 
-    let elementProps = assignProps(context.styletron, styleResult, ownProps);
+    const elementProps = assignProps(context.styletron, styleResult, ownProps);
 
     if (props.innerRef) {
       elementProps.ref = props.innerRef;
     }
 
     if (typeof StyledElement[STYLETRON_KEY].tag === 'string') {
-      elementProps = omitInvalidProps(elementProps);
+      // Use custom element workaround to avoid warnings for "invalid" attributes
+      elementProps.is = true;
+      // Because of this, we need to use true `class` and `for` attributes
+      elementProps.class = elementProps.className;
+      elementProps.className = void 0;
+      elementProps.for = elementProps.htmlFor;
     }
 
     return React.createElement(StyledElement[STYLETRON_KEY].tag, elementProps);
@@ -66,16 +70,6 @@ function createStyledElementComponent(tagName, stylesArray, assignProps) {
 function assign(target, source) {
   for (const key in source) {
     target[key] = source[key];
-  }
-  return target;
-}
-
-function omitInvalidProps(props) {
-  const target = {};
-  for (const attr in props) {
-    if (isValidAttr(attr)) {
-      target[attr] = props[attr];
-    }
   }
   return target;
 }
