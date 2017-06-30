@@ -90,22 +90,26 @@ test('test injection prefixed', function(t) {
   t.equal(classString, '1 2 3 4 5');
   t.deepEqual(decls, [
     {
-      block: 'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
+      block:
+        'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
       media: undefined,
       pseudo: undefined,
     },
     {
-      block: 'height:-webkit-min-content;height:-moz-min-content;height:min-content;height:100%',
+      block:
+        'height:-webkit-min-content;height:-moz-min-content;height:min-content;height:100%',
       media: undefined,
       pseudo: undefined,
     },
     {
-      block: 'transition:height 1s;-webkit-transition:height 1s;-moz-transition:height 1s',
+      block:
+        'transition:height 1s;-webkit-transition:height 1s;-moz-transition:height 1s',
       media: undefined,
       pseudo: undefined,
     },
     {
-      block: 'background-color:-webkit-linear-gradient(to bottom, red, green);background-color:-moz-linear-gradient(to bottom, red, green);background-color:linear-gradient(to bottom, red, green)',
+      block:
+        'background-color:-webkit-linear-gradient(to bottom, red, green);background-color:-moz-linear-gradient(to bottom, red, green);background-color:linear-gradient(to bottom, red, green)',
       media: undefined,
       pseudo: ':hover',
     },
@@ -139,13 +143,15 @@ test('test prefixed cache', function(t) {
   );
   t.deepEqual(cache, {
     display: {
-      flex: 'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
+      flex:
+        'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
     },
     flexGrow: {1: 'color:red'},
   });
   t.deepEqual(decls, [
     {
-      block: 'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
+      block:
+        'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
       media: undefined,
       pseudo: undefined,
     },
