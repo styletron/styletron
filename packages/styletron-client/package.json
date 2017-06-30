@@ -23,7 +23,7 @@
     "styletron-core": "^2.5.7"
   },
   "devDependencies": {
-    "test-fixtures": "*"
+    "test-fixtures": "^0.0.1"
   },
   "license": "MIT"
 }
