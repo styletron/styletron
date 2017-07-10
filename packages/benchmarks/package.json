@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "aphrodite": "^1.0.0",
+    "benchmark": "^2.1.4",
     "browserify": "^13.1.0",
     "camelcase-css": "^1.0.1",
     "jss": "^6.5.0",

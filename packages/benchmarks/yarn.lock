@@ -167,6 +167,13 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+benchmark@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/benchmark/-/benchmark-2.1.4.tgz#09f3de31c916425d498cc2ee565a0ebf3c2a5629"
+  dependencies:
+    lodash "^4.17.4"
+    platform "^1.3.3"
+
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.6"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.6.tgz#53344adb14617a13f6e8dd2ce28905d1c0ba3215"
@@ -1031,7 +1038,7 @@ inline-source-map@~0.6.0:
   dependencies:
     source-map "~0.5.3"
 
-inline-style-prefixer@^3.0.1:
+inline-style-prefixer@^3.0.1, inline-style-prefixer@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.3.tgz#eca9767080b29a8afcf13299fe6358e1f320bbeb"
   dependencies:
@@ -1267,7 +1274,7 @@ lexical-scope@^1.2.0:
   dependencies:
     astw "^2.0.0"
 
-"lighthouse@github:paulirish/lighthouse#c74ea959":
+lighthouse@paulirish/lighthouse#c74ea959:
   version "1.6.0"
   resolved "https://codeload.github.com/paulirish/lighthouse/tar.gz/c74ea959"
   dependencies:
@@ -1308,7 +1315,7 @@ lodash.noop@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/lodash.noop/-/lodash.noop-3.0.1.tgz#38188f4d650a3a474258439b96ec45b32617133c"
 
-lodash@^4.14.0:
+lodash@^4.14.0, lodash@^4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -1620,6 +1627,10 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+platform@^1.3.3:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/platform/-/platform-1.3.4.tgz#6f0fb17edaaa48f21442b3a975c063130f1c3ebd"
 
 postcss-safe-parser@^2.0.0:
   version "2.0.1"
@@ -2063,6 +2074,28 @@ strip-indent@^1.0.1:
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
+
+styletron-client@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-client/-/styletron-client-3.0.0-rc.1.tgz#291a820a141bf212bef9a264ddf9790531470bda"
+  dependencies:
+    styletron-core "^3.0.0-rc.1"
+
+styletron-core@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-3.0.0-rc.1.tgz#3a6b0a2f82f4cd666de317af21b05006221394ef"
+
+styletron-server@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-server/-/styletron-server-3.0.0-rc.1.tgz#998d22f5c1319dfd7b2f5eb7270819a0f0ac51b0"
+  dependencies:
+    styletron-core "^3.0.0-rc.1"
+
+styletron-utils@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-3.0.0-rc.1.tgz#0ae06bbc9009aa904add7dbc1f5b34702e153e75"
+  dependencies:
+    inline-style-prefixer "^3.0.3"
 
 subarg@^1.0.0:
   version "1.0.0"
