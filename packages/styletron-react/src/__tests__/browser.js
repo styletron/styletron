@@ -8,6 +8,7 @@ import Styletron from 'styletron-server';
 import {injectStylePrefixed} from 'styletron-utils';
 import core from '../core';
 import styled from '../styled';
+import withStyle from '../with-style';
 import Provider from '../provider';
 
 function strictAssignProps(styletron, styleResult, ownProps) {
@@ -242,4 +243,32 @@ test('styled merges class name prop', t => {
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'foo a', 'matches expected classes');
   t.end();
+});
+
+test('with style passes props', t => {
+  t.plan(1);
+
+  class InnerComponent extends React.Component {
+    render() {
+      t.deepEqual(
+        this.props,
+        {classes: {foo: 'a'}, bar: 'baz'},
+        'matches props'
+      );
+      return <button>InnerComponent</button>;
+    }
+  }
+
+  const styletron = new Styletron();
+  const Widget = withStyle({foo: {color: 'red'}})(InnerComponent);
+
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement(Widget, {
+        bar: 'baz',
+      })
+    )
+  );
 });
