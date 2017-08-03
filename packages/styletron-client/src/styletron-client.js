@@ -18,6 +18,7 @@ class StyletronClient extends StyletronCore {
    */
   constructor(serverStyles, opts) {
     super(opts);
+    this.selectorPrefix = opts ? opts.selectorPrefix : undefined;
     this.uniqueCount = 0;
     this.mediaSheets = {};
     if (serverStyles) {
@@ -78,7 +79,7 @@ class StyletronClient extends StyletronCore {
     const oldCount = this.uniqueCount;
     const className = super.injectDeclaration(decl);
     if (oldCount !== this.uniqueCount) {
-      const rule = declarationToRule(className, decl);
+      const rule = declarationToRule(className, decl, this.selectorPrefix);
       let sheet;
       if (decl.media) {
         if (!this.mediaSheets[decl.media]) {
@@ -103,9 +104,9 @@ module.exports = StyletronClient;
  * Injection helpers
  */
 
-function declarationToRule(className, {prop, val, pseudo}) {
+function declarationToRule(className, {prop, val, pseudo}, selectorPrefix) {
   const decl = `${prop}:${val}`;
-  let selector = `.${className}`;
+  let selector = `${selectorPrefix ? `${selectorPrefix} ` : ''}.${className}`;
   if (pseudo) {
     selector += pseudo;
   }
