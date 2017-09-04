@@ -1,9 +1,23 @@
 import * as React from 'react';
+import StyletronClient from 'styletron-client';
+import StyletronServer from 'styletron-server';
 import {
   core,
   styled,
+  StyletronProvider
 } from './';
 
+const provider1 = (
+  <StyletronProvider styletron={new StyletronClient}>
+    <div />
+  </StyletronProvider>
+);
+
+const provider2 = (
+  <StyletronProvider styletron={new StyletronServer}>
+    <div />
+  </StyletronProvider>
+);
 
 type PropType1 = {
   prop1: boolean;
