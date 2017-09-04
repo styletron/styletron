@@ -31,7 +31,7 @@ function StatelessComponent(props: PropType1) {
   return <div />;
 }
 
-class StatefullComponent extends React.Component<PropType1, void> {
+class StatefullComponent extends React.Component<PropType1, React.ComponentState> {
   render() {
     return <div />;
   }
