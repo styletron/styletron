@@ -3,8 +3,8 @@
 
 
 "@types/react@*":
-  version "15.0.23"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.23.tgz#f3facbef5290610f54242f00308759d3a3c27346"
+  version "16.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.5.tgz#d713cf67cc211dea20463d2a0b66005c22070c4b"
 
 acorn@^4.0.1:
   version "4.0.11"
@@ -594,6 +594,10 @@ balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
 
+bowser@^1.6.0:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.7.3.tgz#504bdb43118ca8db9cbbadf28fd60f265af96e4f"
+
 brace-expansion@^1.0.0:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.7.tgz#3effc3c50e000531fb720eaff80f0ae8ef23cf59"
@@ -674,6 +678,12 @@ create-universal-package@^1.0.0-rc.3:
     rollup-plugin-node-resolve "^3.0.0"
     rollup-plugin-replace "^1.1.1"
     tape-rollup "^4.6.4"
+
+css-in-js-utils@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-1.0.3.tgz#9ac7e02f763cf85d94017666565ed68a5b5f3215"
+  dependencies:
+    hyphenate-style-name "^1.0.2"
 
 debug@^2.1.1, debug@^2.2.0:
   version "2.6.6"
@@ -860,6 +870,10 @@ homedir-polyfill@^1.0.0:
   dependencies:
     parse-passwd "^1.0.0"
 
+hyphenate-style-name@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
+
 iconv-lite@~0.4.13:
   version "0.4.17"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.17.tgz#4fdaa3b38acbc2c031b045d0edcdfe1ecab18c8d"
@@ -878,6 +892,13 @@ inherits@2:
 ini@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
+
+inline-style-prefixer@^3.0.3:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.7.tgz#0ccc92e5902fe6e0d28d975c4258443f880615f8"
+  dependencies:
+    bowser "^1.6.0"
+    css-in-js-utils "^1.0.3"
 
 invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.2"
@@ -1349,6 +1370,28 @@ strip-ansi@^3.0.0:
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-3.0.1.tgz#6a385fb8853d952d5ff05d0e8aaf94278dc63dcf"
   dependencies:
     ansi-regex "^2.0.0"
+
+styletron-client@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-client/-/styletron-client-3.0.0-rc.1.tgz#291a820a141bf212bef9a264ddf9790531470bda"
+  dependencies:
+    styletron-core "^3.0.0-rc.1"
+
+styletron-core@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-3.0.0-rc.1.tgz#3a6b0a2f82f4cd666de317af21b05006221394ef"
+
+styletron-server@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-server/-/styletron-server-3.0.0-rc.1.tgz#998d22f5c1319dfd7b2f5eb7270819a0f0ac51b0"
+  dependencies:
+    styletron-core "^3.0.0-rc.1"
+
+styletron-utils@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-3.0.0-rc.1.tgz#0ae06bbc9009aa904add7dbc1f5b34702e153e75"
+  dependencies:
+    inline-style-prefixer "^3.0.3"
 
 supports-color@^2.0.0:
   version "2.0.0"
