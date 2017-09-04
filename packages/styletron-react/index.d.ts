@@ -6,7 +6,7 @@ import StyletronServer from "styletron-server";
 import StyletronClient from "styletron-client";
 
 declare namespace StyletronReact {
-  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, void> {}
+  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, React.ComponentState> {}
 
   export function styled<TProps>(
     base: React.StatelessComponent<TProps & ClassNameProp>,
