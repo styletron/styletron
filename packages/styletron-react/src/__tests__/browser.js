@@ -1,3 +1,4 @@
+/* global process */
 /* eslint-env browser */
 
 import test from 'tape';
@@ -241,5 +242,97 @@ test('styled merges class name prop', t => {
   );
   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'div');
   t.equal(div.className, 'foo a', 'matches expected classes');
+  t.end();
+});
+
+test('core sets display name', t => {
+  const env = process.env.NODE_ENV;
+
+  function developmentDisplayName(createComponent) {
+    process.env.NODE_ENV = 'development';
+    const displayName = createComponent().displayName;
+    process.env.NODE_ENV = env;
+    return displayName;
+  }
+  function productionDisplayName(createComponent) {
+    process.env.NODE_ENV = 'production';
+    const displayName = createComponent().displayName;
+    process.env.NODE_ENV = env;
+    return displayName;
+  }
+
+  t.equal(
+    developmentDisplayName(() => styled('div', {color: 'red'})),
+    'Styled(div)',
+    'matches expected display name'
+  );
+  t.equal(
+    productionDisplayName(() => styled('div', {color: 'red'})),
+    void 0,
+    'matches expected display name'
+  );
+
+  class TestComponentClass extends React.Component {
+    render() {
+      return <div />;
+    }
+  }
+
+  t.equal(
+    developmentDisplayName(() => styled(TestComponentClass, {color: 'red'})),
+    'Styled(TestComponentClass)',
+    'matches expected display name'
+  );
+  t.equal(
+    productionDisplayName(() => styled(TestComponentClass, {color: 'red'})),
+    void 0,
+    'matches expected display name'
+  );
+
+  TestComponentClass.displayName = 'Test';
+
+  t.equal(
+    developmentDisplayName(() => styled(TestComponentClass, {color: 'red'})),
+    'Styled(Test)',
+    'matches expected display name'
+  );
+  t.equal(
+    productionDisplayName(() => styled(TestComponentClass, {color: 'red'})),
+    void 0,
+    'matches expected display name'
+  );
+
+  function TestStatelessComponent() {
+    return <div />;
+  }
+
+  t.equal(
+    developmentDisplayName(() =>
+      styled(TestStatelessComponent, {color: 'red'})
+    ),
+    'Styled(TestStatelessComponent)',
+    'matches expected display name'
+  );
+  t.equal(
+    productionDisplayName(() => styled(TestStatelessComponent, {color: 'red'})),
+    void 0,
+    'matches expected display name'
+  );
+
+  TestStatelessComponent.displayName = 'Test';
+
+  t.equal(
+    developmentDisplayName(() =>
+      styled(TestStatelessComponent, {color: 'red'})
+    ),
+    'Styled(Test)',
+    'matches expected display name'
+  );
+  t.equal(
+    productionDisplayName(() => styled(TestStatelessComponent, {color: 'red'})),
+    void 0,
+    'matches expected display name'
+  );
+
   t.end();
 });

@@ -1,3 +1,5 @@
+/* global process */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -25,7 +27,7 @@ export default function core(base, style, assignProps) {
   throw new Error('`styled` takes either a DOM element name or a component');
 }
 
-function createStyledElementComponent(tagName, stylesArray, assignProps) {
+function createStyledElementComponent(base, stylesArray, assignProps) {
   function StyledElement(props, context) {
     const ownProps = assign({}, props);
     delete ownProps.innerRef;
@@ -58,11 +60,18 @@ function createStyledElementComponent(tagName, stylesArray, assignProps) {
   }
 
   StyledElement[STYLETRON_KEY] = {
-    tag: tagName,
+    tag: base,
     styles: stylesArray,
   };
 
   StyledElement.contextTypes = {styletron: PropTypes.object};
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = base.displayName
+      ? base.displayName
+      : typeof base === 'function' ? base.name : base;
+    StyledElement.displayName = `Styled${name ? `(${name})` : ''}`;
+  }
 
   return StyledElement;
 }
