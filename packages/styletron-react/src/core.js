@@ -1,5 +1,3 @@
-/* global process */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -66,7 +64,7 @@ function createStyledElementComponent(base, stylesArray, assignProps) {
 
   StyledElement.contextTypes = {styletron: PropTypes.object};
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (__DEV__) {
     const name = base.displayName
       ? base.displayName
       : typeof base === 'function' ? base.name : base;
