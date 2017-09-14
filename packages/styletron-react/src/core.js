@@ -45,15 +45,6 @@ function createStyledElementComponent(base, stylesArray, assignProps) {
       elementProps.ref = props.innerRef;
     }
 
-    if (typeof StyledElement[STYLETRON_KEY].tag === 'string') {
-      // Use custom element workaround to avoid warnings for "invalid" attributes
-      elementProps.is = true;
-      // Because of this, we need to use true `class` and `for` attributes
-      elementProps.class = elementProps.className;
-      elementProps.className = void 0;
-      elementProps.for = elementProps.htmlFor;
-    }
-
     return React.createElement(StyledElement[STYLETRON_KEY].tag, elementProps);
   }
 
