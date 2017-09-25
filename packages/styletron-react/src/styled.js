@@ -43,6 +43,9 @@ export default function styled(base, style) {
 function assignProps(styletron, styleResult, ownProps) {
   const styletronClassName = injectStylePrefixed(styletron, styleResult);
   // Skipping cloning of `ownProps` since that's already done internally
+  if (ownProps.styleProps) {
+    delete ownProps.styleProps;
+  }
   ownProps.className = ownProps.className
     ? `${ownProps.className} ${styletronClassName}`
     : styletronClassName;
