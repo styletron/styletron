@@ -230,6 +230,40 @@ test('innerRef not passed', t => {
   );
 });
 
+test('styleProps not passed', t => {
+  t.plan(1);
+
+  class InnerComponent extends React.Component {
+    render() {
+      t.deepEqual(
+        this.props,
+        {
+          className: 'a',
+          'data-foo': 'bar',
+        },
+        'props match expected'
+      );
+      return <button>InnerComponent</button>;
+    }
+  }
+
+  const Widget = styled(InnerComponent, {color: 'red'});
+  const styletron = new Styletron();
+
+  ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement(Widget, {
+        'data-foo': 'bar',
+        styleProps: {
+          baz: 'qux',
+        },
+      })
+    )
+  );
+});
+
 test('styled merges class name prop', t => {
   const Widget = styled('div', {color: 'red'});
   const styletron = new Styletron();
