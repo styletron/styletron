@@ -23,6 +23,9 @@
     "styletron-core": "^3.0.0-rc.1"
   },
   "devDependencies": {
+    "eslint-config-cup": "^1.0.0-rc.4",
+    "eslint-config-cup-recommended": "^1.0.0-rc.4",
+    "eslint-plugin-cup": "^1.0.0-rc.4",
     "test-fixtures": "^3.0.0-rc.1"
   },
   "license": "MIT"
