@@ -29,7 +29,10 @@
   "devDependencies": {
     "babel-preset-cup": "^1.0.0-rc.2",
     "babel-preset-react": "^6.24.1",
-    "create-universal-package": "^1.0.0-rc.3"
+    "create-universal-package": "^1.0.0-rc.3",
+    "eslint-config-cup": "^1.0.0-rc.4",
+    "eslint-config-cup-recommended": "^1.0.0-rc.4",
+    "eslint-plugin-cup": "^1.0.0-rc.4"
   },
   "license": "MIT"
 }

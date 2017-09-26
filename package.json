@@ -26,8 +26,6 @@
     "benchmark": "^2.1.1",
     "create-universal-package": "^1.0.0-rc.3",
     "eslint": "^4.1.0",
-    "eslint-config-cup": "^1.0.0-rc.1",
-    "eslint-config-cup-recommended": "^1.0.0-rc.1",
     "eslint-plugin-prettier": "^2.0.1",
     "jsdoc": "^3.4.0",
     "lerna": "^2.0.0-rc.4",
