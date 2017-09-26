@@ -102,6 +102,7 @@ test('core passes through valid props', t => {
       {styletron},
       React.createElement(Widget, {
         'data-bar': 'bar',
+        'someinvalidprop': 'baz',
       })
     )
   );
@@ -110,6 +111,11 @@ test('core passes through valid props', t => {
     div.getAttribute('data-bar'),
     'bar',
     'valid attribute prop passed through'
+  );
+  t.equal(
+    div.getAttribute('someinvalidprop'),
+    null,
+    'invalid attribute prop ignored'
   );
   t.end();
 });
