@@ -3,7 +3,7 @@ import StyletronServer from "styletron-server";
 import StyletronClient from "styletron-client";
 
 declare namespace StyletronReact {
-  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, void> {}
+  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, {}> {}
 
   type InnerRef<TInstance> = {
     innerRef?: React.Ref<TInstance>;

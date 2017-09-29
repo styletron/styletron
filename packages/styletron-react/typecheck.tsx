@@ -1,11 +1,28 @@
 import * as React from 'react';
+import StyletronClient from 'styletron-client';
+import StyletronServer from 'styletron-server';
 import {
   styled,
   StyledHTMLElement,
   StyledSVGElement,
   StyledStatelessComponent,
   StyledComponentClass,
+  StyletronProvider,
 } from './';
+
+
+const provider1 = (
+  <StyletronProvider styletron={new StyletronClient}>
+    <div />
+  </StyletronProvider>
+);
+
+const provider2 = (
+  <StyletronProvider styletron={new StyletronServer}>
+    <div />
+  </StyletronProvider>
+);
+
 
 type PropType = {
   prop: boolean;
@@ -47,7 +64,7 @@ const ComposedStatelessComponent: StyledStatelessComponent<PropType> = styled(Pr
 <ComposedStatelessComponent prop={false} />
 
 
-class StatefullComponent extends React.Component<PropType, void> {
+class StatefullComponent extends React.Component<PropType, {}> {
   render() {
     return <div />;
   }

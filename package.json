@@ -31,7 +31,7 @@
     "react-dom": "^15.5.4",
     "rimraf": "^2.5.4",
     "tape": "^4.6.0",
-    "typescript": "^2.3.2",
+    "typescript": "^2.5.3",
     "unitest": "^1.0.0"
   },
   "license": "MIT"
