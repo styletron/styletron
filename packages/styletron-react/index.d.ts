@@ -35,6 +35,8 @@ declare namespace StyletronReact {
 
   type ClassNameProp = {className?: string};
 
+  type StyleProp<TProps> = {styleProps: TProps};
+
   export function core<TOuterProps, TInnerProps>(
     base: React.StatelessComponent<TInnerProps>,
     style: StyleArgument<TOuterProps>,
