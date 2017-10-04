@@ -1,6 +1,6 @@
 {
   "name": "demos",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "description": "A universal stylesheet manager for node.js and browsers",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -20,7 +20,7 @@
     "connect": "^3.4.1",
     "serve-static": "^1.11.1",
     "styletron-client": "^3.0.0-rc.1",
-    "styletron-react": "^3.0.0-rc.1",
+    "styletron-react": "^3.0.0-rc.2",
     "styletron-server": "^3.0.0-rc.1",
     "styletron-utils": "^3.0.0-rc.1"
   },
