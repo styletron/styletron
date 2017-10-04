@@ -685,6 +685,10 @@ css-in-js-utils@^1.0.3:
   dependencies:
     hyphenate-style-name "^1.0.2"
 
+csstype@*:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-1.1.0.tgz#504fe0cb1b2ede48373beb42fa65255b2ae17828"
+
 debug@^2.1.1, debug@^2.2.0:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.6.tgz#a9fa6fbe9ca43cf1e79f73b75c0189cbb7d6db5a"
