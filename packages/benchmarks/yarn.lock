@@ -1267,9 +1267,9 @@ lexical-scope@^1.2.0:
   dependencies:
     astw "^2.0.0"
 
-"lighthouse@github:paulirish/lighthouse#c74ea959":
+lighthouse@paulirish/lighthouse#c74ea959:
   version "1.6.0"
-  resolved "https://codeload.github.com/paulirish/lighthouse/tar.gz/c74ea959"
+  resolved "https://codeload.github.com/paulirish/lighthouse/tar.gz/c74ea959dd7f7c4f5ab2dfe5644dc24ed8cd6e6c"
   dependencies:
     axe-core "2.1.7"
     chrome-devtools-frontend "1.0.422034"

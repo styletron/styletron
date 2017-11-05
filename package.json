@@ -20,7 +20,7 @@
   "devDependencies": {
     "@rtsao/docdash": "^0.4.2",
     "benchmark": "^2.1.1",
-    "create-universal-package": "^1.0.0-rc.3",
+    "create-universal-package": "1.0.0-rc.5",
     "eslint": "^4.1.0",
     "eslint-config-cup": "^1.0.0-rc.1",
     "eslint-config-cup-recommended": "^1.0.0-rc.1",

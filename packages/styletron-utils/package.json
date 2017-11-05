@@ -22,8 +22,7 @@
     "inline-style-prefixer": "^3.0.3"
   },
   "devDependencies": {
-    "babel-preset-cup": "^1.0.0-rc.2",
-    "create-universal-package": "^1.0.0-rc.3"
+    "babel-preset-cup": "^1.0.0-rc.2"
   },
   "license": "MIT"
 }
