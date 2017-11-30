@@ -1,4 +1,4 @@
-module.exports = {
-  Provider: require('./provider'),
-  styled: require('./styled')
-};
+import Provider from './provider';
+import styled from './styled';
+
+export {Provider, styled};

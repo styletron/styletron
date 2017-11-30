@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "noEmit": true,
+        "jsx": "preserve"
+    },
+    "include": [
+        "packages/*/*.ts",
+        "packages/*/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

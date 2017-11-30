@@ -1,247 +1,220 @@
+// Type definitions for styletron-react
+// TypeScript Version: 2.1
+
 import * as React from "react";
 import StyletronServer from "styletron-server";
 import StyletronClient from "styletron-client";
 
 declare namespace StyletronReact {
-  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, void> {}
+  export class StyletronProvider extends React.Component<{styletron: StyletronServer | StyletronClient}, React.ComponentState> {}
+
+  export function styled<TProps>(
+    base: React.StatelessComponent<TProps & ClassNameProp>,
+    style: Style<TProps>): Component<TProps>;
+
+  export function styled<TInnerProps, TOuterProps>(
+    base: React.StatelessComponent<TInnerProps & ClassNameProp>,
+    style: Style<TOuterProps>): Component<TOuterProps & TInnerProps>;
+
+  export function styled<TProps, TComponent extends React.Component<TProps, React.ComponentState>>(
+    base: React.ClassType<TProps, TComponent, React.ComponentClass<TProps & ClassNameProp>>,
+    style: Style<TProps>): Component<ClassProps<TProps, TComponent>>;
+
+  export function styled<TProps, TBase extends keyof BasePropsMap<TProps>>(
+    base: TBase,
+    style: Style<TProps>): Component<BasePropsMap<TProps>[TBase]>;
+
+  export function styled<TElement extends HTMLElement, TProps>(
+    base: string,
+    style: Style<TProps>): Component<HTMLProps<TProps, React.AllHTMLAttributes<TElement>, TElement>>;
+
+  export function styled<TElement extends SVGElement, TProps>(
+    base: string,
+    style: Style<TProps>): Component<SVGProps<TProps, TElement>>;
+
+  type ClassNameProp = {className?: string};
+
+  export function core<TOuterProps, TInnerProps>(
+    base: React.StatelessComponent<TInnerProps>,
+    style: Style<TOuterProps>,
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<TOuterProps>;
+
+  export function core<TOuterProps, TInnerProps, TComponent extends React.Component<TInnerProps, React.ComponentState>>(
+    base: React.ClassType<TInnerProps, TComponent, React.ComponentClass<TInnerProps>>,
+    style: Style<TOuterProps>,
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<ClassProps<TOuterProps, TComponent>>;
+
+  export function core<TOuterProps, TInnerProps, TBase extends keyof BasePropsMap<TInnerProps>>(
+    base: TBase,
+    style: Style<TOuterProps>,
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<BasePropsMap<TOuterProps>[TBase]>;
+
+  export function core<TElement extends HTMLElement, TOuterProps, TInnerProps>(
+    base: string,
+    style: Style<TOuterProps>,
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<HTMLProps<TOuterProps, React.AllHTMLAttributes<TElement>, TElement>>;
+
+  export function core<TElement extends SVGElement, TOuterProps, TInnerProps>(
+    base: string,
+    style: Style<TOuterProps>,
+    assignProps: AssignProps<TOuterProps, TInnerProps>): Component<SVGProps<TOuterProps, TElement>>;
+
+  type Component<TProps> = React.StatelessComponent<TProps>;
+
+  type ClassProps<TProps, TComponent extends React.Component<{}, React.ComponentState>> = TProps & InnerRef<TComponent>;
+
+  type HTMLProps<TOuterProps, THTMLProps, TElement extends HTMLElement> = TOuterProps & InnerRef<TElement> & THTMLProps;
+
+  type SVGProps<TProps, TElement extends SVGElement> = TProps & InnerRef<TElement> & React.SVGAttributes<TElement>;
 
   type InnerRef<TInstance> = {
-    innerRef?: (instance: TInstance) => any;
+    innerRef?: React.Ref<TInstance>;
   };
 
-  // This is not entierly true, but extending `CSSProperties` enables
-  // autocompletion for CSS properties as plain objects and not only
-  // for function return objects
-  interface StyleFunction<TProps> extends React.CSSProperties {
-    (props: TProps): React.CSSProperties;
-  }
+  type AssignProps<TOuterProps, TInnerProps> = (styletron: StyletronServer | StyletronClient, style: React.CSSProperties, props?: TOuterProps) => TInnerProps;
 
   type Style<TProps> = React.CSSProperties | StyleFunction<TProps>;
 
-  class CStyledHTMLElement<TProps, TElement extends HTMLElement> extends React.Component<TProps & React.HTMLAttributes<TElement> & InnerRef<TElement>, void> {
-    // We define the render method to force a difference between all styled
-    // components, otherwise TypeScript thinks that any component passed as
-    // base argument to `styled` is a `StyledHTMLElement` since it's the first
-    // one matching
-    render(): React.DOMElement<React.HTMLAttributes<TElement>, TElement>
+  // Intersecting `CSSProperties` enables autocompletion for CSS properties as
+  // plain objects and not only for function return objects
+  type StyleFunction<TProps> = React.CSSProperties & ((props: TProps, context?: any) => React.CSSProperties);
+
+  interface BasePropsMap<TProps> {
+    a: HTMLProps<TProps, React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
+    abbr: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    address: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    area: HTMLProps<TProps, React.AreaHTMLAttributes<HTMLAreaElement>, HTMLAreaElement>;
+    article: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    aside: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    audio: HTMLProps<TProps, React.AudioHTMLAttributes<HTMLAudioElement>, HTMLAudioElement>;
+    b: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    base: HTMLProps<TProps, React.BaseHTMLAttributes<HTMLBaseElement>, HTMLBaseElement>;
+    bdi: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    bdo: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    big: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    blockquote: HTMLProps<TProps, React.BlockquoteHTMLAttributes<HTMLElement>, HTMLElement>;
+    body: HTMLProps<TProps, React.HTMLAttributes<HTMLBodyElement>, HTMLBodyElement>;
+    br: HTMLProps<TProps, React.HTMLAttributes<HTMLBRElement>, HTMLBRElement>;
+    button: HTMLProps<TProps, React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+    canvas: HTMLProps<TProps, React.CanvasHTMLAttributes<HTMLCanvasElement>, HTMLCanvasElement>;
+    caption: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    cite: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    code: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    col: HTMLProps<TProps, React.ColHTMLAttributes<HTMLTableColElement>, HTMLTableColElement>;
+    colgroup: HTMLProps<TProps, React.ColgroupHTMLAttributes<HTMLTableColElement>, HTMLTableColElement>;
+    data: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    datalist: HTMLProps<TProps, React.HTMLAttributes<HTMLDataListElement>, HTMLDataListElement>;
+    dd: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    del: HTMLProps<TProps, React.DelHTMLAttributes<HTMLElement>, HTMLElement>;
+    details: HTMLProps<TProps, React.DetailsHTMLAttributes<HTMLElement>, HTMLElement>;
+    dfn: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    dialog: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    div: HTMLProps<TProps, React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+    dl: HTMLProps<TProps, React.HTMLAttributes<HTMLDListElement>, HTMLDListElement>;
+    dt: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    em: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    embed: HTMLProps<TProps, React.EmbedHTMLAttributes<HTMLEmbedElement>, HTMLEmbedElement>;
+    fieldset: HTMLProps<TProps, React.FieldsetHTMLAttributes<HTMLFieldSetElement>, HTMLFieldSetElement>;
+    figcaption: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    figure: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    footer: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    form: HTMLProps<TProps, React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>;
+    h1: HTMLProps<TProps, React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
+    h2: HTMLProps<TProps, React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
+    h3: HTMLProps<TProps, React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
+    h4: HTMLProps<TProps, React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
+    h5: HTMLProps<TProps, React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
+    h6: HTMLProps<TProps, React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>;
+    head: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLHeadElement>;
+    header: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    hgroup: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    hr: HTMLProps<TProps, React.HTMLAttributes<HTMLHRElement>, HTMLHRElement>;
+    html: HTMLProps<TProps, React.HtmlHTMLAttributes<HTMLHtmlElement>, HTMLHtmlElement>;
+    i: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    iframe: HTMLProps<TProps, React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement>;
+    img: HTMLProps<TProps, React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
+    input: HTMLProps<TProps, React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    ins: HTMLProps<TProps, React.InsHTMLAttributes<HTMLModElement>, HTMLModElement>;
+    kbd: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    keygen: HTMLProps<TProps, React.KeygenHTMLAttributes<HTMLElement>, HTMLElement>;
+    label: HTMLProps<TProps, React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>;
+    legend: HTMLProps<TProps, React.HTMLAttributes<HTMLLegendElement>, HTMLLegendElement>;
+    li: HTMLProps<TProps, React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>;
+    link: HTMLProps<TProps, React.LinkHTMLAttributes<HTMLLinkElement>, HTMLLinkElement>;
+    main: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    map: HTMLProps<TProps, React.MapHTMLAttributes<HTMLMapElement>, HTMLMapElement>;
+    mark: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    menu: HTMLProps<TProps, React.MenuHTMLAttributes<HTMLElement>, HTMLElement>;
+    menuitem: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    meta: HTMLProps<TProps, React.MetaHTMLAttributes<HTMLMetaElement>, HTMLMetaElement>;
+    meter: HTMLProps<TProps, React.MeterHTMLAttributes<HTMLElement>, HTMLElement>;
+    nav: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    noscript: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    object: HTMLProps<TProps, React.ObjectHTMLAttributes<HTMLObjectElement>, HTMLObjectElement>;
+    ol: HTMLProps<TProps, React.OlHTMLAttributes<HTMLOListElement>, HTMLOListElement>;
+    optgroup: HTMLProps<TProps, React.OptgroupHTMLAttributes<HTMLOptGroupElement>, HTMLOptGroupElement>;
+    option: HTMLProps<TProps, React.OptionHTMLAttributes<HTMLOptionElement>, HTMLOptionElement>;
+    output: HTMLProps<TProps, React.OutputHTMLAttributes<HTMLElement>, HTMLElement>;
+    p: HTMLProps<TProps, React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>;
+    param: HTMLProps<TProps, React.ParamHTMLAttributes<HTMLParamElement>, HTMLParamElement>;
+    picture: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    pre: HTMLProps<TProps, React.HTMLAttributes<HTMLPreElement>, HTMLPreElement>;
+    progress: HTMLProps<TProps, React.ProgressHTMLAttributes<HTMLProgressElement>, HTMLProgressElement>;
+    q: HTMLProps<TProps, React.QuoteHTMLAttributes<HTMLQuoteElement>, HTMLQuoteElement>;
+    rp: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    rt: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    ruby: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    s: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    samp: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    script: HTMLProps<TProps, React.ScriptHTMLAttributes<HTMLScriptElement>, HTMLScriptElement>;
+    section: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    select: HTMLProps<TProps, React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>;
+    small: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    source: HTMLProps<TProps, React.SourceHTMLAttributes<HTMLSourceElement>, HTMLSourceElement>;
+    span: HTMLProps<TProps, React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>;
+    strong: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    style: HTMLProps<TProps, React.StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>;
+    sub: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    summary: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    sup: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    table: HTMLProps<TProps, React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement>;
+    tbody: HTMLProps<TProps, React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>;
+    td: HTMLProps<TProps, React.TdHTMLAttributes<HTMLTableDataCellElement>, HTMLTableDataCellElement>;
+    textarea: HTMLProps<TProps, React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>;
+    tfoot: HTMLProps<TProps, React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>;
+    th: HTMLProps<TProps, React.ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement>;
+    thead: HTMLProps<TProps, React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>;
+    time: HTMLProps<TProps, React.TimeHTMLAttributes<HTMLElement>, HTMLElement>;
+    title: HTMLProps<TProps, React.HTMLAttributes<HTMLTitleElement>, HTMLTitleElement>;
+    tr: HTMLProps<TProps, React.HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>;
+    track: HTMLProps<TProps, React.TrackHTMLAttributes<HTMLTrackElement>, HTMLTrackElement>;
+    u: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    ul: HTMLProps<TProps, React.HTMLAttributes<HTMLUListElement>, HTMLUListElement>;
+    "var": HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    video: HTMLProps<TProps, React.VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
+    wbr: HTMLProps<TProps, React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    svg: SVGProps<TProps, SVGSVGElement>;
+    animate: SVGProps<TProps, SVGElement>; // TODO: It is SVGAnimateElement but is not in TypeScript's lib.dom.d.ts for now
+    circle: SVGProps<TProps, SVGCircleElement>;
+    defs: SVGProps<TProps, SVGDefsElement>;
+    ellipse: SVGProps<TProps, SVGEllipseElement>;
+    g: SVGProps<TProps, SVGGElement>;
+    image: SVGProps<TProps, SVGImageElement>;
+    line: SVGProps<TProps, SVGLineElement>;
+    linearGradient: SVGProps<TProps, SVGLinearGradientElement>;
+    mask: SVGProps<TProps, SVGMaskElement>;
+    path: SVGProps<TProps, SVGPathElement>;
+    pattern: SVGProps<TProps, SVGPatternElement>;
+    polygon: SVGProps<TProps, SVGPolygonElement>;
+    polyline: SVGProps<TProps, SVGPolylineElement>;
+    radialGradient: SVGProps<TProps, SVGRadialGradientElement>;
+    rect: SVGProps<TProps, SVGRectElement>;
+    stop: SVGProps<TProps, SVGStopElement>;
+    symbol: SVGProps<TProps, SVGSymbolElement>;
+    text: SVGProps<TProps, SVGTextElement>;
+    tspan: SVGProps<TProps, SVGTSpanElement>;
+    use: SVGProps<TProps, SVGUseElement>;
   }
-
-  interface StyledHTMLElement<TProps, TElement extends HTMLElement> {
-    new (): CStyledHTMLElement<TProps, TElement>;
-  }
-
-  export function styled<TElement extends HTMLElement, TProps>(base: string, style: Style<TProps>): StyledHTMLElement<TProps, TElement>;
-  export function styled<TElement extends HTMLElement, TProps, TBaseProps>(base: StyledHTMLElement<TBaseProps, TElement>, style: Style<TProps>): StyledHTMLElement<TBaseProps & TProps, TElement>;
-
-  export function styled<TProps>(base: "a", style: Style<TProps>): StyledHTMLElement<TProps, HTMLAnchorElement>;
-  export function styled<TProps>(base: "abbr", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "address", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "area", style: Style<TProps>): StyledHTMLElement<TProps, HTMLAreaElement>;
-  export function styled<TProps>(base: "article", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "aside", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "audio", style: Style<TProps>): StyledHTMLElement<TProps, HTMLAudioElement>;
-  export function styled<TProps>(base: "b", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "base", style: Style<TProps>): StyledHTMLElement<TProps, HTMLBaseElement>;
-  export function styled<TProps>(base: "bdi", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "bdo", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "big", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "blockquote", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "body", style: Style<TProps>): StyledHTMLElement<TProps, HTMLBodyElement>;
-  export function styled<TProps>(base: "br", style: Style<TProps>): StyledHTMLElement<TProps, HTMLBRElement>;
-  export function styled<TProps>(base: "button", style: Style<TProps>): StyledHTMLElement<TProps, HTMLButtonElement>;
-  export function styled<TProps>(base: "canvas", style: Style<TProps>): StyledHTMLElement<TProps, HTMLCanvasElement>;
-  export function styled<TProps>(base: "caption", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "cite", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "code", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "col", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableColElement>;
-  export function styled<TProps>(base: "colgroup", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableColElement>;
-  export function styled<TProps>(base: "data", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "datalist", style: Style<TProps>): StyledHTMLElement<TProps, HTMLDataListElement>;
-  export function styled<TProps>(base: "dd", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "del", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "details", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "dfn", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "dialog", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "div", style: Style<TProps>): StyledHTMLElement<TProps, HTMLDivElement>;
-  export function styled<TProps>(base: "dl", style: Style<TProps>): StyledHTMLElement<TProps, HTMLDListElement>;
-  export function styled<TProps>(base: "dt", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "em", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "embed", style: Style<TProps>): StyledHTMLElement<TProps, HTMLEmbedElement>;
-  export function styled<TProps>(base: "fieldset", style: Style<TProps>): StyledHTMLElement<TProps, HTMLFieldSetElement>;
-  export function styled<TProps>(base: "figcaption", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "figure", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "footer", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "form", style: Style<TProps>): StyledHTMLElement<TProps, HTMLFormElement>;
-  export function styled<TProps>(base: "h1", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadingElement>;
-  export function styled<TProps>(base: "h2", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadingElement>;
-  export function styled<TProps>(base: "h3", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadingElement>;
-  export function styled<TProps>(base: "h4", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadingElement>;
-  export function styled<TProps>(base: "h5", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadingElement>;
-  export function styled<TProps>(base: "h6", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadingElement>;
-  export function styled<TProps>(base: "head", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHeadElement>;
-  export function styled<TProps>(base: "header", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "hgroup", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "hr", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHRElement>;
-  export function styled<TProps>(base: "html", style: Style<TProps>): StyledHTMLElement<TProps, HTMLHtmlElement>;
-  export function styled<TProps>(base: "i", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "iframe", style: Style<TProps>): StyledHTMLElement<TProps, HTMLIFrameElement>;
-  export function styled<TProps>(base: "img", style: Style<TProps>): StyledHTMLElement<TProps, HTMLImageElement>;
-  export function styled<TProps>(base: "input", style: Style<TProps>): StyledHTMLElement<TProps, HTMLInputElement>;
-  export function styled<TProps>(base: "ins", style: Style<TProps>): StyledHTMLElement<TProps, HTMLModElement>;
-  export function styled<TProps>(base: "kbd", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "keygen", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "label", style: Style<TProps>): StyledHTMLElement<TProps, HTMLLabelElement>;
-  export function styled<TProps>(base: "legend", style: Style<TProps>): StyledHTMLElement<TProps, HTMLLegendElement>;
-  export function styled<TProps>(base: "li", style: Style<TProps>): StyledHTMLElement<TProps, HTMLLIElement>;
-  export function styled<TProps>(base: "link", style: Style<TProps>): StyledHTMLElement<TProps, HTMLLinkElement>;
-  export function styled<TProps>(base: "main", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "map", style: Style<TProps>): StyledHTMLElement<TProps, HTMLMapElement>;
-  export function styled<TProps>(base: "mark", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "menu", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "menuitem", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "meta", style: Style<TProps>): StyledHTMLElement<TProps, HTMLMetaElement>;
-  export function styled<TProps>(base: "meter", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "nav", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "noindex", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "noscript", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "object", style: Style<TProps>): StyledHTMLElement<TProps, HTMLObjectElement>;
-  export function styled<TProps>(base: "ol", style: Style<TProps>): StyledHTMLElement<TProps, HTMLOListElement>;
-  export function styled<TProps>(base: "optgroup", style: Style<TProps>): StyledHTMLElement<TProps, HTMLOptGroupElement>;
-  export function styled<TProps>(base: "option", style: Style<TProps>): StyledHTMLElement<TProps, HTMLOptionElement>;
-  export function styled<TProps>(base: "output", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "p", style: Style<TProps>): StyledHTMLElement<TProps, HTMLParagraphElement>;
-  export function styled<TProps>(base: "param", style: Style<TProps>): StyledHTMLElement<TProps, HTMLParamElement>;
-  export function styled<TProps>(base: "picture", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "pre", style: Style<TProps>): StyledHTMLElement<TProps, HTMLPreElement>;
-  export function styled<TProps>(base: "progress", style: Style<TProps>): StyledHTMLElement<TProps, HTMLProgressElement>;
-  export function styled<TProps>(base: "q", style: Style<TProps>): StyledHTMLElement<TProps, HTMLQuoteElement>;
-  export function styled<TProps>(base: "rp", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "rt", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "ruby", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "s", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "samp", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "script", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "section", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "select", style: Style<TProps>): StyledHTMLElement<TProps, HTMLSelectElement>;
-  export function styled<TProps>(base: "small", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "source", style: Style<TProps>): StyledHTMLElement<TProps, HTMLSourceElement>;
-  export function styled<TProps>(base: "span", style: Style<TProps>): StyledHTMLElement<TProps, HTMLSpanElement>;
-  export function styled<TProps>(base: "strong", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "style", style: Style<TProps>): StyledHTMLElement<TProps, HTMLStyleElement>;
-  export function styled<TProps>(base: "sub", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "summary", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "sup", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "table", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableElement>;
-  export function styled<TProps>(base: "tbody", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableSectionElement>;
-  export function styled<TProps>(base: "td", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableDataCellElement>;
-  export function styled<TProps>(base: "textarea", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTextAreaElement>;
-  export function styled<TProps>(base: "tfoot", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableSectionElement>;
-  export function styled<TProps>(base: "th", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableHeaderCellElement>;
-  export function styled<TProps>(base: "thead", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableSectionElement>;
-  export function styled<TProps>(base: "time", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "title", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTitleElement>;
-  export function styled<TProps>(base: "tr", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTableRowElement>;
-  export function styled<TProps>(base: "track", style: Style<TProps>): StyledHTMLElement<TProps, HTMLTrackElement>;
-  export function styled<TProps>(base: "u", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "ul", style: Style<TProps>): StyledHTMLElement<TProps, HTMLUListElement>;
-  export function styled<TProps>(base: "var", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-  export function styled<TProps>(base: "video", style: Style<TProps>): StyledHTMLElement<TProps, HTMLVideoElement>;
-  export function styled<TProps>(base: "wbr", style: Style<TProps>): StyledHTMLElement<TProps, HTMLElement>;
-
-  class CStyledSVGElement<TProps, TElement extends SVGElement> extends React.Component<TProps & React.SVGAttributes<TElement> & InnerRef<TElement>, void> {
-    render(): React.DOMElement<React.HTMLAttributes<TElement>, TElement>
-  }
-
-  interface StyledSVGElement<TProps, TElement extends SVGElement> {
-    new (): CStyledSVGElement<TProps, TElement>;
-  }
-
-  export function styled<TElement extends SVGElement, TProps>(base: string, style: Style<TProps>): StyledSVGElement<TProps, TElement>;
-  export function styled<TElement extends SVGElement, TProps, TBaseProps>(base: StyledSVGElement<TBaseProps, TElement>, style: Style<TProps>): StyledSVGElement<TBaseProps & TProps, TElement>;
-
-  export function styled<TProps>(base: "svg", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "circle", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "clipPath", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "defs", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "desc", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "ellipse", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feBlend", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feColorMatrix", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feComponentTransfer", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feComposite", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feConvolveMatrix", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feDiffuseLighting", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feDisplacementMap", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feDistantLight", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feFlood", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feFuncA", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feFuncB", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feFuncG", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feFuncR", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feGaussianBlur", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feImage", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feMerge", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feMergeNode", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feMorphology", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feOffset", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "fePointLight", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feSpecularLighting", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feSpotLight", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feTile", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "feTurbulence", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "filter", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "foreignObject", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "g", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "image", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "line", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "linearGradient", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "marker", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "mask", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "metadata", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "path", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "pattern", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "polygon", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "polyline", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "radialGradient", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "rect", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "stop", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "switch", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "symbol", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "text", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "textPath", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "tspan", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "use", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-  export function styled<TProps>(base: "view", style: Style<TProps>): StyledSVGElement<TProps, SVGElement>;
-
-  class CStyledStatelessComponent<TProps> extends React.Component<TProps, void> {
-    render(): React.SFCElement<TProps>
-  }
-
-  interface StyledStatelessComponent<TProps> {
-    new (): CStyledStatelessComponent<TProps>;
-  }
-
-  export function styled<TProps>(
-    base: React.StatelessComponent<TProps> | StyledStatelessComponent<TProps>,
-    style: Style<TProps>
-  ): StyledStatelessComponent<TProps>;
-
-  class CStyledComponentClass<TProps, TComponent extends React.Component<TProps, React.ComponentState>> extends React.Component<TProps & InnerRef<TComponent>, void> {
-    render(): React.ComponentElement<TProps, TComponent>
-  }
-
-  interface StyledComponentClass<TProps, TComponent extends React.Component<TProps, React.ComponentState>> {
-    new (): CStyledComponentClass<TProps, TComponent>;
-  }
-
-  export function styled<TProps, TComponent extends React.Component<TProps, React.ComponentState>>(
-    base: StyledComponentClass<TProps, TComponent>,
-    style: Style<TProps>
-  ): StyledComponentClass<TProps, TComponent>;
-  export function styled<TProps extends {}, TComponent extends React.Component<TProps, React.ComponentState>>(
-    base: React.ClassType<TProps, TComponent, React.ComponentClass<TProps>>,
-    style: Style<TProps>
-  ): StyledComponentClass<TProps, TComponent>;
 }
 
 export = StyletronReact;

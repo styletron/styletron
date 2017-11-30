@@ -72,7 +72,7 @@ injectStyle(styletron, {
 
 ## Using Styletron with React
 
-**[Live Demo](http://www.webpackbin.com/N12fnIW7G)**
+**[Live Demo](https://www.webpackbin.com/bins/-KkgKZBMnqRV_U-VKjHy)**
 
 The `styletron-react` package provides a convenient way to use Styletron in React applications. The API is inspired by the wonderful [styled-components library](https://github.com/styled-components/styled-components), except with style objects instead of template strings.
 
@@ -134,21 +134,6 @@ const StyledThirdParty = styled(ThirdParty, (props) => ({
 
 ### App integration and server-side rendering
 
-#### Client-side rendering
-```jsx
-import Styletron from 'styletron-client';
-import {StyletronProvider} from 'styletron-react';
-
-const styleElements = document.getElementsByClassName('_styletron_hydrate_');
-
-ReactDOM.render(
-  <StyletronProvider styletron={new Styletron(styleElements)}>
-    <App/>
-  </StyletronProvider>,
-  document.getElementById('app')
-);
-```
-
 #### Server-side rendering
 
 ```jsx
@@ -167,7 +152,34 @@ function render() {
   
   return `<html><head>${stylesForHead}</head><body>${appMarkup}</body></html>`;
 }
+```
 
+#### Client-side rendering w/ hydration
+```jsx
+import Styletron from 'styletron-client';
+import {StyletronProvider} from 'styletron-react';
+
+const styleElements = document.getElementsByClassName('_styletron_hydrate_');
+
+ReactDOM.render(
+  <StyletronProvider styletron={new Styletron(styleElements)}>
+    <App/>
+  </StyletronProvider>,
+  document.getElementById('app')
+);
+```
+
+#### Client-side rendering only
+```jsx
+import Styletron from 'styletron-client';
+import {StyletronProvider} from 'styletron-react';
+
+ReactDOM.render(
+  <StyletronProvider styletron={new Styletron()}>
+    <App/>
+  </StyletronProvider>,
+  document.getElementById('app')
+);
 ```
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master

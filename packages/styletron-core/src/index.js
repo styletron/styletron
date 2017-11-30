@@ -3,7 +3,6 @@
  * @packagename styletron-core
  */
 class StyletronCore {
-
   /**
    * Create a new StyletronCore instance
    * @param {object} [opts]           An object containing options
@@ -12,7 +11,7 @@ class StyletronCore {
   constructor({prefix = ''} = {}) {
     this.cache = {
       media: {},
-      pseudo: {}
+      pseudo: {},
     };
     this.prefix = prefix === '' ? false : prefix;
     this.uniqueCount = 0;
@@ -22,7 +21,7 @@ class StyletronCore {
   }
 
   static assignDecl(target, decl, className) {
-    const {prop, val, media, pseudo} = decl;
+    const {block, media, pseudo} = decl;
     let targetEntry;
     if (media) {
       if (!target.media[media]) {
@@ -38,10 +37,7 @@ class StyletronCore {
       }
       targetEntry = targetEntry.pseudo[pseudo];
     }
-    if (!targetEntry[prop]) {
-      targetEntry[prop] = {};
-    }
-    targetEntry[prop][val] = className;
+    targetEntry[block] = className;
   }
 
   /**
@@ -53,7 +49,19 @@ class StyletronCore {
    * @param  {string} [decl.pseudo] The pseudo selector
    * @return {string|undefined}     The class name for the declaration
    */
-  injectDeclaration(decl) {
+  injectDeclaration({prop, val, media, pseudo}) {
+    return this.injectRawDeclaration({block: `${prop}:${val}`, media, pseudo});
+  }
+
+  /**
+   * Injects a raw declaration (if not already injected) and returns a class name
+   * @param  {object} decl          The CSS declaration object
+   * @param  {string} decl.block    The declaration block
+   * @param  {string} [decl.media]  The media query
+   * @param  {string} [decl.pseudo] The pseudo selector
+   * @return {string|undefined}     The class name for the declaration
+   */
+  injectRawDeclaration(decl) {
     const cached = this.getCachedDeclaration(decl);
     if (cached) {
       return cached;
@@ -66,10 +74,10 @@ class StyletronCore {
   }
 
   /**
-   * @private
    * Get the next virtual class number, while setting
    * the uniqueCount, offset, and msb counters appropriately.
    * @return {number} The virtual class count
+   * @private
    */
   incrementVirtualCount() {
     const virtualCount = this.uniqueCount + this.offset;
@@ -82,16 +90,15 @@ class StyletronCore {
   }
 
   /**
-   * @private
    * Gets the class name for an already injected declaration
    * @param  {object} decl          The CSS declaration object
-   * @param  {string} decl.prop     The property name
-   * @param  {string} decl.val      The property value
+   * @param  {string} decl.block    The declaration block
    * @param  {string} [decl.media]  The media query
    * @param  {string} [decl.pseudo] The pseudo selector
    * @return {string|undefined}     The class name for the declaration
+   * @private
    */
-  getCachedDeclaration({prop, val, media, pseudo}) {
+  getCachedDeclaration({block, media, pseudo}) {
     let entry;
     if (media) {
       entry = this.cache.media[media];
@@ -107,9 +114,8 @@ class StyletronCore {
         return false;
       }
     }
-    return entry[prop] && entry[prop].hasOwnProperty(val) && entry[prop][val];
+    return entry[block];
   }
-
 }
 
-module.exports = StyletronCore;
+export default StyletronCore;

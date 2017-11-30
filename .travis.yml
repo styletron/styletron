@@ -1,7 +1,6 @@
 language: node_js
 sudo: false
 node_js:
-  - 4
   - 6
 addons:
   apt:
@@ -18,6 +17,8 @@ install:
   - yarn install
 script:
   - yarn run lint
-  - lerna bootstrap --ignore={benchmarks,demos} --concurrency=1
+  - lerna bootstrap --ignore={benchmarks,demos}
   - lerna run pretest --ignore={benchmarks,demos}
   - lerna run test --ignore={benchmarks,demos} --concurrency=1
+  - yarn run tsc
+  - lerna run prepublish --ignore={benchmarks,demos}

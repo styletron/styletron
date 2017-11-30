@@ -3,6 +3,7 @@ const DIR_SUFFIX = ['-top', '-right', '-bottom', '-left'];
 const BORDER_DIR_VAL = ['-width', '-style', '-color'];
 const WIDTH_STYLE_COLOR = ['-width', '-style', '-color'];
 
+// prettier-ignore
 const SHORTHANDS = {
   // CSS 2.1: http://www.w3.org/TR/CSS2/propidx.html
   'list-style':      ['-type', '-position', '-image'],
@@ -63,7 +64,7 @@ function assign(shorthand) {
     result[longhand] = true;
     if (SHORTHANDS[longhand]) {
       const nested = assign(longhand);
-      for (let nestedProp in nested) {
+      for (const nestedProp in nested) {
         result[nestedProp] = true;
       }
     }
@@ -72,8 +73,8 @@ function assign(shorthand) {
   return result;
 }
 
-for (let shorthand in SHORTHANDS) {
+for (const shorthand in SHORTHANDS) {
   assign(shorthand);
 }
 
-module.exports = dict;
+export default dict;

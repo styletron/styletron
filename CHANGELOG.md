@@ -1,3 +1,24 @@
+## 2.5.8
+- Update TypeScript definitions to reflect statless functional component usage ([#124](https://github.com/rtsao/styletron/pull/124)) Thanks [@faddee](https://github.com/faddee)!
+
+## 2.5.7
+- Added `styletron-preact` package
+- Use stateless functional component in `styled` function in `styletron-react`
+- Minor docs updates
+
+## 2.5.6
+- Update TypeScript definitions ([#120](https://github.com/rtsao/styletron/pull/120)) Thanks [@faddee](https://github.com/faddee)!
+
+## 2.5.5
+- Change prop-types package from peer to regular dependency ([#118](https://github.com/rtsao/styletron/pull/118)) Thanks [@faddee](https://github.com/faddee)!
+
+## 2.5.4
+- Add prop-types package for React 15.5 compatibility ([#116](https://github.com/rtsao/styletron/pull/116)) Thanks [@jbellsey](https://github.com/jbellsey)!
+
+## 2.5.3
+
+- Added bindings for Inferno ([#90](https://github.com/rtsao/styletron/pull/90)) Thanks [@wagerfield](https://github.com/wagerfield)!
+
 ## 2.5.2
 
 - Don't pass `innerRef` in styletron-react ([#80](https://github.com/rtsao/styletron/pull/80)) Thanks [@faddee](https://github.com/faddee)!

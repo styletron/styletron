@@ -1,0 +1,34 @@
+{
+  "name": "styletron-preact",
+  "version": "3.0.0-rc.3",
+  "description": "Official Preact bindings for styletron",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "homepage": "https://github.com/rtsao/styletron",
+  "repository": "git@github.com:rtsao/styletron.git",
+  "bugs": "https://github.com/rtsao/styletron/issues",
+  "main": "./dist/node.cjs.js",
+  "module": "./dist/node.es.js",
+  "browser": {
+    "./dist/node.cjs.js": "./dist/browser.cjs.js",
+    "./dist/node.es.js": "./dist/browser.es.js"
+  },
+  "scripts": {
+    "transpile": "cup build",
+    "pretest": "cup build-tests",
+    "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js",
+    "prepublish": "npm run transpile"
+  },
+  "dependencies": {
+    "styletron-client": "^3.0.0-rc.3",
+    "styletron-server": "^3.0.0-rc.3",
+    "styletron-utils": "^3.0.0-rc.3"
+  },
+  "peerDependencies": {
+    "preact": "6.x - 8.x"
+  },
+  "devDependencies": {
+    "babel-preset-cup": "^1.0.0-rc.2",
+    "babel-preset-react": "^6.24.1"
+  },
+  "license": "MIT"
+}

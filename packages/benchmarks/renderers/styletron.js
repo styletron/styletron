@@ -11,11 +11,9 @@ module.exports = (rules, synthetic) => {
     let className = StyletronUtils.injectStyle(styletron, rules[i]);
     if (i === 0) {
       first = className;
-    }
-    else if (i === 1000) {
+    } else if (i === 1000) {
       middle = className;
-    }
-    else if (i === len - 1) {
+    } else if (i === len - 1) {
       last = className;
     }
   }
@@ -24,8 +22,7 @@ module.exports = (rules, synthetic) => {
     ? `<style class="styletron"></style>`
     : styletron.getStylesheetsHtml();
 
-  return (
-`<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -40,5 +37,5 @@ ${styleElement}
 <div class="${last}">baz</div>
 <script src="styletron-bundle.js"></script>
 </body>
-</html>`);
-}
+</html>`;
+};

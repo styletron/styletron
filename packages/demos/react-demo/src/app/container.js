@@ -5,12 +5,12 @@ const Container = styled('div', props => {
     margin: '0px auto',
     width: '640px',
     padding: `${props.size}px`,
-    background: props.color
-  }
+    background: props.color,
+  };
 });
 
 Container.defaultProps = {
-  color: 'green'
+  color: 'green',
 };
 
 module.exports = Container;

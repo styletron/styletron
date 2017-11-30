@@ -1,10 +1,10 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * @class StyletronProvider
  * @packagename styletron-react
- * @description React component
+ * @description Provides a Styletron instance to descendant styled components via context
  * @example
  * const Styletron = require('styletron');
  *
@@ -35,11 +35,11 @@ class StyletronProvider extends React.Component {
 
 StyletronProvider.PropTypes = {
   styletron: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };
 
 StyletronProvider.childContextTypes = {
-  styletron: PropTypes.object.isRequired
+  styletron: PropTypes.object.isRequired,
 };
 
-module.exports = StyletronProvider;
+export default StyletronProvider;

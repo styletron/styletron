@@ -1,6 +1,6 @@
-const baseHandler = require('./base-obj-to-css');
+import baseHandler from './base-obj-to-css';
 
-module.exports = cacheToStylesheets;
+export default cacheToStylesheets;
 
 /*
  * Converts cache object to a CSS string
@@ -10,7 +10,7 @@ module.exports = cacheToStylesheets;
 function cacheToStylesheets(cacheObj) {
   let mediaSheets;
   let mainCss = '';
-  for (let key in cacheObj) {
+  for (const key in cacheObj) {
     if (key === 'media') {
       mediaSheets = getMediaSheets(cacheObj[key]);
       continue;
@@ -18,22 +18,22 @@ function cacheToStylesheets(cacheObj) {
     mainCss += baseHandler(key, cacheObj[key]);
   }
   const mainSheet = {
-    css: mainCss
+    css: mainCss,
   };
   return mediaSheets ? [mainSheet].concat(mediaSheets) : [mainSheet];
 }
 
 function getMediaSheets(mediaObj) {
   const stylesheets = [];
-  for (let query in mediaObj) {
+  for (const query in mediaObj) {
     const obj = mediaObj[query];
     let mediaCss = '';
-    for (let key in obj) {
+    for (const key in obj) {
       mediaCss += baseHandler(key, obj[key]);
     }
     stylesheets.push({
       media: query,
-      css: mediaCss
+      css: mediaCss,
     });
   }
   return stylesheets;

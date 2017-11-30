@@ -1,9 +1,9 @@
-const baseHandler = require('./base-obj-to-css');
+import baseHandler from './base-obj-to-css';
 
 // https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/
 const IE9_RULE_LIMIT = 4095;
 
-module.exports = cacheToStylesheetsOldIE;
+export default cacheToStylesheetsOldIE;
 
 /*
  * Converts cache object to a CSS string
@@ -15,12 +15,16 @@ function cacheToStylesheetsOldIE(cacheObj) {
   let mediaSheets;
   let mainCss = '';
   let ruleCount = 0;
-  for (let key in cacheObj) {
+  for (const key in cacheObj) {
     if (key === 'media') {
       mediaSheets = getMediaSheets(cacheObj[key]);
       continue;
     }
-    ruleCount += Object.keys(cacheObj[key]).length;
+    if (typeof cacheObj[key] === 'object') {
+      ruleCount += Object.keys(cacheObj[key]).length;
+    } else {
+      ruleCount++;
+    }
     mainCss += baseHandler(key, cacheObj[key]);
     // TODO: handle case of than 4095 unique values for a single property
     if (ruleCount > IE9_RULE_LIMIT && mainCss) {
@@ -37,24 +41,28 @@ function cacheToStylesheetsOldIE(cacheObj) {
 
 function getMediaSheets(mediaObj) {
   const stylesheets = [];
-  for (let query in mediaObj) {
+  for (const query in mediaObj) {
     const obj = mediaObj[query];
     let mediaCss = '';
     let ruleCount = 0;
-    for (let key in obj) {
-      ruleCount += Object.keys(obj[key]).length;
+    for (const key in obj) {
+      if (typeof obj[key] === 'object') {
+        ruleCount += Object.keys(obj[key]).length;
+      } else {
+        ruleCount++;
+      }
+      mediaCss += baseHandler(key, obj[key]);
       // TODO: handle case of than 4095 unique values for a single property
       if (ruleCount > IE9_RULE_LIMIT && mediaCss) {
         stylesheets.push({media: query, css: mediaCss});
         mediaCss = '';
         ruleCount = 0;
       }
-      mediaCss += baseHandler(key, obj[key]);
     }
     if (mediaCss) {
       stylesheets.push({
         media: query,
-        css: mediaCss
+        css: mediaCss,
       });
     }
   }

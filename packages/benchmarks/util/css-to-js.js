@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 const postcss = require('postcss');
 const camelcase = require('camelcase-css');
 const safeParser = require('postcss-safe-parser');
@@ -31,7 +31,7 @@ module.exports = function cssToJs(src) {
         inverted[media][key] = ruleResult;
         count++;
       });
-    } else if (node.type ==='rule') {
+    } else if (node.type === 'rule') {
       let ruleResult = {};
       node.walkDecls(function(decl) {
         // TODO: handle duplicate properties
@@ -46,7 +46,7 @@ module.exports = function cssToJs(src) {
   });
 
   return {result, inverted, raw};
-}
+};
 
 function getKey(count) {
   return 's' + count;

@@ -17,7 +17,7 @@ const renderers = {
   styletron: require('./renderers/styletron'),
   aphrodite: require('./renderers/aphrodite'),
   glamor: require('./renderers/glamor'),
-  jss: require('./renderers/jss')
+  jss: require('./renderers/jss'),
 };
 const keys = Object.keys(renderers);
 
@@ -27,8 +27,16 @@ sources.forEach(({app, lib, style}) => {
   const renderer = renderers[lib];
   // hydrated
   const hydrated = renderer(style, false);
-  fs.writeFileSync(path.join(staticDir, 'hydrate', app, `${lib}.html`), hydrated, 'utf8');
+  fs.writeFileSync(
+    path.join(staticDir, 'hydrate', app, `${lib}.html`),
+    hydrated,
+    'utf8'
+  );
   // client-only
   const clientOnly = renderer(style, true);
-  fs.writeFileSync(path.join(staticDir, 'client-only', app, `${lib}.html`), clientOnly, 'utf8');
+  fs.writeFileSync(
+    path.join(staticDir, 'client-only', app, `${lib}.html`),
+    clientOnly,
+    'utf8'
+  );
 });

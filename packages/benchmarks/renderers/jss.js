@@ -21,8 +21,7 @@ module.exports = (invertedSheet, synthetic) => {
     ? ''
     : `<style id="server-side-styles">${jsscss}</style>`;
 
-  return (
-`<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -37,5 +36,5 @@ ${styleElement}
 <div class="${last}">baz</div>
 <script src="jss-bundle.js"></script>
 </body>
-</html>`);
-}
+</html>`;
+};

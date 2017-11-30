@@ -1,21 +1,21 @@
 {
   "name": "styletron",
-  "version": "2.5.1",
+  "version": "3.0.0-rc.3",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "./lib/server.js",
-  "browser": "./lib/client.js",
-  "scripts": {
-    "transpile": "../../node_modules/.bin/buble -i src -o lib",
-    "prepublish": "npm run transpile"
+  "main": "./node.cjs.js",
+  "module": "./node.es.js",
+  "browser": {
+    "./node.cjs.js": "./browser.cjs.js",
+    "./node.es.js": "./browser.es.js"
   },
+  "scripts": {},
   "dependencies": {
-    "styletron-server": "^2.5.1",
-    "styletron-client": "^2.5.1"
+    "styletron-client": "^3.0.0-rc.3",
+    "styletron-server": "^3.0.0-rc.3"
   },
-  "devDependencies": {},
   "license": "MIT"
 }

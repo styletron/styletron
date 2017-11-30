@@ -15,7 +15,7 @@ server.use(compression());
 server.use(serve(path.resolve(__dirname, '../static'), {index: false}));
 
 const getMarkup = (bodyContent, cssContent) =>
-`<!DOCTYPE html>
+  `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -31,9 +31,13 @@ ${cssContent}
 
 server.use((req, res) => {
   const styletron = new StyletronServer();
-  const app = createElement(StyletronProvider, {styletron}, createElement(App, {
-    path: req.url
-  }));
+  const app = createElement(
+    StyletronProvider,
+    {styletron},
+    createElement(App, {
+      path: req.url,
+    })
+  );
   const html = renderToString(app);
   const css = styletron.getStylesheetsHtml();
   res.end(getMarkup(html, css));

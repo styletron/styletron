@@ -1,16 +1,10 @@
-const createElement = require('inferno-create-element');
-const {injectStylePrefixed} = require('styletron-utils');
-const {
-  assign,
-  isNil,
-  isObject,
-  isString,
-  isFunction
-} = require('./utils');
+import createElement from 'inferno-create-element';
+import {injectStylePrefixed} from 'styletron-utils';
+import {assign, isNil, isObject, isString, isFunction} from './utils';
 
 const STYLETRON_KEY = '__STYLETRON';
 
-module.exports = styled;
+export default styled;
 
 /**
  * Helper function to create styled components
@@ -51,23 +45,21 @@ module.exports = styled;
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
 function styled(name, styles) {
-
   // Styled component
   if (name && name.hasOwnProperty(STYLETRON_KEY)) {
     const component = name[STYLETRON_KEY];
     const stylesArray = component.stylesArray.concat(styles);
     return createStyledComponent(component.name, stylesArray);
 
-  // Tag name or non-styled component
+    // Tag name or non-styled component
   } else if (isString(name) || isFunction(name)) {
     return createStyledComponent(name, [styles]);
   }
 
-  throw new Error('Must pass a tag name or component');
+  throw new Error('`styled` takes either a DOM element name or a component');
 }
 
 function createStyledComponent(name, stylesArray) {
-
   function StyledComponent(props, context) {
     const newProps = assign({}, props);
     const styles = resolveStyles(stylesArray, props, context);
