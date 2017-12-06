@@ -33,7 +33,7 @@ class StyletronProvider extends React.Component {
   }
 }
 
-StyletronProvider.PropTypes = {
+StyletronProvider.propTypes = {
   styletron: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired,
 };
