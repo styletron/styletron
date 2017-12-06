@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
  *     </StyletronProvider>
  *   );
  * }
- * 
+ *
  * @property {object} styletron - Styletron instance
  * @property {ReactElement} children - children
  * @extends ReactClass

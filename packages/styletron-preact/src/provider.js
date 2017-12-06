@@ -15,7 +15,7 @@ import Preact from 'preact';
  *     </StyletronProvider>
  *   );
  * }
- * 
+ *
  * @property {object} styletron - Styletron instance
  * @property {PreactElement} children - children
  * @extends PreactClass
