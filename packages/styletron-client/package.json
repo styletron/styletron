@@ -1,6 +1,6 @@
 {
   "name": "styletron-client",
-  "version": "3.0.0-rc.3",
+  "version": "3.0.0-rc.5",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
