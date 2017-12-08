@@ -1,20 +1,16 @@
 language: node_js
 sudo: false
 node_js:
-  - 6
+  - 8
 addons:
   apt:
     packages:
-      - xvfb
+      - google-chrome-stable
 cache:
   yarn: true
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - yarn install
 script:
   - yarn run lint
   - lerna bootstrap --ignore={benchmarks,demos}
