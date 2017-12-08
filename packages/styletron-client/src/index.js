@@ -22,7 +22,7 @@ class StyletronClient extends StyletronCore {
     super(opts);
     this.uniqueCount = 0;
     this.mediaSheets = {};
-    if (serverStyles) {
+    if (serverStyles && serverStyles.length > 0) {
       for (let i = 0; i < serverStyles.length; i++) {
         const element = serverStyles[i];
         if (element.media) {
