@@ -85,6 +85,12 @@ test('rule insertion order', t => {
   t.end();
 });
 
+test('with zero length stylesheets', t => {
+  const instance = new StyletronTest([]);
+  t.equal(instance.mainSheet instanceof HTMLStyleElement, true);
+  t.end();
+});
+
 function createFixtures(sheets) {
   return sheets.map(sheet => createStyleElement(sheet.css, sheet.media));
 }
