@@ -1,5 +1,5 @@
 import Preact from 'preact';
-import utils from 'styletron-utils';
+import {injectStylePrefixed} from 'styletron-utils';
 
 const STYLETRON_KEY = '__STYLETRON';
 
