@@ -67,7 +67,7 @@ function createStyledElementComponent(tagName, stylesArray) {
       }
     });
 
-    const styletronClassName = utils.injectStylePrefixed(
+    const styletronClassName = injectStylePrefixed(
       context.styletron,
       resolvedStyle
     );
