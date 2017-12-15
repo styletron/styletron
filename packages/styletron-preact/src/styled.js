@@ -1,5 +1,5 @@
 import Preact from 'preact';
-import utils from 'styletron-utils';
+import {injectStylePrefixed} from 'styletron-utils';
 
 const STYLETRON_KEY = '__STYLETRON';
 
@@ -67,7 +67,7 @@ function createStyledElementComponent(tagName, stylesArray) {
       }
     });
 
-    const styletronClassName = utils.injectStylePrefixed(
+    const styletronClassName = injectStylePrefixed(
       context.styletron,
       resolvedStyle
     );
