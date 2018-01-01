@@ -1,6 +1,6 @@
 {
   "name": "styletron-inferno",
-  "version": "3.0.0-rc.5",
+  "version": "3.0.0-rc.7",
   "description": "Inferno bindings for Styletron",
   "author": "Matthew Wagerfield <matthew@wagerfield.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "styletron-client": "^3.0.0-rc.5",
-    "styletron-server": "^3.0.0-rc.3",
+    "styletron-server": "^3.0.0-rc.7",
     "styletron-utils": "^3.0.0-rc.3"
   },
   "peerDependencies": {
