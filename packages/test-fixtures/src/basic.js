@@ -9,6 +9,7 @@ module.exports = {
       'color:green': 'c',
     },
   },
+
   pseudo: {
     ':hover': {
       'display:none': 'e',

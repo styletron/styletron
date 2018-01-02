@@ -6,11 +6,21 @@
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "./dist/node.cjs.js",
-  "module": "./dist/node.es.js",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index",
+  "module": "./dist/index.mjs",
   "browser": {
-    "./dist/node.cjs.js": "./dist/browser.cjs.js",
-    "./dist/node.es.js": "./dist/browser.es.js"
+    "./dist/index.js": "./dist/browser.es5.js",
+    "./dist/index.mjs": "./dist/browser.es5.mjs"
+  },
+  "es2015": {
+    "./dist/browser.es5.mjs": "./dist/browser.es2015.mjs"
+  },
+  "es2017": {
+    "./dist/browser.es5.mjs": "./dist/browser.es2017.mjs",
+    "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
   },
   "types": "./index.d.ts",
   "scripts": {
@@ -21,7 +31,8 @@
   },
   "dependencies": {
     "@types/react": "*",
-    "prop-types": "^15.5.8",
+    "eslint-plugin-cup": "^1.0.0",
+    "prop-types": "^15.6.0",
     "styletron-client": "^3.0.0-rc.5",
     "styletron-server": "^3.0.0-rc.7",
     "styletron-utils": "^3.0.0-rc.3"
@@ -30,8 +41,12 @@
     "react": "0.14.x - 16.x"
   },
   "devDependencies": {
-    "babel-preset-cup": "^1.0.0-rc.2",
-    "babel-preset-react": "^6.24.1"
+    "@babel/preset-react": "^7.0.0-beta.36",
+    "create-universal-package": "^3.1.1",
+    "eslint-config-cup": "^1.0.0",
+    "eslint-config-cup-recommended": "^1.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "license": "MIT"
 }

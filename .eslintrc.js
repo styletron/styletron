@@ -1,7 +1,6 @@
 module.exports = {
-
   parserOptions: {
-    ecmaVersion: 6
+    ecmaVersion: 2017,
   },
 
   plugins: ['eslint-plugin-prettier'],
@@ -21,6 +20,5 @@ module.exports = {
         semi: true,
       },
     ],
-  }
-
+  },
 };

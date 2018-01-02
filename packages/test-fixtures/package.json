@@ -5,7 +5,14 @@
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "prepublish": "babel src -d dist --plugins=static-fs"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-static-fs": "^1.1.0"
+  }
 }

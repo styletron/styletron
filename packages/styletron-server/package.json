@@ -6,11 +6,19 @@
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "main": "./dist/node.cjs.js",
-  "module": "./dist/node.es.js",
+  "files": ["dist"],
+  "main": "./dist/index",
+  "module": "./dist/index.mjs",
   "browser": {
-    "./dist/node.cjs.js": "./dist/browser.cjs.js",
-    "./dist/node.es.js": "./dist/browser.es.js"
+    "./dist/index.js": "./dist/browser.es5.js",
+    "./dist/index.mjs": "./dist/browser.es5.mjs"
+  },
+  "es2015": {
+    "./dist/browser.es5.mjs": "./dist/browser.es2015.mjs"
+  },
+  "es2017": {
+    "./dist/browser.es5.mjs": "./dist/browser.es2017.mjs",
+    "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
   },
   "types": "./index.d.ts",
   "scripts": {
@@ -23,7 +31,10 @@
     "styletron-core": "^3.0.0-rc.3"
   },
   "devDependencies": {
-    "babel-preset-cup": "^1.0.0-rc.2",
+    "create-universal-package": "^3.1.1",
+    "eslint-config-cup": "^1.0.0",
+    "eslint-config-cup-recommended": "^1.0.0",
+    "eslint-plugin-cup": "^1.0.0",
     "test-fixtures": "^3.0.0-rc.1"
   },
   "license": "MIT"
