@@ -1,8 +1,0 @@
-app/*.js
-bundles/*.js
-static/*/*/*.js
-static/*/*/*.html
-results/
-styles/*
-!styles/.gitkeep
-!fixtures/json/.gitkeep
