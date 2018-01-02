@@ -114,7 +114,7 @@ test('test injection prefixed', function(t) {
       pseudo: ':hover',
     },
     {
-      block: 'flex-grow:1;-webkit-flex-grow:1',
+      block: '-webkit-flex-grow:1;flex-grow:1',
       media: '(max-width: 500px)',
       pseudo: undefined,
     },
