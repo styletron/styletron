@@ -39,7 +39,9 @@ function createStyledElementComponent(base, stylesArray, assignProps) {
       }
     });
 
-    const elementProps = assignProps(context.styletron, styleResult, ownProps);
+    let elementProps = assignProps(context.styletron, styleResult, ownProps);
+
+    elementProps = omit$Props(elementProps);
 
     if (props.innerRef) {
       elementProps.ref = props.innerRef;
@@ -70,4 +72,14 @@ function assign(target, source) {
     target[key] = source[key];
   }
   return target;
+}
+
+function omit$Props(source) {
+  const result = {};
+  for (const key in source) {
+    if (key[0] !== '$') {
+      result[key] = source[key];
+    }
+  }
+  return result;
 }
