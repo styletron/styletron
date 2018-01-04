@@ -10,7 +10,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "lint": "eslint packages/*/src/**.js",
+    "lint": "eslint packages/*/src/**.js packages/*/src/__tests__/*.js",
     "tsc": "tsc",
     "build-docs": "jsdoc -c jsdoc.json",
     "pretest": "npm run lint && npm run tsc && lerna run pretest",

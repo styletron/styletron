@@ -138,6 +138,49 @@ test('core composition', t => {
   t.end();
 });
 
+test.only('core composition w/ props', t => {
+  const Widget = core(
+    'input',
+    props => ({
+      color: props['data-foo'],
+      display: props.$hidden ? 'none' : 'block',
+      fontSize: '4px',
+    }),
+    strictAssignProps
+  );
+  const SuperWidget = core(
+    Widget,
+    props => ({
+      background: props['data-foo'],
+      fontSize: '12px',
+      left: props.$left,
+      opacity: props.disabled ? '.5' : '1',
+    }),
+    strictAssignProps
+  );
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement(SuperWidget, {
+        'data-foo': 'red',
+        $hidden: true,
+        $left: '120px',
+        disabled: true,
+      })
+    )
+  );
+  const input = ReactTestUtils.findRenderedDOMComponentWithTag(output, 'input');
+  t.equal(input.className, 'a b c d e f', 'matches expected styletron classes');
+  t.equal(input.disabled, true, 'input is disabled');
+  t.equal(
+    styletron.getCss(),
+    '.a{color:red}.b{display:none}.c{font-size:12px}.d{background:red}.e{left:120px}.f{opacity:.5}'
+  );
+  t.end();
+});
+
 test('core component', t => {
   const Widget = ({className}) => React.createElement('div', {className});
   const SuperWidget = core(Widget, {color: 'red'}, strictAssignProps);
@@ -291,7 +334,7 @@ test('$-prefixed props not passed', t => {
       React.createElement(Widget, {
         'data-foo': 'bar',
         $foo: 'bar',
-        $baz: 'baz'
+        $baz: 'baz',
       })
     )
   );
