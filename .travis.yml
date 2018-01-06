@@ -7,8 +7,7 @@ cache:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add greenkeeper-lockfile@1
-before_script: greenkeeper-lockfile-update
+install: yarn install --frozen-lockfile
 script:
   - yarn run lint
   - lerna bootstrap --ignore=demos
@@ -17,4 +16,3 @@ script:
   - lerna run test --ignore=demos --concurrency=1
   - yarn run tsc
   - lerna run prepublish --ignore=demos
-after_script: greenkeeper-lockfile-upload
