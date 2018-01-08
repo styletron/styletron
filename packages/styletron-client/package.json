@@ -1,12 +1,14 @@
 {
   "name": "styletron-client",
-  "version": "3.0.0-rc.5",
+  "version": "3.0.0",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index",
   "module": "./dist/index.mjs",
   "browser": {
@@ -29,7 +31,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "styletron-core": "^3.0.0-rc.3"
+    "styletron-core": "^3.0.0"
   },
   "devDependencies": {
     "create-universal-package": "3.1.1",
@@ -37,7 +39,7 @@
     "eslint-config-cup-recommended": "1.0.0",
     "eslint-plugin-cup": "1.0.0",
     "tape": "4.8.0",
-    "test-fixtures": "^3.0.0-rc.1",
+    "test-fixtures": "^3.0.0",
     "unitest": "2.1.1"
   },
   "license": "MIT"

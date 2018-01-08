@@ -1,12 +1,14 @@
 {
   "name": "styletron-utils",
-  "version": "3.0.0-rc.3",
+  "version": "3.0.0",
   "description": "Generic helper utilities for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index",
   "module": "./dist/index.mjs",
   "browser": {
