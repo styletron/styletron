@@ -12,6 +12,7 @@
     "./node.cjs.js": "./browser.cjs.js",
     "./node.es.js": "./browser.es.js"
   },
+  "sideEffects": false,
   "scripts": {},
   "dependencies": {
     "styletron-client": "^3.0.0-rc.5",

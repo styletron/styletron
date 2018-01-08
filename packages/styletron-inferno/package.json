@@ -22,6 +22,7 @@
     "./dist/browser.es5.mjs": "./dist/browser.es2017.mjs",
     "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
   },
+  "sideEffects": false,
   "scripts": {
     "build": "cup build",
     "pretest": "cup build-tests",

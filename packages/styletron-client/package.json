@@ -21,6 +21,7 @@
     "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
   },
   "types": "./index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "cup build",
     "pretest": "cup build-tests",

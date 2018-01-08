@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "private": true,
+  "sideEffects": false,
   "scripts": {
     "build": "babel src -d dist --plugins=static-fs",
     "prepublish": "npm run build"
