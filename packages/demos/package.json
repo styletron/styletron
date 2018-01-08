@@ -16,19 +16,19 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
-    "compression": "^1.6.2",
-    "connect": "^3.4.1",
-    "serve-static": "^1.11.1",
+    "compression": "1.7.1",
+    "connect": "3.6.5",
+    "serve-static": "1.13.1",
     "styletron-client": "^3.0.0-rc.5",
     "styletron-react": "^3.0.0-rc.7",
     "styletron-server": "^3.0.0-rc.7",
     "styletron-utils": "^3.0.0-rc.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-preset-react": "^6.11.1",
-    "babelify": "^7.3.0",
-    "browserify": "^13.1.0"
+    "babel-cli": "6.26.0",
+    "babel-preset-react": "6.24.1",
+    "babelify": "7.3.0",
+    "browserify": "13.3.0"
   },
   "engines": {
     "node": ">=4"
