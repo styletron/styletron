@@ -14,7 +14,7 @@
     "tsc": "tsc",
     "build-docs": "jsdoc -c jsdoc.json",
     "pretest": "npm run lint && npm run tsc && lerna run pretest",
-    "test": "lerna run test --concurrency=1",
+    "test": "lerna run test",
     "predeploy-docs":
       "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
     "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
