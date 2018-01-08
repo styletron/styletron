@@ -27,7 +27,7 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-preset-react": "6.24.1",
-    "babelify": "7.3.0",
+    "babelify": "8.0.0",
     "browserify": "13.3.0"
   },
   "engines": {
