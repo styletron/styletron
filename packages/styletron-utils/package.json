@@ -21,10 +21,10 @@
     "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
   },
   "scripts": {
-    "transpile": "cup build",
+    "build": "cup build",
     "pretest": "cup build-tests",
     "test": "node dist-tests/node.js",
-    "prepublish": "npm run transpile"
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "inline-style-prefixer": "^4.0.0"

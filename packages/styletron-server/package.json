@@ -22,10 +22,10 @@
   },
   "types": "./index.d.ts",
   "scripts": {
-    "transpile": "cup build",
+    "build": "cup build",
     "pretest": "cup build-tests",
     "test": "node dist-tests/node.js",
-    "prepublish": "npm run transpile"
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "styletron-core": "^3.0.0-rc.3"

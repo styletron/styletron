@@ -24,10 +24,10 @@
   },
   "types": "./index.d.ts",
   "scripts": {
-    "transpile": "cup build",
+    "build": "cup build",
     "pretest": "cup build-tests",
     "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js",
-    "prepublish": "npm run transpile"
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "@types/react": "*",

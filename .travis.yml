@@ -13,6 +13,5 @@ script:
   - lerna bootstrap --ignore=demos
   - lerna run prepublish --ignore=demos
   - lerna run pretest --ignore=demos
-  - lerna run test --ignore=demos --concurrency=1
+  - lerna run test --ignore=demos
   - yarn run tsc
-  - lerna run prepublish --ignore=demos

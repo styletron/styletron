@@ -9,7 +9,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepublish": "babel src -d dist --plugins=static-fs"
+    "build": "babel src -d dist --plugins=static-fs",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

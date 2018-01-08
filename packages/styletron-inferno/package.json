@@ -23,10 +23,10 @@
     "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
   },
   "scripts": {
-    "transpile": "cup build",
+    "build": "cup build",
     "pretest": "cup build-tests",
     "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js",
-    "prepublish": "npm run transpile"
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "inferno-create-element": "^3.10.1",
