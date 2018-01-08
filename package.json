@@ -21,16 +21,16 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@rtsao/docdash": "^0.4.2",
-    "benchmark": "^2.1.4",
-    "eslint": "^4.14.0",
-    "eslint-plugin-prettier": "^2.4.0",
-    "jsdoc": "^3.5.5",
-    "lerna": "^2.5.1",
-    "prettier": "^1.9.2",
-    "push-dir": "^0.4.1",
-    "rimraf": "^2.6.2",
-    "typescript": "^2.6.2"
+    "@rtsao/docdash": "0.4.2",
+    "benchmark": "2.1.4",
+    "eslint": "4.15.0",
+    "eslint-plugin-prettier": "2.4.0",
+    "jsdoc": "3.5.5",
+    "lerna": "2.5.1",
+    "prettier": "1.9.2",
+    "push-dir": "0.4.1",
+    "rimraf": "2.6.2",
+    "typescript": "2.6.2"
   },
   "license": "MIT"
 }

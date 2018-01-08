@@ -30,10 +30,10 @@
     "styletron-client": "^3.0.0-rc.5"
   },
   "devDependencies": {
-    "create-universal-package": "^3.1.1",
-    "eslint-config-cup": "^1.0.0",
-    "eslint-config-cup-recommended": "^1.0.0",
-    "eslint-plugin-cup": "^1.0.0",
+    "create-universal-package": "3.1.1",
+    "eslint-config-cup": "1.0.0",
+    "eslint-config-cup-recommended": "1.0.0",
+    "eslint-plugin-cup": "1.0.0",
     "test-fixtures": "^3.0.0-rc.1"
   },
   "license": "MIT"

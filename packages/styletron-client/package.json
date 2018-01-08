@@ -31,13 +31,13 @@
     "styletron-core": "^3.0.0-rc.3"
   },
   "devDependencies": {
-    "create-universal-package": "^3.1.1",
-    "eslint-config-cup": "^1.0.0",
-    "eslint-config-cup-recommended": "^1.0.0",
-    "eslint-plugin-cup": "^1.0.0",
-    "tape": "^4.8.0",
+    "create-universal-package": "3.1.1",
+    "eslint-config-cup": "1.0.0",
+    "eslint-config-cup-recommended": "1.0.0",
+    "eslint-plugin-cup": "1.0.0",
+    "tape": "4.8.0",
     "test-fixtures": "^3.0.0-rc.1",
-    "unitest": "^2.1.0"
+    "unitest": "2.1.1"
   },
   "license": "MIT"
 }
