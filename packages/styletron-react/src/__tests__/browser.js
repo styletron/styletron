@@ -138,7 +138,7 @@ test('core composition', t => {
   t.end();
 });
 
-test.only('core composition w/ props', t => {
+test('core composition w/ props', t => {
   const Widget = core(
     'input',
     props => ({
