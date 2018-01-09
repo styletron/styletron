@@ -1,6 +1,6 @@
 {
   "name": "styletron-core",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",

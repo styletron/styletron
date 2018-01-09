@@ -1,6 +1,6 @@
 {
   "name": "styletron-client-ie9",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -30,7 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "styletron-client": "^3.0.0"
+    "styletron-client": "^3.0.1"
   },
   "devDependencies": {
     "create-universal-package": "3.1.1",
