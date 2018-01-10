@@ -1931,9 +1931,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-universal-package@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/create-universal-package/-/create-universal-package-3.1.1.tgz#5f84d57dbe18c981e96a7b49fe7ce011b74ae5ba"
+create-universal-package@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/create-universal-package/-/create-universal-package-3.2.2.tgz#302c2529e682ad282e360d5ad88f1aabd17dc5f9"
   dependencies:
     "@babel/core" "^7.0.0-beta.36"
     "@babel/plugin-transform-flow-strip-types" "^7.0.0-beta.36"
@@ -1945,7 +1945,6 @@ create-universal-package@3.1.1:
     chalk "^2.3.0"
     draftlog "^1.0.12"
     fast-async "^6.3.0"
-    flow-bin "^0.62.0"
     import-lazy "^3.1.0"
     jest-worker "^22.0.3"
     loader-utils "^1.1.0"
@@ -2643,10 +2642,6 @@ flat-cache@^1.2.1:
     del "^2.0.2"
     graceful-fs "^4.1.2"
     write "^0.2.1"
-
-flow-bin@^0.62.0:
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.62.0.tgz#14bca669a6e3f95c0bc0c2d1eb55ec4e98cb1d83"
 
 for-each@~0.3.2:
   version "0.3.2"
