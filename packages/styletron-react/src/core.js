@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+/* @flow */
 
-const STYLETRON_KEY = '__STYLETRON';
+import * as React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Helper function to create styled element components
@@ -12,9 +12,30 @@ const STYLETRON_KEY = '__STYLETRON';
  * @return {function}                    Component
  * @example
  */
-export default function core(base, style, assignProps) {
-  if (typeof base === 'function' && base[STYLETRON_KEY]) {
-    const {tag, styles} = base[STYLETRON_KEY];
+
+export type styleT = Object | ((props: Object, context?: Object) => Object);
+
+export type nonStyletronComponentT = string | React.ComponentType<*>;
+
+export type styletronComponentT = styletronStatics &
+  React.StatelessFunctionalComponent<*>;
+
+export type styletronStatics = {
+  __STYLETRON: styletronPropertiesT,
+};
+
+export type styletronPropertiesT = {|
+  tag: styletronComponentT | nonStyletronComponentT,
+  styles: Array<styleT>,
+|};
+
+export default function core(
+  base: styletronComponentT | nonStyletronComponentT,
+  style: styleT,
+  assignProps: any
+) {
+  if (typeof base === 'function' && base.__STYLETRON) {
+    const {tag, styles} = ((base: any): styletronComponentT).__STYLETRON;
     // Styled component
     return createStyledElementComponent(tag, styles.concat(style), assignProps);
   }
@@ -25,13 +46,17 @@ export default function core(base, style, assignProps) {
   throw new Error('`styled` takes either a DOM element name or a component');
 }
 
-function createStyledElementComponent(base, stylesArray, assignProps) {
-  function StyledElement(props, context) {
+function createStyledElementComponent(
+  base: styletronComponentT | nonStyletronComponentT,
+  stylesArray: Array<styleT>,
+  assignProps
+): styletronComponentT {
+  function StyledElement(props: Object, context) {
     const ownProps = assign({}, props);
     delete ownProps.innerRef;
 
     const styleResult = {};
-    StyledElement[STYLETRON_KEY].styles.forEach(style => {
+    StyledElement.__STYLETRON.styles.forEach(style => {
       if (typeof style === 'function') {
         assign(styleResult, style(ownProps, context));
       } else if (typeof style === 'object') {
@@ -47,10 +72,10 @@ function createStyledElementComponent(base, stylesArray, assignProps) {
       elementProps.ref = props.innerRef;
     }
 
-    return React.createElement(StyledElement[STYLETRON_KEY].tag, elementProps);
+    return React.createElement(StyledElement.__STYLETRON.tag, elementProps);
   }
 
-  StyledElement[STYLETRON_KEY] = {
+  StyledElement.__STYLETRON = {
     tag: base,
     styles: stylesArray,
   };
@@ -58,9 +83,14 @@ function createStyledElementComponent(base, stylesArray, assignProps) {
   StyledElement.contextTypes = {styletron: PropTypes.object};
 
   if (__DEV__) {
-    const name = base.displayName
-      ? base.displayName
-      : typeof base === 'function' ? base.name : base;
+    let name;
+    if (base.displayName) {
+      name = ((base.displayName: any): string);
+    } else if (base.name) {
+      name = ((base.name: any): string);
+    } else if (typeof base === 'string') {
+      name = base;
+    }
     StyledElement.displayName = `Styled${name ? `(${name})` : ''}`;
   }
 

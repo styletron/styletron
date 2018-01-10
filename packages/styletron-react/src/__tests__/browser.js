@@ -1,8 +1,9 @@
+/* @flow */
 /* global process */
 /* eslint-env browser */
 
 import test from 'tape';
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import ReactTestUtils from 'react-dom/test-utils';
 import Styletron from 'styletron-server';
@@ -18,11 +19,11 @@ function strictAssignProps(styletron, styleResult, ownProps) {
 }
 
 test('provider provides instance', t => {
-  const mockInstance = {};
+  const instance = new Styletron();
   const MockComponent = (props, context) => {
     t.equal(
       context.styletron,
-      mockInstance,
+      instance,
       'styletron instance override provided'
     );
     return React.createElement('div');
@@ -32,7 +33,7 @@ test('provider provides instance', t => {
     React.createElement(
       Provider,
       {
-        styletron: mockInstance,
+        styletron: instance,
       },
       React.createElement(MockComponent)
     )
@@ -200,7 +201,8 @@ test('innerRef works', t => {
   const Widget = core('button', {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
 
-  class TestComponent extends React.Component {
+  class TestComponent extends React.Component<{}> {
+    widgetInner: HTMLButtonElement;
     componentDidMount() {
       t.ok(this.widgetInner instanceof HTMLButtonElement, 'is button');
     }
@@ -226,7 +228,7 @@ test('innerRef works', t => {
 test('innerRef not passed', t => {
   t.plan(2);
 
-  class InnerComponent extends React.Component {
+  class InnerComponent extends React.Component<{foo: string}> {
     render() {
       t.deepEqual(
         this.props,
@@ -243,7 +245,8 @@ test('innerRef not passed', t => {
   const Widget = core(InnerComponent, {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();
 
-  class TestComponent extends React.Component {
+  class TestComponent extends React.Component<{}> {
+    widgetInner: InnerComponent;
     componentDidMount() {
       t.ok(
         ReactTestUtils.isCompositeComponentWithType(
@@ -276,7 +279,7 @@ test('innerRef not passed', t => {
 test('styleProps not passed', t => {
   t.plan(1);
 
-  class InnerComponent extends React.Component {
+  class InnerComponent extends React.Component<{}> {
     render() {
       t.deepEqual(
         this.props,
@@ -310,7 +313,7 @@ test('styleProps not passed', t => {
 test('$-prefixed props not passed', t => {
   t.plan(1);
 
-  class InnerComponent extends React.Component {
+  class InnerComponent extends React.Component<{}> {
     render() {
       t.deepEqual(
         this.props,
@@ -382,7 +385,7 @@ test('core sets display name', t => {
     'matches expected display name'
   );
 
-  class TestComponentClass extends React.Component {
+  class TestComponentClass extends React.Component<{}> {
     render() {
       return <div />;
     }

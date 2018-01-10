@@ -1,3 +1,6 @@
+/* @flow */
+
+import * as React from 'react';
 import core from './core';
 import {injectStylePrefixed} from 'styletron-utils';
 
@@ -36,7 +39,10 @@ import {injectStylePrefixed} from 'styletron-utils';
  *
  * <DeluxePanel>Bonjour Monde</DeluxePanel>
  */
-export default function styled(base, style) {
+export default function styled(
+  base: string | React.ComponentType<Object>,
+  style: Object
+) {
   return core(base, style, assignProps);
 }
 

@@ -1,6 +1,8 @@
+/* @flow */
+
 import test from 'tape';
 import fixtures from 'test-fixtures';
-import cacheToCss from '../cache-to-css.js';
+import {cacheToCss} from '../utils.js';
 import Styletron from '../index.js';
 
 class StyletronTest extends Styletron {
@@ -30,6 +32,7 @@ test('test getStylesheets method', t => {
   t.deepEqual(instance.getStylesheets(), [
     {
       css: '.e:hover{display:none}.a{color:red}.b{color:green}',
+      media: '',
     },
     {
       media: '(max-width: 800px)',

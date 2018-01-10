@@ -1,3 +1,5 @@
+/* @flow */
+
 import Styletron from '../index.js';
 import test from 'tape';
 
@@ -102,7 +104,7 @@ test('test raw injection', t => {
 
 test('test constructor', t => {
   const instance = new Styletron();
-  t.equal(instance.prefix, false, 'prefix defaults to false');
+  t.equal(instance.prefix, '', 'prefix defaults to empty string');
   t.end();
 });
 

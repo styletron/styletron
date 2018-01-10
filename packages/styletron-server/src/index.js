@@ -1,8 +1,16 @@
-import cacheToCss from './cache-to-css';
-import cacheToStylesheets from './cache-to-stylesheets';
-import cacheToStylesheetsOldIE from './cache-to-stylesheets-old-ie';
-import generateHtmlString from './generate-html-string';
+/* @flow */
+
 import StyletronCore from 'styletron-core';
+import type {optionsT} from 'styletron-core';
+
+import cacheToStylesheetsOldIE from './cache-to-stylesheets-old-ie.js';
+import cacheToStylesheets from './cache-to-stylesheets.js';
+import {generateHtmlString, cacheToCss} from './utils.js';
+
+export type sheetT = {
+  media: string,
+  css: string,
+};
 
 /**
  * A Styletron class for extracting styles during server-side rendering
@@ -13,7 +21,7 @@ class StyletronServer extends StyletronCore {
   /**
    * Create a new StyletronServer instance
    */
-  constructor(opts) {
+  constructor(opts?: optionsT) {
     super(opts);
   }
 
@@ -28,7 +36,7 @@ class StyletronServer extends StyletronCore {
    * styletron.getStylesheets();
    * // → [{css: '.a{color:red}'}]
    */
-  getStylesheets() {
+  getStylesheets(): Array<sheetT> {
     return cacheToStylesheets(this.cache);
   }
 
@@ -43,7 +51,7 @@ class StyletronServer extends StyletronCore {
    * styletron.getStylesheetsOldIE();
    * // → [{css: '.a{color:red}'}]
    */
-  getStylesheetsOldIE() {
+  getStylesheetsOldIE(): Array<sheetT> {
     return cacheToStylesheetsOldIE(this.cache);
   }
 
@@ -60,7 +68,7 @@ class StyletronServer extends StyletronCore {
    * styletron.getStylesheetsHtml('custom_class');
    * // → '<style class="custom_class">.a{color:red}</style>'
    */
-  getStylesheetsHtml(className = '_styletron_hydrate_') {
+  getStylesheetsHtml(className?: string = '_styletron_hydrate_') {
     return generateHtmlString(this.getStylesheets(), className);
   }
 
@@ -77,7 +85,7 @@ class StyletronServer extends StyletronCore {
    * styletron.getStylesheetsHtml('custom_class');
    * // → '<style class="custom_class">.a{color:red}</style>'
    */
-  getStylesheetsHtmlOldIE(className = '_styletron_hydrate_') {
+  getStylesheetsHtmlOldIE(className?: string = '_styletron_hydrate_') {
     return generateHtmlString(this.getStylesheetsOldIE(), className);
   }
 
