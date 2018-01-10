@@ -10,18 +10,18 @@
     "dist",
     "index.d.ts"
   ],
-  "main": "./dist/index",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.es.js",
   "browser": {
     "./dist/index.js": "./dist/browser.es5.js",
-    "./dist/index.mjs": "./dist/browser.es5.mjs"
+    "./dist/index.es.js": "./dist/browser.es5.es.js"
   },
   "es2015": {
-    "./dist/browser.es5.mjs": "./dist/browser.es2015.mjs"
+    "./dist/browser.es5.es.js": "./dist/browser.es2015.es.js"
   },
   "es2017": {
-    "./dist/browser.es5.mjs": "./dist/browser.es2017.mjs",
-    "./dist/browser.es2015.mjs": "./dist/browser.es2017.mjs"
+    "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
+    "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
   },
   "sideEffects": false,
   "types": "./index.d.ts",
@@ -32,7 +32,7 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "create-universal-package": "3.1.1",
+    "create-universal-package": "3.2.4",
     "eslint-config-cup": "1.0.0",
     "eslint-config-cup-recommended": "1.0.0",
     "eslint-plugin-cup": "1.0.0",
