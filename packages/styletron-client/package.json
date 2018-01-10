@@ -1,6 +1,6 @@
 {
   "name": "styletron-client",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -32,7 +32,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "styletron-core": "^3.0.1"
+    "styletron-core": "^3.0.2"
   },
   "devDependencies": {
     "create-universal-package": "3.2.4",
