@@ -8,6 +8,7 @@
   "bugs": "https://github.com/rtsao/styletron/issues",
   "files": [
     "dist",
+    "src",
     "index.d.ts"
   ],
   "main": "./dist/index.js",
@@ -26,7 +27,7 @@
   "sideEffects": false,
   "types": "./index.d.ts",
   "scripts": {
-    "build": "cup build",
+    "build": "cup build --force-flow",
     "pretest": "cup build-tests",
     "test": "node dist-tests/node.js",
     "prepublish": "npm run build"
@@ -36,6 +37,7 @@
     "eslint-config-cup": "1.0.0",
     "eslint-config-cup-recommended": "1.0.0",
     "eslint-plugin-cup": "1.0.0",
+    "flow-bin": "0.63.1",
     "tape": "4.8.0"
   },
   "license": "MIT"

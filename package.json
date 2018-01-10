@@ -23,6 +23,7 @@
   "dependencies": {},
   "devDependencies": {
     "@rtsao/docdash": "0.4.2",
+    "babel-eslint": "^8.1.2",
     "benchmark": "2.1.4",
     "eslint": "4.15.0",
     "eslint-plugin-prettier": "2.4.0",

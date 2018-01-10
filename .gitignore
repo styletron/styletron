@@ -6,3 +6,4 @@ lerna-debug.log
 lib/
 dist/
 dist-tests/
+yarn-error.log

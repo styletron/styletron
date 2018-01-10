@@ -1,8 +1,16 @@
+// @flow
 /* eslint-env browser */
 
 const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^}]+)}/g;
 
 import StyletronCore from 'styletron-core';
+
+import type {optionsT, declT, rawDeclT} from 'styletron-core';
+
+type serverStylesT =
+  | HTMLCollection<HTMLStyleElement>
+  | HTMLStyleElement[]
+  | NodeList<HTMLStyleElement>;
 
 /**
  * A Styletron class for rendering styles in the browser
@@ -13,12 +21,15 @@ import StyletronCore from 'styletron-core';
  * const styletron = new StyletronClient(elements);
  */
 class StyletronClient extends StyletronCore {
+  uniqueCount: number;
+  mediaSheets: Object;
+  mainSheet: HTMLStyleElement;
   /**
    * Create a new StyletronClient instance
    * @param {NodeList|HTMLCollection|HTMLStyleElement[]} [serverStyles] - List of server style elements
    * @param {object} [opts] - StyletronCore options
    */
-  constructor(serverStyles, opts) {
+  constructor(serverStyles: serverStylesT, opts?: optionsT) {
     super(opts);
     this.uniqueCount = 0;
     this.mediaSheets = {};
@@ -34,6 +45,9 @@ class StyletronClient extends StyletronCore {
       }
     } else {
       const styleSheet = document.createElement('style');
+      if (document.head === null) {
+        throw new Error('`document.head` cannot be null');
+      }
       document.head.appendChild(styleSheet);
       this.mainSheet = styleSheet;
     }
@@ -44,7 +58,7 @@ class StyletronClient extends StyletronCore {
    * @param {string} css   - The stylesheet css content
    * @param {string} media - The stylesheet media string
    */
-  hydrateCacheFromCssString(css, media) {
+  hydrateCacheFromCssString(css: string, media: string) {
     let decl;
     // {
     //  1: className,
@@ -78,7 +92,7 @@ class StyletronClient extends StyletronCore {
    * styletron.injectDeclaration({prop: 'color', val: 'red'});
    * // → 'a'
    */
-  injectDeclaration({prop, val, media, pseudo}) {
+  injectDeclaration({prop, val, media, pseudo}: declT) {
     return this.injectRawDeclaration({block: `${prop}:${val}`, media, pseudo});
   }
 
@@ -95,7 +109,7 @@ class StyletronClient extends StyletronCore {
    * styletron.injectRawDeclaration({block: 'color:red'});
    * // → 'a'
    */
-  injectRawDeclaration(decl) {
+  injectRawDeclaration(decl: rawDeclT) {
     const oldCount = this.uniqueCount;
     const className = super.injectRawDeclaration(decl);
     if (oldCount !== this.uniqueCount) {
@@ -104,15 +118,21 @@ class StyletronClient extends StyletronCore {
       if (decl.media) {
         if (!this.mediaSheets[decl.media]) {
           const mediaSheet = document.createElement('style');
-          mediaSheet.media = decl.media;
+          mediaSheet.media = decl.media || '';
           this.mediaSheets[decl.media] = mediaSheet;
-          this.mainSheet.parentNode.appendChild(mediaSheet);
+          if (this.mainSheet.parentNode) {
+            this.mainSheet.parentNode.appendChild(mediaSheet);
+          }
         }
         sheet = this.mediaSheets[decl.media].sheet;
       } else {
         sheet = this.mainSheet.sheet;
       }
-      sheet.insertRule(rule, sheet.cssRules.length);
+      // Ugly casting workaround for https://github.com/facebook/flow/issues/2696
+      ((sheet: any): CSSStyleSheet).insertRule(
+        rule,
+        ((sheet: any): CSSStyleSheet).cssRules.length
+      );
     }
     return className;
   }

@@ -1,4 +1,9 @@
-import baseHandler from './base-obj-to-css';
+/* @flow */
+
+import type {cacheT, mediaCacheT} from 'styletron-core';
+
+import {baseHandler} from './utils.js';
+import type {sheetT} from './index.js';
 
 export default cacheToStylesheets;
 
@@ -7,7 +12,7 @@ export default cacheToStylesheets;
  * @param  {object} cacheObj Cache object
  * @return {string}          String of CSS
  */
-function cacheToStylesheets(cacheObj) {
+export function cacheToStylesheets(cacheObj: cacheT): Array<sheetT> {
   let mediaSheets;
   let mainCss = '';
   for (const key in cacheObj) {
@@ -19,11 +24,12 @@ function cacheToStylesheets(cacheObj) {
   }
   const mainSheet = {
     css: mainCss,
+    media: '',
   };
   return mediaSheets ? [mainSheet].concat(mediaSheets) : [mainSheet];
 }
 
-function getMediaSheets(mediaObj) {
+function getMediaSheets(mediaObj: mediaCacheT): Array<sheetT> {
   const stylesheets = [];
   for (const query in mediaObj) {
     const obj = mediaObj[query];

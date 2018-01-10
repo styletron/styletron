@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint-env browser */
 
 import Styletron from '../index.js';
@@ -54,7 +55,9 @@ test('rule insertion order', t => {
     {block: 'color:purple'},
   ];
   decls.forEach(decl => instance.injectRawDeclaration(decl));
-  t.equal(element.sheet.rules.length, 4);
+  // Ugly casting workaround for https://github.com/facebook/flow/issues/2696
+  const sheet: CSSStyleSheet = ((element.sheet: any): CSSStyleSheet);
+  t.equal(sheet.cssRules.length, 4);
   const mainExpected = [
     '.a { color: red; }',
     '.b { color: blue; }',
@@ -65,7 +68,7 @@ test('rule insertion order', t => {
     '(max-width: 333px)': ['.c { color: blue; }'],
     'screen and (max-width: 400px)': ['.e { color: red; }'],
   };
-  forEach.call(element.sheet.rules, (rule, i) => {
+  forEach.call(sheet.cssRules, (rule, i) => {
     t.equal(rule.cssText, mainExpected[i]);
   });
   const mediaSheets = instance.getMediaSheets();
@@ -92,7 +95,9 @@ test('with zero length stylesheets', t => {
 });
 
 function createFixtures(sheets) {
-  return sheets.map(sheet => createStyleElement(sheet.css, sheet.media));
+  return sheets.map(sheet =>
+    createStyleElement(sheet.css, sheet.media || void 0)
+  );
 }
 
 function createStyleElement(css, media) {
@@ -100,6 +105,9 @@ function createStyleElement(css, media) {
   element.appendChild(document.createTextNode(css));
   if (media) {
     element.setAttribute('media', media);
+  }
+  if (document.body === null) {
+    throw new Error('`document.body` cannot be null');
   }
   document.body.appendChild(element);
   return element;

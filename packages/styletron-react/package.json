@@ -8,6 +8,7 @@
   "bugs": "https://github.com/rtsao/styletron/issues",
   "files": [
     "dist",
+    "src",
     "index.d.ts"
   ],
   "main": "./dist/index.js",
@@ -26,7 +27,7 @@
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "cup build",
+    "build": "cup build --force-flow",
     "pretest": "cup build-tests",
     "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js",
     "prepublish": "npm run build"

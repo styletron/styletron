@@ -1,4 +1,6 @@
-import React from 'react';
+/* @flow */
+
+import * as React from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -20,12 +22,22 @@ import PropTypes from 'prop-types';
  * @property {ReactElement} children - children
  * @extends ReactClass
  */
-class StyletronProvider extends React.Component {
+
+import type StyletronCore from 'styletron-core';
+
+type providerPropsT = {|
+  styletron: StyletronCore,
+  children: React.Element<any>,
+|};
+
+class StyletronProvider extends React.Component<providerPropsT> {
+  styletron: StyletronCore;
+
   getChildContext() {
     return {styletron: this.styletron};
   }
-  constructor(props, context) {
-    super(props, context);
+  constructor(props: providerPropsT) {
+    super(props);
     this.styletron = props.styletron;
   }
   render() {
