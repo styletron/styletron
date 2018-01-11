@@ -37,10 +37,6 @@
   },
   "devDependencies": {
     "create-universal-package": "3.2.4",
-    "eslint-config-cup": "1.0.0",
-    "eslint-config-cup-recommended": "1.0.0",
-    "eslint-plugin-cup": "1.0.0",
-    "flow-bin": "0.63.1",
     "tape": "4.8.0",
     "test-fixtures": "^3.0.0",
     "unitest": "2.1.1"

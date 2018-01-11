@@ -34,10 +34,7 @@
     "inline-style-prefixer": "^4.0.0"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
-    "eslint-config-cup": "1.0.0",
-    "eslint-config-cup-recommended": "1.0.0",
-    "eslint-plugin-cup": "1.0.0"
+    "create-universal-package": "3.2.4"
   },
   "license": "MIT"
 }
