@@ -38,11 +38,7 @@
     "preact": "6.x - 8.x"
   },
   "devDependencies": {
-    "babel-preset-react": "6.24.1",
     "create-universal-package": "3.2.4",
-    "eslint-config-cup": "1.0.0",
-    "eslint-config-cup-recommended": "1.0.0",
-    "eslint-plugin-cup": "1.0.0",
     "preact": "8.2.7"
   },
   "license": "MIT"

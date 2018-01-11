@@ -3,6 +3,11 @@ module.exports = {
     ecmaVersion: 2017,
   },
 
+  extends: [
+    require.resolve('eslint-config-cup'),
+    require.resolve('eslint-config-cup-recommended')
+  ],
+
   plugins: ['eslint-plugin-prettier'],
 
   rules: {

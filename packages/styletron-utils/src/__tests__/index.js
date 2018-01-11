@@ -22,18 +22,18 @@ test('test injection', t => {
   });
   t.equal(classString, '1 2 3 4');
   t.deepEqual(decls, [
-    {block: 'color:red', media: undefined, pseudo: undefined},
+    {block: 'color:red', media: void 0, pseudo: void 0},
     {
       block: 'background-color:blue',
-      media: undefined,
-      pseudo: undefined,
+      media: void 0,
+      pseudo: void 0,
     },
     {
       block: 'color:purple',
       media: '(max-width: 500px)',
-      pseudo: undefined,
+      pseudo: void 0,
     },
-    {block: 'background:orange', media: undefined, pseudo: ':hover'},
+    {block: 'background:orange', media: void 0, pseudo: ':hover'},
   ]);
   t.end();
 });
@@ -57,13 +57,13 @@ test('test injection array', function(t) {
   });
   t.equal(classString, '1 2 3');
   t.deepEqual(decls, [
-    {block: 'color:red;color:blue', media: undefined, pseudo: undefined},
+    {block: 'color:red;color:blue', media: void 0, pseudo: void 0},
     {
       block: 'color:purple;color:orange',
       media: '(max-width: 500px)',
-      pseudo: undefined,
+      pseudo: void 0,
     },
-    {block: 'color:green;color:yellow', media: undefined, pseudo: ':hover'},
+    {block: 'color:green;color:yellow', media: void 0, pseudo: ':hover'},
   ]);
   t.end();
 });
@@ -92,31 +92,31 @@ test('test injection prefixed', function(t) {
     {
       block:
         'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
-      media: undefined,
-      pseudo: undefined,
+      media: void 0,
+      pseudo: void 0,
     },
     {
       block:
         'height:-webkit-min-content;height:-moz-min-content;height:min-content;height:100%',
-      media: undefined,
-      pseudo: undefined,
+      media: void 0,
+      pseudo: void 0,
     },
     {
       block:
         'transition:height 1s;-webkit-transition:height 1s;-moz-transition:height 1s',
-      media: undefined,
-      pseudo: undefined,
+      media: void 0,
+      pseudo: void 0,
     },
     {
       block:
         'background-color:-webkit-linear-gradient(to bottom, red, green);background-color:-moz-linear-gradient(to bottom, red, green);background-color:linear-gradient(to bottom, red, green)',
-      media: undefined,
+      media: void 0,
       pseudo: ':hover',
     },
     {
       block: '-webkit-flex-grow:1;flex-grow:1',
       media: '(max-width: 500px)',
-      pseudo: undefined,
+      pseudo: void 0,
     },
   ]);
   t.end();
@@ -137,8 +137,8 @@ test('test prefixed cache', function(t) {
       display: 'flex',
       flexGrow: 1,
     },
-    undefined,
-    undefined,
+    void 0,
+    void 0,
     cache
   );
   t.deepEqual(cache, {
@@ -152,10 +152,10 @@ test('test prefixed cache', function(t) {
     {
       block:
         'display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex',
-      media: undefined,
-      pseudo: undefined,
+      media: void 0,
+      pseudo: void 0,
     },
-    {block: 'color:red', media: undefined, pseudo: undefined},
+    {block: 'color:red', media: void 0, pseudo: void 0},
   ]);
   t.end();
 });
