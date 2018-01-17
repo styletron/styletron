@@ -44,7 +44,6 @@
   "devDependencies": {
     "@babel/preset-react": "7.0.0-beta.37",
     "create-universal-package": "3.2.4",
-    "eslint-plugin-cup": "^1.0.0",
     "react-dom": "16.2.0",
     "react": "16.2.0"
   },
