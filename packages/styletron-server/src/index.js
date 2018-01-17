@@ -14,7 +14,6 @@ export type sheetT = {
 
 /**
  * A Styletron class for extracting styles during server-side rendering
- * @packagename styletron-server
  * @extends StyletronCore
  */
 class StyletronServer extends StyletronCore {

@@ -2,12 +2,13 @@
 
 const IE9_RULE_LIMIT = 4095;
 
-import StyletronClient from 'styletron-client';
+import StyletronClient from './client.js';
 
 /**
- * StyletronClientIE9
+ * IE9-compatible StyletronClient
+ * @name StyletronClientIE9
+ * @exportName StyletronClientIE9
  * @extends StyletronClient
- * @packagename styletron-client-old-ie
  * @example
  * const styleElement = document.querySelector('style');
  * const styletron = new StyletronClientIE9(styleElement);

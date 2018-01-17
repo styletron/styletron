@@ -14,17 +14,18 @@
     "clean": "lerna clean",
     "lint": "eslint packages/*/src/**.js packages/*/src/__tests__/*.js",
     "tsc": "tsc",
-    "build-docs": "jsdoc -c jsdoc.json",
+    "build-docs": "documentation build packages/*/src/*.js -f html -o htmldocs --config documentation.yml",
     "pretest": "npm run lint && npm run tsc && lerna run pretest",
     "test": "lerna run test",
     "predeploy-docs": "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
-    "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
+    "deploy-docs": "push-dir --dir htmldocs --branch gh-pages",
+    "postinstall": "cd ./node_modules/documentation && yarn run prepare"
   },
   "dependencies": {},
   "devDependencies": {
-    "@rtsao/docdash": "0.4.2",
     "babel-eslint": "^8.1.2",
     "benchmark": "2.1.4",
+    "documentation": "git://github.com/rtsao/documentation.git#es-modules-monorepo",
     "eslint": "4.15.0",
     "eslint-config-cup": "^1.0.0",
     "eslint-config-cup-recommended": "^1.0.0",

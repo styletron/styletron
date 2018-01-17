@@ -3,16 +3,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Helper function to create styled element components
- * @packagename styletron-react
- * @param  {String|function} base        Tag name or component
- * @param  {function|object} styleFn     Style object or function that returns a style object
- * @param  {function}        assignProps Function that consumes the style result and props and returns an object with new props
- * @return {function}                    Component
- * @example
- */
-
 export type styleT = Object | ((props: Object, context?: Object) => Object);
 
 export type nonStyletronComponentT = string | React.ComponentType<*>;

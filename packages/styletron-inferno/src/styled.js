@@ -8,7 +8,8 @@ export default styled;
 
 /**
  * Helper function to create styled components
- * @packagename styletron-inferno
+ * @name styledInferno
+ * @exportName styled
  * @param  {string|function} name   Tag name or component function/class
  * @param  {function|object} styles Style object or function that returns a style object
  * @return {function}               Styled component
