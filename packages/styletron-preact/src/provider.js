@@ -1,9 +1,9 @@
 import Preact from 'preact';
 
 /**
- * @class StyletronProvider
- * @packagename styletron-preact
- * @description Provides a Styletron instance to descendant styled components via context
+ * Provides a Styletron instance to descendant styled components via context
+ * @name StyletronProviderPreact
+ * @exportName StyletronProvider
  * @example
  * const Styletron = require('styletron');
  * const renderToString = require('preact-render-to-string');

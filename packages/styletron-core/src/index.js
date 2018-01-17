@@ -36,7 +36,6 @@ export type declT = {|
 
 /**
  * The core styletron module
- * @packagename styletron-core
  */
 class StyletronCore {
   cache: cacheT;

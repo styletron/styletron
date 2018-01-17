@@ -6,10 +6,12 @@ import {injectStylePrefixed} from 'styletron-utils';
 
 /**
  * Helper function to create styled element components
- * @packagename styletron-react
+ * @name styledReact
+ * @exportName styled
  * @param  {String|function} base     Tag name or styled element component
  * @param  {function|object} styleFn  Style object or function that returns a style object
  * @return {function}                 Styled element component
+ * @yolo asdfasf
  * @example
  * import {styled} from 'styletron-react';
  *

@@ -1,10 +1,9 @@
 import InfernoComponent from 'inferno-component';
 
 /**
- * @class Provider
- * @packagename styletron-inferno
- * @description Provides a Styletron instance to descendant styled components via context
- *
+ * Provides a Styletron instance to descendant styled components via context
+ * @name StyletronProviderInferno
+ * @exportName StyletronProvider
  * @example
  * // Server
  * import StyletronServer from 'styletron-server';

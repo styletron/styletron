@@ -1,6 +1,7 @@
+/* @flow */
 /* eslint-env browser */
 
-import Styletron from '../index.js';
+import {StyletronClient as Styletron} from '../index.js';
 import test from 'tape';
 const forEach = Array.prototype.forEach;
 
@@ -34,9 +35,8 @@ test('hydration basic', t => {
   const instance = new StyletronTest(elements);
   t.deepEqual(instance.getCache(), fixtures.basic.cache, 'cache hydrated');
   t.equal(instance.getUniqueDeclarationCount(), 5, 'count correctly hyrdated');
-  const newClass = instance.injectDeclaration({
-    prop: 'color',
-    val: 'purple',
+  const newClass = instance.injectRawDeclaration({
+    block: 'color:purple',
     media: '(max-width: 800px)',
   });
   t.equal(newClass, 'f', 'new class with correct count');
@@ -47,15 +47,17 @@ test('rule insertion order', t => {
   const element = createStyleElement('');
   const instance = new StyletronTest([element]);
   const decls = [
-    {prop: 'color', val: 'red'},
-    {prop: 'color', val: 'blue'},
-    {prop: 'color', val: 'blue', media: '(max-width: 333px)'},
-    {prop: 'color', val: 'green'},
-    {prop: 'color', val: 'red', media: 'screen and (max-width: 400px)'},
-    {prop: 'color', val: 'purple'},
+    {block: 'color:red'},
+    {block: 'color:blue'},
+    {block: 'color:blue', media: '(max-width: 333px)'},
+    {block: 'color:green'},
+    {block: 'color:red', media: 'screen and (max-width: 400px)'},
+    {block: 'color:purple'},
   ];
-  decls.forEach(decl => instance.injectDeclaration(decl));
-  t.equal(element.sheet.rules.length, 4);
+  decls.forEach(decl => instance.injectRawDeclaration(decl));
+  // Ugly casting workaround for https://github.com/facebook/flow/issues/2696
+  const sheet: CSSStyleSheet = ((element.sheet: any): CSSStyleSheet);
+  t.equal(sheet.cssRules.length, 4);
   const mainExpected = [
     '.a { color: red; }',
     '.b { color: blue; }',
@@ -66,7 +68,7 @@ test('rule insertion order', t => {
     '(max-width: 333px)': ['.c { color: blue; }'],
     'screen and (max-width: 400px)': ['.e { color: red; }'],
   };
-  forEach.call(element.sheet.rules, (rule, i) => {
+  forEach.call(sheet.cssRules, (rule, i) => {
     t.equal(rule.cssText, mainExpected[i]);
   });
   const mediaSheets = instance.getMediaSheets();
@@ -79,15 +81,23 @@ test('rule insertion order', t => {
       t.equal(rule.cssText, mediaExpected[mediaKey][i], 'media decl matches');
     });
   });
-  Object.keys(mediaSheets).forEach(function(mediaKey) {
-    var mediaSheet = mediaSheets[mediaKey];
+  Object.keys(mediaSheets).forEach(mediaKey => {
+    const mediaSheet = mediaSheets[mediaKey];
     t.equal(mediaSheet.media, mediaKey, 'media attribute matches');
   });
   t.end();
 });
 
+test('with zero length stylesheets', t => {
+  const instance = new StyletronTest([]);
+  t.equal(instance.mainSheet instanceof HTMLStyleElement, true);
+  t.end();
+});
+
 function createFixtures(sheets) {
-  return sheets.map(sheet => createStyleElement(sheet.css, sheet.media));
+  return sheets.map(sheet =>
+    createStyleElement(sheet.css, sheet.media || void 0)
+  );
 }
 
 function createStyleElement(css, media) {
@@ -95,6 +105,9 @@ function createStyleElement(css, media) {
   element.appendChild(document.createTextNode(css));
   if (media) {
     element.setAttribute('media', media);
+  }
+  if (document.body === null) {
+    throw new Error('`document.body` cannot be null');
   }
   document.body.appendChild(element);
   return element;
