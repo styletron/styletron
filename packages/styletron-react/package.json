@@ -1,6 +1,6 @@
 {
   "name": "styletron-react",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Official React bindings for styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "homepage": "https://github.com/rtsao/styletron",
@@ -34,9 +34,9 @@
   "dependencies": {
     "@types/react": "*",
     "prop-types": "^15.6.0",
-    "styletron-client": "^3.0.2",
-    "styletron-server": "^3.0.2",
-    "styletron-utils": "^3.0.2"
+    "styletron-client": "^3.0.4",
+    "styletron-server": "^3.0.4",
+    "styletron-utils": "^3.0.4"
   },
   "peerDependencies": {
     "react": "0.14.x - 16.x"
@@ -44,8 +44,8 @@
   "devDependencies": {
     "@babel/preset-react": "7.0.0-beta.37",
     "create-universal-package": "3.2.4",
-    "react-dom": "16.2.0",
-    "react": "16.2.0"
+    "react": "16.2.0",
+    "react-dom": "16.2.0"
   },
   "license": "MIT"
 }
