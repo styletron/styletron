@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@types/react": "*",
-    "eslint-plugin-cup": "^1.0.0",
     "prop-types": "^15.6.0",
     "styletron-client": "^3.0.2",
     "styletron-server": "^3.0.2",
@@ -45,8 +44,8 @@
   "devDependencies": {
     "@babel/preset-react": "7.0.0-beta.37",
     "create-universal-package": "3.2.4",
-    "react": "16.2.0",
-    "react-dom": "16.2.0"
+    "react-dom": "16.2.0",
+    "react": "16.2.0"
   },
   "license": "MIT"
 }
