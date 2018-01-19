@@ -60,7 +60,8 @@ class StyletronClient extends StyletronCore {
           pseudo: decl[2],
           media,
         },
-        decl[1]
+        decl[1],
+        this.declarations
       );
     }
   }

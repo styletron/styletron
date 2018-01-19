@@ -81,6 +81,113 @@ test('core applies styles', t => {
   t.end();
 });
 
+test('composition works with intermediate componenents', t => {
+  const Widget = styled('p', {color: 'red'});
+
+  const SuperWidget = styled(props => React.createElement(Widget, props), {
+    color: 'green',
+  });
+
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement('div', {}, [
+        React.createElement(SuperWidget),
+        React.createElement(Widget),
+      ])
+    )
+  );
+  const [superWidget, widget] = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+    output,
+    'p'
+  );
+  t.equal(superWidget.className, 'a', 'styletron classes');
+  t.equal(widget.className, 'b', 'styletron classes');
+  t.equal(styletron.getCss(), '.a{color:green}.b{color:red}');
+  t.end();
+});
+
+test('composition works with intermediate componenents: media', t => {
+  const Widget = styled('p', {
+    border: '1px solid black',
+    color: 'red',
+    '@media screen and (min-width: 1000px)': {
+      color: 'red',
+      border: 'none',
+    },
+  });
+
+  const SuperWidget = styled(props => React.createElement(Widget, props), {
+    color: 'green',
+    '@media screen and (min-width: 1000px)': {
+      color: 'green',
+    },
+  });
+
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement('div', {}, [
+        React.createElement(SuperWidget),
+        React.createElement(Widget),
+      ])
+    )
+  );
+  const [superWidget, widget] = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+    output,
+    'p'
+  );
+  t.equal(superWidget.className, 'c a b d', 'styletron classes');
+  t.equal(widget.className, 'c e f d', 'styletron classes');
+  t.equal(
+    styletron.getCss(),
+    '.a{color:green}.c{border:1px solid black}.e{color:red}@media screen and (min-width: 1000px){.b{color:green}.d{border:none}.f{color:red}}'
+  );
+  t.end();
+});
+
+test('composition works with intermediate componenents: pseudo', t => {
+  const Widget = styled('p', {
+    ':hover': {
+      color: 'red',
+      border: 'none',
+    },
+  });
+
+  const SuperWidget = styled(props => React.createElement(Widget, props), {
+    ':hover': {
+      color: 'green',
+    },
+  });
+
+  const styletron = new Styletron();
+  const output = ReactTestUtils.renderIntoDocument(
+    React.createElement(
+      Provider,
+      {styletron},
+      React.createElement('div', {}, [
+        React.createElement(SuperWidget),
+        React.createElement(Widget),
+      ])
+    )
+  );
+  const [superWidget, widget] = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+    output,
+    'p'
+  );
+  t.equal(superWidget.className, 'a b', 'styletron classes');
+  t.equal(widget.className, 'c b', 'styletron classes');
+  t.equal(
+    styletron.getCss(),
+    '.a:hover{color:green}.b:hover{border:none}.c:hover{color:red}'
+  );
+  t.end();
+});
+
 test('core applies static styles', t => {
   const Widget = core('div', {color: 'red'}, strictAssignProps);
   const styletron = new Styletron();

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import assign from './assign';
 
 const STYLETRON_KEY = '__STYLETRON';
 
@@ -27,7 +28,7 @@ export default function core(base, style, assignProps) {
 
 function createStyledElementComponent(base, stylesArray, assignProps) {
   function StyledElement(props, context) {
-    const ownProps = assign({}, props);
+    const ownProps = Object.assign({}, props);
     delete ownProps.innerRef;
 
     const styleResult = {};
@@ -65,13 +66,6 @@ function createStyledElementComponent(base, stylesArray, assignProps) {
   }
 
   return StyledElement;
-}
-
-function assign(target, source) {
-  for (const key in source) {
-    target[key] = source[key];
-  }
-  return target;
 }
 
 function omit$Props(source) {
