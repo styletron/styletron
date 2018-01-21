@@ -13,6 +13,7 @@ class StyletronCore {
       media: {},
       pseudo: {},
     };
+    this.declarations = {};
     this.prefix = prefix === '' ? false : prefix;
     this.uniqueCount = 0;
     this.offset = 10; // skip 0-9
@@ -20,7 +21,7 @@ class StyletronCore {
     this.power = 1;
   }
 
-  static assignDecl(target, decl, className) {
+  static assignDecl(target, decl, className, declarations) {
     const {block, media, pseudo} = decl;
     let targetEntry;
     if (media) {
@@ -38,6 +39,7 @@ class StyletronCore {
       targetEntry = targetEntry.pseudo[pseudo];
     }
     targetEntry[block] = className;
+    declarations[className] = decl;
   }
 
   /**
@@ -69,7 +71,7 @@ class StyletronCore {
     const virtualCount = this.incrementVirtualCount();
     const hash = virtualCount.toString(36);
     const className = this.prefix ? this.prefix + hash : hash;
-    StyletronCore.assignDecl(this.cache, decl, className);
+    StyletronCore.assignDecl(this.cache, decl, className, this.declarations);
     return className;
   }
 
@@ -115,6 +117,15 @@ class StyletronCore {
       }
     }
     return entry[block];
+  }
+
+  /**
+   * Gets the declaration from a class name
+   * @param  {string}               The class name for the declaration
+   * @return {decl|undefined}       The CSS declaration object
+   */
+  getDeclarationFromClassName(className) {
+    return this.declarations[className];
   }
 }
 

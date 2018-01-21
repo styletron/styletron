@@ -22,6 +22,12 @@ test('test injection', t => {
   instance.injectDeclaration(decl1);
   t.equal(instance.getCache()['color:red'], 'a');
   t.equal(instance.getCachedDeclaration({block: 'color:red'}), 'a');
+  let media, pseudo;
+  t.deepEqual(instance.getDeclarationFromClassName('a'), {
+    block: 'color:red',
+    media,
+    pseudo,
+  });
   t.equal(instance.getCount(), 1, 'unique count incremented');
   instance.injectDeclaration(decl1);
   t.equal(
@@ -115,6 +121,7 @@ test('test injection with prefix', t => {
   instance.injectRawDeclaration(decl1);
   t.equal(instance.getCache()[block1], 'qqa');
   t.equal(instance.getCachedDeclaration(decl1), 'qqa');
+  t.deepEqual(instance.getDeclarationFromClassName('qqa'), decl1);
   t.equal(instance.getCount(), 1, 'unique count incremented');
   t.end();
 });
