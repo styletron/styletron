@@ -9,9 +9,8 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 install: yarn install --frozen-lockfile
 script:
-  - yarn run lint
-  - lerna bootstrap --ignore=demos
-  - lerna run prepublish --ignore=demos
-  - lerna run pretest --ignore=demos
-  - lerna run test --ignore=demos
-  - yarn run tsc
+  - yarn lint
+  - yarn run flow
+  - yarn bootstrap
+  - yarn build
+  - yarn test

@@ -6,37 +6,39 @@
   "repository": "git@github.com:rtsao/styletron.git",
   "bugs": "https://github.com/rtsao/styletron/issues",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "lint": "eslint packages/*/src/**.js packages/*/src/__tests__/*.js",
-    "tsc": "tsc",
-    "build-docs": "documentation build packages/*/src/*.js -f html -o htmldocs --config documentation.yml",
-    "pretest": "npm run lint && npm run tsc && lerna run pretest",
+    "lint":
+      "eslint packages/*/src/** packages/*/src/**/*.js packages/*/src/__tests__/*.js",
+    "build-docs":
+      "documentation build packages/*/src/*.js -f html -o htmldocs --config documentation.yml",
+    "pretest": "npm run lint && lerna run pretest",
     "test": "lerna run test",
-    "predeploy-docs": "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
-    "deploy-docs": "push-dir --dir htmldocs --branch gh-pages",
-    "postinstall": "cd ./node_modules/documentation && yarn run prepare"
+    "build": "lerna run build",
+    "predeploy-docs":
+      "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
+    "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
   },
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^8.1.2",
     "benchmark": "2.1.4",
-    "documentation": "git://github.com/rtsao/documentation.git#es-modules-monorepo",
+    "documentation":
+      "git://github.com/rtsao/documentation.git#es-modules-monorepo",
     "eslint": "4.15.0",
     "eslint-config-cup": "^1.0.0",
     "eslint-config-cup-recommended": "^1.0.0",
     "eslint-plugin-cup": "^1.0.0",
+    "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-prettier": "2.4.0",
+    "flow-bin": "^0.64.0",
     "jsdoc": "3.5.5",
     "lerna": "2.6.0",
     "prettier": "1.10.2",
     "push-dir": "0.4.1",
-    "rimraf": "2.6.2",
-    "typescript": "2.6.2"
+    "rimraf": "2.6.2"
   },
   "license": "MIT"
 }

@@ -1,13 +1,11 @@
 /* @flow */
 
-import * as React from 'react';
-import PropTypes from 'prop-types';
-
-import type StyletronCore from 'styletron-core';
+import * as React from "react";
+import PropTypes from "prop-types";
 
 type providerPropsT = {|
-  styletron: StyletronCore,
-  children: React.Element<any>,
+  styletron: any,
+  children: React.Element<any>
 |};
 
 /**
@@ -30,7 +28,7 @@ type providerPropsT = {|
  * @extends ReactClass
  */
 class StyletronProvider extends React.Component<providerPropsT> {
-  styletron: StyletronCore;
+  styletron: any;
 
   getChildContext() {
     return {styletron: this.styletron};
@@ -46,11 +44,11 @@ class StyletronProvider extends React.Component<providerPropsT> {
 
 StyletronProvider.propTypes = {
   styletron: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired
 };
 
 StyletronProvider.childContextTypes = {
-  styletron: PropTypes.object.isRequired,
+  styletron: PropTypes.object.isRequired
 };
 
 export default StyletronProvider;
