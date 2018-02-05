@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "noEmit": true,
-    "jsx": "preserve",
-    "lib": ["es2016", "dom"]
-  },
-  "include": ["packages/*/*.ts", "packages/*/*.tsx"],
-  "exclude": ["node_modules"]
-}

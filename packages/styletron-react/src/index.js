@@ -1,7 +1,6 @@
 /* @flow */
 
-import StyletronProvider from './provider';
-import core from './core';
-import styled from './styled';
+import StyletronProvider from "./provider";
+import {styled} from "./next";
 
-export {StyletronProvider, styled, core};
+export {StyletronProvider, styled};

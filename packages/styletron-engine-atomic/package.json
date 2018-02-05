@@ -1,11 +1,11 @@
 {
-  "name": "styletron-react",
-  "version": "3.0.4",
-  "description": "Official React bindings for styletron",
+  "name": "styletron-engine-atomic",
+  "version": "1.0.0",
+  "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "rtsao/styletron",
-  "sideEffects": false,
   "files": ["dist", "src"],
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "browser": {
@@ -22,25 +22,16 @@
   "scripts": {
     "build": "cup build --force-flow",
     "pretest": "cup build-tests",
-    "test":
-      "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
+    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
+    "inline-style-prefixer": "^4.0.0",
     "styletron-types": "^0.1.0"
   },
-  "peerDependencies": {
-    "react": "0.14.x - 16.x"
-  },
   "devDependencies": {
-    "@babel/preset-react": "7.0.0-beta.37",
     "create-universal-package": "3.2.4",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "eslint-plugin-react": "^7.6.1",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "tape": "4.8.0",
     "unitest": "^2.1.1"
   },
   "license": "MIT"

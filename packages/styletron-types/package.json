@@ -1,0 +1,11 @@
+{
+  "name": "styletron-types",
+  "version": "0.1.0",
+  "description": "Types for Styletron",
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "repository": "rtsao/styletron",
+  "main": "index.js",
+  "sideEffects": false,
+  "devDependencies": {},
+  "license": "MIT"
+}
