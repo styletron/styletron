@@ -143,7 +143,6 @@ export function withWrapper<Style: Object, Props: Object>(
   );
 }
 
-
 export function autoComposeShallow<
   Style: Object,
   Props: Object,

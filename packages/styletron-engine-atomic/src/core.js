@@ -44,7 +44,7 @@ import type {
 } from "styletron-types";
 
 /**
- * 
+ *
  */
 class StyletronCore implements StyletronEngine {
   styleCache: StyleCache;
