@@ -2,6 +2,14 @@
 
 React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library.
 
+## API
+The `styletron-react` package consists of the following named exports:
+- [`styled`](#styled)
+- [`withStyle`](#withstyle)
+- [`withStyleDeep`](#withstyledeep)
+- [`withTransform`](#withtransform)
+- [`withWrapper`](#withwrapper)
+
 ## Creating styled components
 
 ### `styled`
@@ -73,9 +81,9 @@ class Component extends React.Component {
 
 `styletron-react` also exports several composition functions, allowing you to create new styled element components from existing ones.
 
-- [`withStyle`](#withStyle)
-- [`withStyleDeep`](#withStyleDeep)
-- [`withTransform`](#withTransform)
+- [`withStyle`](#withstyle)
+- [`withStyleDeep`](#withstyledeep)
+- [`withTransform`](#withtransform)
 
 ### `withStyle`
 
