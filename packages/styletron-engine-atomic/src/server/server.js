@@ -14,17 +14,10 @@ export type sheetT = {|
   fontFaceIds?: Array<string>
 |};
 
-/**
- * A Styletron class for extracting styles during server-side rendering
- * @extends StyletronCore
- */
 class StyletronServer extends StyletronCore {
   keyframesCss: string;
   fontFaceCss: string;
 
-  /**
-   * Create a new StyletronServer instance
-   */
   constructor(opts?: optionsT) {
     super(opts);
     this.keyframesCss = "";
@@ -39,17 +32,6 @@ class StyletronServer extends StyletronCore {
     };
   }
 
-  /**
-   * Get an array of stylesheet objects
-   * @return {Array} Array of stylesheet objects
-   * @example
-   * const styletron = new StyletronServer();
-   *
-   * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'a'
-   * styletron.getStylesheets();
-   * // → [{css: '.a{color:red}'}]
-   */
   getStylesheets(): Array<sheetT> {
     return [
       ...(this.fontFaceCss.length
@@ -72,35 +54,10 @@ class StyletronServer extends StyletronCore {
     ];
   }
 
-  /**
-   * Get a string of style elements for server rendering
-   * @return {String} The string of HTML
-   * @param {String} className=_styletron_hydrate_ Class name for style elements
-   * @example
-   * const styletron = new StyletronServer();
-   * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'a'
-   * styletron.getStylesheetsHtml();
-   * // → '<style class="_styletron_hydrate_">.a{color:red}</style>'
-   * styletron.getStylesheetsHtml('custom_class');
-   * // → '<style class="custom_class">.a{color:red}</style>'
-   */
   getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
     return generateHtmlString(this.getStylesheets(), className);
   }
 
-  /**
-   * Get the CSS string. For hydrating styles on the client,
-   * [`getStylesheetsHtml`]{@link StyletronServer#getStylesheetsHtml} or [`getStylesheets`]{@link StyletronServer#getStylesheets} should be used instead.
-   * @return {String} The string of CSS
-   * @example
-   * const styletron = new StyletronServer();
-   *
-   * styletron.injectDeclaration({prop: 'color', val: 'red'});
-   * // → 'a'
-   * styletron.getCss();
-   * // → '.a{color:red}'
-   */
   getCss() {
     return cacheToCss(this.styleCache.cache);
   }

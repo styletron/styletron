@@ -7,11 +7,6 @@ import type {sheetT} from "./server.js";
 
 export default cacheToStylesheets;
 
-/*
- * Converts cache object to a CSS string
- * @param  {object} cacheObj Cache object
- * @return {string}          String of CSS
- */
 export function cacheToStylesheets(cacheObj: cacheT): Array<sheetT> {
   let mediaSheets;
   let mainCss = "";

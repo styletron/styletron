@@ -16,25 +16,12 @@ type serverStylesT =
   | Array<HTMLStyleElement>
   | NodeList<HTMLStyleElement>;
 
-/**
- * A Styletron class for rendering styles in the browser
- * @extends StyletronCore
- * @packagename styletron-client
- * @example
- * const elements = document.getElementsByClassName('_styletron_hydrate_');
- * const styletron = new StyletronClient(elements);
- */
 class StyletronClient extends StyletronCore implements StyletronEngine {
-  // mediaSheets: Object;
   mediaSheets: {[string]: HTMLStyleElement};
   mainSheet: HTMLStyleElement;
   fontFaceSheet: HTMLStyleElement;
   keyframesSheet: HTMLStyleElement;
-  /**
-   * Create a new StyletronClient instance
-   * @param {NodeList|HTMLCollection|HTMLStyleElement[]} [serverStyles] - List of server style elements
-   * @param {object} [opts] - StyletronCore options
-   */
+
   constructor(serverStyles: serverStylesT, opts?: optionsT) {
     super(opts);
 
@@ -103,11 +90,6 @@ class StyletronClient extends StyletronCore implements StyletronEngine {
     };
   }
 
-  /*
-   * Hydrate the cache from a css string and media string
-   * @param {string} css   - The stylesheet css content
-   * @param {string} media - The stylesheet media string
-   */
   hydrateCacheFromCssString(css: string, media: string) {
     let decl; // {1: className, 2: pseudo, 3: block}
     while ((decl = DECL_REGEX.exec(css))) {

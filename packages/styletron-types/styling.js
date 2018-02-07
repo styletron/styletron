@@ -18,6 +18,7 @@ export type nestedT<Style> = {
   }
 };
 
+/** */
 export type coreStyleT = nestedT<baseStyleT>;
 
 export type fontStyleT = "normal" | "italic" | "oblique" | globalValuesT;

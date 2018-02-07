@@ -44,18 +44,13 @@ import type {
 } from "styletron-types";
 
 /**
- * The core styletron module
+ * 
  */
 class StyletronCore implements StyletronEngine {
   styleCache: StyleCache;
   keyframesCache: KeyframesCache;
   fontFaceCache: FontFaceCache;
 
-  /**
-   * Create a new StyletronCore instance
-   * @param {object} [opts]           An object containing options
-   * @param {string} [opts.prefix=''] A prefix for generated CSS class names
-   */
   constructor(opts?: optionsT = {}) {
     const prefix = opts.prefix || "";
     this.styleCache = new StyleCache(prefix);

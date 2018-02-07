@@ -1,32 +1,19 @@
 {
   "name": "styletron-monorepo",
-  "description": "A generic server-rendering helper for css-in-js tools",
-  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
-  "homepage": "https://github.com/rtsao/styletron",
-  "repository": "git@github.com:rtsao/styletron.git",
-  "bugs": "https://github.com/rtsao/styletron/issues",
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "lint":
-      "eslint packages/*/src/** packages/*/src/**/*.js packages/*/src/__tests__/*.js",
-    "build-docs":
-      "documentation build packages/*/src/*.js -f html -o htmldocs --config documentation.yml",
-    "pretest": "npm run lint && lerna run pretest",
+    "lint": "eslint packages/*/src/**",
+    "pretest": "yarn run lint && yarn run flow",
     "test": "lerna run test",
-    "build": "lerna run build",
-    "predeploy-docs":
-      "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
-    "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
+    "build": "lerna run build"
   },
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^8.1.2",
     "benchmark": "2.1.4",
-    "documentation":
-      "git://github.com/rtsao/documentation.git#es-modules-monorepo",
     "eslint": "4.15.0",
     "eslint-config-cup": "^1.0.0",
     "eslint-config-cup-recommended": "^1.0.0",

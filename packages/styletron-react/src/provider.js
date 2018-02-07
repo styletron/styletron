@@ -8,25 +8,6 @@ type providerPropsT = {|
   children: React.Element<any>
 |};
 
-/**
- * Provides a Styletron instance to descendant styled components via context
- * @name StyletronProviderReact
- * @exportName StyletronProvider
- * @example
- * const Styletron = require('styletron');
- *
- * function render() {
- *   return React.renderToString(
- *     <StyletronProvider styletron={new Styletron()}>
- *       <App/>
- *     </StyletronProvider>
- *   );
- * }
- *
- * @property {object} styletron - Styletron instance
- * @property {ReactElement} children - children
- * @extends ReactClass
- */
 class StyletronProvider extends React.Component<providerPropsT> {
   styletron: any;
 

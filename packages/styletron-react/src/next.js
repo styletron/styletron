@@ -126,6 +126,24 @@ export function withStyleDeep<
   );
 }
 
+export function withWrapper<Style: Object, Props: Object>(
+  component: styletronComponentT<Style, Props>,
+  wrapper: any
+): styletronComponentT<Style, Props> {
+  const styletron = component.__STYLETRON__;
+  return createStyledElementComponent(
+    {
+      getInitialStyle: styletron.getInitialStyle,
+      base: styletron.base,
+      injector: styletron.injector,
+      wrapper: wrapper,
+      reducers: styletron.reducers
+    },
+    {}
+  );
+}
+
+
 export function autoComposeShallow<
   Style: Object,
   Props: Object,
@@ -287,23 +305,6 @@ export function composeDynamic<
     wrapper: styletron.wrapper,
     reducers: [reducer].concat(styletron.reducers)
   };
-}
-
-export function withWrapper<Style: Object, Props: Object>(
-  component: styletronComponentT<Style, Props>,
-  wrapper: any
-): styletronComponentT<Style, Props> {
-  const styletron = component.__STYLETRON__;
-  return createStyledElementComponent(
-    {
-      getInitialStyle: styletron.getInitialStyle,
-      base: styletron.base,
-      injector: styletron.injector,
-      wrapper: wrapper,
-      reducers: styletron.reducers
-    },
-    {}
-  );
 }
 
 export function createStyledElementComponent<Style: Object, Props: Object>(
