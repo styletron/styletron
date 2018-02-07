@@ -42,7 +42,7 @@ const Foo = styled("div", props => {
 
 #### Styled prop filtering
 
-Styled components automatically pass through all props to their underlying base except those prefixed by `$`, which will be filtered out. Use this namespace for props only used for styling. React will [no longer automatically filter out non-HTML props](https://reactjs.org/blog/2017/09/08/dom-attributes-in-react-16.html) so this convention solves this problem without burdensome manual prop filtering.
+Styled components automatically pass through all props to their underlying base except those prefixed by `$`, which will be filtered out. Use this namespace for props only used for styling. React will [no longer automatically filter out non-HTML props](https://reactjs.org/blog/2017/09/08/dom-attributes-in-react-16.html) so this convention avoids the need for burdensome manual prop filtering.
 
 ```jsx
 const StyledInput = styled("input", props => ({
@@ -100,6 +100,8 @@ Use `withStyle` for style composition via shallow object merging.
 #### Params
 1. `styledComponent` (`StyledComponent`)
 2. `style` (`Style` | `(props: Object) => Style`)
+
+#### Examples
 
 ```jsx
 const Foo = styled("div, {color: "red", background: "red"});
