@@ -5,6 +5,6 @@
 ### Benefits
 - Good integration with Flow
 
-### Downsides
+### Drawbacks
 - Must be using IDE with Flow support for autocomplete (unlike static CSS files)
 - Less opportunity for build-time optimizations
