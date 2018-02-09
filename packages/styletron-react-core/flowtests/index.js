@@ -20,7 +20,7 @@ type customStyleT = $Shape<{
 
 interface CustomEngine {}
 
-const customDriver = (style: customStyleT, styletron: any) => "test";
+const customDriver = (style: customStyleT, styletron: CustomEngine) => "test";
 const customGetInitialStyle = () => ({}: customStyleT);
 
 const customStyled: styledFnT<customStyleT, CustomEngine> = createStyled({
