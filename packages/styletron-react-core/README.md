@@ -1,28 +1,37 @@
-# styletron-react
+# styletron-react-core
 
-React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library.
+React bindings for Styletron, inspired by [styled-components](https://github.com/styled-components/styled-components).
+
+This package is completely unopinionated about the shape of style objects. Used in `styletron-react`.
 
 ## API
-The `styletron-react` package consists of the following named exports:
-- [`styled`](#styled)
+The `styletron-react-core` package consists of the following named exports:
+- [`createStyled`](#createstyled)
 - [`withStyle`](#withstyle)
 - [`withStyleDeep`](#withstyledeep)
 - [`withTransform`](#withtransform)
 - [`withWrapper`](#withwrapper)
 
-## Creating styled components
+## Customizing `styled`
 
-### `styled`
+The main purpose of this package is a
 
-```js
-import {styled} from "styletron-react";
-```
+### `createStyled`
 
 The `styled` function is used to create a styled component.
 
 #### Params
 1. `base` (`string` | `React.ComponentType`)
 2. `style` (`Style` | `(props: Object) => Style`)
+
+```js
+import {createStyled} from "styletron-react";
+```
+
+
+
+
+
 
 ```js
 // Static styles

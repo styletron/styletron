@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "inline-style-prefixer": "^4.0.0",
-    "styletron-types": "^0.1.0"
+    "styletron-standard": "^1.0.0"
   },
   "devDependencies": {
     "create-universal-package": "3.2.4",

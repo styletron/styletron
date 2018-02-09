@@ -5,7 +5,7 @@ const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^}]+)}/g;
 
 import StyletronCore from "../core.js";
 
-import type {StyletronEngine} from "styletron-types";
+import type {StandardEngine} from "styletron-standard";
 
 import type {optionsT, rawDeclT} from "../core.js";
 
@@ -16,7 +16,7 @@ type serverStylesT =
   | Array<HTMLStyleElement>
   | NodeList<HTMLStyleElement>;
 
-class StyletronClient extends StyletronCore implements StyletronEngine {
+class StyletronClient extends StyletronCore implements StandardEngine {
   mediaSheets: {[string]: HTMLStyleElement};
   mainSheet: HTMLStyleElement;
   fontFaceSheet: HTMLStyleElement;

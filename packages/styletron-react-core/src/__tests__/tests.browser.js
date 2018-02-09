@@ -1,11 +1,12 @@
-// @flow
+// @flow strict
 
 import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import * as React from "react";
 
-import {styled, withWrapper, withStyle, Provider} from "../index.js";
+import {withWrapper, withStyle, Provider} from "../index.js";
+import {styled} from "./utils/custom-styled.js";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -74,7 +75,7 @@ test("$-prefixed props not passed", t => {
     }
   }
 
-  const Widget = styled(InnerComponent, {color: "red"});
+  const Widget = styled(InnerComponent, {size: 1});
 
   Enzyme.mount(<Widget $foo="foo" $baz="baz" data-bar="bar" />, {
     context: {
@@ -90,7 +91,7 @@ test("$-prefixed props not passed", t => {
 test("$ref", t => {
   t.plan(1);
 
-  const Widget = styled("button", {color: "red"});
+  const Widget = styled("button", {size: 1});
   class TestComponent extends React.Component<{}> {
     widgetInner: ?HTMLButtonElement;
     componentDidMount() {
@@ -114,7 +115,7 @@ test("$ref", t => {
 
 test("withWrapper", t => {
   t.plan(6);
-  const Widget = styled("button", {color: "red"});
+  const Widget = styled("button", {size: 1, color: "red"});
   const WrappedWidget = withWrapper(Widget, StyledElement => props => {
     t.deepEqual(props, {foo: "bar"}, "props passed");
     return (
@@ -127,7 +128,7 @@ test("withWrapper", t => {
     <Provider
       value={{
         renderStyle: style => {
-          t.deepEqual(style, {color: "red"});
+          t.deepEqual(style, {size: 1, color: "red"});
         }
       }}
     >
@@ -136,14 +137,17 @@ test("withWrapper", t => {
   );
   t.equal(wrapper1.find("section").length, 1, "wrapper rendered");
 
-  const DeluxeWrappedWidget = withStyle(WrappedWidget, {color: "blue"});
+  const DeluxeWrappedWidget = withStyle(WrappedWidget, {
+    size: 2,
+    shape: "circle"
+  });
   const wrapper2 = Enzyme.mount(
     <Provider
       value={{
         renderStyle: style => {
           t.deepEqual(
             style,
-            {color: "blue"},
+            {size: 2, color: "red", shape: "circle"},
             "style composition works after wrapping"
           );
         }
@@ -160,18 +164,3 @@ test("withWrapper", t => {
 
   t.end();
 });
-
-// test("styled merges class name prop", t => {
-//   const Widget = styled("div", {color: "red"});
-//   const styletron = new Styletron();
-//   const output = ReactTestUtils.renderIntoDocument(
-//     React.createElement(
-//       Provider,
-//       {styletron},
-//       React.createElement(Widget, {className: "foo"})
-//     )
-//   );
-//   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, "div");
-//   t.equal(div.className, "foo a", "matches expected classes");
-//   t.end();
-// });

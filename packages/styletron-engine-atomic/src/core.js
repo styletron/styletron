@@ -1,9 +1,10 @@
 /* @flow */
 
-export type optionsT = {
-  prefix?: string,
-  [any]: empty
-};
+export type optionsT = $Shape<{|
+  classPrefix?: string,
+  keyframesPrefix?: string,
+  fontFacePrefix?: string
+|}>;
 
 export type baseCacheT = {[string]: string};
 
@@ -37,25 +38,24 @@ export type declT = {|
 import injectStylePrefixed from "./utils/inject-style-prefixed.js";
 
 import type {
-  StyletronEngine,
+  StandardEngine,
   coreStyleT,
   keyframesT,
   fontFaceT
-} from "styletron-types";
+} from "styletron-standard";
 
-/**
- *
- */
-class StyletronCore implements StyletronEngine {
+export class StyletronCore implements StandardEngine {
   styleCache: StyleCache;
   keyframesCache: KeyframesCache;
   fontFaceCache: FontFaceCache;
 
   constructor(opts?: optionsT = {}) {
-    const prefix = opts.prefix || "";
-    this.styleCache = new StyleCache(prefix);
-    this.keyframesCache = new KeyframesCache(prefix);
-    this.fontFaceCache = new FontFaceCache(prefix);
+    const classPrefix = opts.classPrefix || "";
+    const fontFacePrefix = opts.fontFacePrefix || "_";
+    const keyframesPrefix = opts.keyframesPrefix || "_";
+    this.styleCache = new StyleCache(classPrefix);
+    this.fontFaceCache = new FontFaceCache(fontFacePrefix);
+    this.keyframesCache = new KeyframesCache(keyframesPrefix);
   }
 
   renderStyle(style: coreStyleT) {
@@ -71,12 +71,12 @@ class StyletronCore implements StyletronEngine {
   }
 }
 
-class StyleCache {
+export class StyleCache {
   cache: cacheT;
   classGenerator: SequentialIDGenerator;
   injector: any;
 
-  constructor(prefix) {
+  constructor(prefix: string) {
     this.cache = {
       media: {},
       pseudo: {}
@@ -137,7 +137,7 @@ class StyleCache {
   }
 }
 
-class KeyframesCache {
+export class KeyframesCache {
   prefix: string;
   ids: {[string]: boolean};
   injector: any;
@@ -147,7 +147,7 @@ class KeyframesCache {
     this.ids = {};
   }
 
-  injectKeyframes(obj) {
+  injectKeyframes(obj: keyframesT) {
     const id = idFromObject(obj, this.prefix);
     if (!this.ids[id]) {
       this.ids[id] = true;
@@ -159,7 +159,7 @@ class KeyframesCache {
   }
 }
 
-class FontFaceCache {
+export class FontFaceCache {
   prefix: string;
   ids: {[string]: boolean};
   injector: any;
@@ -169,7 +169,7 @@ class FontFaceCache {
     this.ids = {};
   }
 
-  injectFontFace(obj) {
+  injectFontFace(obj: fontFaceT) {
     const id = idFromObject(obj, this.prefix);
     if (!this.ids[id]) {
       this.ids[id] = true;
@@ -181,14 +181,14 @@ class FontFaceCache {
   }
 }
 
-class SequentialIDGenerator {
+export class SequentialIDGenerator {
   prefix: string;
   uniqueCount: number;
   offset: number;
   msb: number;
   power: number;
 
-  constructor(prefix = "") {
+  constructor(prefix: string = "") {
     this.prefix = prefix;
     this.uniqueCount = 0;
     this.offset = 10; // skip 0-9
@@ -212,12 +212,12 @@ class SequentialIDGenerator {
   }
 }
 
-function idFromObject(obj: Object, prefix: string): string {
+export function idFromObject(obj: Object, prefix: string): string {
   const id = djb2a(JSON.stringify(obj)).toString(36);
   return prefix ? `${prefix}${id}` : id;
 }
 
-function djb2a(str: string): number {
+export function djb2a(str: string): number {
   let hash = 5381;
   let i = str.length;
   while (i) {

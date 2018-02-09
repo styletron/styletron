@@ -10,6 +10,23 @@ export type keyframesT = {
   [string]: baseStyleT
 };
 
+export type L1<Style> = {
+  ...Style,
+  [string]: {
+    ...Style,
+    [string]: Style
+  }
+};
+
+export type L2<Style> = {
+  ...Style,
+  [string]: {
+    ...Style
+  }
+};
+
+export type L3<Style> = Style;
+
 export type nestedT<Style> = {
   ...Style,
   [string]: {
@@ -18,8 +35,23 @@ export type nestedT<Style> = {
   }
 };
 
-/** */
+export type s1 = L1<baseStyleT>;
+export type s2 = L2<baseStyleT>;
+export type s3 = L3<baseStyleT>;
+
 export type coreStyleT = nestedT<baseStyleT>;
+
+export type declarativeStyleT = $Shape<{
+  ...baseStyleT,
+  animationName?: string | keyframesT,
+  fontFamily?: string | fontFaceT
+}>;
+
+export type d1 = L1<declarativeStyleT>;
+export type d2 = L2<declarativeStyleT>;
+export type d3 = L3<declarativeStyleT>;
+
+export type composedStyleT = nestedT<declarativeStyleT>;
 
 export type fontStyleT = "normal" | "italic" | "oblique" | globalValuesT;
 
@@ -38,18 +70,22 @@ export type fontWeightT =
   | 800
   | 900;
 
+export type fontStretchT =
+  | "ultra-condensed"
+  | "extra-condensed"
+  | "condensed"
+  | "semi-condensed"
+  | "normal"
+  | "semi-expanded"
+  | "expanded"
+  | "extra-expanded"
+  | "ultra-expanded";
+
+export type fontDisplayT = "auto" | "block" | "swap" | "fallback" | "optional";
+
 export type fontFaceT = $Shape<{
-  fontDisplay?: "auto" | "block" | "swap" | "fallback" | "optional",
-  fontStretch?:
-    | "ultra-condensed"
-    | "extra-condensed"
-    | "condensed"
-    | "semi-condensed"
-    | "normal"
-    | "semi-expanded"
-    | "expanded"
-    | "extra-expanded"
-    | "ultra-expanded",
+  fontDisplay?: fontDisplayT,
+  fontStretch?: fontStretchT,
   fontWeight?: fontWeightT,
   fontVariant?: string,
   fontVariationSettings?: string,
@@ -186,7 +222,7 @@ export type baseStyleT = $Shape<{
   fontLanguageOverride?: string,
   fontSize?: string | number,
   fontSizeAdjust?: string,
-  fontStretch?: string,
+  fontStretch?: fontStretchT,
   fontStyle?: fontStyleT,
   fontSynthesis?: string,
   fontVariant?: string,
@@ -196,7 +232,7 @@ export type baseStyleT = $Shape<{
   fontVariantLigatures?: string,
   fontVariantNumeric?: string,
   fontVariantPosition?: string,
-  fontWeight?: string,
+  fontWeight?: fontWeightT,
   grid?: string,
   gridArea?: string,
   gridAutoColumns?: string,

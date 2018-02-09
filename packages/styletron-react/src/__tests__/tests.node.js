@@ -5,7 +5,7 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import * as React from "react";
 
-import {withStyle, styled, withTransform} from "../next.js";
+import {withStyle, styled, withTransform} from "../index.js";
 
 Enzyme.configure({adapter: new Adapter()});
 

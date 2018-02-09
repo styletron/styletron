@@ -73,7 +73,7 @@ test("test constructor", t => {
 });
 
 test("test injection with prefix", t => {
-  const instance = new StyletronTest({prefix: "qq"});
+  const instance = new StyletronTest({classPrefix: "qq"});
   t.equal(
     instance.styleCache.classGenerator.prefix,
     "qq",
