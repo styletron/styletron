@@ -143,7 +143,7 @@ export class KeyframesCache {
   injector: any;
 
   constructor(prefix: string) {
-    this.prefix = `_${prefix}`;
+    this.prefix = prefix;
     this.ids = {};
   }
 
@@ -165,7 +165,7 @@ export class FontFaceCache {
   injector: any;
 
   constructor(prefix: string) {
-    this.prefix = `_${prefix}`;
+    this.prefix = prefix;
     this.ids = {};
   }
 

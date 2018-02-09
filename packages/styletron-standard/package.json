@@ -22,7 +22,7 @@
   "scripts": {
     "build": "cup build --force-flow",
     "pretest": "cup build-tests",
-    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+    "test": "unitest --node=dist-tests/node.js",
     "prepublish": "npm run build"
   },
   "dependencies": {
