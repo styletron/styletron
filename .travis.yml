@@ -10,7 +10,7 @@ cache:
 install: yarn install --network-concurrency 1
 script:
   - yarn lint
-  - yarn run flow
   - yarn bootstrap
   - yarn build
+  - yarn run flow
   - yarn test
