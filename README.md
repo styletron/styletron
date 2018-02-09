@@ -2,8 +2,6 @@
 
 [![build status][build-badge]][build-href]
 
-
-
 Toolkit for component-oriented styling
 
 ## Design principles
@@ -12,9 +10,9 @@ TODO
 
 ## Packages
 
-- [`styletron-engine-atomic`]((packages/styletron-engine-atomic))
+- [`styletron-engine-atomic`](packages/styletron-engine-atomic)
 - [`styletron-react`](packages/styletron-react)
-- [`styletron-react-core`](packages/styletron-standard)
+- [`styletron-react-core`](packages/styletron-react-core)
 - [`styletron-standard`](packages/styletron-standard)
 
 ## Getting Started
@@ -102,6 +100,10 @@ See [packages/styletron-engine-atomic](packages/styletron-engine-atomic/README.m
 ## Architecture
 
 See [docs/architecture.md](docs/architecture.md)
+
+## Tradeoffs
+
+See [TRADEOFFS.md](TRADEOFFS.md)
 
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master

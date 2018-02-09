@@ -59,7 +59,6 @@ const styled = createStyled({getInitialStyle, driver, wrapper})
 
 ```
 
-
 [deps-badge]: https://david-dm.org/rtsao/styletron.svg
 [deps-href]: https://david-dm.org/rtsao/styletron
 [npm-badge]: https://badge.fury.io/js/styletron.svg
