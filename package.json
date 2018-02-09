@@ -16,18 +16,14 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^8.1.2",
-    "benchmark": "2.1.4",
     "eslint": "4.17.0",
     "eslint-config-cup-recommended": "^1.0.0",
     "eslint-plugin-cup": "^1.0.0",
     "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-prettier": "2.6.0",
     "flow-bin": "^0.65.0",
-    "jsdoc": "3.5.5",
     "lerna": "2.8.0",
-    "prettier": "1.10.2",
-    "push-dir": "0.4.1",
-    "rimraf": "2.6.2"
+    "prettier": "1.10.2"
   },
   "license": "MIT"
 }
