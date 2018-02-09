@@ -4,7 +4,7 @@
 
 React bindings for Styletron, inspired by [styled-components](https://github.com/styled-components/styled-components).
 
-This package provides the core implementation that unopinionated with regard to the shape of style objects and engine interface.
+This package provides the core implementation that is agnostic of the shape style objects and the engine interface.
 
 ## API
 The `styletron-react-core` package consists of the following named exports:
@@ -19,7 +19,7 @@ The `styletron-react-core` package consists of the following named exports:
 ### `createStyled`
 
 ```js
-import {createStyled} from "styletron-react";
+import {createStyled} from "styletron-react-core";
 ```
 
 Returns a `styled` function.
@@ -59,7 +59,7 @@ const styled = createStyled({getInitialStyle, driver, wrapper})
 
 ```
 
-[deps-badge]: https://david-dm.org/rtsao/styletron.svg
-[deps-href]: https://david-dm.org/rtsao/styletron
-[npm-badge]: https://badge.fury.io/js/styletron.svg
-[npm-href]: https://www.npmjs.com/package/styletron
+[deps-badge]: https://david-dm.org/rtsao/styletron-react-core.svg
+[deps-href]: https://david-dm.org/rtsao/styletron-react-core
+[npm-badge]: https://badge.fury.io/js/styletron-react-core.svg
+[npm-href]: https://www.npmjs.com/package/styletron-react-core
