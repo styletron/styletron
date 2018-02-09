@@ -1,6 +1,6 @@
 # styletron-react
 
-React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library.
+React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library. Adheres to `styletron-standard` interface.
 
 ## API
 The `styletron-react` package consists of the following named exports:
@@ -69,7 +69,7 @@ const Foo = styled("div", /* ... */);
 The the `$ref` prop to set a React `ref` on the underlying element.
 
 ```jsx
-const Foo = styled('div', /* ... */);
+const Foo = styled("div", /* ... */);
 
 class Component extends React.Component {
   <Foo
@@ -104,7 +104,7 @@ Use `withStyle` for style composition via shallow object merging.
 #### Examples
 
 ```jsx
-const Foo = styled("div, {color: "red", background: "red"});
+const Foo = styled("div", {color: "red", background: "red"});
 
 // Static styles
 const Bar = withStyle(Foo, {background: "green"});
