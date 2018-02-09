@@ -1,5 +1,7 @@
 # styletron-react-core
 
+[![npm version][npm-badge]][npm-href] [![dependencies status][deps-badge]][deps-href]
+
 React bindings for Styletron, inspired by [styled-components](https://github.com/styled-components/styled-components).
 
 This package provides the core implementation that unopinionated with regard to the shape of style objects and engine interface.
@@ -56,3 +58,9 @@ const wrapper = StyledComponent => props => <div><StyledComponent {...props}/></
 const styled = createStyled({getInitialStyle, driver, wrapper})
 
 ```
+
+
+[deps-badge]: https://david-dm.org/rtsao/styletron.svg
+[deps-href]: https://david-dm.org/rtsao/styletron
+[npm-badge]: https://badge.fury.io/js/styletron.svg
+[npm-href]: https://www.npmjs.com/package/styletron

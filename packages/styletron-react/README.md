@@ -1,5 +1,7 @@
 # styletron-react
 
+[![npm version][npm-badge]][npm-href] [![dependencies status][deps-badge]][deps-href]
+
 React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library. Adheres to `styletron-standard` interface.
 
 ## API
@@ -191,3 +193,8 @@ const Wrapped = withWrapper(Foo, Styled => props => (
 const Bar = withStyle(Wrapped, {background: "red"});
 
 ```
+
+[deps-badge]: https://david-dm.org/rtsao/styletron-react.svg
+[deps-href]: https://david-dm.org/rtsao/styletron-react
+[npm-badge]: https://badge.fury.io/js/styletron-react.svg
+[npm-href]: https://www.npmjs.com/package/styletron-react

@@ -1,14 +1,21 @@
 # [![Styletron logo](https://cdn.rawgit.com/rtsao/styletron/logo/logo.svg "Styletron")](https://github.com/rtsao/styletron)
 
 [![build status][build-badge]][build-href]
-[![dependencies status][deps-badge]][deps-href]
-[![npm version][npm-badge]][npm-href]
+
+
 
 Toolkit for component-oriented styling
 
 ## Design principles
 
 TODO
+
+## Packages
+
+- [`styletron-engine-atomic`]((packages/styletron-engine-atomic))
+- [`styletron-react`](packages/styletron-react)
+- [`styletron-react-core`](packages/styletron-standard)
+- [`styletron-standard`](packages/styletron-standard)
 
 ## Getting Started
 
@@ -99,7 +106,3 @@ See [docs/architecture.md](docs/architecture.md)
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
-[deps-badge]: https://david-dm.org/rtsao/styletron.svg
-[deps-href]: https://david-dm.org/rtsao/styletron
-[npm-badge]: https://badge.fury.io/js/styletron.svg
-[npm-href]: https://www.npmjs.com/package/styletron

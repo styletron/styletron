@@ -1,5 +1,7 @@
 # styletron-standard
 
+[![npm version][npm-badge]][npm-href] [![dependencies status][deps-badge]][deps-href]
+
 Opinionated, standard interfaces for Styletron.
 
 ## Style object interface
@@ -102,4 +104,9 @@ interface StandardEngine {
 ```js
 import type {StandardEngine} from "styletron-standard";
 ```
+
+[deps-badge]: https://david-dm.org/rtsao/styletron-standard.svg
+[deps-href]: https://david-dm.org/rtsao/styletron-standard
+[npm-badge]: https://badge.fury.io/js/styletron-standard.svg
+[npm-href]: https://www.npmjs.com/package/styletron-standard
 
