@@ -1,5 +1,7 @@
 # styletron-engine-atomic
 
+Atomic implementation of `styletron-standard` engine interface.
+
 ## `Client`
 
 ```js
@@ -17,8 +19,6 @@ new Client();
 ```
 
 #### `.renderStyle(style) => string`
-
-
 
 #### `.renderKeyframes(keyframes) => string`
 

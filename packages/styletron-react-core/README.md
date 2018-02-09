@@ -40,7 +40,7 @@ type customStyleT = $Shape<{
 }>;
 
 interface CustomEngine {
-  customMethod: customStyleT => string
+  someMethod: customStyleT => string
 }
 
 function driver(style: customStyleT, engine: CustomEngine) : string {

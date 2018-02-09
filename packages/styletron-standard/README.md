@@ -1,2 +1,105 @@
 # styletron-standard
 
+Opinionated, standard interfaces for Styletron.
+
+## Style object interface
+
+```js
+import type {styleT} from "styletron-standard";
+```
+
+`styletron-standard` defines a specific style object interface (along with corresponding Flow type definitions).
+
+### Camel case properties
+
+CSS property names are camel cased.
+
+```js
+const style: styleT = {
+  textAlign: "center"
+};
+```
+
+### Pseudo classes
+
+Nesting is used for psuedo selectors.
+
+```js
+const style: styleT = {
+  textAlign: "center"
+  ":hover": {
+    color: "red"
+  }
+};
+```
+
+### Media queries
+
+To define styles that correspond to media queries, use nested style object.
+
+```js
+const style: styleT = {
+  textAlign: "center"
+  "@media (max-width: 800px)": {
+    color: "red"
+  }
+};
+```
+
+### Declarative `@keyframes`
+
+The `animationName` property takes a string, but declarative animation is also supported.
+
+```js
+import type {animationT} from "styletron-standard";
+
+const animation: animationT = {
+  to: {},
+  from: {}
+};
+
+const style: styleT = {
+  animationName: animation
+};
+
+```
+
+### Declarative `@font-face`
+
+The `fontFamily` property takes a string, fonts can also be used declaratively.
+
+```js
+import type {fontT} from "styletron-standard";
+
+const font: fontT = {
+  src: "..."
+};
+
+const style: styleT = {
+  fontFamily: font
+};
+
+```
+
+
+## Engine interface
+```js
+import type {StandardEngine} from "styletron-standard";
+```
+
+`styletron-standard` also defines a standard engine interface.
+
+```js
+interface StandardEngine {
+  renderStyle,
+  renderKeyframes,
+  renderFontFace,
+};
+```
+
+## Driver
+
+```js
+import type {StandardEngine} from "styletron-standard";
+```
+
