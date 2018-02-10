@@ -11,7 +11,7 @@
  - Overlapping media queries on same element
  - Mixing shorthand and longform on same element
 
-### Rendering CSS with `CSSStyleSheet.insertRule()`
+## Rendering CSS with `CSSStyleSheet.insertRule()`
 
 ### Benefits
 - Performance
