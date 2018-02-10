@@ -18,9 +18,11 @@ type customStyleT = $Shape<{
   velocity?: number
 }>;
 
-interface CustomEngine {}
+interface CustomEngine {
+  someMethod: customStyleT => string
+};
 
-const customDriver = (style: customStyleT, styletron: CustomEngine) => "test";
+const customDriver = (style: customStyleT, engine: CustomEngine) => engine.someMethod(style);
 const customGetInitialStyle = () => ({}: customStyleT);
 
 const customStyled: styledFnT<customStyleT, CustomEngine> = createStyled({
