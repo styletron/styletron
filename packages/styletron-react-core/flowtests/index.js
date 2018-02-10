@@ -19,10 +19,11 @@ type customStyleT = $Shape<{
 }>;
 
 interface CustomEngine {
-  someMethod: customStyleT => string
-};
+  someMethod: customStyleT => string;
+}
 
-const customDriver = (style: customStyleT, engine: CustomEngine) => engine.someMethod(style);
+const customDriver = (style: customStyleT, engine: CustomEngine) =>
+  engine.someMethod(style);
 const customGetInitialStyle = () => ({}: customStyleT);
 
 const customStyled: styledFnT<customStyleT, CustomEngine> = createStyled({
