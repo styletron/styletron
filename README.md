@@ -8,22 +8,23 @@ Toolkit for component-oriented styling
 
 TODO
 
+## Architecture
+
+See [docs/design.md](docs/design.md) for more details.
+
 ## Packages
 
-- [`styletron-engine-atomic`](packages/styletron-engine-atomic)
-- [`styletron-react`](packages/styletron-react)
-- [`styletron-react-core`](packages/styletron-react-core)
-- [`styletron-standard`](packages/styletron-standard)
+* [`styletron-engine-atomic`](packages/styletron-engine-atomic)
+* [`styletron-react`](packages/styletron-react)
+* [`styletron-react-core`](packages/styletron-react-core)
+* [`styletron-standard`](packages/styletron-standard)
 
 ## Getting Started
-
 
 ### Defining styled components
 
 ```js
 import {styled} from "styletron-react";
-
-
 ```
 
 See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
@@ -32,7 +33,6 @@ See [packages/styletron-react](packages/styletron-react/README.md) for full docu
 
 ```js
 import {withStyle} from "styletron-react";
-
 ```
 
 See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
@@ -51,7 +51,7 @@ const engine = new Styletron();
 // wrap root component with provider
 React.render(
   <StyletronProvider value={engine}>
-    <App/>
+    <App />
   </StyletronProvider>
 );
 ```
@@ -70,7 +70,7 @@ const engine = new StyletronServer();
 // wrap root component with provider
 React.render(
   <StyletronProvider value={engine}>
-    <App/>
+    <App />
   </StyletronProvider>
 );
 
@@ -97,14 +97,9 @@ React.render(
 
 See [packages/styletron-engine-atomic](packages/styletron-engine-atomic/README.md) for full documentation.
 
-## Architecture
-
-See [docs/architecture.md](docs/architecture.md)
-
 ## Tradeoffs
 
 See [TRADEOFFS.md](TRADEOFFS.md)
-
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
