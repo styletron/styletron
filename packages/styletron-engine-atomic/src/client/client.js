@@ -1,7 +1,7 @@
 // @flow
 /* eslint-env browser */
 
-const DECL_REGEX = /.([^:{]+)(:[^{]+)?{([^}]+)}/g;
+const DECL_REGEX = /\.([^:{]+)(:[^{]+)?{([^}]+)}/g;
 
 import StyletronCore from "../core.js";
 
