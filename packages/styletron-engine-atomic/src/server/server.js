@@ -1,7 +1,6 @@
 // @flow
 
-import StyletronCore from "../core.js";
-import type {optionsT} from "../core.js";
+import SequentialIDGenerator from "../sequential-id-generator.js";
 
 import cacheToStylesheets from "./cache-to-stylesheets.js";
 import {generateHtmlString, cacheToCss} from "./utils.js";
@@ -14,14 +13,28 @@ export type sheetT = {|
   fontFaceIds?: Array<string>
 |};
 
-class StyletronServer extends StyletronCore {
+class StyletronServer implements StyletronEngine {
+  styleIds: SequentialIDGenerator;
+  mainStyleCache: Cache<string>;
+  mediaStyleCache: {[string]: Cache<string>};
+  keyframesCache: Cache<string>;
+  fontFaceCache: Cache<string>;
   keyframesCss: string;
   fontFaceCss: string;
 
   constructor(opts?: optionsT) {
-    super(opts);
     this.keyframesCss = "";
     this.fontFaceCss = "";
+
+    // create shared style id generator
+    this.styleIds = new SequentialIDGenerator();
+
+    this.mainStyleCache = new Cache(this.styleIds);
+    this.mediaStyleCache = {};
+
+    // font face and keyframes get their own id generator
+    this.fontFaceCache = new Cache(new SequentialIDGenerator());
+    this.keyframesCache = new Cache(new SequentialIDGenerator());
 
     // add injectors to accumulate CSS
     this.fontFaceCache.injector = (id, fontFace) => {
@@ -31,6 +44,12 @@ class StyletronServer extends StyletronCore {
       this.keyframesCss += keyframesToCss(id, keyframes);
     };
   }
+
+  renderStyle(style: coreStyleT) {}
+
+  renderFontFace(fontFace: fontFaceT) {}
+
+  renderKeyframes(keyframes: keyframesT) {}
 
   getStylesheets(): Array<sheetT> {
     return [
@@ -60,6 +79,35 @@ class StyletronServer extends StyletronCore {
 
   getCss() {
     return cacheToCss(this.styleCache.cache);
+  }
+}
+
+type cacheItemT<T> = {|
+  id: string,
+  value: T
+|};
+
+export class Cache<T> {
+  cache: {[string]: cacheItemT<T>};
+  idGenerator: SequentialIDGenerator;
+  onNewValue: (string, T) => any;
+
+  constructor(idGenerator: SequentialIDGenerator) {
+    this.cache = {};
+    this.idGenerator = idGenerator;
+  }
+
+  addValue(key: string, value: any) {
+    const cached = this.cache[key];
+    if (cached) {
+      return cached;
+    }
+    const id = this.idGenerator.next();
+    this.cache[key] = {id, value};
+    if (this.onNewValue) {
+      this.onNewValue(id, value);
+    }
+    return id;
   }
 }
 

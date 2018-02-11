@@ -3,11 +3,9 @@
 
 const DECL_REGEX = /\.([^:{]+)(:[^{]+)?{([^}]+)}/g;
 
-import StyletronCore from "../core.js";
+import SequentialIDGenerator from "../sequential-id-generator.js";
 
 import type {StandardEngine} from "styletron-standard";
-
-import type {optionsT, rawDeclT} from "../core.js";
 
 import {keyframesToCss, fontFaceToCss} from "../utils/serializers.js";
 
@@ -16,15 +14,13 @@ type serverStylesT =
   | Array<HTMLStyleElement>
   | NodeList<HTMLStyleElement>;
 
-class StyletronClient extends StyletronCore implements StandardEngine {
+class StyletronClient implements StandardEngine {
   mediaSheets: {[string]: HTMLStyleElement};
   mainSheet: HTMLStyleElement;
   fontFaceSheet: HTMLStyleElement;
   keyframesSheet: HTMLStyleElement;
 
   constructor(serverStyles: serverStylesT, opts?: optionsT) {
-    super(opts);
-
     this.mediaSheets = {};
     if (serverStyles && serverStyles.length > 0) {
       for (let i = 0; i < serverStyles.length; i++) {
@@ -89,6 +85,12 @@ class StyletronClient extends StyletronCore implements StandardEngine {
       );
     };
   }
+
+  renderStyle(style: coreStyleT) {}
+
+  renderFontFace(fontFace: fontFaceT) {}
+
+  renderKeyframes(keyframes: keyframesT) {}
 
   hydrateCacheFromCssString(css: string, media: string) {
     let decl; // {1: className, 2: pseudo, 3: block}
