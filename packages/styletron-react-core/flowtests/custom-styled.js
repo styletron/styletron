@@ -47,16 +47,16 @@ const shouldError: styledFnT<customStyleT, CustomEngine> = createStyled({
 const ShouldError = customStyled("div", {invalid: 0});
 
 const Custom1 = customStyled("div", {velocity: 0});
-const Custom2 = customStyled("div", (props: {foo?: boolean}) => ({
+const Custom2 = customStyled("div", (props: {$foo?: boolean}) => ({
   angle: 23
 }));
 
-<Custom2 foo={true} />;
+<Custom2 $foo={true} />;
 
 // $FlowFixMe
-<Custom2 foo="invalid" />;
+<Custom2 $foo="invalid" />;
 
-const Custom3 = withStyle(Custom2, (props: {bar: number}) => ({
+const Custom3 = withStyle(Custom2, (props: {$bar: number}) => ({
   angle: 23
 }));
 
@@ -67,6 +67,8 @@ const Custom3 = withStyle(Custom2, (props: {bar: number}) => ({
 <Custom3 bar="invalid" />;
 
 // $FlowFixMe
-<Custom3 bar={0} foo="invalid" />;
+<Custom3 $bar={0} $foo="invalid" />;
 
-<Custom3 bar={0} foo />;
+<Custom3 $bar={0} $foo />;
+
+export {customStyled as styled};

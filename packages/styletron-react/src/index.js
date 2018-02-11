@@ -1,4 +1,4 @@
-/* @flow */
+// @flow strict
 
 import type {StandardEngine, d1} from "styletron-standard";
 import {driver, getInitialStyle} from "styletron-standard";
