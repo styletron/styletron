@@ -1,63 +1,46 @@
 import hyphenate from "./hyphenate-style-name";
 import prefixAll from "inline-style-prefixer/static";
 
-const prefixedBlockCache = {};
-
-export default function injectStylePrefixed(
-  styleCache,
-  styles,
-  media,
-  pseudo,
-  cache = prefixedBlockCache
-) {
+export default function injectStylePrefixed(styleCache, styles, media, pseudo) {
+  const cache = styleCache.getCache(media);
   let classString = "";
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
-    const originalValType = typeof originalVal;
-    const isPrimitiveVal =
-      originalValType === "string" || originalValType === "number";
-    if (isPrimitiveVal || Array.isArray(originalVal)) {
-      let block = "";
-      if (
-        isPrimitiveVal &&
-        cache.hasOwnProperty(originalKey) &&
-        cache[originalKey].hasOwnProperty(originalVal)
-      ) {
-        block = cache[originalKey][originalVal];
+
+    if (typeof originalVal !== "object") {
+      // Primitive value
+      if (__DEV__) {
+        validateValueType(originalVal);
+      }
+
+      const key = `${originalKey}${pseudo}:${originalVal}`;
+
+      if (cache[key]) {
+        // cached
+        classString += " " + cache[key].id;
+        continue;
       } else {
+        // cache miss
+        let block = "";
         const prefixed = prefixAll({[originalKey]: originalVal});
         for (const prefixedKey in prefixed) {
           const prefixedVal = prefixed[prefixedKey];
           const prefixedValType = typeof prefixedVal;
           if (prefixedValType === "string" || prefixedValType === "number") {
             block += `${hyphenate(prefixedKey)}:${prefixedVal};`;
-            continue;
-          }
-          if (Array.isArray(prefixedVal)) {
+          } else if (Array.isArray(prefixedVal)) {
             const hyphenated = hyphenate(prefixedKey);
             for (let i = 0; i < prefixedVal.length; i++) {
               block += `${hyphenated}:${prefixedVal[i]};`;
             }
-            continue;
           }
         }
         block = block.slice(0, -1); // Remove trailing semicolon
-        if (isPrimitiveVal) {
-          if (!cache.hasOwnProperty(originalKey)) {
-            cache[originalKey] = {};
-          }
-          cache[originalKey][originalVal] = block;
-        }
+        const id = cache.addValue(key, {pseudo, block});
+        classString += " " + id;
       }
-      classString +=
-        " " +
-        styleCache.addBlock({
-          block,
-          media,
-          pseudo
-        });
-    }
-    if (originalValType === "object") {
+    } else {
+      // Object value
       if (originalKey[0] === ":") {
         classString +=
           " " +
@@ -65,25 +48,30 @@ export default function injectStylePrefixed(
             styleCache,
             originalVal,
             media,
-            originalKey,
-            cache
+            pseudo + originalKey
           );
-        continue;
-      }
-      if (originalKey.substring(0, 6) === "@media") {
+      } else if (originalKey.substring(0, 6) === "@media") {
         classString +=
           " " +
           injectStylePrefixed(
             styleCache,
             originalVal,
             originalKey.substr(7),
-            pseudo,
-            cache
+            pseudo
           );
-        continue;
       }
     }
   }
-  // remove leading space on way out
+  // remove leading space
   return classString.slice(1);
+}
+
+function validateValueType(value) {
+  if (
+    value === null ||
+    Array.isArray(value) ||
+    (typeof value !== "number" && typeof value !== "string")
+  ) {
+    throw new Error(`Unsupported style value: ${value}`);
+  }
 }

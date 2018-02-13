@@ -6,6 +6,10 @@ import cacheToStylesheets from "./cache-to-stylesheets.js";
 import {generateHtmlString, cacheToCss} from "./utils.js";
 import {keyframesToCss, fontFaceToCss} from "../utils/serializers.js";
 
+import type {StandardEngine} from "styletron-standard";
+
+import {Cache, MultiCache} from "../cache.js";
+
 export type sheetT = {|
   css: string,
   media?: string,
@@ -13,36 +17,34 @@ export type sheetT = {|
   fontFaceIds?: Array<string>
 |};
 
-class StyletronServer implements StyletronEngine {
-  styleIds: SequentialIDGenerator;
-  mainStyleCache: Cache<string>;
-  mediaStyleCache: {[string]: Cache<string>};
+class StyletronServer implements StandardEngine {
+  styleCache: MultiCache<{psuedo: string, block: string}>;
   keyframesCache: Cache<string>;
   fontFaceCache: Cache<string>;
+  stylesCss: {[string]: string};
   keyframesCss: string;
   fontFaceCss: string;
 
   constructor(opts?: optionsT) {
-    this.keyframesCss = "";
-    this.fontFaceCss = "";
-
-    // create shared style id generator
-    this.styleIds = new SequentialIDGenerator();
-
-    this.mainStyleCache = new Cache(this.styleIds);
-    this.mediaStyleCache = {};
-
-    // font face and keyframes get their own id generator
-    this.fontFaceCache = new Cache(new SequentialIDGenerator());
-    this.keyframesCache = new Cache(new SequentialIDGenerator());
-
-    // add injectors to accumulate CSS
-    this.fontFaceCache.injector = (id, fontFace) => {
-      this.fontFaceCss += fontFaceToCss(id, fontFace);
-    };
-    this.keyframesCache.injector = (id, keyframes) => {
-      this.keyframesCss += keyframesToCss(id, keyframes);
-    };
+    this.styleCache = new MultiCache(
+      new SequentialIDGenerator(),
+      (cache, id, value) => {
+        const {pseudo, block} = value;
+        this.stylesCss[cache.key] += `.${id}${pseudo}{${block}}`;
+      }
+    );
+    this.fontFaceCache = new Cache(
+      new SequentialIDGenerator(),
+      (_, id, value) => {
+        this.fontFaceCss += `@font-face {font-family:${id};${value}}`;
+      }
+    );
+    this.keyframesCache = new Cache(
+      new SequentialIDGenerator(),
+      (_, id, value) => {
+        this.keyframesCss += `@keyframes ${id} {${value}}`;
+      }
+    );
   }
 
   renderStyle(style: coreStyleT) {}
@@ -79,35 +81,6 @@ class StyletronServer implements StyletronEngine {
 
   getCss() {
     return cacheToCss(this.styleCache.cache);
-  }
-}
-
-type cacheItemT<T> = {|
-  id: string,
-  value: T
-|};
-
-export class Cache<T> {
-  cache: {[string]: cacheItemT<T>};
-  idGenerator: SequentialIDGenerator;
-  onNewValue: (string, T) => any;
-
-  constructor(idGenerator: SequentialIDGenerator) {
-    this.cache = {};
-    this.idGenerator = idGenerator;
-  }
-
-  addValue(key: string, value: any) {
-    const cached = this.cache[key];
-    if (cached) {
-      return cached;
-    }
-    const id = this.idGenerator.next();
-    this.cache[key] = {id, value};
-    if (this.onNewValue) {
-      this.onNewValue(id, value);
-    }
-    return id;
   }
 }
 

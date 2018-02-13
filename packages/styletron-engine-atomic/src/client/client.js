@@ -9,81 +9,95 @@ import type {StandardEngine} from "styletron-standard";
 
 import {keyframesToCss, fontFaceToCss} from "../utils/serializers.js";
 
+import {Cache, MultiCache} from "../cache.js";
+
 type serverStylesT =
   | HTMLCollection<HTMLStyleElement>
   | Array<HTMLStyleElement>
   | NodeList<HTMLStyleElement>;
 
+type optionsT = {
+  serverStyles: serverStylesT,
+  container: Element
+};
+
 class StyletronClient implements StandardEngine {
-  mediaSheets: {[string]: HTMLStyleElement};
-  mainSheet: HTMLStyleElement;
+  sheetContainer: Element;
+  styleSheets: {[string]: HTMLStyleElement};
   fontFaceSheet: HTMLStyleElement;
   keyframesSheet: HTMLStyleElement;
 
-  constructor(serverStyles: serverStylesT, opts?: optionsT) {
-    this.mediaSheets = {};
-    if (serverStyles && serverStyles.length > 0) {
-      for (let i = 0; i < serverStyles.length; i++) {
-        const element = serverStyles[i];
-        if (element.media) {
-          this.mediaSheets[element.media] = element;
-        } else if (element.dataset["font-face"]) {
-          hydrateIds(this.fontFaceCache.ids, element.dataset["font-face"]);
-        } else if (element.dataset.keyframes) {
-          hydrateIds(this.fontFaceCache.ids, element.dataset.keyframes);
-        } else {
-          this.mainSheet = element;
+  styleCache: MultiCache<{psuedo: string, block: string}>;
+  keyframesCache: Cache<string>;
+  fontFaceCache: Cache<string>;
+
+  constructor(opts?: optionsT) {
+    this.styleSheets = {};
+
+    // Setup style cache
+    this.styleCache = new MultiCache(
+      new SequentialIDGenerator(),
+      media => {
+        const sheet = appendSheetToContainer(this.sheetContainer);
+        this.styleSheets[media] = sheet;
+      },
+      (cache, id, value) => {
+        const {pseudo, decls} = value;
+        const css = `.${id}${pseudo}{${decls}}`;
+        const sheet: CSSStyleSheet = (this.styleSheets[cache.key].sheet: any);
+        sheet.insertRule(css, sheet.cssRules.length);
+      }
+    );
+
+    this.keyframesCache = new Cache(
+      new SequentialIDGenerator(),
+      (cache, id, block) => {
+        const sheet: CSSStyleSheet = (this.keyframesSheet.sheet: any);
+        sheet.insertRule(`@keyframes ${id}{${block}}`, sheet.cssRules.length);
+      }
+    );
+
+    this.fontFaceCache = new Cache(new SequentialIDGenerator(), (id, block) => {
+      const sheet: CSSStyleSheet = (this.keyframesSheet.sheet: any);
+      sheet.insertRule(
+        `@font-face {font-family:${id};${block}}`,
+        sheet.cssRules.length
+      );
+    });
+
+    // Hydrate serverStyles
+    if (opts && opts.serverStyles && opts.serverStyles.length > 0) {
+      const parentElement = opts.serverStyles[0].parentElement;
+      if (parentElement !== null && parentElement !== void 0) {
+        this.sheetContainer = parentElement;
+      } else {
+        if (document.head === null) {
+          throw new Error("No container provided and document.head was null");
         }
-        this.hydrateCacheFromCssString(element.textContent, element.media);
+        this.sheetContainer = document.head;
+      }
+
+      for (let i = 0; i < opts.serverStyles.length; i++) {
+        const element = opts.serverStyles[i];
+        if (element.dataset["font-face"]) {
+          // TODO actually hydrate
+          continue;
+        }
+        if (element.dataset.keyframes) {
+          // TODO actually hyrdate
+          continue;
+        }
+        const key = element.media ? element.media : "";
+        this.styleSheets[key] = element;
+        // TODO: actually hyrdate
+        // this.hydrateCacheFromCssString(element.textContent, element.media);
       }
     } else {
-      const styleSheet = document.createElement("style");
       if (document.head === null) {
-        throw new Error("`document.head` cannot be null");
+        throw new Error("No container provided and document.head was null");
       }
-      document.head.appendChild(styleSheet);
-      this.mainSheet = styleSheet;
+      this.sheetContainer = document.head;
     }
-
-    this.styleCache.injector = (className: string, decl: rawDeclT) => {
-      const rule = declarationToRule(className, decl);
-      let sheet;
-      if (decl.media) {
-        const query: string = decl.media;
-        if (!this.mediaSheets[query]) {
-          const mediaSheet = document.createElement("style");
-          mediaSheet.media = query;
-          this.mediaSheets[query] = mediaSheet;
-          if (this.mainSheet.parentNode) {
-            this.mainSheet.parentNode.appendChild(mediaSheet);
-          }
-        }
-        sheet = this.mediaSheets[query].sheet;
-      } else {
-        sheet = this.mainSheet.sheet;
-      }
-      // Casting workaround for https://github.com/facebook/flow/issues/2696
-      ((sheet: any): CSSStyleSheet).insertRule(
-        rule,
-        ((sheet: any): CSSStyleSheet).cssRules.length
-      );
-    };
-
-    this.keyframesCache.injector = (id, keyframes) => {
-      const rule = keyframesToCss(id, keyframes);
-      ((this.keyframesSheet: any): CSSStyleSheet).insertRule(
-        rule,
-        ((this.fontFaceSheet: any): CSSStyleSheet).cssRules.length
-      );
-    };
-
-    this.fontFaceCache.injector = (id, fontFace) => {
-      const rule = fontFaceToCss(id, fontFace);
-      ((this.fontFaceSheet: any): CSSStyleSheet).insertRule(
-        rule,
-        ((this.fontFaceSheet: any): CSSStyleSheet).cssRules.length
-      );
-    };
   }
 
   renderStyle(style: coreStyleT) {}
@@ -91,28 +105,9 @@ class StyletronClient implements StandardEngine {
   renderFontFace(fontFace: fontFaceT) {}
 
   renderKeyframes(keyframes: keyframesT) {}
-
-  hydrateCacheFromCssString(css: string, media: string) {
-    let decl; // {1: className, 2: pseudo, 3: block}
-    while ((decl = DECL_REGEX.exec(css))) {
-      this.styleCache.classGenerator.increment();
-      this.styleCache.setBlock(decl[1], {
-        block: decl[3],
-        pseudo: decl[2],
-        media
-      });
-    }
-  }
 }
 
 export default StyletronClient;
-
-function hydrateIds(target, source) {
-  const ids = source.split(",");
-  for (let i = 0; i < ids.length; i++) {
-    target[ids[i]] = true;
-  }
-}
 
 function declarationToRule(className, {block, pseudo}) {
   let selector = `.${className}`;
@@ -120,4 +115,9 @@ function declarationToRule(className, {block, pseudo}) {
     selector += pseudo;
   }
   return `${selector}{${block}}`;
+}
+
+function appendSheetToContainer(container: Element) {
+  const styleSheet = document.createElement("style");
+  container.appendChild(styleSheet);
 }
