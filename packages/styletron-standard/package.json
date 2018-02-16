@@ -4,7 +4,10 @@
   "description": "Standard interfaces for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "rtsao/styletron",
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
@@ -26,6 +29,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "csstype": "^1.7.1",
     "inline-style-prefixer": "^4.0.0"
   },
   "devDependencies": {

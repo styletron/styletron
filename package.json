@@ -21,7 +21,7 @@
     "eslint-plugin-cup": "^1.0.0",
     "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-prettier": "2.6.0",
-    "flow-bin": "^0.65.0",
+    "flow-bin": "0.65",
     "lerna": "2.8.0",
     "prettier": "1.10.2"
   },

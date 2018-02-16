@@ -1,7 +1,18 @@
+// @flow strict
+
 import hyphenate from "./hyphenate-style-name";
 import prefixAll from "inline-style-prefixer/static";
 
-export default function injectStylePrefixed(styleCache, styles, media, pseudo) {
+import type {s1} from "styletron-standard";
+
+import {MultiCache} from "../cache.js";
+
+export default function injectStylePrefixed(
+  styleCache: MultiCache<{pseudo: string, block: string}>,
+  styles: s1,
+  media: string,
+  pseudo: string
+) {
   const cache = styleCache.getCache(media);
   let classString = "";
   for (const originalKey in styles) {
@@ -15,9 +26,10 @@ export default function injectStylePrefixed(styleCache, styles, media, pseudo) {
 
       const key = `${originalKey}${pseudo}:${originalVal}`;
 
-      if (cache[key]) {
-        // cached
-        classString += " " + cache[key].id;
+      const cachedId = cache.cache[key];
+      if (cachedId !== void 0) {
+        // cache hit
+        classString += " " + cachedId;
         continue;
       } else {
         // cache miss

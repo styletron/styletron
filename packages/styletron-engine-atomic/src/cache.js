@@ -1,8 +1,12 @@
+// @flow strict
+
+import SequentialIDGenerator from "./sequential-id-generator.js";
+
 export class MultiCache<T> {
   caches: {[string]: Cache<T>};
   idGenerator: SequentialIDGenerator;
   onNewCache: (string, Cache<T>) => any;
-  onNewValue: (cache: Cache<T>, key: string, id: string, value: T) => any;
+  onNewValue: (cache: Cache<T>, id: string, value: T) => any;
 
   constructor(
     idGenerator: SequentialIDGenerator,
@@ -15,7 +19,7 @@ export class MultiCache<T> {
     this.caches = {};
   }
 
-  getCache(key: string) {
+  getCache(key: string): Cache<T> {
     if (!this.caches[key]) {
       const cache = new Cache(this.idGenerator, this.onNewValue);
       cache.key = key;

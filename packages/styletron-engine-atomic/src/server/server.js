@@ -1,74 +1,108 @@
-// @flow
+// @flow strict
 
 import SequentialIDGenerator from "../sequential-id-generator.js";
 
-import cacheToStylesheets from "./cache-to-stylesheets.js";
-import {generateHtmlString, cacheToCss} from "./utils.js";
-import {keyframesToCss, fontFaceToCss} from "../utils/serializers.js";
+import {generateHtmlString} from "./utils.js";
 
 import type {StandardEngine} from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache.js";
 
+import injectStylePrefixed from "../utils/inject-style-prefixed.js";
+
+import type {s1, fontFaceT, keyframesT} from "styletron-standard";
+
+import {
+  styleBlockToRule,
+  atomicSelector,
+  keyframesBlockToRule,
+  declarationsToBlock,
+  keyframesToBlock,
+  fontFaceBlockToRule
+} from "../css.js";
+
 export type sheetT = {|
   css: string,
-  media?: string,
-  keyframesIds?: Array<string>,
-  fontFaceIds?: Array<string>
+  attrs: {[string]: string}
 |};
 
 class StyletronServer implements StandardEngine {
-  styleCache: MultiCache<{psuedo: string, block: string}>;
-  keyframesCache: Cache<string>;
-  fontFaceCache: Cache<string>;
-  stylesCss: {[string]: string};
-  keyframesCss: string;
-  fontFaceCss: string;
+  styleCache: MultiCache<{pseudo: string, block: string}>;
+  keyframesCache: Cache<keyframesT>;
+  fontFaceCache: Cache<fontFaceT>;
+  styleRules: {[string]: string};
+  keyframesRules: string;
+  fontFaceRules: string;
 
-  constructor(opts?: optionsT) {
+  constructor() {
+    this.styleRules = {"": ""};
     this.styleCache = new MultiCache(
       new SequentialIDGenerator(),
+      media => {
+        this.styleRules[media] = "";
+      },
       (cache, id, value) => {
         const {pseudo, block} = value;
-        this.stylesCss[cache.key] += `.${id}${pseudo}{${block}}`;
+        this.styleRules[cache.key] += styleBlockToRule(
+          atomicSelector(id, pseudo),
+          block
+        );
       }
     );
+
+    this.fontFaceRules = "";
     this.fontFaceCache = new Cache(
       new SequentialIDGenerator(),
-      (_, id, value) => {
-        this.fontFaceCss += `@font-face {font-family:${id};${value}}`;
+      (cache, id, value) => {
+        this.fontFaceRules += fontFaceBlockToRule(
+          id,
+          declarationsToBlock(value)
+        );
       }
     );
+
+    this.keyframesRules = "";
     this.keyframesCache = new Cache(
       new SequentialIDGenerator(),
-      (_, id, value) => {
-        this.keyframesCss += `@keyframes ${id} {${value}}`;
+      (cache, id, value) => {
+        this.keyframesRules += keyframesBlockToRule(
+          id,
+          keyframesToBlock(value)
+        );
       }
     );
   }
 
-  renderStyle(style: coreStyleT) {}
+  renderStyle(style: s1): string {
+    return injectStylePrefixed(this.styleCache, style, "", "");
+  }
 
-  renderFontFace(fontFace: fontFaceT) {}
+  renderFontFace(fontFace: fontFaceT): string {
+    const key = JSON.stringify(fontFace);
+    return this.fontFaceCache.addValue(key, fontFace);
+  }
 
-  renderKeyframes(keyframes: keyframesT) {}
+  renderKeyframes(keyframes: keyframesT): string {
+    const key = JSON.stringify(keyframes);
+    return this.keyframesCache.addValue(key, keyframes);
+  }
 
   getStylesheets(): Array<sheetT> {
     return [
-      ...(this.fontFaceCss.length
+      ...(this.fontFaceRules.length
         ? [
             {
-              css: this.fontFaceCss,
-              fontFaceIds: Object.keys(this.fontFaceCache.ids)
+              css: this.fontFaceRules,
+              attrs: {"data-hydrate": "font-face"}
             }
           ]
         : []),
-      ...cacheToStylesheets(this.styleCache.cache),
-      ...(this.keyframesCss.length
+      ...sheetify(this.styleRules),
+      ...(this.keyframesRules.length
         ? [
             {
-              css: this.keyframesCss,
-              keyframesIds: Object.keys(this.keyframesCache.ids)
+              css: this.keyframesRules,
+              attrs: {"data-hydrate": "keyframes"}
             }
           ]
         : [])
@@ -80,8 +114,33 @@ class StyletronServer implements StandardEngine {
   }
 
   getCss() {
-    return cacheToCss(this.styleCache.cache);
+    return (
+      this.fontFaceRules + stringify(this.styleRules) + this.keyframesRules
+    );
   }
+}
+
+function stringify(styleRules) {
+  let result = "";
+  for (const media in styleRules) {
+    const rules = styleRules[media];
+    if (media) {
+      result += `@media ${media}{${rules}}`;
+    } else {
+      result += rules;
+    }
+  }
+  return result;
+}
+
+function sheetify(styleRules) {
+  const sheets = [];
+  for (const media in styleRules) {
+    // omit media attribute if empty
+    const attrs = media ? {media} : {};
+    sheets.push({css: styleRules[media], attrs});
+  }
+  return sheets;
 }
 
 export default StyletronServer;

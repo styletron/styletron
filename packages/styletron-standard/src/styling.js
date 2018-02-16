@@ -10,22 +10,10 @@ export type keyframesT = {
   [string]: baseStyleT
 };
 
-export type L1<Style> = {
+export type nestedStyle<Style> = {
   ...Style,
-  [string]: {
-    ...Style,
-    [string]: Style
-  }
+  [string]: nestedStyle<Style>
 };
-
-export type L2<Style> = {
-  ...Style,
-  [string]: {
-    ...Style
-  }
-};
-
-export type L3<Style> = Style;
 
 export type nestedT<Style> = {
   ...Style,
@@ -35,11 +23,7 @@ export type nestedT<Style> = {
   }
 };
 
-export type s1 = L1<baseStyleT>;
-export type s2 = L2<baseStyleT>;
-export type s3 = L3<baseStyleT>;
-
-export type coreStyleT = nestedT<baseStyleT>;
+export type s1 = nestedStyle<baseStyleT>;
 
 export type declarativeStyleT = $Shape<{
   ...baseStyleT,
@@ -47,9 +31,7 @@ export type declarativeStyleT = $Shape<{
   fontFamily?: string | fontFaceT
 }>;
 
-export type d1 = L1<declarativeStyleT>;
-export type d2 = L2<declarativeStyleT>;
-export type d3 = L3<declarativeStyleT>;
+export type d1 = nestedStyle<declarativeStyleT>;
 
 export type composedStyleT = nestedT<declarativeStyleT>;
 

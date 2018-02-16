@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 const uppercasePattern = /[A-Z]/g;
 const msPattern = /^ms-/;
