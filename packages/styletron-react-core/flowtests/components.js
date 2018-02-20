@@ -1,10 +1,10 @@
-// @flow strict
+// @flow
 
 /* eslint-disable no-unused-vars */
 
 import * as React from "react";
 
-import {styled} from "./custom-styled.js";
+import {customStyled} from "./custom-styled.js";
 import {withStyle} from "../src/index.js";
 
 /**
@@ -19,7 +19,7 @@ class Dummy extends React.Component<{title: string, className: string}> {
   }
 }
 
-const Styled1 = styled(Dummy, (props: {$num: number}) => ({
+const Styled1 = customStyled(Dummy, (props: {$num: number}) => ({
   velocity: props.$num
 }));
 

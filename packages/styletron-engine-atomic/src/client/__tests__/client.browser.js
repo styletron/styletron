@@ -1,36 +1,44 @@
-// @flow
 /* eslint-env browser */
 
+//
 import StyletronServer from "../../server/server.js";
 import StyletronClient from "../client.js";
 import test from "tape";
 const reduce = Array.prototype.reduce;
-const some = Array.prototype.some;
 const map = Array.prototype.map;
 
-test("automatically inserts a stylesheet given an empty element collection", t => {
-  t.equal(document.styleSheets.length, 0);
-  const instance = new StyletronClient([]);
-  t.equal(document.styleSheets.length, 1);
-  t.ok(
-    instance.mainSheet instanceof HTMLStyleElement,
-    "main stylesheet automatically created"
+test("container config", t => {
+  const instance = new StyletronClient();
+  t.strictEqual(
+    instance.container,
+    document.head,
+    "container defaults to document.head"
   );
-  t.ok(
-    some.call(
-      document.styleSheets,
-      sheet => sheet === instance.mainSheet.sheet
-    ),
-    "new sheet is appended to DOM"
+  t.end();
+});
+
+test("automatic stylesheet insertion", t => {
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container});
+  t.strictEqual(instance.container, container, "uses container config");
+  // lazy instantiation
+  t.equal(document.styleSheets.length, 0, "sheet not yet instantiated");
+  t.equal(
+    instance.renderStyle({color: "purple"}),
+    "a",
+    "new unique class returned"
   );
-  instance.mainSheet.remove();
-  t.equal(document.styleSheets.length, 0);
+  t.equal(document.styleSheets.length, 1, "sheet added");
+  instance.container.remove();
+  t.equal(document.styleSheets.length, 0, "no sheets after container removed");
   t.end();
 });
 
 test("rendering", t => {
-  const instance = new StyletronClient([]);
-  // const newClass = ;
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container});
   t.equal(
     instance.renderStyle({color: "purple"}),
     "a",
@@ -50,8 +58,28 @@ test("rendering", t => {
     {media: "", rules: [".a { color: purple; }"]},
     {media: "(max-width: 800px)", rules: [".b { color: purple; }"]}
   ]);
-
-  instance.mainSheet.remove();
+  instance.renderStyle({
+    userSelect: "none"
+  });
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".a { color: purple; }", ".c { user-select: none; }"]},
+    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]}
+  ]);
+  instance.renderStyle({
+    display: "flex"
+  });
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        ".a { color: purple; }",
+        ".c { user-select: none; }",
+        ".d { display: flex; }"
+      ]
+    },
+    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]}
+  ]);
+  instance.container.remove();
   t.end();
 });
 
@@ -72,7 +100,7 @@ test("hydration", t => {
   t.deepEqual(
     before,
     after,
-    "sheet CSS not changed after rendering hyrdated style"
+    "CSSStylesheet rules not changed after rendering hydrated styles"
   );
   cleanup();
   t.end();
@@ -97,6 +125,12 @@ function injectFixtureStyles(styletron) {
     ":hover": {
       display: "none"
     }
+  });
+  styletron.renderStyle({
+    userSelect: "none"
+  });
+  styletron.renderStyle({
+    display: "flex"
   });
 }
 

@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 import test from "tape";
 import Enzyme from "enzyme";

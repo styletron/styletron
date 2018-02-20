@@ -1,17 +1,17 @@
-// @flow strict
+// @flow
 
 /* eslint-disable no-unused-vars */
 
 import * as React from "react";
 
-import {styled} from "./custom-styled.js";
+import {customStyled} from "./custom-styled.js";
 import {withStyle} from "../src/index.js";
 
 /**
  * Component composition example
  */
 
-const Styled1 = styled("div", (props: {$num: number}) => ({
+const Styled1 = customStyled("div", (props: {$num: number}) => ({
   velocity: props.$num
 }));
 

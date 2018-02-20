@@ -11,7 +11,7 @@
     "pretest": "yarn run lint && yarn run flow",
     "test": "lerna run test",
     "build": "lerna run build",
-    "flow": "flow --include-warnings"
+    "flow": "flow --max-warnings=0"
   },
   "dependencies": {},
   "devDependencies": {
@@ -21,7 +21,7 @@
     "eslint-plugin-cup": "^1.0.0",
     "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-prettier": "2.6.0",
-    "flow-bin": "^0.65.0",
+    "flow-bin": "^0.66",
     "lerna": "2.8.0",
     "prettier": "1.10.2"
   },

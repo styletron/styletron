@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 import test from "tape";
 import Enzyme from "enzyme";
@@ -160,18 +160,3 @@ test("withWrapper", t => {
 
   t.end();
 });
-
-// test("styled merges class name prop", t => {
-//   const Widget = styled("div", {color: "red"});
-//   const styletron = new Styletron();
-//   const output = ReactTestUtils.renderIntoDocument(
-//     React.createElement(
-//       Provider,
-//       {styletron},
-//       React.createElement(Widget, {className: "foo"})
-//     )
-//   );
-//   const div = ReactTestUtils.findRenderedDOMComponentWithTag(output, "div");
-//   t.equal(div.className, "foo a", "matches expected classes");
-//   t.end();
-// });

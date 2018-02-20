@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 import type {ComponentType, Ref, StatelessFunctionalComponent} from "react";
 import {createElement} from "react";

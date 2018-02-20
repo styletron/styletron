@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 /* eslint-disable no-unused-vars */
 
@@ -13,10 +13,19 @@ import type {
   styledFnT
 } from "../src/index.js";
 
-type customStyleT = $Shape<{
-  angle?: number,
-  velocity?: number
-}>;
+type nestT<Style> = {
+  ...Style,
+  [string]: Style
+};
+
+type customStyleT = $Shape<
+  nestT<
+    $Shape<{
+      angle?: number,
+      velocity?: number
+    }>
+  >
+>;
 
 interface CustomEngine {
   someMethod: customStyleT => string;
@@ -64,11 +73,11 @@ const Custom3 = withStyle(Custom2, (props: {$bar: number}) => ({
 <Custom3 />;
 
 // $FlowFixMe
-<Custom3 bar="invalid" />;
+<Custom3 $bar="invalid" />;
 
 // $FlowFixMe
 <Custom3 $bar={0} $foo="invalid" />;
 
 <Custom3 $bar={0} $foo />;
 
-export {customStyled as styled};
+export {customStyled};

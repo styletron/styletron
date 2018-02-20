@@ -1,6 +1,31 @@
 // @flow
 
-import type {s1, d1, keyframesT, fontFaceT} from "./styling.js";
+import type {Properties, FontFace} from "./style-types.js";
+
+type both = Properties<string> & {
+  animationName: keyframesT,
+  fontFamily: FontFace
+};
+
+type keyframesT = {
+  from?: Properties<string>,
+  to?: Properties<string>,
+  [string]: Properties<string>
+};
+
+type fontFaceT = FontFace;
+
+type Meta<T> = {
+  ...T,
+  [string]: {
+    ...T,
+    [string]: T
+  }
+};
+
+type s1 = Meta<Properties<string>>;
+
+type d1 = Meta<both>;
 
 export interface StandardEngine {
   renderStyle(style: s1): string;
@@ -36,4 +61,4 @@ function renderDeclarativeRules(style: d1, styletron: StandardEngine): s1 {
   return (style: any);
 }
 
-export * from "./styling.js";
+export type {s1, d1, keyframesT, fontFaceT};
