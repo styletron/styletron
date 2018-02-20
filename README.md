@@ -7,14 +7,14 @@ Toolkit for component-oriented styling
 ## Design principles
 
 1. Component-oriented
-   - Stateless, single-element styled components as base styling primitive
-   - Prop interfaces for conditional/dynamic styling
+   * Stateless, single-element styled components as base styling primitive
+   * Prop interfaces for conditional/dynamic styling
 2. Embrace typed JavaScript
-   - Composition of styles via (typed) JavaScript objects
-   - No extra tooling (e.g. Webpack loaders, Babel plugins, etc.)
+   * Composition of styles via (typed) JavaScript objects
+   * No extra tooling (e.g. Webpack loaders, Babel plugins, etc.)
 3. Portability and flexibility
-   - Portability of styled components across different rendering engines (e.g. atomic CSS)
-   - Core implementation agnostic of shape of style objects
+   * Portability of styled components across different rendering engines (e.g. atomic CSS)
+   * Core implementation agnostic of shape of style objects
 
 See [docs/design.md](docs/design.md) for more details.
 
@@ -68,22 +68,26 @@ React.render(
 
 ```js
 import {Provider as StyletronProvider} from "styletron-react";
-import {Server as StyletronServer} from "styletron-engine-atomic";
+import {Server as Styletron} from "styletron-engine-atomic";
 
 // create an engine instance
-const engine = new StyletronServer();
+const engine = new Styletron();
 
 // wrap root component with provider
-React.render(
+const html = React.render(
   <StyletronProvider value={engine}>
     <App />
   </StyletronProvider>
 );
 
+// extract critical styles after SSR
 const styles = engine.getStyleSheetsHTML();
+// → "<style ..."
 ```
 
 #### Hydrating server-rendered styles
+
+When server-side rendering, pass the server-rendered styled elements to the client engine constructor to hydrate the client-side cache. This prevents these styles from being re-rendered and avoids potential style conflicts.
 
 ```diff
 import {Provider as StyletronProvider} from "styletron-react";
@@ -91,7 +95,7 @@ import {Client as Styletron} from "styletron-engine-atomic";
 
 // create an engine instance
 - const engine = new Styletron();
-+ const engine = new Styletron(document.getElementsByClassName('_styletron_hydrate'));
++ const engine = new Styletron({hydrate: document.getElementsByClassName("_styletron_hydrate_")});
 
 // wrap root component with provider
 React.render(
