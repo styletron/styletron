@@ -4,6 +4,13 @@
 
 Toolkit for component-oriented styling
 
+## Packages
+
+* [`styletron-engine-atomic`](packages/styletron-engine-atomic)
+* [`styletron-react`](packages/styletron-react)
+* [`styletron-react-core`](packages/styletron-react-core)
+* [`styletron-standard`](packages/styletron-standard)
+
 ## Design principles
 
 1. Component-oriented
@@ -18,27 +25,42 @@ Toolkit for component-oriented styling
 
 See [docs/design.md](docs/design.md) for more details.
 
-## Packages
-
-* [`styletron-engine-atomic`](packages/styletron-engine-atomic)
-* [`styletron-react`](packages/styletron-react)
-* [`styletron-react-core`](packages/styletron-react-core)
-* [`styletron-standard`](packages/styletron-standard)
-
 ## Getting Started
 
 ### Defining styled components
 
 ```js
 import {styled} from "styletron-react";
+
+// Static styles
+const Foo = styled("div", {color: "red"});
+
+<Foo />;
+
+// Prop-driven styles
+const Foo = styled("div", props => {
+  return {color: props.$fraction < 0.5 ? "red" : "green"};
+});
+
+<Foo $fraction={Math.random()} />;
 ```
 
 See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
 
 ### Composing styled components
 
+`styletron-react` also provides composition helpers such as [`withStyle`](packages/styletron-react#withstyle) to build styled components from existing styled components.
+
 ```js
 import {withStyle} from "styletron-react";
+
+// Static styles
+const Bar = withStyle(Foo, {background: "green"});
+
+// Prop-driven styles
+const Baz = withStyle(Foo, props => ({
+  letterSpacing: props.$crushed ? "-5px" : "0px"
+}));
 ```
 
 See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
