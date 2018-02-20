@@ -6,9 +6,15 @@ Toolkit for component-oriented styling
 
 ## Design principles
 
-TODO
-
-## Architecture
+1. Component-oriented
+   - Stateless, single-element styled components as base styling primitive
+   - Prop interfaces for conditional/dynamic styling
+2. Embrace typed JavaScript
+   - Composition of styles via (typed) JavaScript objects
+   - No extra tooling (e.g. Webpack loaders, Babel plugins, etc.)
+3. Portability and flexibility
+   - Portability of styled components across different rendering engines (e.g. atomic CSS)
+   - Core implementation agnostic of shape of style objects
 
 See [docs/design.md](docs/design.md) for more details.
 
