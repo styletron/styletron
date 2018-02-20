@@ -1,3 +1,5 @@
+// @flow
+
 import test from "tape";
 import Styletron from "../server.js";
 

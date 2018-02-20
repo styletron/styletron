@@ -27,31 +27,31 @@
 //     {
 //       block:
 //         "display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex",
-//       media: void 0,
-//       pseudo: void 0
+//       media: "",
+//       pseudo: ""
 //     },
 //     {
 //       block:
 //         "height:-webkit-min-content;height:-moz-min-content;height:min-content;height:100%",
-//       media: void 0,
-//       pseudo: void 0
+//       media: "",
+//       pseudo: ""
 //     },
 //     {
 //       block:
 //         "transition:height 1s;-webkit-transition:height 1s;-moz-transition:height 1s",
-//       media: void 0,
-//       pseudo: void 0
+//       media: "",
+//       pseudo: ""
 //     },
 //     {
 //       block:
 //         "background-color:-webkit-linear-gradient(to bottom, red, green);background-color:-moz-linear-gradient(to bottom, red, green);background-color:linear-gradient(to bottom, red, green)",
-//       media: void 0,
+//       media: "",
 //       pseudo: ":hover"
 //     },
 //     {
 //       block: "-webkit-flex-grow:1;flex-grow:1",
 //       media: "(max-width: 500px)",
-//       pseudo: void 0
+//       pseudo: ""
 //     }
 //   ]);
 //   t.end();
@@ -72,8 +72,8 @@
 //       display: "flex",
 //       flexGrow: 1
 //     },
-//     void 0,
-//     void 0,
+//     "",
+//     "",
 //     cache
 //   );
 //   t.deepEqual(cache, {
@@ -87,10 +87,10 @@
 //     {
 //       block:
 //         "display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex",
-//       media: void 0,
-//       pseudo: void 0
+//       media: "",
+//       pseudo: ""
 //     },
-//     {block: "color:red", media: void 0, pseudo: void 0}
+//     {block: "color:red", media: "", pseudo: ""}
 //   ]);
 //   t.end();
 // });

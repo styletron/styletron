@@ -1,6 +1,7 @@
+// @flow
+
 /* eslint-env browser */
 
-//
 import StyletronServer from "../../server/server.js";
 import StyletronClient from "../client.js";
 import test from "tape";
