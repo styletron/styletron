@@ -102,7 +102,8 @@ const Foo = styled("div", {fontFamily: font});
 
 ```jsx
 const animation = {
-  src: "..."
+  from: {color: "red"},
+  to: {color: "blue"}
 };
 
 const Foo = styled("div", {animationName: animation});
