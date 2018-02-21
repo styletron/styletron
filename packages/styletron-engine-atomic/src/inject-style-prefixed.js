@@ -5,7 +5,7 @@ import prefixAll from "inline-style-prefixer/static";
 
 import type {baseStyleT} from "styletron-standard";
 
-import {MultiCache} from "../cache.js";
+import {MultiCache} from "./cache.js";
 
 export default function injectStylePrefixed(
   styleCache: MultiCache<{pseudo: string, block: string}>,

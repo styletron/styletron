@@ -1,6 +1,6 @@
 // @flow strict
 
-import hyphenate from "./utils/hyphenate-style-name.js";
+import hyphenate from "./hyphenate-style-name.js";
 
 export function atomicSelector(id: string, pseudo: string): string {
   let selector = `.${id}`;

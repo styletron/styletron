@@ -8,7 +8,7 @@ import type {StandardEngine} from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache.js";
 
-import injectStylePrefixed from "../utils/inject-style-prefixed.js";
+import injectStylePrefixed from "../inject-style-prefixed.js";
 
 import type {baseStyleT, fontFaceT, keyframesT} from "styletron-standard";
 
