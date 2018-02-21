@@ -84,6 +84,39 @@ test("rendering", t => {
   t.end();
 });
 
+test("prefix", t => {
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container, prefix: "foo_"});
+  t.equal(
+    instance.renderStyle({color: "purple"}),
+    "foo_a",
+    "new unique class returned"
+  );
+  t.equal(
+    instance.renderFontFace({src: "url(blah)"}),
+    "foo_a",
+    "new unique font family returned"
+  );
+  t.equal(
+    instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
+    "foo_a",
+    "new unique animation name returned"
+  );
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        ".foo_a { color: purple; }",
+        `@font-face { font-family: foo_a; src: url("blah"); }`,
+        "@keyframes foo_a { \n  0% { color: red; }\n  100% { color: blue; }\n}"
+      ]
+    }
+  ]);
+  instance.container.remove();
+  t.end();
+});
+
 test("hydration", t => {
   const {getSheets, cleanup, container} = setup();
 
@@ -133,6 +166,8 @@ function injectFixtureStyles(styletron) {
   styletron.renderStyle({
     display: "flex"
   });
+  styletron.renderFontFace({src: "url(blah)"});
+  styletron.renderKeyframes({from: {color: "red"}, to: {color: "blue"}});
 }
 
 function setup() {

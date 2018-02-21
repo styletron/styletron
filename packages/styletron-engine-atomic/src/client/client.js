@@ -29,7 +29,7 @@ import type {
 
 import {Cache, MultiCache} from "../cache.js";
 
-import injectStylePrefixed from "../utils/inject-style-prefixed.js";
+import injectStylePrefixed from "../inject-style-prefixed.js";
 
 import {
   styleBlockToRule,
@@ -47,7 +47,8 @@ type hydrateT =
 
 type optionsT = {
   hydrate?: hydrateT,
-  container?: Element
+  container?: Element,
+  prefix?: string
 };
 
 class StyletronClient implements StandardEngine {
@@ -60,10 +61,10 @@ class StyletronClient implements StandardEngine {
   keyframesCache: Cache<keyframesT>;
   fontFaceCache: Cache<fontFaceT>;
 
-  constructor(opts?: optionsT) {
+  constructor(opts?: optionsT = {}) {
     this.styleElements = {};
 
-    const styleIdGenerator = new SequentialIDGenerator();
+    const styleIdGenerator = new SequentialIDGenerator(opts.prefix);
     const onNewStyle = (cache, id, value) => {
       const {pseudo, block} = value;
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
@@ -86,9 +87,10 @@ class StyletronClient implements StandardEngine {
     );
 
     this.keyframesCache = new Cache(
-      new SequentialIDGenerator(),
+      new SequentialIDGenerator(opts.prefix),
       (cache, id, value) => {
-        const sheet: CSSStyleSheet = (this.keyframesSheet.sheet: any);
+        this.styleCache.getCache("");
+        const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
         sheet.insertRule(
           keyframesBlockToRule(id, keyframesToBlock(value)),
           sheet.cssRules.length
@@ -97,9 +99,10 @@ class StyletronClient implements StandardEngine {
     );
 
     this.fontFaceCache = new Cache(
-      new SequentialIDGenerator(),
+      new SequentialIDGenerator(opts.prefix),
       (cache, id, value) => {
-        const sheet: CSSStyleSheet = (this.keyframesSheet.sheet: any);
+        this.styleCache.getCache("");
+        const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
         sheet.insertRule(
           fontFaceBlockToRule(id, declarationsToBlock(value)),
           sheet.cssRules.length
@@ -107,12 +110,12 @@ class StyletronClient implements StandardEngine {
       }
     );
 
-    if (opts && opts.container) {
+    if (opts.container) {
       this.container = opts.container;
     }
 
     // Hydrate
-    if (opts && opts.hydrate && opts.hydrate.length > 0) {
+    if (opts.hydrate && opts.hydrate.length > 0) {
       // infer container from parent element
       if (!this.container) {
         const parentElement = opts.hydrate[0].parentElement;

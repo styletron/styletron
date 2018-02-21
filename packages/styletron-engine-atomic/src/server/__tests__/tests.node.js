@@ -108,6 +108,26 @@ test("StyletronServer getStylesheetsHtml ", t => {
   t.end();
 });
 
+test("StyletronServer prefix option", t => {
+  const styletron = new Styletron({prefix: "foo_"});
+  t.equal(styletron.renderStyle({color: "red"}), "foo_a");
+  t.equal(injectFixtureFontFace(styletron), "foo_a");
+  t.equal(injectFixtureKeyframes(styletron), "foo_a");
+  t.deepEqual(styletron.getStylesheets(), [
+    {
+      css: "@font-face{font-family:foo_a;src:local('Roboto')}",
+      attrs: {"data-hydrate": "font-face"}
+    },
+    {css: ".foo_a{color:red}", attrs: {}},
+    {
+      css:
+        "@keyframes foo_a{from{color:purple}50%{color:yellow}to{color:orange}}",
+      attrs: {"data-hydrate": "keyframes"}
+    }
+  ]);
+  t.end();
+});
+
 function injectFixtureStyles(styletron) {
   styletron.renderStyle({color: "red"});
   styletron.renderStyle({color: "green"});
@@ -137,7 +157,7 @@ function injectFixtureStyles(styletron) {
 }
 
 function injectFixtureKeyframes(styletron) {
-  styletron.renderKeyframes({
+  return styletron.renderKeyframes({
     from: {
       color: "purple"
     },
@@ -151,7 +171,7 @@ function injectFixtureKeyframes(styletron) {
 }
 
 function injectFixtureFontFace(styletron) {
-  styletron.renderFontFace({
+  return styletron.renderFontFace({
     src: "local('Roboto')"
   });
 }

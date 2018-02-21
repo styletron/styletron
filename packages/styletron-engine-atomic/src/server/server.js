@@ -24,6 +24,10 @@ export type sheetT = {|
   attrs: {[string]: string}
 |};
 
+type optionsT = {
+  prefix?: string
+};
+
 class StyletronServer implements StandardEngine {
   styleCache: MultiCache<{pseudo: string, block: string}>;
   keyframesCache: Cache<keyframesT>;
@@ -32,10 +36,10 @@ class StyletronServer implements StandardEngine {
   keyframesRules: string;
   fontFaceRules: string;
 
-  constructor() {
+  constructor(opts?: optionsT = {}) {
     this.styleRules = {"": ""};
     this.styleCache = new MultiCache(
-      new SequentialIDGenerator(),
+      new SequentialIDGenerator(opts.prefix),
       media => {
         this.styleRules[media] = "";
       },
@@ -50,7 +54,7 @@ class StyletronServer implements StandardEngine {
 
     this.fontFaceRules = "";
     this.fontFaceCache = new Cache(
-      new SequentialIDGenerator(),
+      new SequentialIDGenerator(opts.prefix),
       (cache, id, value) => {
         this.fontFaceRules += fontFaceBlockToRule(
           id,
@@ -61,7 +65,7 @@ class StyletronServer implements StandardEngine {
 
     this.keyframesRules = "";
     this.keyframesCache = new Cache(
-      new SequentialIDGenerator(),
+      new SequentialIDGenerator(opts.prefix),
       (cache, id, value) => {
         this.keyframesRules += keyframesBlockToRule(
           id,

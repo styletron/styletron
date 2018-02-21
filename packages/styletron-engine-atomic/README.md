@@ -17,7 +17,7 @@ This package provides two named exports:
 import {Client} from "styletron-engine-atomic";
 ```
 
-#### `.constructor(opts?: {prefix?: string, hydrate?: HTMLStyleElement[]})`
+#### `.constructor(opts?: {prefix?: string, hydrate?: HTMLStyleElement[], container: Element})`
 
 ```js
 const instance = new Client();
