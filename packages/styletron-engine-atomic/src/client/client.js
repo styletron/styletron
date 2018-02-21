@@ -24,7 +24,7 @@ import type {
   StandardEngine,
   keyframesT,
   fontFaceT,
-  s1
+  baseStyleT
 } from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache.js";
@@ -147,7 +147,7 @@ class StyletronClient implements StandardEngine {
     }
   }
 
-  renderStyle(style: s1): string {
+  renderStyle(style: baseStyleT): string {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 

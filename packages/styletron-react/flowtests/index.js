@@ -6,7 +6,7 @@ import * as React from "react";
 
 import {styled, withStyle} from "../src/index.js";
 
-import type {s1, StandardEngine} from "styletron-standard";
+import type {baseStyleT, StandardEngine} from "styletron-standard";
 import type {styleArgT, baseT, styletronComponentT} from "styletron-react-core";
 
 const Yo = styled("div", {color: "red"});

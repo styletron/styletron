@@ -3,13 +3,13 @@
 import hyphenate from "./hyphenate-style-name";
 import prefixAll from "inline-style-prefixer/static";
 
-import type {s1} from "styletron-standard";
+import type {baseStyleT} from "styletron-standard";
 
 import {MultiCache} from "../cache.js";
 
 export default function injectStylePrefixed(
   styleCache: MultiCache<{pseudo: string, block: string}>,
-  styles: s1,
+  styles: baseStyleT,
   media: string,
   pseudo: string
 ) {

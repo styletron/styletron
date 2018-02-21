@@ -1,6 +1,6 @@
 // @flow
 
-import type {StandardEngine, d1} from "styletron-standard";
+import type {StandardEngine, declarativeStyleT} from "styletron-standard";
 import {driver, getInitialStyle} from "styletron-standard";
 
 import type {styledFnT} from "styletron-react-core";
@@ -8,7 +8,7 @@ import {createStyled, Provider} from "styletron-react-core";
 
 export {Provider};
 
-const styled: styledFnT<d1, StandardEngine> = createStyled({
+const styled: styledFnT<declarativeStyleT, StandardEngine> = createStyled({
   wrapper: Component => Component,
   getInitialStyle,
   driver

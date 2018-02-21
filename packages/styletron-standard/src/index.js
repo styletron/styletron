@@ -13,7 +13,7 @@ type keyframesT = {
 };
 
 // TODO: investigate why $Shape is needed
-type Meta<T> = $Shape<{
+type NestedStyleT<T> = $Shape<{
   ...T,
   [string]: {
     ...T,
@@ -21,26 +21,31 @@ type Meta<T> = $Shape<{
   }
 }>;
 
-type s1 = Meta<Properties<string>>;
+type baseStyleT = NestedStyleT<Properties<string>>;
 
-type d1 = Meta<Properties<string, fontFaceT, keyframesT>>;
+type declarativeStyleT = NestedStyleT<
+  Properties<string, fontFaceT, keyframesT>
+>;
 
 export interface StandardEngine {
-  renderStyle(style: s1): string;
+  renderStyle(style: baseStyleT): string;
   renderKeyframes(keyframes: keyframesT): string;
   renderFontFace(fontFace: fontFaceT): string;
 }
 
-export function driver(style: d1, styletron: StandardEngine) {
+export function driver(style: declarativeStyleT, styletron: StandardEngine) {
   const tx = renderDeclarativeRules(style, styletron);
   return styletron.renderStyle(tx);
 }
 
-export function getInitialStyle(): d1 {
+export function getInitialStyle(): declarativeStyleT {
   return {};
 }
 
-function renderDeclarativeRules(style: d1, styletron: StandardEngine): s1 {
+function renderDeclarativeRules(
+  style: declarativeStyleT,
+  styletron: StandardEngine
+): baseStyleT {
   for (const key in style) {
     const val = style[key];
     if (key === "animationName" && typeof val !== "string") {
@@ -63,4 +68,4 @@ function renderDeclarativeRules(style: d1, styletron: StandardEngine): s1 {
   return (style: any);
 }
 
-export type {s1, d1, keyframesT, fontFaceT};
+export type {baseStyleT, declarativeStyleT, keyframesT, fontFaceT};

@@ -10,7 +10,7 @@ import {Cache, MultiCache} from "../cache.js";
 
 import injectStylePrefixed from "../utils/inject-style-prefixed.js";
 
-import type {s1, fontFaceT, keyframesT} from "styletron-standard";
+import type {baseStyleT, fontFaceT, keyframesT} from "styletron-standard";
 
 import {
   styleBlockToRule,
@@ -73,7 +73,7 @@ class StyletronServer implements StandardEngine {
     );
   }
 
-  renderStyle(style: s1): string {
+  renderStyle(style: baseStyleT): string {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 
