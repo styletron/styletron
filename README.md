@@ -32,17 +32,17 @@ See [docs/design.md](docs/design.md) for more details.
 ```js
 import {styled} from "styletron-react";
 
-// Static styles
-const Foo = styled("div", {color: "red"});
+// Create a styled component by passing an element name and a style object
+const RedAnchor = styled("a", {color: "red"});
 
-<Foo />;
+<RedAnchor href="/foo">Hello</RedAnchor>;
 
-// Prop-driven styles
-const Foo = styled("div", props => {
-  return {color: props.$fraction < 0.5 ? "red" : "green"};
+// Or pass a function that takes props and returns a style object
+const Panel = styled("div", props => {
+  return {backgroundColor: props.$alert < "orange" : "lightblue"};
 });
 
-<Foo $fraction={Math.random()} />;
+<Panel $alert>Hello!</Panel>;
 ```
 
 See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
@@ -54,29 +54,33 @@ See [packages/styletron-react](packages/styletron-react/README.md) for full docu
 ```js
 import {withStyle} from "styletron-react";
 
-// Static styles
-const Bar = withStyle(Foo, {background: "green"});
+const FancyAnchor = withStyle(RedAnchor, {fontFamily: "cursive"});
 
-// Prop-driven styles
-const Baz = withStyle(Foo, props => ({
-  letterSpacing: props.$crushed ? "-5px" : "0px"
+<FancyAnchor href="/foo">Hello</FancyAnchor>;
+
+const DeluxePanel = withStyle(Panel, props => ({
+  backgroundColor: props.alert ? "firebrick" : "rebeccapurple",
+  color: "white",
+  boxShadow: "3px 3px 3px darkgray"
 }));
+
+<DeluxePanel>Bonjour Monde</DeluxePanel>;
 ```
 
 See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
 
 ### Providing a rendering engine
 
-Styled components require a rendering engine to perform side effects.
+Styled components require a rendering engine to perform side effects (such as rendering styles to the page).
 
 ```js
 import {Provider as StyletronProvider} from "styletron-react";
 import {Client as Styletron} from "styletron-engine-atomic";
 
-// create an engine instance
+// 1. Create a client engine instance
 const engine = new Styletron();
 
-// wrap root component with provider
+// 2. Wrap root component with provider
 React.render(
   <StyletronProvider value={engine}>
     <App />
@@ -92,17 +96,17 @@ React.render(
 import {Provider as StyletronProvider} from "styletron-react";
 import {Server as Styletron} from "styletron-engine-atomic";
 
-// create an engine instance
+// 1. Create a server engine instance
 const engine = new Styletron();
 
-// wrap root component with provider
+// 2. Provide the engine to the app
 const html = React.render(
   <StyletronProvider value={engine}>
     <App />
   </StyletronProvider>
 );
 
-// extract critical styles after SSR
+// 3. Extract critical styles after SSR
 const styles = engine.getStyleSheetsHTML();
 // → "<style ..."
 ```
