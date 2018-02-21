@@ -12,7 +12,7 @@ type hydratorT =
 function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   let match;
   while ((match = hydrator.exec(css))) {
-    const [, /*_*/ id, key] = match;
+    const [, id, key] = match;
     cache.cache[key] = id; // set cache without triggering side effects
     cache.idGenerator.increment(); // increment id
   }
