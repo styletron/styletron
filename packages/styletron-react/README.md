@@ -5,12 +5,14 @@
 React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library. Adheres to `styletron-standard` interface.
 
 ## API
+
 The `styletron-react` package consists of the following named exports:
-- [`styled`](#styled)
-- [`withStyle`](#withstyle)
-- [`withStyleDeep`](#withstyledeep)
-- [`withTransform`](#withtransform)
-- [`withWrapper`](#withwrapper)
+
+* [`styled`](#styled)
+* [`withStyle`](#withstyle)
+* [`withStyleDeep`](#withstyledeep)
+* [`withTransform`](#withtransform)
+* [`withWrapper`](#withwrapper)
 
 ## Creating styled components
 
@@ -23,6 +25,7 @@ import {styled} from "styletron-react";
 The `styled` function is used to create a styled component.
 
 #### Params
+
 1. `base` (`string` | `React.ComponentType`)
 2. `style` (`Style` | `(props: Object) => Style`)
 
@@ -38,9 +41,7 @@ const Foo = styled("div", props => {
 });
 
 <Foo $fraction={Math.random()} />;
-
 ```
-
 
 #### Styled prop filtering
 
@@ -52,18 +53,19 @@ const StyledInput = styled("input", props => ({
   background: props.$variant === "error" ? "red" : "blue"
 }));
 
-<StyledInput disabled={true} $variant="error"/>
+<StyledInput disabled={true} $variant="error" />;
 ```
 
 #### Built-in props
 
 #### `$as`
-```jsx
-const Foo = styled("div", /* ... */);
 
-<Foo/>;
-<Foo $as="span"/>;
-<Foo $as={Link}/>;
+```jsx
+const Foo = styled("div" /* ... */);
+
+<Foo />;
+<Foo $as="span" />;
+<Foo $as={Link} />;
 ```
 
 #### `$ref`
@@ -80,16 +82,41 @@ class Component extends React.Component {
     }}
   />
 }
+```
 
+## Declarative `@keyframes` and `@font-face` rules
+
+### `@font-face`
+
+```jsx
+const font = {
+  src: "..."
+};
+
+const Foo = styled("div", {fontFamily: font});
+
+<Foo />;
+```
+
+### `@keyframes`
+
+```jsx
+const animation = {
+  src: "..."
+};
+
+const Foo = styled("div", {animationName: animation});
+
+<Foo />;
 ```
 
 ## Composing styles
 
 `styletron-react` also exports several composition functions. These can be used to create new styled components by composing styles from existing ones.
 
-- [`withStyle`](#withstyle)
-- [`withStyleDeep`](#withstyledeep)
-- [`withTransform`](#withtransform)
+* [`withStyle`](#withstyle)
+* [`withStyleDeep`](#withstyledeep)
+* [`withTransform`](#withtransform)
 
 ### `withStyle`
 
@@ -100,6 +127,7 @@ import {withStyle} from "styletron-react";
 Use `withStyle` for style composition via shallow object merging.
 
 #### Params
+
 1. `styledComponent` (`StyledComponent`)
 2. `style` (`Style` | `(props: Object) => Style`)
 
@@ -126,6 +154,7 @@ import {withStyle} from "styletron-react";
 Use withStyle for style composition via deep object merging.
 
 #### Params
+
 1. `styledComponent` (`StyledComponent`)
 2. `style` (`Style` | `(props: Object) => Style`)
 
@@ -145,6 +174,7 @@ import {withTransform} from "styletron-react";
 Shallow and deep object merging gets the job done most of the time, but for more control over composition, `withTransform` allows for direct style manipulation via an arbitrary transformation function.
 
 #### Params
+
 1. `styledComponent` (`StyledComponent`)
 2. `transform` (`(style: Style, props: Object) => Style`)
 
@@ -160,7 +190,6 @@ const Bar = withTransform(Foo, (style, props) => {
       : props.$inline === true ? "inline-flex" : "flex";
   return {...style, display};
 });
-
 ```
 
 ## Adding wrappers
@@ -174,6 +203,7 @@ import {withWrapper} from "styletron-react";
 Use `withWrapper` to add wrapping components while preserving the ability to compose styles later on.
 
 #### Params
+
 1. `styledComponent` (`StyledComponent`)
 2. `wrapFn` (`StyledComponent => props => ReactElement`)
 
@@ -191,7 +221,6 @@ const Wrapped = withWrapper(Foo, Styled => props => (
 
 // Style composition still works as normal
 const Bar = withStyle(Wrapped, {background: "red"});
-
 ```
 
 [deps-badge]: https://david-dm.org/rtsao/styletron-react.svg
