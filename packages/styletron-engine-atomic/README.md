@@ -2,7 +2,7 @@
 
 [![npm version][npm-badge]][npm-href] [![dependencies status][deps-badge]][deps-href]
 
-Atomic implementation of `styletron-standard` engine interface.
+Atomic implementation of the [`styletron-standard`](packages/styletron-standard) engine interface.
 
 ## API
 
@@ -17,46 +17,17 @@ This package provides two named exports:
 import {Client} from "styletron-engine-atomic";
 ```
 
-#### `.constructor()`
+#### `.constructor(opts?: {prefix?: string, hydrate?: HTMLStyleElement[]})`
 
 ```js
-new Client();
+const instance = new Client();
 ```
 
-#### `.renderStyle(style) => string`
+#### [`.renderStyle(style) => string`](#renderstylestyle--string-2)
 
-Render a given style object, returning the corresponding generated class name.
+#### [`.renderKeyframes(keyframes) => string`](#renderkeyframeskeyframes--string-2)
 
-```js
-instance.renderStyle({
-  color: "red",
-  fontSize: "12px"
-});
-// → "a b"
-```
-
-#### `.renderKeyframes(keyframes) => string`
-
-Render a given keyframes object, returning the corresponding generated keyframes name.
-
-```js
-const animationName = instance.renderKeyframes({
-  to: {},
-  from: {}
-});
-// → "a"
-```
-
-#### `.renderFontFace(fontFace) => string`
-
-Render a given font face object, returning the corresponding generated font-family name.
-
-```js
-const fontFamily = instance.renderFontFace({
-  src: "..."
-});
-// → "a"
-```
+#### [`.renderFontFace(fontFace) => string`](#renderfontfacefontface--string-2)
 
 ---
 
@@ -66,11 +37,39 @@ const fontFamily = instance.renderFontFace({
 import {Server} from "styletron-engine-atomic";
 ```
 
-#### `.constructor()`
+#### `.constructor(opts?: {prefix?: string})`
+
+```js
+const instance = new Server();
+```
+
+#### `.getStylesheets() => Array<{css: string, attrs: {[string]: string}}>`
+
+Returns styles as an array of stylesheet objects.
+
+#### `.getStylesheetsHtml(className: string) => string`
+
+Returns styles as a string of HTML that can also be used for client-side hydration.
+
+#### `.getCss() => string`
+
+Returns styles as a string of CSS for purely server-side rendering use cases where no client-side hydration is needed.
+
+#### [`.renderStyle(style) => string`](#renderstylestyle--string-2)
+
+#### [`.renderKeyframes(keyframes) => string`](#renderkeyframeskeyframes--string-2)
+
+#### [`.renderFontFace(fontFace) => string`](#renderfontfacefontface--string-2)
+
+---
+
+### Universal methods
+
+These methods exist on both the server and client instances.
 
 #### `.renderStyle(style) => string`
 
-Render a given style object, returning the corresponding generated class name.
+Renders a given style object, returning the corresponding generated class name.
 
 ```js
 instance.renderStyle({
@@ -82,36 +81,26 @@ instance.renderStyle({
 
 #### `.renderKeyframes(keyframes) => string`
 
-Render a given keyframes object, returning the corresponding generated keyframes name.
+Renders a given keyframes object, returning the corresponding generated `@keyframes` rule name.
 
 ```js
-instance.renderKeyframes({
-  to: {},
-  from: {}
+const animationName = instance.renderKeyframes({
+  from: {color: "red"},
+  to: {color: "blue"}
 });
 // → "a"
 ```
 
 #### `.renderFontFace(fontFace) => string`
 
-Render a given font face object, returning the corresponding generated font-family name.
+Renders a given font face object, returning the font-family name from the corresponding generated `@font-face` rule.
 
 ```js
-instance.renderFontFace({
+const fontFamily = instance.renderFontFace({
   src: "..."
 });
 // → "a"
 ```
-
-#### `.getStylesheets() => Array<{css: string, attrs: {[string]: string}}>`
-
-#### `.getStylesheetsHtml(className: string) => string`
-
-Returns a string of HTML
-
-#### `.getCss() => string`
-
-Returns a string of all CSS for purely server-side rendering use cases where no client-side hydration is needed.
 
 ## Tradeoffs
 

@@ -80,7 +80,7 @@ import {Client as Styletron} from "styletron-engine-atomic";
 // 1. Create a client engine instance
 const engine = new Styletron();
 
-// 2. Wrap root component with provider
+// 2. Provide the engine to the app
 React.render(
   <StyletronProvider value={engine}>
     <App />
