@@ -1,6 +1,10 @@
 // @flow
 
-export type StandardLonghandProperties<TLength = string | number> = {
+export type StandardLonghandProperties<
+  TLength = string | number,
+  FontFamilyT = FontFamilyProperty,
+  AnimationNameT = AnimationNameProperty
+> = {
   alignContent?: AlignContentProperty,
   alignItems?: AlignItemsProperty,
   alignSelf?: AlignSelfProperty,
@@ -9,7 +13,7 @@ export type StandardLonghandProperties<TLength = string | number> = {
   animationDuration?: GlobalsString,
   animationFillMode?: AnimationFillModeProperty,
   animationIterationCount?: AnimationIterationCountProperty,
-  animationName?: AnimationNameProperty,
+  animationName?: AnimationNameT,
   animationPlayState?: AnimationPlayStateProperty,
   animationTimingFunction?: AnimationTimingFunctionProperty,
   appearance?: AppearanceProperty,
@@ -110,7 +114,7 @@ export type StandardLonghandProperties<TLength = string | number> = {
   flexShrink?: GlobalsNumber,
   flexWrap?: FlexWrapProperty,
   float?: FloatProperty,
-  fontFamily?: FontFamilyProperty,
+  fontFamily?: FontFamilyT,
   fontFeatureSettings?: FontFeatureSettingsProperty,
   fontKerning?: FontKerningProperty,
   fontLanguageOverride?: FontLanguageOverrideProperty,
@@ -335,8 +339,11 @@ export type StandardShorthandProperties<TLength = string | number> = {
 };
 
 export type StandardProperties<
-  TLength = string | number
-> = StandardLonghandProperties<TLength> & StandardShorthandProperties<TLength>;
+  TLength = string | number,
+  FontFamilyT = FontFamilyProperty,
+  AnimationNameT = AnimationNameProperty
+> = StandardLonghandProperties<TLength, FontFamilyT, AnimationNameT> &
+  StandardShorthandProperties<TLength>;
 
 export type VendorLonghandProperties<TLength = string | number> = {
   msOverflowStyle?: MsOverflowStyleProperty,
@@ -396,9 +403,11 @@ export type VendorProperties<
   TLength = string | number
 > = VendorLonghandProperties<TLength> & VendorShorthandProperties<TLength>;
 
-export type Properties<TLength = string | number> = StandardProperties<
-  TLength
-> &
+export type Properties<
+  TLength = string | number,
+  FontFamilyT = FontFamilyProperty,
+  AnimationNameT = AnimationNameProperty
+> = StandardProperties<TLength, FontFamilyT, AnimationNameT> &
   VendorProperties<TLength>;
 
 export type CounterStyle = {
@@ -416,7 +425,6 @@ export type CounterStyle = {
 
 export type FontFace = {
   fontDisplay?: FontFaceFontDisplayProperty,
-  fontFamily?: string,
   fontFeatureSettings?: FontFaceFontFeatureSettingsProperty,
   fontVariationSettings?: FontFaceFontVariationSettingsProperty,
   fontStretch?: FontFaceFontStretchProperty,
@@ -579,7 +587,7 @@ type AnimationFillModeProperty = Globals | SingleAnimationFillMode;
 
 type AnimationIterationCountProperty = Globals | SingleAnimationIterationCount;
 
-type AnimationNameProperty = Globals | "none" | string;
+export type AnimationNameProperty = Globals | "none" | string;
 
 type AnimationPlayStateProperty = Globals | SingleAnimationPlayState;
 
@@ -938,7 +946,7 @@ type FloatProperty =
   | "none"
   | "right";
 
-type FontFamilyProperty = Globals | GenericFamily | string;
+export type FontFamilyProperty = Globals | GenericFamily | string;
 
 type FontFeatureSettingsProperty = Globals | "normal" | string;
 

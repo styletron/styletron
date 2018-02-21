@@ -1,10 +1,9 @@
 // @flow
 
-import type {Properties, FontFace} from "./style-types.js";
+import type {Properties} from "./style-types.js";
 
-type both = Properties<string> & {
-  animationName: keyframesT,
-  fontFamily: FontFace
+type fontFaceT = {
+  src?: string
 };
 
 type keyframesT = {
@@ -13,19 +12,18 @@ type keyframesT = {
   [string]: Properties<string>
 };
 
-type fontFaceT = FontFace;
-
-type Meta<T> = {
+// TODO: investigate why $Shape is needed
+type Meta<T> = $Shape<{
   ...T,
   [string]: {
     ...T,
     [string]: T
   }
-};
+}>;
 
 type s1 = Meta<Properties<string>>;
 
-type d1 = Meta<both>;
+type d1 = Meta<Properties<string, fontFaceT, keyframesT>>;
 
 export interface StandardEngine {
   renderStyle(style: s1): string;
@@ -46,11 +44,15 @@ function renderDeclarativeRules(style: d1, styletron: StandardEngine): s1 {
   for (const key in style) {
     const val = style[key];
     if (key === "animationName" && typeof val !== "string") {
-      style.animationName = styletron.renderKeyframes(((val: any): keyframesT));
+      style.animationName = ((styletron.renderKeyframes(
+        ((val: any): keyframesT)
+      ): any): keyframesT);
       continue;
     }
     if (key === "fontFamily" && typeof val !== "string") {
-      style.fontFamily = styletron.renderFontFace(((val: any): fontFaceT));
+      style.fontFamily = ((styletron.renderFontFace(
+        ((val: any): fontFaceT)
+      ): any): fontFaceT);
       continue;
     }
     if (typeof val === "object" && val !== null) {

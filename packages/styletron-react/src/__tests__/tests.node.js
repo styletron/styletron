@@ -94,3 +94,54 @@ test("withTransform", t => {
   });
   t.end();
 });
+
+test("font-face injection", t => {
+  t.plan(2);
+  const fontFace = {
+    src: "foo"
+  };
+  const style = {fontFamily: fontFace};
+  const Widget = styled("div", style);
+  Enzyme.shallow(<Widget />, {
+    context: {
+      styletron: {
+        renderStyle: x => {
+          t.deepEqual(x, {
+            fontFamily: "foo"
+          });
+        },
+        renderFontFace: x => {
+          t.deepEqual(x, fontFace);
+          return "foo";
+        }
+      }
+    }
+  });
+  t.end();
+});
+
+test("keyframes injection", t => {
+  t.plan(2);
+  const keyframes = {
+    from: {color: "red"},
+    to: {color: "green"}
+  };
+  const style = {animationName: keyframes};
+  const Widget = styled("div", style);
+  Enzyme.shallow(<Widget />, {
+    context: {
+      styletron: {
+        renderStyle: x => {
+          t.deepEqual(x, {
+            animationName: "foo"
+          });
+        },
+        renderKeyframes: x => {
+          t.deepEqual(x, keyframes);
+          return "foo";
+        }
+      }
+    }
+  });
+  t.end();
+});
