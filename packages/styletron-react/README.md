@@ -86,7 +86,11 @@ class Component extends React.Component {
 
 ## Declarative `@keyframes` and `@font-face` rules
 
+Both `@font-face` and `@keyframes` rules can be used declaratively within style objects.
+
 ### `@font-face`
+
+If a font face object is used in place of a string for `fontFamily`, a corresponding `@font-face` rule will be automatically generated.
 
 ```jsx
 const font = {
@@ -99,6 +103,8 @@ const Foo = styled("div", {fontFamily: font});
 ```
 
 ### `@keyframes`
+
+If a keyframes object is used in place of a string for `animationName`, a corresponding `@keyframes` rule will be automatically generated.
 
 ```jsx
 const animation = {
