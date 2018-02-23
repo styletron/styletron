@@ -27,9 +27,9 @@ import {Client} from "styletron-engine-atomic";
 
 ##### Options
 
-* `prefix` The prefix to be used for all generated atomic identifiers (e.g. class names, `@keyframes` names, etc.)
-* `hydrate` The server-rendered style elements. Hydration is required when server-side rendering.
-* `container` The element that new stylesheets should be appended to. Defaults to the parent element of the first stylesheet passed via `hydrate`, otherwise defaults to `document.head`.
+* `prefix?: string` The prefix to be used for all generated atomic identifiers (e.g. class names, `@keyframes` names, etc.)
+* `hydrate?: HTMLStyleElement[]` Collection of server-rendered style elements. Hydration is required when server-side rendering.
+* `container?: Element` The element that new stylesheets should be appended to. Defaults to the parent element of the first stylesheet passed via `hydrate`, otherwise defaults to `document.head`.
 
 ```js
 const instance = new Client();
@@ -51,7 +51,7 @@ import {Server} from "styletron-engine-atomic";
 
 ##### Options
 
-* `prefix` The prefix to be used for all generated atomic identifiers (e.g. class names, `@keyframes` names, etc.)
+* `prefix?: string` The prefix to be used for all generated atomic identifiers (e.g. class names, `@keyframes` names, etc.)
 
 ```js
 const instance = new Server();
