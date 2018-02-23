@@ -1,6 +1,7 @@
 // @flow
 
-import hyphenate from "./hyphenate-style-name";
+import hyphenate from "./hyphenate-style-name.js";
+import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
 import prefixAll from "inline-style-prefixer/static";
 
 import type {baseStyleT} from "styletron-standard";
@@ -74,6 +75,23 @@ export default function injectStylePrefixed(
       }
     }
   }
+
+  if (__DEV__) {
+    const conflicts = validateNoMixedHand(styles);
+    if (conflicts.length) {
+      conflicts.forEach(({shorthand, longhand}) => {
+        const short = JSON.stringify({[shorthand.property]: shorthand.value});
+        const long = JSON.stringify({[longhand.property]: longhand.value});
+        // eslint-disable-next-line no-console
+        console.warn(
+          `Styles \`${short}\` and \`${long}\` in object yielding class "${classString.slice(
+            1
+          )}" may result in unexpected behavior. Mixing shorthand and longhand properties within the same style object is unsupported with atomic rendering.`
+        );
+      });
+    }
+  }
+
   // remove leading space
   return classString.slice(1);
 }
