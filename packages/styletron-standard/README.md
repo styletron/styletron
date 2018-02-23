@@ -4,7 +4,15 @@
 
 Opinionated, standard interfaces for Styletron.
 
-## Style object interface
+## Installation
+
+```
+yarn add styletron-standard
+```
+
+## API
+
+### Style object interface
 
 ```js
 import type {styleT} from "styletron-standard";
@@ -12,7 +20,7 @@ import type {styleT} from "styletron-standard";
 
 `styletron-standard` defines a specific style object interface (along with corresponding Flow type definitions).
 
-### Camel case properties
+#### Camel case properties
 
 CSS property names are camel cased.
 
@@ -22,7 +30,7 @@ const style: styleT = {
 };
 ```
 
-### Pseudo classes
+#### Pseudo classes
 
 Nesting is used for psuedo selectors.
 
@@ -35,7 +43,7 @@ const style: styleT = {
 };
 ```
 
-### Media queries
+#### Media queries
 
 To define styles that correspond to media queries, use nested style object.
 
@@ -63,7 +71,6 @@ const animation: animationT = {
 const style: styleT = {
   animationName: animation
 };
-
 ```
 
 ### Declarative `@font-face`
@@ -80,11 +87,10 @@ const font: fontT = {
 const style: styleT = {
   fontFamily: font
 };
-
 ```
 
+### Engine interface
 
-## Engine interface
 ```js
 import type {StandardEngine} from "styletron-standard";
 ```
@@ -99,7 +105,7 @@ interface StandardEngine {
 };
 ```
 
-## Driver
+### Driver
 
 ```js
 import type {StandardEngine} from "styletron-standard";
@@ -109,4 +115,3 @@ import type {StandardEngine} from "styletron-standard";
 [deps-href]: https://david-dm.org/rtsao/styletron-standard
 [npm-badge]: https://badge.fury.io/js/styletron-standard.svg
 [npm-href]: https://www.npmjs.com/package/styletron-standard
-

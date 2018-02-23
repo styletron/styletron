@@ -4,6 +4,12 @@
 
 React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library. Adheres to `styletron-standard` interface.
 
+## Installation
+
+```
+yarn add styletron-react
+```
+
 ## API
 
 The `styletron-react` package consists of the following named exports:

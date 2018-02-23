@@ -4,12 +4,18 @@
 
 Atomic implementation of the [`styletron-standard`](packages/styletron-standard) engine interface.
 
+## Installation
+
+```
+yarn add styletron-engine-atomic
+```
+
 ## API
 
 This package provides two named exports:
 
-* [`Client`](#client) - Client-side engine
-* [`Server`](#server) - Server-side engine
+* [`Client`](#client) - Client-side engine class
+* [`Server`](#server) - Server-side engine class
 
 ### `Client`
 
@@ -18,6 +24,12 @@ import {Client} from "styletron-engine-atomic";
 ```
 
 #### `.constructor(opts?: {prefix?: string, hydrate?: HTMLStyleElement[], container: Element})`
+
+##### Options
+
+* `prefix` The prefix to be used for all generated atomic identifiers (e.g. class names, `@keyframes` names, etc.)
+* `hydrate` The server-rendered style elements. Hydration is required when server-side rendering.
+* `container` The element that new stylesheets should be appended to. Defaults to the parent element of the first stylesheet passed via `hydrate`, otherwise defaults to `document.head`.
 
 ```js
 const instance = new Client();
@@ -29,8 +41,6 @@ const instance = new Client();
 
 #### [`.renderFontFace(fontFace) => string`](#renderfontfacefontface--string-2)
 
----
-
 ### `Server`
 
 ```js
@@ -38,6 +48,10 @@ import {Server} from "styletron-engine-atomic";
 ```
 
 #### `.constructor(opts?: {prefix?: string})`
+
+##### Options
+
+* `prefix` The prefix to be used for all generated atomic identifiers (e.g. class names, `@keyframes` names, etc.)
 
 ```js
 const instance = new Server();
@@ -60,8 +74,6 @@ Returns styles as a string of CSS for purely server-side rendering use cases whe
 #### [`.renderKeyframes(keyframes) => string`](#renderkeyframeskeyframes--string-2)
 
 #### [`.renderFontFace(fontFace) => string`](#renderfontfacefontface--string-2)
-
----
 
 ### Universal methods
 

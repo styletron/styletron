@@ -6,13 +6,21 @@ React bindings for Styletron, inspired by [styled-components](https://github.com
 
 This package provides the core implementation that is agnostic of the shape style objects and the engine interface.
 
+## Installation
+
+```
+yarn add styletron-react-core
+```
+
 ## API
+
 The `styletron-react-core` package consists of the following named exports:
-- [`createStyled`](#createstyled)
-- [`withStyle`](#withstyle)
-- [`withStyleDeep`](#withstyledeep)
-- [`withTransform`](#withtransform)
-- [`withWrapper`](#withwrapper)
+
+* [`createStyled`](#createstyled)
+* [`withStyle`](#withstyle)
+* [`withStyleDeep`](#withstyledeep)
+* [`withTransform`](#withtransform)
+* [`withWrapper`](#withwrapper)
 
 ## Customizing `styled`
 
@@ -25,11 +33,12 @@ import {createStyled} from "styletron-react-core";
 Returns a `styled` function.
 
 #### Params
-1. `opts`
-- `opts.getInitialStyle`: (`void => Style`)
-- `opts.driver`: (`(Style, Engine) => string`)
-- `opts.wrapper`: (`StatelessFunctionalComponent<*> => StatelessFunctionalComponent<*>`)
 
+1. `opts`
+
+* `opts.getInitialStyle`: (`void => Style`)
+* `opts.driver`: (`(Style, Engine) => string`)
+* `opts.wrapper`: (`StatelessFunctionalComponent<*> => StatelessFunctionalComponent<*>`)
 
 #### Examples
 
@@ -42,21 +51,24 @@ type customStyleT = $Shape<{
 }>;
 
 interface CustomEngine {
-  someMethod: customStyleT => string
+  someMethod: customStyleT => string;
 }
 
-function driver(style: customStyleT, engine: CustomEngine) : string {
+function driver(style: customStyleT, engine: CustomEngine): string {
   return engine.someMethod(style);
 }
 
-function getInitialStyle() : customStyleT {
+function getInitialStyle(): customStyleT {
   return {};
 }
 
-const wrapper = StyledComponent => props => <div><StyledComponent {...props}/></div>;
+const wrapper = StyledComponent => props => (
+  <div>
+    <StyledComponent {...props} />
+  </div>
+);
 
-const styled = createStyled({getInitialStyle, driver, wrapper})
-
+const styled = createStyled({getInitialStyle, driver, wrapper});
 ```
 
 [deps-badge]: https://david-dm.org/rtsao/styletron-react-core.svg
