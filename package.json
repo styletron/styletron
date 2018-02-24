@@ -1,9 +1,7 @@
 {
   "name": "styletron-monorepo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
@@ -13,17 +11,16 @@
     "build": "lerna run build",
     "flow": "flow --max-warnings=0"
   },
-  "dependencies": {},
   "devDependencies": {
-    "babel-eslint": "^8.1.2",
-    "eslint": "4.17.0",
+    "babel-eslint": "^8.2.2",
+    "eslint": "4.18.1",
     "eslint-config-cup-recommended": "^1.0.0",
     "eslint-plugin-cup": "^1.0.0",
-    "eslint-plugin-flowtype": "^2.41.0",
+    "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-prettier": "2.6.0",
     "flow-bin": "^0.66",
-    "lerna": "2.8.0",
-    "prettier": "1.10.2"
+    "lerna": "^2.9.0",
+    "prettier": "^1.10.2"
   },
   "license": "MIT"
 }
