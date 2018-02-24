@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/documentation
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

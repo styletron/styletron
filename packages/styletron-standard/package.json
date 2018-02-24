@@ -1,11 +1,14 @@
 {
-  "name": "styletron-react",
-  "version": "3.0.4",
-  "description": "React bindings for Styletron",
+  "name": "styletron-standard",
+  "version": "1.0.0",
+  "description": "Standard interfaces for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "rtsao/styletron",
+  "files": [
+    "dist",
+    "src"
+  ],
   "sideEffects": false,
-  "files": ["dist", "src"],
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "browser": {
@@ -22,26 +25,15 @@
   "scripts": {
     "build": "cup build --force-flow",
     "pretest": "cup build-tests",
-    "test":
-      "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
+    "test": "unitest --node=dist-tests/node.js",
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "styletron-react-core": "^1.0.0",
-    "styletron-standard": "^1.0.0"
-  },
-  "peerDependencies": {
-    "react": "0.14.x - 16.x"
+    "inline-style-prefixer": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "7.0.0-beta.37",
     "create-universal-package": "3.2.4",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "eslint-plugin-react": "^7.6.1",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "tape": "4.8.0",
     "unitest": "^2.1.1"
   },
   "license": "MIT"

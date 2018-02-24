@@ -1,190 +1,141 @@
 # [![Styletron logo](https://cdn.rawgit.com/rtsao/styletron/logo/logo.svg "Styletron")](https://github.com/rtsao/styletron)
 
 [![build status][build-badge]][build-href]
-[![dependencies status][deps-badge]][deps-href]
-[![npm version][npm-badge]][npm-href]
 
-Universal, high-performance JavaScript styles.
+Toolkit for component-oriented styling
 
-## What is Styletron?
+## Packages
 
-Styletron is a universal CSS-in-JS engine built from the ground up for high-performance. Features include:
+* [`styletron-engine-atomic`](packages/styletron-engine-atomic)
+* [`styletron-react`](packages/styletron-react)
+* [`styletron-react-core`](packages/styletron-react-core)
+* [`styletron-standard`](packages/styletron-standard)
 
-#### Advanced critical rendering path optimization of server-rendered pages
-- Dynamic generation of inlineable critical stylesheets with minimum possible size and parse times
-  - Automatic generation of maximally compressed "atomic" critical CSS via declaration-level deduplication
-  - Automatic declaration-level dead CSS elimination - only *actually used* declarations get included in output
-- Native media query and pseudo selector support for full critical CSS without JavaScript
+## Design principles
 
-#### Efficient dynamic client-side styles
-- Hyper-granular memoization to avoid making unnecessary modifications to stylesheet
-- Fast cache hydration of server-rendered styles to prevent re-rendering of server-rendered styles
-- Use of `CSSStyleSheet` rule injection ensuring *only* new styles get parsed
+1. Component-oriented
+   * Stateless, single-element styled components as base styling primitive
+   * Prop interfaces for conditional/dynamic styling
+2. Embrace typed JavaScript
+   * Composition of styles via (typed) JavaScript objects
+   * No extra tooling (e.g. Webpack loaders, Babel plugins, etc.)
+3. Portability and flexibility
+   * Portability of styled components across different rendering engines (e.g. atomic CSS)
+   * Core implementation agnostic of shape of style objects
 
-### [Check out the introductory blog post to learn more](https://ryantsao.com/blog/virtual-css-with-styletron)
+See [docs/design.md](docs/design.md) for more details.
 
-## For framework and library authors
+## Getting Started
 
-The core Styletron module is a small, generic utility that is entirely independent of React so it can be integrated into virtually any web app. Additionally, many CSS-in-JS interfaces can be implemented with Styletron as a result of its low-level, unopinionated API.
+### Defining styled components
 
-#### Core API overview
 ```js
-import Styletron from 'styletron'; // either styletron-server or styletron-client (package.json browser field)
-const styletron = new Styletron();
-styletron.injectDeclaration({prop: 'color', val: 'red'});
-// → 'a'
-styletron.injectDeclaration({prop: 'color', val: 'red', media: '(min-width: 800px)'});
-// → 'b'
-styletron.injectDeclaration({prop: 'color', val: 'blue'});
-// → 'c'
+import {styled} from "styletron-react";
+
+// Create a styled component by passing an element name and a style object
+const RedAnchor = styled("a", {color: "red"});
+
+<RedAnchor href="/foo">Hello</RedAnchor>;
+
+// Or pass a function that takes props and returns a style object
+const Panel = styled("div", props => {
+  return {backgroundColor: props.$alert < "orange" : "lightblue"};
+});
+
+<Panel $alert>Hello!</Panel>;
 ```
-#### Injecting style objects
-The styletron-utils packages includes some convenient helper functions that make working with the core API easier.
+
+See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
+
+### Composing styled components
+
+`styletron-react` also provides composition helpers such as [`withStyle`](packages/styletron-react#withstyle) to build styled components from existing styled components.
+
 ```js
-import {injectStyle} from 'styletron-utils';
-injectStyle(styletron, {
-  color: 'red',
-  display: 'inline-block'
-});
-// → 'a d'
-injectStyle(styletron, {
-  color: 'red',
-  fontSize: '1.6em'
-});
-// → 'a e'
-```
+import {withStyle} from "styletron-react";
 
-#### Pseudo classes and media queries
-The object literal syntax supported by styletron-utils also supports pseudo classes and media queries. This syntax is also supported in the styletron-react package.
-```jsx
-injectStyle(styletron, {
-  fontSize: '36px',
-  '@media (max-width: 768px)': {
-    fontSize: '24px'
-  },
-  ':hover': {
-    backgroundColor: 'papayawhip'
-  }
-});
-```
+const FancyAnchor = withStyle(RedAnchor, {fontFamily: "cursive"});
 
-**[Full API documentation for Styletron is available at http://styletron.js.org](http://styletron.js.org)**
+<FancyAnchor href="/foo">Hello</FancyAnchor>;
 
-## Using Styletron with React
-
-**[Live Demo](https://www.webpackbin.com/bins/-KkgKZBMnqRV_U-VKjHy)**
-
-The `styletron-react` package provides a convenient way to use Styletron in React applications. The API is inspired by the wonderful [styled-components library](https://github.com/styled-components/styled-components), except with style objects instead of template strings.
-
-**Note: this is just one high-level interface, many others are possible with Styletron.**
-
-### Creating styled element components
-
-#### Static styles
-```jsx
-import {styled} from 'styletron-react';
-
-const Panel = styled('div', {
-  backgroundColor: 'lightblue',
-  fontSize: '12px'
-});
-
-<Panel>Hello World</Panel>
-```
-
-#### Using props and context in styles
-```jsx
-import {styled} from 'styletron-react';
-
-const Panel = styled('div', (props) => ({
-  backgroundColor: props.alert ? 'orange' : 'lightblue',
-  fontSize: '12px'
+const DeluxePanel = withStyle(Panel, props => ({
+  backgroundColor: props.alert ? "firebrick" : "rebeccapurple",
+  color: "white",
+  boxShadow: "3px 3px 3px darkgray"
 }));
 
-<Panel alert>Danger!</Panel>
+<DeluxePanel>Bonjour Monde</DeluxePanel>;
 ```
 
-#### Extending other styled element components
-```jsx
-import {styled} from 'styletron-react';
+See [packages/styletron-react](packages/styletron-react/README.md) for full documentation
 
-const DeluxePanel = styled(Panel, (props) => ({
-  backgroundColor: props.alert ? 'firebrick' : 'rebeccapurple',
-  color: 'white',
-  boxShadow: '3px 3px 3px darkgray'
-}));
+### Providing a rendering engine
 
-<DeluxePanel>Bonjour Monde</DeluxePanel>
-```
-#### Styling third party components
-```jsx
-import {styled} from 'styletron-react';
+Styled components require a rendering engine to perform side effects (such as rendering styles to the page).
 
-// third party components must consume a `className` prop
-const ThirdParty = ({className, href, children}) =>
-  <a className={className} href={href}>{children}</a>
+```js
+import {Provider as StyletronProvider} from "styletron-react";
+import {Client as Styletron} from "styletron-engine-atomic";
 
-const StyledThirdParty = styled(ThirdParty, (props) => ({
-  color: 'gold'
-}));
+// 1. Create a client engine instance
+const engine = new Styletron();
 
-<StyledThirdParty href="/foo">Foo</StyledThirdParty>
-```
-
-
-### App integration and server-side rendering
-
-#### Server-side rendering
-
-```jsx
-import Styletron from 'styletron-server';
-import {StyletronProvider} from 'styletron-react';
-
-function render() {
-  const styletron = new Styletron();
-  const appMarkup = ReactDOM.renderToString(
-    <StyletronProvider styletron={styletron}>
-      <App/>
-    </StyletronProvider>
-  );
-
-  const stylesForHead = styletron.getStylesheetsHtml();
-  
-  return `<html><head>${stylesForHead}</head><body>${appMarkup}</body></html>`;
-}
-```
-
-#### Client-side rendering w/ hydration
-```jsx
-import Styletron from 'styletron-client';
-import {StyletronProvider} from 'styletron-react';
-
-const styleElements = document.getElementsByClassName('_styletron_hydrate_');
-
-ReactDOM.render(
-  <StyletronProvider styletron={new Styletron(styleElements)}>
-    <App/>
-  </StyletronProvider>,
-  document.getElementById('app')
+// 2. Provide the engine to the app
+React.render(
+  <StyletronProvider value={engine}>
+    <App />
+  </StyletronProvider>
 );
 ```
 
-#### Client-side rendering only
-```jsx
-import Styletron from 'styletron-client';
-import {StyletronProvider} from 'styletron-react';
+### Server-side rendering
 
-ReactDOM.render(
-  <StyletronProvider styletron={new Styletron()}>
+#### Extracting server-rendered styles
+
+```js
+import {Provider as StyletronProvider} from "styletron-react";
+import {Server as Styletron} from "styletron-engine-atomic";
+
+// 1. Create a server engine instance
+const engine = new Styletron();
+
+// 2. Provide the engine to the app
+const html = React.render(
+  <StyletronProvider value={engine}>
+    <App />
+  </StyletronProvider>
+);
+
+// 3. Extract critical styles after SSR
+const styles = engine.getStyleSheetsHTML();
+// → "<style ..."
+```
+
+#### Hydrating server-rendered styles
+
+When server-side rendering, pass the server-rendered styled elements to the client engine constructor to hydrate the client-side cache. This prevents these styles from being re-rendered and avoids potential style conflicts.
+
+```diff
+import {Provider as StyletronProvider} from "styletron-react";
+import {Client as Styletron} from "styletron-engine-atomic";
+
+// create an engine instance
+- const engine = new Styletron();
++ const engine = new Styletron({hydrate: document.getElementsByClassName("_styletron_hydrate_")});
+
+// wrap root component with provider
+React.render(
+  <StyletronProvider value={engine}>
     <App/>
-  </StyletronProvider>,
-  document.getElementById('app')
+  </StyletronProvider>
 );
 ```
+
+See [packages/styletron-engine-atomic](packages/styletron-engine-atomic/README.md) for full documentation.
+
+## Tradeoffs
+
+See [TRADEOFFS.md](TRADEOFFS.md)
 
 [build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
 [build-href]: https://travis-ci.org/rtsao/styletron
-[deps-badge]: https://david-dm.org/rtsao/styletron.svg
-[deps-href]: https://david-dm.org/rtsao/styletron
-[npm-badge]: https://badge.fury.io/js/styletron.svg
-[npm-href]: https://www.npmjs.com/package/styletron

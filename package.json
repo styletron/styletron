@@ -1,10 +1,5 @@
 {
   "name": "styletron-monorepo",
-  "description": "A generic server-rendering helper for css-in-js tools",
-  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
-  "homepage": "https://github.com/rtsao/styletron",
-  "repository": "git@github.com:rtsao/styletron.git",
-  "bugs": "https://github.com/rtsao/styletron/issues",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -12,29 +7,23 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "lint": "eslint packages/*/src/**.js packages/*/src/__tests__/*.js",
-    "tsc": "tsc",
-    "build-docs": "jsdoc -c jsdoc.json",
-    "pretest": "npm run lint && npm run tsc && lerna run pretest",
+    "lint": "eslint --ignore-path .gitignore .",
+    "pretest": "yarn run lint && yarn run flow",
     "test": "lerna run test",
-    "predeploy-docs": "rimraf htmldocs && npm run build-docs && echo styletron.js.org > htmldocs/CNAME",
-    "deploy-docs": "push-dir --dir htmldocs --branch gh-pages"
+    "build": "lerna run build",
+    "flow": "flow --max-warnings=0"
   },
   "dependencies": {},
   "devDependencies": {
-    "@rtsao/docdash": "0.4.2",
-    "benchmark": "2.1.4",
-    "eslint": "4.15.0",
-    "eslint-config-cup": "^1.0.0",
+    "babel-eslint": "^8.1.2",
+    "eslint": "4.17.0",
     "eslint-config-cup-recommended": "^1.0.0",
     "eslint-plugin-cup": "^1.0.0",
-    "eslint-plugin-prettier": "2.4.0",
-    "jsdoc": "3.5.5",
-    "lerna": "2.6.0",
-    "prettier": "1.10.2",
-    "push-dir": "0.4.1",
-    "rimraf": "2.6.2",
-    "typescript": "2.6.2"
+    "eslint-plugin-flowtype": "^2.41.0",
+    "eslint-plugin-prettier": "2.6.0",
+    "flow-bin": "^0.66",
+    "lerna": "2.8.0",
+    "prettier": "1.10.2"
   },
   "license": "MIT"
 }
