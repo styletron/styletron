@@ -1,11 +1,14 @@
 {
   "name": "styletron-react",
-  "version": "3.0.4",
+  "version": "4.0.0-beta.0",
   "description": "React bindings for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "rtsao/styletron",
   "sideEffects": false,
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "browser": {
@@ -22,14 +25,13 @@
   "scripts": {
     "build": "cup build --force-flow",
     "pretest": "cup build-tests",
-    "test":
-      "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
+    "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
     "prepublish": "npm run build"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
-    "styletron-react-core": "^1.0.0",
-    "styletron-standard": "^1.0.0"
+    "styletron-react-core": "^1.0.0-beta.0",
+    "styletron-standard": "^1.0.0-beta.0"
   },
   "peerDependencies": {
     "react": "0.14.x - 16.x"
