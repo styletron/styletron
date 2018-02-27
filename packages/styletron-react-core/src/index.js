@@ -67,6 +67,7 @@ export type styletronT<
 |};
 /* eslint-enable no-unused-vars */
 
+/* eslint-disable no-unused-vars */
 export type styletronComponentT<
   Style: Object,
   Props: Object,
@@ -76,9 +77,8 @@ export type styletronComponentT<
   Props &
     styledElementProps<Base> &
     $Diff<ElementConfig<Base>, {className: any}>,
-> & {
-  __STYLETRON__: styletronT<Style, Props, Base, Engine>,
-};
+>;
+/* eslint-enable no-unused-vars */
 
 export type styledFnT<Style: Object, Engine> = <
   Props: Object,
@@ -128,7 +128,7 @@ export function withTransform<
   transformer: (style: Style, props: TransformerProps) => Style,
 ): styletronComponentT<Style, Props & TransformerProps, Base, Engine> {
   return createStyledElementComponent(
-    composeDynamic(component.__STYLETRON__, {
+    composeDynamic((component: any).__STYLETRON__, {
       assignCommutative: false,
       reducer: transformer,
     }),
@@ -152,7 +152,7 @@ export function withStyle<
   component: styletronComponentT<Style, Props, Base, Engine>,
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
-  const styletron = component.__STYLETRON__;
+  const styletron = (component: any).__STYLETRON__;
   return createStyledElementComponent(
     autoComposeShallow(styletron, styleArg),
     {},
@@ -169,7 +169,7 @@ export function withStyleDeep<
   component: styletronComponentT<Style, Props, Base, Engine>,
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
-  const styletron = component.__STYLETRON__;
+  const styletron = (component: any).__STYLETRON__;
   return createStyledElementComponent(autoComposeDeep(styletron, styleArg), {});
 }
 
@@ -182,7 +182,7 @@ export function withWrapper<
   component: styletronComponentT<Style, Props, Base, Engine>,
   wrapper: any,
 ): styletronComponentT<Style, Props, Base, Engine> {
-  const styletron = component.__STYLETRON__;
+  const styletron = (component: any).__STYLETRON__;
   return createStyledElementComponent(
     {
       getInitialStyle: styletron.getInitialStyle,
