@@ -9,7 +9,8 @@
     "pretest": "yarn run lint && yarn run flow",
     "test": "lerna run test",
     "build": "lerna run build",
-    "flow": "flow --max-warnings=0"
+    "flow": "flow --max-warnings=0",
+    "publish": "lerna publish --npm-client=npm"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
