@@ -9,17 +9,17 @@ test("StyletronServer toCss", t => {
   injectFixtureStyles(styletron);
   t.equal(
     styletron.getCss(),
-    ".a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (max-width: 800px){.c{color:green}.d:hover{color:green}}",
+    ".ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (max-width: 800px){.ag{color:green}.ah:hover{color:green}}",
   );
   injectFixtureStyles(styletron);
   t.equal(
     styletron.getCss(),
-    ".a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (max-width: 800px){.c{color:green}.d:hover{color:green}}",
+    ".ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (max-width: 800px){.ag{color:green}.ah:hover{color:green}}",
   );
   injectFixtureKeyframes(styletron);
   t.equal(
     styletron.getCss(),
-    ".a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (max-width: 800px){.c{color:green}.d:hover{color:green}}@keyframes a{from{color:purple}50%{color:yellow}to{color:orange}}",
+    ".ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (max-width: 800px){.ag{color:green}.ah:hover{color:green}}@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}",
   );
   t.end();
 });
@@ -35,11 +35,11 @@ test("StyletronServer getStylesheets", t => {
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        ".a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
+        ".ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
     {
-      css: ".c{color:green}.d:hover{color:green}",
+      css: ".ag{color:green}.ah:hover{color:green}",
       attrs: {media: "(max-width: 800px)"},
     },
   ]);
@@ -47,35 +47,35 @@ test("StyletronServer getStylesheets", t => {
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        ".a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
+        ".ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
     {
-      css: ".c{color:green}.d:hover{color:green}",
+      css: ".ag{color:green}.ah:hover{color:green}",
       attrs: {media: "(max-width: 800px)"},
     },
     {
-      css: "@keyframes a{from{color:purple}50%{color:yellow}to{color:orange}}",
+      css: "@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}",
       attrs: {"data-hydrate": "keyframes"},
     },
   ]);
   injectFixtureFontFace(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css: "@font-face{font-family:a;src:local('Roboto')}",
+      css: "@font-face{font-family:ae;src:local('Roboto')}",
       attrs: {"data-hydrate": "font-face"},
     },
     {
       css:
-        ".a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
+        ".ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
     {
-      css: ".c{color:green}.d:hover{color:green}",
+      css: ".ag{color:green}.ah:hover{color:green}",
       attrs: {media: "(max-width: 800px)"},
     },
     {
-      css: "@keyframes a{from{color:purple}50%{color:yellow}to{color:orange}}",
+      css: "@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}",
       attrs: {"data-hydrate": "keyframes"},
     },
   ]);
@@ -93,35 +93,35 @@ test("StyletronServer getStylesheetsHtml ", t => {
   injectFixtureStyles(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_">.a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.c{color:green}.d:hover{color:green}</style>',
+    '<style class="_styletron_hydrate_">.ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.ag{color:green}.ah:hover{color:green}</style>',
   );
   injectFixtureKeyframes(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_">.a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.c{color:green}.d:hover{color:green}</style><style class="_styletron_hydrate_" data-hydrate="keyframes">@keyframes a{from{color:purple}50%{color:yellow}to{color:orange}}</style>',
+    '<style class="_styletron_hydrate_">.ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.ag{color:green}.ah:hover{color:green}</style><style class="_styletron_hydrate_" data-hydrate="keyframes">@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}</style>',
   );
   injectFixtureFontFace(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_" data-hydrate="font-face">@font-face{font-family:a;src:local(\'Roboto\')}</style><style class="_styletron_hydrate_">.a{color:red}.b{color:green}.e:hover{display:none}.f{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.g{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.c{color:green}.d:hover{color:green}</style><style class="_styletron_hydrate_" data-hydrate="keyframes">@keyframes a{from{color:purple}50%{color:yellow}to{color:orange}}</style>',
+    '<style class="_styletron_hydrate_" data-hydrate="font-face">@font-face{font-family:ae;src:local(\'Roboto\')}</style><style class="_styletron_hydrate_">.ae{color:red}.af{color:green}.ai:hover{display:none}.aj{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ak{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}</style><style class="_styletron_hydrate_" media="(max-width: 800px)">.ag{color:green}.ah:hover{color:green}</style><style class="_styletron_hydrate_" data-hydrate="keyframes">@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}</style>',
   );
   t.end();
 });
 
 test("StyletronServer prefix option", t => {
   const styletron = new Styletron({prefix: "foo_"});
-  t.equal(styletron.renderStyle({color: "red"}), "foo_a");
-  t.equal(injectFixtureFontFace(styletron), "foo_a");
-  t.equal(injectFixtureKeyframes(styletron), "foo_a");
+  t.equal(styletron.renderStyle({color: "red"}), "foo_ae");
+  t.equal(injectFixtureFontFace(styletron), "foo_ae");
+  t.equal(injectFixtureKeyframes(styletron), "foo_ae");
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css: "@font-face{font-family:foo_a;src:local('Roboto')}",
+      css: "@font-face{font-family:foo_ae;src:local('Roboto')}",
       attrs: {"data-hydrate": "font-face"},
     },
-    {css: ".foo_a{color:red}", attrs: {}},
+    {css: ".foo_ae{color:red}", attrs: {}},
     {
       css:
-        "@keyframes foo_a{from{color:purple}50%{color:yellow}to{color:orange}}",
+        "@keyframes foo_ae{from{color:purple}50%{color:yellow}to{color:orange}}",
       attrs: {"data-hydrate": "keyframes"},
     },
   ]);
