@@ -1,5 +1,7 @@
 // @flow
 
+declare var __DEV__: boolean;
+
 import hyphenate from "./hyphenate-style-name.js";
 import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
 import prefixAll from "inline-style-prefixer/static";

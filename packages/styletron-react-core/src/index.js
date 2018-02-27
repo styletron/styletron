@@ -1,5 +1,7 @@
 // @flow
 
+declare var __DEV__: boolean;
+
 import type {
   Ref,
   StatelessFunctionalComponent,
