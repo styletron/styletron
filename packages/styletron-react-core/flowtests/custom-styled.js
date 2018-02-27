@@ -6,12 +6,7 @@ import * as React from "react";
 
 import {withStyle, createStyled} from "../src/index.js";
 
-import type {
-  styleArgT,
-  baseT,
-  styletronComponentT,
-  styledFnT
-} from "../src/index.js";
+import type {styleArgT, styletronComponentT, styledFnT} from "../src/index.js";
 
 type nestT<Style> = {
   ...Style,
@@ -59,6 +54,12 @@ const Custom1 = customStyled("div", {velocity: 0});
 const Custom2 = customStyled("div", (props: {$foo?: boolean}) => ({
   angle: 23
 }));
+
+const SomeComponent = withStyle(Custom2, (props: {$bar: number}) => ({
+  angle: 23
+}));
+
+export {SomeComponent};
 
 <Custom2 $foo={true} />;
 

@@ -1,14 +1,18 @@
 // @flow
 
-import type {ComponentType, Ref, StatelessFunctionalComponent} from "react";
+import type {
+  Ref,
+  StatelessFunctionalComponent,
+  ElementType,
+  ElementConfig
+} from "react";
 import {createElement} from "react";
 
 export {default as Provider} from "./provider.js";
 
-// TODO: More precise typing of ref type?
-export type styledElementProps = {
-  $as?: baseT<any>,
-  $ref?: Ref<*>
+export type styledElementProps<Base: ElementType> = {
+  $as?: Base,
+  $ref?: Ref<Base>
 };
 
 export type reducerT<Style: Object, Props: Object = {}> = (
@@ -40,7 +44,6 @@ export type driverT<Style: Object, Engine> = (
   styletron: Engine
 ) => string;
 
-export type baseT<BaseProps> = string | ComponentType<BaseProps>;
 export type wrapperT = (
   StatelessFunctionalComponent<*>
 ) => StatelessFunctionalComponent<*>;
@@ -49,13 +52,13 @@ export type wrapperT = (
 export type styletronT<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
 > = {|
   // TODO: Variadic generics for multiple reducer prop types?
   // Look into $Compose?
   reducers: Array<reducerItemT<Style, *>>,
-  base: baseT<BaseProps>,
+  base: ElementType,
   getInitialStyle: () => Style,
   driver: driverT<Style, Engine>,
   wrapper: any
@@ -65,21 +68,23 @@ export type styletronT<
 export type styletronComponentT<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
-> = {
-  __STYLETRON__: styletronT<Style, Props, BaseProps, Engine>
-} & StatelessFunctionalComponent<
-  Props & styledElementProps & withoutClassNamePropT<BaseProps>
->;
+> = StatelessFunctionalComponent<
+  Props &
+    styledElementProps<Base> &
+    $Diff<ElementConfig<Base>, {className: any}>
+> & {
+  __STYLETRON__: styletronT<Style, Props, Base, Engine>
+};
 
 export type styledFnT<Style: Object, Engine> = <
-  BaseProps: Object,
-  Props: Object
+  Props: Object,
+  Base: ElementType
 >(
-  baseT<BaseProps>,
+  Base,
   styleArgT<Style, Props>
-) => styletronComponentT<Style, Props, BaseProps, Engine>;
+) => styletronComponentT<Style, Props, Base, Engine>;
 
 type styledConfig<Style: Object, Engine> = {
   getInitialStyle: void => Style,
@@ -92,11 +97,11 @@ export function createStyled<Style: Object, Engine>({
   driver,
   wrapper
 }: styledConfig<Style, Engine>): styledFnT<Style, Engine> {
-  return function styled<Props: Object, BaseProps: Object>(
-    base: baseT<BaseProps>,
+  return function styled<Props: Object, Base: ElementType>(
+    base: ElementType,
     styleArg: styleArgT<Style, Props>
-  ): styletronComponentT<Style, Props, BaseProps, Engine> {
-    const baseStyletron: styletronT<Style, {}, BaseProps, Engine> = {
+  ): styletronComponentT<Style, Props, Base, Engine> {
+    const baseStyletron: styletronT<Style, {}, Base, Engine> = {
       reducers: [],
       base: base,
       driver,
@@ -113,13 +118,13 @@ export function createStyled<Style: Object, Engine>({
 export function withTransform<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   TransformerProps: Object,
   Engine
 >(
-  component: styletronComponentT<Style, Props, BaseProps, Engine>,
+  component: styletronComponentT<Style, Props, Base, Engine>,
   transformer: (style: Style, props: TransformerProps) => Style
-): styletronComponentT<Style, Props & TransformerProps, BaseProps, Engine> {
+): styletronComponentT<Style, Props & TransformerProps, Base, Engine> {
   return createStyledElementComponent(
     composeDynamic(component.__STYLETRON__, {
       assignCommutative: false,
@@ -138,13 +143,13 @@ export type styleArgT<Style: Object, Props: Object> =
 export function withStyle<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  component: styletronComponentT<Style, Props, BaseProps, Engine>,
+  component: styletronComponentT<Style, Props, Base, Engine>,
   styleArg: styleArgT<Style, ReducerProps>
-): styletronComponentT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = component.__STYLETRON__;
   return createStyledElementComponent(
     autoComposeShallow(styletron, styleArg),
@@ -155,13 +160,13 @@ export function withStyle<
 export function withStyleDeep<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  component: styletronComponentT<Style, Props, BaseProps, Engine>,
+  component: styletronComponentT<Style, Props, Base, Engine>,
   styleArg: styleArgT<Style, ReducerProps>
-): styletronComponentT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = component.__STYLETRON__;
   return createStyledElementComponent(autoComposeDeep(styletron, styleArg), {});
 }
@@ -169,12 +174,12 @@ export function withStyleDeep<
 export function withWrapper<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
 >(
-  component: styletronComponentT<Style, Props, BaseProps, Engine>,
+  component: styletronComponentT<Style, Props, Base, Engine>,
   wrapper: any
-): styletronComponentT<Style, Props, BaseProps, Engine> {
+): styletronComponentT<Style, Props, Base, Engine> {
   const styletron = component.__STYLETRON__;
   return createStyledElementComponent(
     {
@@ -191,13 +196,13 @@ export function withWrapper<
 export function autoComposeShallow<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   styleArg: styleArgT<Style, ReducerProps>
-): styletronT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronT<Style, Props & ReducerProps, Base, Engine> {
   if (typeof styleArg === "function") {
     return dynamicComposeShallow(styletron, styleArg);
   }
@@ -208,13 +213,13 @@ export function autoComposeShallow<
 export function autoComposeDeep<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   styleArg: styleArgT<Style, ReducerProps>
-): styletronT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronT<Style, Props & ReducerProps, Base, Engine> {
   if (typeof styleArg === "function") {
     return dynamicComposeDeep(styletron, styleArg);
   }
@@ -225,12 +230,12 @@ export function autoComposeDeep<
 export function staticComposeShallow<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   style: Style
-): styletronT<Style, Props, BaseProps, Engine> {
+): styletronT<Style, Props, Base, Engine> {
   return composeStatic(styletron, {
     reducer: createShallowMergeReducer(style),
     assignCommutative: true
@@ -240,12 +245,12 @@ export function staticComposeShallow<
 export function staticComposeDeep<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   style: Style
-): styletronT<Style, Props, BaseProps, Engine> {
+): styletronT<Style, Props, Base, Engine> {
   return composeStatic(styletron, {
     reducer: createDeepMergeReducer(style),
     assignCommutative: true
@@ -255,13 +260,13 @@ export function staticComposeDeep<
 export function dynamicComposeShallow<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   styleFn: (props: ReducerProps) => Style
-): styletronT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronT<Style, Props & ReducerProps, Base, Engine> {
   return composeDynamic(styletron, {
     assignCommutative: false,
     reducer: toMergeReducer(styleFn, shallowMerge)
@@ -271,13 +276,13 @@ export function dynamicComposeShallow<
 export function dynamicComposeDeep<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   styleFn: (props: ReducerProps) => Style
-): styletronT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronT<Style, Props & ReducerProps, Base, Engine> {
   return composeDynamic(styletron, {
     assignCommutative: false,
     reducer: toMergeReducer(styleFn, deepMerge)
@@ -318,12 +323,12 @@ export function createDeepMergeReducer<Style: Object>(
 export function composeStatic<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   reducer: reducerItemT<Style, Props>
-): styletronT<Style, Props, BaseProps, Engine> {
+): styletronT<Style, Props, Base, Engine> {
   if (styletron.reducers.length === 0) {
     // TODO: remove this casting
     const style = reducer.reducer(styletron.getInitialStyle(), ({}: any));
@@ -360,13 +365,13 @@ export function composeStatic<
 export function composeDynamic<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   ReducerProps: Object,
   Engine
 >(
-  styletron: styletronT<Style, Props, BaseProps, Engine>,
+  styletron: styletronT<Style, Props, Base, Engine>,
   reducer: reducerItemT<Style, ReducerProps>
-): styletronT<Style, Props & ReducerProps, BaseProps, Engine> {
+): styletronT<Style, Props & ReducerProps, Base, Engine> {
   return {
     getInitialStyle: styletron.getInitialStyle,
     base: styletron.base,
@@ -376,12 +381,10 @@ export function composeDynamic<
   };
 }
 
-type withoutClassNamePropT<T> = $Diff<T, {className: string}>;
-
 export function createStyledElementComponent<
   Style: Object,
   Props: Object,
-  BaseProps: Object,
+  Base: ElementType,
   Engine
 >(
   {
@@ -390,9 +393,9 @@ export function createStyledElementComponent<
     driver,
     wrapper,
     getInitialStyle
-  }: styletronT<Style, Props, BaseProps, Engine>,
+  }: styletronT<Style, Props, Base, Engine>,
   {contextTypes}: any
-): styletronComponentT<Style, Props, BaseProps, Engine> {
+): styletronComponentT<Style, Props, Base, Engine> {
   // TODO: make casting not necessary
   function omitPrefixedKeys<T>(source: T): $Diff<T, Props> {
     const result = ({}: any);
@@ -404,10 +407,7 @@ export function createStyledElementComponent<
     return ((result: any): $Diff<T, Props>);
   }
 
-  function StyledElement(
-    props: withoutClassNamePropT<BaseProps> & Props & styledElementProps,
-    context: {styletron: Engine}
-  ) {
+  function StyledElement(props, context) {
     const elementProps = omitPrefixedKeys(props);
     const style = resolveStyle(getInitialStyle, reducers, props);
     const styleClassString = driver(style, context.styletron);

@@ -7,7 +7,7 @@ import * as React from "react";
 import {styled, withStyle} from "../src/index.js";
 
 import type {baseStyleT, StandardEngine} from "styletron-standard";
-import type {styleArgT, baseT, styletronComponentT} from "styletron-react-core";
+import type {styleArgT, styletronComponentT} from "styletron-react-core";
 
 const Yo = styled("div", {color: "red"});
 <Yo $as="a" foo={23} />;

@@ -19,6 +19,12 @@ class Dummy extends React.Component<{title: string, className: string}> {
   }
 }
 
+const AnotherComponent = customStyled(Dummy, (props: {$num: number}) => ({
+  velocity: props.$num
+}));
+
+export {AnotherComponent};
+
 const Styled1 = customStyled(Dummy, (props: {$num: number}) => ({
   velocity: props.$num
 }));
