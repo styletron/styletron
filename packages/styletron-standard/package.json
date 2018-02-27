@@ -6,7 +6,8 @@
   "repository": "rtsao/styletron",
   "files": [
     "dist",
-    "src"
+    "src",
+    "!__tests__"
   ],
   "sideEffects": false,
   "main": "./dist/index.js",
