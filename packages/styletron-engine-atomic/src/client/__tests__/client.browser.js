@@ -27,7 +27,7 @@ test("automatic stylesheet insertion", t => {
   t.equal(document.styleSheets.length, 0, "sheet not yet instantiated");
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "a",
+    "ae",
     "new unique class returned",
   );
   t.equal(document.styleSheets.length, 1, "sheet added");
@@ -42,29 +42,32 @@ test("rendering", t => {
   const instance = new StyletronClient({container});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "a",
+    "ae",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".a { color: purple; }"]},
+    {media: "", rules: [".ae { color: purple; }"]},
   ]);
   t.equal(
     instance.renderStyle({
       "@media (max-width: 800px)": {color: "purple"},
     }),
-    "b",
+    "af",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".a { color: purple; }"]},
-    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]},
+    {media: "", rules: [".ae { color: purple; }"]},
+    {media: "(max-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
   instance.renderStyle({
     userSelect: "none",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".a { color: purple; }", ".c { user-select: none; }"]},
-    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]},
+    {
+      media: "",
+      rules: [".ae { color: purple; }", ".ag { user-select: none; }"],
+    },
+    {media: "(max-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
   instance.renderStyle({
     display: "flex",
@@ -73,12 +76,12 @@ test("rendering", t => {
     {
       media: "",
       rules: [
-        ".a { color: purple; }",
-        ".c { user-select: none; }",
-        ".d { display: flex; }",
+        ".ae { color: purple; }",
+        ".ag { user-select: none; }",
+        ".ah { display: flex; }",
       ],
     },
-    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]},
+    {media: "(max-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
   instance.container.remove();
   t.end();
@@ -90,26 +93,26 @@ test("prefix", t => {
   const instance = new StyletronClient({container, prefix: "foo_"});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "foo_a",
+    "foo_ae",
     "new unique class returned",
   );
   t.equal(
     instance.renderFontFace({src: "url(blah)"}),
-    "foo_a",
+    "foo_ae",
     "new unique font family returned",
   );
   t.equal(
     instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
-    "foo_a",
+    "foo_ae",
     "new unique animation name returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
       rules: [
-        ".foo_a { color: purple; }",
-        `@font-face { font-family: foo_a; src: url("blah"); }`,
-        "@keyframes foo_a { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+        ".foo_ae { color: purple; }",
+        `@font-face { font-family: foo_ae; src: url("blah"); }`,
+        "@keyframes foo_ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
       ],
     },
   ]);

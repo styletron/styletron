@@ -8,11 +8,12 @@ export default class SequentialIDGenerator {
   power: number;
 
   constructor(prefix: string = "") {
+    // ensure start with "ae" so "ad" is never produced
     this.prefix = prefix;
     this.count = 0;
-    this.offset = 10; // skip ids "1" through "9"
-    this.msb = 35;
-    this.power = 1;
+    this.offset = 374;
+    this.msb = 1295;
+    this.power = 2;
   }
 
   next() {
