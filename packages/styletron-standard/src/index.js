@@ -3,13 +3,13 @@
 import type {Properties} from "./style-types.js";
 
 type fontFaceT = {
-  src?: string
+  src?: string,
 };
 
 type keyframesT = {
   from?: Properties<string>,
   to?: Properties<string>,
-  [string]: Properties<string>
+  [string]: Properties<string>,
 };
 
 // TODO: investigate why $Shape is needed
@@ -17,14 +17,14 @@ type NestedStyleT<T> = $Shape<{
   ...T,
   [string]: {
     ...T,
-    [string]: T
-  }
+    [string]: T,
+  },
 }>;
 
 type baseStyleT = NestedStyleT<Properties<string>>;
 
 type declarativeStyleT = NestedStyleT<
-  Properties<string, fontFaceT, keyframesT>
+  Properties<string, fontFaceT, keyframesT>,
 >;
 
 export interface StandardEngine {
@@ -44,19 +44,19 @@ export function getInitialStyle(): declarativeStyleT {
 
 function renderDeclarativeRules(
   style: declarativeStyleT,
-  styletron: StandardEngine
+  styletron: StandardEngine,
 ): baseStyleT {
   for (const key in style) {
     const val = style[key];
     if (key === "animationName" && typeof val !== "string") {
       style.animationName = ((styletron.renderKeyframes(
-        ((val: any): keyframesT)
+        ((val: any): keyframesT),
       ): any): keyframesT);
       continue;
     }
     if (key === "fontFamily" && typeof val !== "string") {
       style.fontFamily = ((styletron.renderFontFace(
-        ((val: any): fontFaceT)
+        ((val: any): fontFaceT),
       ): any): fontFaceT);
       continue;
     }

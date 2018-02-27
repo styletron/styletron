@@ -13,7 +13,7 @@ test("container config", t => {
   t.strictEqual(
     instance.container,
     document.head,
-    "container defaults to document.head"
+    "container defaults to document.head",
   );
   t.end();
 });
@@ -28,7 +28,7 @@ test("automatic stylesheet insertion", t => {
   t.equal(
     instance.renderStyle({color: "purple"}),
     "a",
-    "new unique class returned"
+    "new unique class returned",
   );
   t.equal(document.styleSheets.length, 1, "sheet added");
   instance.container.remove();
@@ -43,31 +43,31 @@ test("rendering", t => {
   t.equal(
     instance.renderStyle({color: "purple"}),
     "a",
-    "new unique class returned"
-  );
-  t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".a { color: purple; }"]}
-  ]);
-  t.equal(
-    instance.renderStyle({
-      "@media (max-width: 800px)": {color: "purple"}
-    }),
-    "b",
-    "new unique class returned"
+    "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {media: "", rules: [".a { color: purple; }"]},
-    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]}
+  ]);
+  t.equal(
+    instance.renderStyle({
+      "@media (max-width: 800px)": {color: "purple"},
+    }),
+    "b",
+    "new unique class returned",
+  );
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".a { color: purple; }"]},
+    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]},
   ]);
   instance.renderStyle({
-    userSelect: "none"
+    userSelect: "none",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {media: "", rules: [".a { color: purple; }", ".c { user-select: none; }"]},
-    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]}
+    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]},
   ]);
   instance.renderStyle({
-    display: "flex"
+    display: "flex",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
@@ -75,10 +75,10 @@ test("rendering", t => {
       rules: [
         ".a { color: purple; }",
         ".c { user-select: none; }",
-        ".d { display: flex; }"
-      ]
+        ".d { display: flex; }",
+      ],
     },
-    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]}
+    {media: "(max-width: 800px)", rules: [".b { color: purple; }"]},
   ]);
   instance.container.remove();
   t.end();
@@ -91,17 +91,17 @@ test("prefix", t => {
   t.equal(
     instance.renderStyle({color: "purple"}),
     "foo_a",
-    "new unique class returned"
+    "new unique class returned",
   );
   t.equal(
     instance.renderFontFace({src: "url(blah)"}),
     "foo_a",
-    "new unique font family returned"
+    "new unique font family returned",
   );
   t.equal(
     instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
     "foo_a",
-    "new unique animation name returned"
+    "new unique animation name returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
@@ -109,9 +109,9 @@ test("prefix", t => {
       rules: [
         ".foo_a { color: purple; }",
         `@font-face { font-family: foo_a; src: url("blah"); }`,
-        "@keyframes foo_a { \n  0% { color: red; }\n  100% { color: blue; }\n}"
-      ]
-    }
+        "@keyframes foo_a { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+      ],
+    },
   ]);
   instance.container.remove();
   t.end();
@@ -134,7 +134,7 @@ test("hydration", t => {
   t.deepEqual(
     before,
     after,
-    "CSSStylesheet rules not changed after rendering hydrated styles"
+    "CSSStylesheet rules not changed after rendering hydrated styles",
   );
   cleanup();
   t.end();
@@ -145,26 +145,26 @@ function injectFixtureStyles(styletron) {
   styletron.renderStyle({color: "green"});
   styletron.renderStyle({
     "@media (max-width: 800px)": {
-      color: "green"
-    }
+      color: "green",
+    },
   });
   styletron.renderStyle({
     "@media (max-width: 800px)": {
       ":hover": {
-        color: "green"
-      }
-    }
+        color: "green",
+      },
+    },
   });
   styletron.renderStyle({
     ":hover": {
-      display: "none"
-    }
+      display: "none",
+    },
   });
   styletron.renderStyle({
-    userSelect: "none"
+    userSelect: "none",
   });
   styletron.renderStyle({
-    display: "flex"
+    display: "flex",
   });
   styletron.renderFontFace({src: "url(blah)"});
   styletron.renderKeyframes({from: {color: "red"}, to: {color: "blue"}});
@@ -188,7 +188,7 @@ function setup() {
     },
     cleanup() {
       container.remove();
-    }
+    },
   };
 }
 
@@ -198,7 +198,7 @@ function sheetToRules(sheet) {
     (acc, rule) => {
       return [...acc, rule.cssText];
     },
-    []
+    [],
   );
 }
 
@@ -212,9 +212,9 @@ function sheetsToRules(sheets) {
     (acc, sheet) => {
       return [
         ...acc,
-        {media: sheet.media.mediaText, rules: sheetToRules(sheet)}
+        {media: sheet.media.mediaText, rules: sheetToRules(sheet)},
       ];
     },
-    []
+    [],
   );
 }

@@ -12,7 +12,7 @@ import {withStyle} from "../src/index.js";
  */
 
 const Styled1 = customStyled("div", (props: {$num: number}) => ({
-  velocity: props.$num
+  velocity: props.$num,
 }));
 
 // $FlowFixMe
@@ -21,7 +21,7 @@ const Styled1 = customStyled("div", (props: {$num: number}) => ({
 <Styled1 $num={100} />;
 
 const Styled2 = withStyle(Styled1, (props: {$size: number}) => ({
-  angle: props.$size
+  angle: props.$size,
 }));
 
 // $FlowFixMe

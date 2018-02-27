@@ -20,16 +20,16 @@ test("styled (static)", t => {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, style);
-        }
-      }
-    }
+        },
+      },
+    },
   });
   const wrapper = Enzyme.shallow(<Widget className="foo" />, {
     context: {
       styletron: {
-        renderStyle: () => "bar"
-      }
-    }
+        renderStyle: () => "bar",
+      },
+    },
   });
   const divs = wrapper.find("div");
   t.equal(divs.length, 1, "single div rendered");
@@ -39,7 +39,7 @@ test("styled (static)", t => {
 
 test("styled (dynamic)", t => {
   const Widget = styled("div", (props: {foo: boolean}) => ({
-    size: props.foo ? 1 : 2
+    size: props.foo ? 1 : 2,
   }));
 
   Enzyme.shallow(<Widget foo={true} />, {
@@ -47,9 +47,9 @@ test("styled (dynamic)", t => {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {size: 1});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -58,16 +58,16 @@ test("withStyle (static)", t => {
   const Widget = styled("div", {size: 1, color: "red"});
   const SuperWidget = withStyle(Widget, {
     color: "blue",
-    shape: "circle"
+    shape: "circle",
   });
   Enzyme.shallow(<SuperWidget />, {
     context: {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {size: 1, color: "blue", shape: "circle"});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -76,16 +76,16 @@ test("withStyle (dynamic)", t => {
   const Widget = styled("div", {color: "red", shape: "square"});
   const SuperWidget = withStyle(Widget, props => ({
     shape: props.$round ? "circle" : "square",
-    size: 1
+    size: 1,
   }));
   Enzyme.shallow(<SuperWidget $round={true} />, {
     context: {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {color: "red", shape: "circle", size: 1});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -94,7 +94,7 @@ test("withStyleDeep (static)", t => {
   const Widget = styled("div", {size: 1, color: "red", velocity: {speed: 1}});
   const SuperWidget = withStyleDeep(Widget, {
     color: "blue",
-    velocity: {direction: 1}
+    velocity: {direction: 1},
   });
   Enzyme.shallow(<SuperWidget />, {
     context: {
@@ -103,11 +103,11 @@ test("withStyleDeep (static)", t => {
           t.deepEqual(x, {
             size: 1,
             color: "blue",
-            velocity: {speed: 1, direction: 1}
+            velocity: {speed: 1, direction: 1},
           });
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -116,7 +116,7 @@ test("withStyleDeep (dynamic)", t => {
   const Widget = styled("div", {size: 1, color: "red", velocity: {speed: 1}});
   const SuperWidget = withStyleDeep(Widget, props => ({
     shape: props.$round ? "circle" : "square",
-    velocity: {direction: 1}
+    velocity: {direction: 1},
   }));
   Enzyme.shallow(<SuperWidget $round={true} />, {
     context: {
@@ -126,11 +126,11 @@ test("withStyleDeep (dynamic)", t => {
             color: "red",
             shape: "circle",
             size: 1,
-            velocity: {direction: 1, speed: 1}
+            velocity: {direction: 1, speed: 1},
           });
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -139,16 +139,16 @@ test("withTransform", t => {
   const Widget = styled("div", {color: "red", shape: "square"});
   const SuperWidget = withTransform(Widget, (style, props) => ({
     ...style,
-    shape: props.$round ? "circle" : "square"
+    shape: props.$round ? "circle" : "square",
   }));
   Enzyme.shallow(<SuperWidget $round={true} />, {
     context: {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {color: "red", shape: "circle"});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });

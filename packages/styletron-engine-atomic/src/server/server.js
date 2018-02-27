@@ -16,16 +16,16 @@ import {
   keyframesBlockToRule,
   declarationsToBlock,
   keyframesToBlock,
-  fontFaceBlockToRule
+  fontFaceBlockToRule,
 } from "../css.js";
 
 export type sheetT = {|
   css: string,
-  attrs: {[string]: string}
+  attrs: {[string]: string},
 |};
 
 type optionsT = {
-  prefix?: string
+  prefix?: string,
 };
 
 class StyletronServer implements StandardEngine {
@@ -47,9 +47,9 @@ class StyletronServer implements StandardEngine {
         const {pseudo, block} = value;
         this.styleRules[cache.key] += styleBlockToRule(
           atomicSelector(id, pseudo),
-          block
+          block,
         );
-      }
+      },
     );
 
     this.fontFaceRules = "";
@@ -58,9 +58,9 @@ class StyletronServer implements StandardEngine {
       (cache, id, value) => {
         this.fontFaceRules += fontFaceBlockToRule(
           id,
-          declarationsToBlock(value)
+          declarationsToBlock(value),
         );
-      }
+      },
     );
 
     this.keyframesRules = "";
@@ -69,9 +69,9 @@ class StyletronServer implements StandardEngine {
       (cache, id, value) => {
         this.keyframesRules += keyframesBlockToRule(
           id,
-          keyframesToBlock(value)
+          keyframesToBlock(value),
         );
-      }
+      },
     );
   }
 
@@ -95,8 +95,8 @@ class StyletronServer implements StandardEngine {
         ? [
             {
               css: this.fontFaceRules,
-              attrs: {"data-hydrate": "font-face"}
-            }
+              attrs: {"data-hydrate": "font-face"},
+            },
           ]
         : []),
       ...sheetify(this.styleRules),
@@ -104,10 +104,10 @@ class StyletronServer implements StandardEngine {
         ? [
             {
               css: this.keyframesRules,
-              attrs: {"data-hydrate": "keyframes"}
-            }
+              attrs: {"data-hydrate": "keyframes"},
+            },
           ]
-        : [])
+        : []),
     ];
   }
 
@@ -131,7 +131,7 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
       class: originalClassName
         ? `${className} ${originalClassName}`
         : className,
-      ...rest
+      ...rest,
     };
     html += `<style${attrsToString(attrs)}>${sheet.css}</style>`;
   }

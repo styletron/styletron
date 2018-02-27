@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 
 type providerPropsT<Engine> = {|
   value: Engine,
-  children: React.Node
+  children: React.Node,
 |};
 
 class StyletronProvider<Engine> extends React.Component<
-  providerPropsT<Engine>
+  providerPropsT<Engine>,
 > {
   styletron: Engine;
 
@@ -27,11 +27,11 @@ class StyletronProvider<Engine> extends React.Component<
 
 StyletronProvider.propTypes = {
   value: PropTypes.object.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 StyletronProvider.childContextTypes = {
-  styletron: PropTypes.object.isRequired
+  styletron: PropTypes.object.isRequired,
 };
 
 export default StyletronProvider;

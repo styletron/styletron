@@ -10,16 +10,16 @@ import type {styleArgT, styletronComponentT, styledFnT} from "../src/index.js";
 
 type nestT<Style> = {
   ...Style,
-  [string]: Style
+  [string]: Style,
 };
 
 type customStyleT = $Shape<
   nestT<
     $Shape<{
       angle?: number,
-      velocity?: number
-    }>
-  >
+      velocity?: number,
+    }>,
+  >,
 >;
 
 interface CustomEngine {
@@ -37,14 +37,14 @@ const customStyled: styledFnT<customStyleT, CustomEngine> = createStyled({
     <div>
       <Component {...props} />
     </div>
-  )
+  ),
 });
 
 // $FlowFixMe
 const shouldError: styledFnT<customStyleT, CustomEngine> = createStyled({
   getInitialStyle: customGetInitialStyle,
   driver: customDriver,
-  wrapper: Component => props => invalid => invalid
+  wrapper: Component => props => invalid => invalid,
 });
 
 // $FlowFixMe
@@ -52,11 +52,11 @@ const ShouldError = customStyled("div", {invalid: 0});
 
 const Custom1 = customStyled("div", {velocity: 0});
 const Custom2 = customStyled("div", (props: {$foo?: boolean}) => ({
-  angle: 23
+  angle: 23,
 }));
 
 const SomeComponent = withStyle(Custom2, (props: {$bar: number}) => ({
-  angle: 23
+  angle: 23,
 }));
 
 export {SomeComponent};
@@ -67,7 +67,7 @@ export {SomeComponent};
 <Custom2 $foo="invalid" />;
 
 const Custom3 = withStyle(Custom2, (props: {$bar: number}) => ({
-  angle: 23
+  angle: 23,
 }));
 
 // $FlowFixMe

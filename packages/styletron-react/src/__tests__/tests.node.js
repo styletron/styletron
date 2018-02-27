@@ -17,16 +17,16 @@ test("styled static", t => {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, style);
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
 
 test("styled dynamic", t => {
   const Widget = styled("div", (props: {foo: boolean}) => ({
-    color: props.foo ? "red" : "blue"
+    color: props.foo ? "red" : "blue",
   }));
 
   Enzyme.shallow(<Widget foo={true} />, {
@@ -34,9 +34,9 @@ test("styled dynamic", t => {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {color: "red"});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -45,16 +45,16 @@ test("withStyle static", t => {
   const Widget = styled("div", {color: "red", display: "inline"});
   const SuperWidget = withStyle(Widget, {
     display: "block",
-    background: "black"
+    background: "black",
   });
   Enzyme.shallow(<SuperWidget />, {
     context: {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {color: "red", display: "block", background: "black"});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -63,16 +63,16 @@ test("withStyle dynamic", t => {
   const Widget = styled("div", {color: "red", display: "inline"});
   const SuperWidget = withStyle(Widget, props => ({
     display: props.$block ? "block" : "inline",
-    background: "black"
+    background: "black",
   }));
   Enzyme.shallow(<SuperWidget $block={true} />, {
     context: {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {color: "red", display: "block", background: "black"});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -81,16 +81,16 @@ test("withTransform", t => {
   const Widget = styled("div", {color: "red", display: "inline"});
   const SuperWidget = withTransform(Widget, (style, props) => ({
     ...style,
-    display: props.$block ? "block" : "inline"
+    display: props.$block ? "block" : "inline",
   }));
   Enzyme.shallow(<SuperWidget $block={true} />, {
     context: {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {color: "red", display: "block"});
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -98,7 +98,7 @@ test("withTransform", t => {
 test("font-face injection", t => {
   t.plan(2);
   const fontFace = {
-    src: "foo"
+    src: "foo",
   };
   const style = {fontFamily: fontFace};
   const Widget = styled("div", style);
@@ -107,15 +107,15 @@ test("font-face injection", t => {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {
-            fontFamily: "foo"
+            fontFamily: "foo",
           });
         },
         renderFontFace: x => {
           t.deepEqual(x, fontFace);
           return "foo";
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });
@@ -124,7 +124,7 @@ test("keyframes injection", t => {
   t.plan(2);
   const keyframes = {
     from: {color: "red"},
-    to: {color: "green"}
+    to: {color: "green"},
   };
   const style = {animationName: keyframes};
   const Widget = styled("div", style);
@@ -133,15 +133,15 @@ test("keyframes injection", t => {
       styletron: {
         renderStyle: x => {
           t.deepEqual(x, {
-            animationName: "foo"
+            animationName: "foo",
           });
         },
         renderKeyframes: x => {
           t.deepEqual(x, keyframes);
           return "foo";
-        }
-      }
-    }
+        },
+      },
+    },
   });
   t.end();
 });

@@ -11,7 +11,7 @@ export class MultiCache<T> {
   constructor(
     idGenerator: SequentialIDGenerator,
     onNewCache: Function,
-    onNewValue: Function
+    onNewValue: Function,
   ) {
     this.idGenerator = idGenerator;
     this.onNewCache = onNewCache;
@@ -38,7 +38,7 @@ export class Cache<T> {
 
   constructor(
     idGenerator: SequentialIDGenerator,
-    onNewValue: (cache: Cache<T>, id: string, value: any) => any
+    onNewValue: (cache: Cache<T>, id: string, value: any) => any,
   ) {
     this.cache = {};
     this.idGenerator = idGenerator;

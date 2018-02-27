@@ -3,7 +3,7 @@
 export type StandardLonghandProperties<
   TLength = string | number,
   FontFamilyT = FontFamilyProperty,
-  AnimationNameT = AnimationNameProperty
+  AnimationNameT = AnimationNameProperty,
 > = {
   alignContent?: AlignContentProperty,
   alignItems?: AlignItemsProperty,
@@ -295,7 +295,7 @@ export type StandardLonghandProperties<
   wordSpacing?: WordSpacingProperty<TLength>,
   wordWrap?: WordWrapProperty,
   writingMode?: WritingModeProperty,
-  zIndex?: ZIndexProperty
+  zIndex?: ZIndexProperty,
 };
 
 export type StandardShorthandProperties<TLength = string | number> = {
@@ -335,13 +335,13 @@ export type StandardShorthandProperties<TLength = string | number> = {
   padding?: PaddingProperty<TLength>,
   textDecoration?: GlobalsString,
   textEmphasis?: GlobalsString,
-  transition?: TransitionProperty
+  transition?: TransitionProperty,
 };
 
 export type StandardProperties<
   TLength = string | number,
   FontFamilyT = FontFamilyProperty,
-  AnimationNameT = AnimationNameProperty
+  AnimationNameT = AnimationNameProperty,
 > = StandardLonghandProperties<TLength, FontFamilyT, AnimationNameT> &
   StandardShorthandProperties<TLength>;
 
@@ -389,24 +389,24 @@ export type VendorLonghandProperties<TLength = string | number> = {
   webkitTextFillColor?: WebkitTextFillColorProperty,
   webkitTextStrokeColor?: WebkitTextStrokeColorProperty,
   webkitTextStrokeWidth?: WebkitTextStrokeWidthProperty<TLength>,
-  webkitTouchCallout?: WebkitTouchCalloutProperty
+  webkitTouchCallout?: WebkitTouchCalloutProperty,
 };
 
 export type VendorShorthandProperties<TLength = string | number> = {
   mozOutlineRadius?: GlobalsString,
   webkitBorderBefore?: GlobalsString,
   webkitMask?: GlobalsString,
-  webkitTextStroke?: WebkitTextStrokeProperty<TLength>
+  webkitTextStroke?: WebkitTextStrokeProperty<TLength>,
 };
 
 export type VendorProperties<
-  TLength = string | number
+  TLength = string | number,
 > = VendorLonghandProperties<TLength> & VendorShorthandProperties<TLength>;
 
 export type Properties<
   TLength = string | number,
   FontFamilyT = FontFamilyProperty,
-  AnimationNameT = AnimationNameProperty
+  AnimationNameT = AnimationNameProperty,
 > = StandardProperties<TLength, FontFamilyT, AnimationNameT> &
   VendorProperties<TLength>;
 
@@ -420,7 +420,7 @@ export type CounterStyle = {
   speakAs?: CounterStyleSpeakAsProperty,
   suffix?: string,
   symbols?: string,
-  system?: CounterStyleSystemProperty
+  system?: CounterStyleSystemProperty,
 };
 
 export type FontFace = {
@@ -432,12 +432,12 @@ export type FontFace = {
   fontWeight?: FontFaceFontWeightProperty,
   fontVariant?: FontFaceFontVariantProperty,
   src?: string,
-  unicodeRange?: string
+  unicodeRange?: string,
 };
 
 export type Page<TLength = string | number> = {
   bleed?: PageBleedProperty<TLength>,
-  marks?: PageMarksProperty
+  marks?: PageMarksProperty,
 };
 
 export type Viewport<TLength = string | number> = {
@@ -451,7 +451,7 @@ export type Viewport<TLength = string | number> = {
   orientation?: ViewportOrientationProperty,
   userZoom?: ViewportUserZoomProperty,
   width?: ViewportWidthProperty<TLength>,
-  zoom?: ViewportZoomProperty
+  zoom?: ViewportZoomProperty,
 };
 
 export type AtRules =

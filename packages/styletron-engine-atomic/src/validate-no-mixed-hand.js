@@ -22,7 +22,7 @@ const shorthandMap = {
     "background-origin",
     "background-clip",
     "background-attachment",
-    "background-color"
+    "background-color",
   ],
   border: [
     "border-top-width",
@@ -39,54 +39,54 @@ const shorthandMap = {
     "border-right-color",
     "border-bottom-color",
     "border-left-color",
-    "border-color"
+    "border-color",
   ],
   "border-color": [
     "border-top-color",
     "border-right-color",
     "border-bottom-color",
-    "border-left-color"
+    "border-left-color",
   ],
   "border-style": [
     "border-top-style",
     "border-right-style",
     "border-bottom-style",
-    "border-left-style"
+    "border-left-style",
   ],
   "border-width": [
     "border-top-width",
     "border-right-width",
     "border-bottom-width",
-    "border-left-width"
+    "border-left-width",
   ],
   "border-top": ["border-top-width", "border-top-style", "border-top-color"],
   "border-right": [
     "border-right-width",
     "border-right-style",
-    "border-right-color"
+    "border-right-color",
   ],
   "border-bottom": [
     "border-bottom-width",
     "border-bottom-style",
-    "border-bottom-color"
+    "border-bottom-color",
   ],
   "border-left": [
     "border-left-width",
     "border-left-style",
-    "border-left-color"
+    "border-left-color",
   ],
   "border-radius": [
     "border-top-left-radius",
     "border-top-right-radius",
     "border-bottom-right-radius",
-    "border-bottom-left-radius"
+    "border-bottom-left-radius",
   ],
   "border-image": [
     "border-image-source",
     "border-image-slice",
     "border-image-width",
     "border-image-outset",
-    "border-image-repeat"
+    "border-image-repeat",
   ],
 
   // CSS Fonts Module Level 3: https://www.w3.org/TR/css3-fonts/
@@ -102,14 +102,14 @@ const shorthandMap = {
     "font-stretch",
     "font-size",
     "line-height",
-    "font-family"
+    "font-family",
   ],
   "font-variant": [
     "font-variant-ligatures",
     "font-variant-alternates",
     "font-variant-caps",
     "font-variant-numeric",
-    "font-variant-east-asian"
+    "font-variant-east-asian",
   ],
 
   // CSS Flexible Box Layout Module Level 1: https://www.w3.org/TR/css3-flexbox-1/
@@ -123,12 +123,12 @@ const shorthandMap = {
     "grid-template-areas",
     "grid-auto-rows",
     "grid-auto-columns",
-    "grid-auto-flow"
+    "grid-auto-flow",
   ],
   "grid-template": [
     "grid-template-rows",
     "grid-template-columns",
-    "grid-template-areas"
+    "grid-template-areas",
   ],
   "grid-row": ["grid-row-start", "grid-row-end"],
   "grid-column": ["grid-column-start", "grid-column-end"],
@@ -136,7 +136,7 @@ const shorthandMap = {
     "grid-row-start",
     "grid-column-start",
     "grid-row-end",
-    "grid-column-end"
+    "grid-column-end",
   ],
   "grid-gap": ["grid-row-gap", "grid-column-gap"],
 
@@ -148,7 +148,7 @@ const shorthandMap = {
     "mask-size",
     "mask-repeat",
     "mask-origin",
-    "mask-clip"
+    "mask-clip",
   ],
   "mask-border": [
     "mask-border-source",
@@ -156,7 +156,7 @@ const shorthandMap = {
     "mask-border-width",
     "mask-border-outset",
     "mask-border-repeat",
-    "mask-border-mode"
+    "mask-border-mode",
   ],
 
   // CSS Multi-column Layout Module: https://www.w3.org/TR/css3-multicol/
@@ -164,7 +164,7 @@ const shorthandMap = {
   "column-rule": [
     "column-rule-width",
     "column-rule-style",
-    "column-rule-color"
+    "column-rule-color",
   ],
 
   // CSS Scroll Snap Module Level 1: https://www.w3.org/TR/css-scroll-snap-1/
@@ -172,29 +172,29 @@ const shorthandMap = {
     "scroll-padding-top",
     "scroll-padding-right",
     "scroll-padding-bottom",
-    "scroll-padding-left"
+    "scroll-padding-left",
   ],
   "scroll-padding-block": [
     "scroll-padding-block-start",
-    "scroll-padding-block-end"
+    "scroll-padding-block-end",
   ],
   "scroll-padding-inline": [
     "scroll-padding-inline-start",
-    "scroll-padding-inline-end"
+    "scroll-padding-inline-end",
   ],
   "scroll-snap-margin": [
     "scroll-snap-margin-top",
     "scroll-snap-margin-right",
     "scroll-snap-margin-bottom",
-    "scroll-snap-margin-left"
+    "scroll-snap-margin-left",
   ],
   "scroll-snap-margin-block": [
     "scroll-snap-margin-block-start",
-    "scroll-snap-margin-block-end"
+    "scroll-snap-margin-block-end",
   ],
   "scroll-snap-margin-inline": [
     "scroll-snap-margin-inline-start",
-    "scroll-snap-margin-inline-end"
+    "scroll-snap-margin-inline-end",
   ],
 
   // CSS Speech Module: https://www.w3.org/TR/css3-speech/
@@ -206,7 +206,7 @@ const shorthandMap = {
   "text-decoration": [
     "text-decoration-line",
     "text-decoration-style",
-    "text-decoration-color"
+    "text-decoration-color",
   ],
   "text-emphasis": ["text-emphasis-style", "text-emphasis-color"],
 
@@ -219,7 +219,7 @@ const shorthandMap = {
     "animation-iteration-count",
     "animation-direction",
     "animation-fill-mode",
-    "animation-play-state"
+    "animation-play-state",
   ],
 
   // CSS Transitions (WD): https://www.w3.org/TR/css3-transitions/
@@ -227,8 +227,8 @@ const shorthandMap = {
     "transition-property",
     "transition-duration",
     "transition-timing-function",
-    "transition-delay"
-  ]
+    "transition-delay",
+  ],
 };
 
 export function validateNoMixedHand(style: Object) {
@@ -246,7 +246,7 @@ export function validateNoMixedHand(style: Object) {
           const short = hyphenatedProperties[property];
           mixed.push({
             shorthand: {property: short, value: style[short]},
-            longhand: {property: long, value: style[long]}
+            longhand: {property: long, value: style[long]},
           });
         }
       }

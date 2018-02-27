@@ -9,7 +9,7 @@ type customStyleT = $Shape<{
   size: number,
   color: string,
   shape: "square" | "circle",
-  velocity: {speed?: number, direction?: number}
+  velocity: {speed?: number, direction?: number},
 }>;
 
 interface CustomEngine {
@@ -23,7 +23,7 @@ const customGetInitialStyle = () => ({}: customStyleT);
 const customStyled: styledFnT<customStyleT, CustomEngine> = createStyled({
   getInitialStyle: customGetInitialStyle,
   driver: customDriver,
-  wrapper: Component => Component
+  wrapper: Component => Component,
 });
 
 export {customStyled as styled};

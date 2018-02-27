@@ -12,7 +12,7 @@ export default function injectStylePrefixed(
   styleCache: MultiCache<{pseudo: string, block: string}>,
   styles: baseStyleT,
   media: string,
-  pseudo: string
+  pseudo: string,
 ) {
   const cache = styleCache.getCache(media);
   let classString = "";
@@ -61,7 +61,7 @@ export default function injectStylePrefixed(
             styleCache,
             originalVal,
             media,
-            pseudo + originalKey
+            pseudo + originalKey,
           );
       } else if (originalKey.substring(0, 6) === "@media") {
         classString +=
@@ -70,7 +70,7 @@ export default function injectStylePrefixed(
             styleCache,
             originalVal,
             originalKey.substr(7),
-            pseudo
+            pseudo,
           );
       }
     }
@@ -85,8 +85,8 @@ export default function injectStylePrefixed(
         // eslint-disable-next-line no-console
         console.warn(
           `Styles \`${short}\` and \`${long}\` in object yielding class "${classString.slice(
-            1
-          )}" may result in unexpected behavior. Mixing shorthand and longhand properties within the same style object is unsupported with atomic rendering.`
+            1,
+          )}" may result in unexpected behavior. Mixing shorthand and longhand properties within the same style object is unsupported with atomic rendering.`,
         );
       });
     }

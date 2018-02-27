@@ -17,7 +17,7 @@ test("Provider", t => {
     t.equal(
       context.styletron,
       styletron,
-      "styletron instance override provided"
+      "styletron instance override provided",
     );
     return <div />;
   };
@@ -26,7 +26,7 @@ test("Provider", t => {
   Enzyme.mount(
     <Provider value={styletron}>
       <MockComponent />
-    </Provider>
+    </Provider>,
   );
 });
 
@@ -42,16 +42,16 @@ test("$as works", t => {
       styletron: {
         renderStyle: () => {
           return "foo";
-        }
-      }
-    }
+        },
+      },
+    },
   });
   const wrapper = Enzyme.mount(<Widget $as="span" />, {
     context: {
       styletron: {
-        renderStyle: () => {}
-      }
-    }
+        renderStyle: () => {},
+      },
+    },
   });
   t.equal(wrapper.find("span").length, 1, "span rendered");
   t.end();
@@ -66,9 +66,9 @@ test("$-prefixed props not passed", t => {
         this.props,
         {
           className: "styleclass",
-          "data-bar": "bar"
+          "data-bar": "bar",
         },
-        "props match expected"
+        "props match expected",
       );
       return <button>InnerComponent</button>;
     }
@@ -81,9 +81,9 @@ test("$-prefixed props not passed", t => {
       styletron: {
         renderStyle: () => {
           return "styleclass";
-        }
-      }
-    }
+        },
+      },
+    },
   });
 });
 
@@ -128,11 +128,11 @@ test("withWrapper", t => {
       value={{
         renderStyle: style => {
           t.deepEqual(style, {color: "red"});
-        }
+        },
       }}
     >
       <WrappedWidget foo="bar" />
-    </Provider>
+    </Provider>,
   );
   t.equal(wrapper1.find("section").length, 1, "wrapper rendered");
 
@@ -144,18 +144,18 @@ test("withWrapper", t => {
           t.deepEqual(
             style,
             {color: "blue"},
-            "style composition works after wrapping"
+            "style composition works after wrapping",
           );
-        }
+        },
       }}
     >
       <DeluxeWrappedWidget foo="bar" />
-    </Provider>
+    </Provider>,
   );
   t.equal(
     wrapper2.find("section").length,
     1,
-    "wrapper rendered after composition"
+    "wrapper rendered after composition",
   );
 
   t.end();

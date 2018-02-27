@@ -22,7 +22,7 @@ module.exports = {
         printWidth: 80,
         tabWidth: 2,
         singleQuote: false,
-        trailingComma: "both",
+        trailingComma: "all",
         bracketSpacing: false,
         jsxBracketSameLine: false,
         parser: "babylon",

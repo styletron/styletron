@@ -20,13 +20,13 @@ class Dummy extends React.Component<{title: string, className: string}> {
 }
 
 const AnotherComponent = customStyled(Dummy, (props: {$num: number}) => ({
-  velocity: props.$num
+  velocity: props.$num,
 }));
 
 export {AnotherComponent};
 
 const Styled1 = customStyled(Dummy, (props: {$num: number}) => ({
-  velocity: props.$num
+  velocity: props.$num,
 }));
 
 // $FlowFixMe
@@ -44,7 +44,7 @@ const Styled1 = customStyled(Dummy, (props: {$num: number}) => ({
 <Styled1 title="works" $num={100} />;
 
 const Styled2 = withStyle(Styled1, (props: {$size: number}) => ({
-  angle: props.$size
+  angle: props.$size,
 }));
 
 // $FlowFixMe

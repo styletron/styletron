@@ -11,7 +11,7 @@ export {Provider};
 const styled: styledFnT<declarativeStyleT, StandardEngine> = createStyled({
   wrapper: Component => Component,
   getInitialStyle,
-  driver
+  driver,
 });
 
 export {styled};
@@ -20,5 +20,5 @@ export {
   withStyle,
   withStyleDeep,
   withTransform,
-  withWrapper
+  withWrapper,
 } from "styletron-react-core";

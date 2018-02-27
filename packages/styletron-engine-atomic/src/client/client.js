@@ -24,7 +24,7 @@ import type {
   StandardEngine,
   keyframesT,
   fontFaceT,
-  baseStyleT
+  baseStyleT,
 } from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache.js";
@@ -37,7 +37,7 @@ import {
   keyframesBlockToRule,
   declarationsToBlock,
   keyframesToBlock,
-  fontFaceBlockToRule
+  fontFaceBlockToRule,
 } from "../css.js";
 
 type hydrateT =
@@ -48,7 +48,7 @@ type hydrateT =
 type optionsT = {
   hydrate?: hydrateT,
   container?: Element,
-  prefix?: string
+  prefix?: string,
 };
 
 class StyletronClient implements StandardEngine {
@@ -70,7 +70,7 @@ class StyletronClient implements StandardEngine {
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
       sheet.insertRule(
         styleBlockToRule(atomicSelector(id, pseudo), block),
-        sheet.cssRules.length
+        sheet.cssRules.length,
       );
     };
 
@@ -83,7 +83,7 @@ class StyletronClient implements StandardEngine {
         this.container.appendChild(styleElement);
         this.styleElements[media] = styleElement;
       },
-      onNewStyle
+      onNewStyle,
     );
 
     this.keyframesCache = new Cache(
@@ -93,9 +93,9 @@ class StyletronClient implements StandardEngine {
         const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
         sheet.insertRule(
           keyframesBlockToRule(id, keyframesToBlock(value)),
-          sheet.cssRules.length
+          sheet.cssRules.length,
         );
-      }
+      },
     );
 
     this.fontFaceCache = new Cache(
@@ -105,9 +105,9 @@ class StyletronClient implements StandardEngine {
         const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
         sheet.insertRule(
           fontFaceBlockToRule(id, declarationsToBlock(value)),
-          sheet.cssRules.length
+          sheet.cssRules.length,
         );
-      }
+      },
     );
 
     if (opts.container) {
