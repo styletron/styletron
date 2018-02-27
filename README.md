@@ -4,6 +4,8 @@
 
 Toolkit for component-oriented styling
 
+[*Looking for v3.x docs?*](http://styletron.js.org/)
+
 ## Packages
 
 * [`styletron-engine-atomic`](packages/styletron-engine-atomic)
