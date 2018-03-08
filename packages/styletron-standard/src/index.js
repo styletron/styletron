@@ -24,7 +24,7 @@ type NestedStyleT<T> = $Shape<{
 type baseStyleT = NestedStyleT<Properties<string>>;
 
 type declarativeStyleT = NestedStyleT<
-  Properties<string, fontFaceT, keyframesT>,
+  Properties<string, string | fontFaceT, string | keyframesT>,
 >;
 
 export interface StandardEngine {
