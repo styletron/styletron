@@ -129,14 +129,23 @@ test("hydration", t => {
   container.innerHTML = server.getStylesheetsHtml();
 
   // Hydration
-  const instance = new StyletronClient(getSheets());
+  const instance = new StyletronClient({
+    hydrate: getSheets(),
+  });
 
-  const before = elementsToRules(getSheets());
+  const beforeSheetLength = document.styleSheets.length;
+  const beforeRules = elementsToRules(getSheets());
   injectFixtureStyles(instance);
-  const after = elementsToRules(getSheets());
+  const afterSheetLength = document.styleSheets.length;
+  const afterRules = elementsToRules(getSheets());
+  t.equal(
+    beforeSheetLength,
+    afterSheetLength,
+    "number of stylesheets should not have changed",
+  );
   t.deepEqual(
-    before,
-    after,
+    afterRules,
+    beforeRules,
     "CSSStylesheet rules not changed after rendering hydrated styles",
   );
   cleanup();

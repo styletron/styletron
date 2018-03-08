@@ -27,8 +27,10 @@ export default function injectStylePrefixed(
         validateValueType(originalVal);
       }
 
-      const key = `${originalKey}${pseudo}:${((originalVal: any): string)}`;
-
+      const propValPair = `${hyphenate(
+        originalKey,
+      )}:${((originalVal: any): string)}`;
+      const key = `${pseudo}${propValPair}`;
       const cachedId = cache.cache[key];
       if (cachedId !== void 0) {
         // cache hit
@@ -42,15 +44,21 @@ export default function injectStylePrefixed(
           const prefixedVal = prefixed[prefixedKey];
           const prefixedValType = typeof prefixedVal;
           if (prefixedValType === "string" || prefixedValType === "number") {
-            block += `${hyphenate(prefixedKey)}:${prefixedVal};`;
+            const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
+            if (prefixedPair !== propValPair) {
+              block += `${prefixedPair};`;
+            }
           } else if (Array.isArray(prefixedVal)) {
             const hyphenated = hyphenate(prefixedKey);
             for (let i = 0; i < prefixedVal.length; i++) {
-              block += `${hyphenated}:${prefixedVal[i]};`;
+              const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
+              if (prefixedPair !== propValPair) {
+                block += `${prefixedPair};`;
+              }
             }
           }
         }
-        block = block.slice(0, -1); // Remove trailing semicolon
+        block += propValPair; // ensure original prop/val is last (for hydration)
         const id = cache.addValue(key, {pseudo, block});
         classString += " " + id;
       }

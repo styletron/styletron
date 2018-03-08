@@ -1,13 +1,23 @@
 /* eslint-env browser */
 
-const STYLES_HYDRATOR = /\.([^{]+){[^}]*;([^}]*?)}/g;
-const KEYFRAMES_HYRDATOR = /@keyframes ([^{]+)\{([^{]+\{[^}]*\})*\}/g;
+const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
+const KEYFRAMES_HYRDATOR = /@keyframes ([^{]+)\{((?:[^{]+\{[^}]*\})*)\}/g;
 const FONT_FACE_HYDRATOR = /@font-face\{font-family:([^;]+);([^}]*)\}/g;
 
 type hydratorT =
   | typeof STYLES_HYDRATOR
   | typeof KEYFRAMES_HYRDATOR
   | typeof FONT_FACE_HYDRATOR;
+
+function hydrateStyles<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
+  let match;
+  while ((match = hydrator.exec(css))) {
+    const [, id, pseudo, key] = match;
+    const fullKey = pseudo ? `${pseudo}${key}` : key;
+    cache.cache[fullKey] = id; // set cache without triggering side effects
+    cache.idGenerator.increment(); // increment id
+  }
+}
 
 function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   let match;
@@ -126,11 +136,12 @@ class StyletronClient implements StandardEngine {
 
       for (let i = 0; i < opts.hydrate.length; i++) {
         const element = opts.hydrate[i];
-        if (element.dataset["font-face"]) {
+        const hydrateType = element.dataset.hydrate;
+        if (hydrateType === "font-face") {
           hydrate(this.fontFaceCache, FONT_FACE_HYDRATOR, element.textContent);
           continue;
         }
-        if (element.dataset.keyframes) {
+        if (hydrateType === "keyframes") {
           hydrate(this.keyframesCache, KEYFRAMES_HYRDATOR, element.textContent);
           continue;
         }
@@ -138,7 +149,8 @@ class StyletronClient implements StandardEngine {
         this.styleElements[key] = element;
         const cache = new Cache(styleIdGenerator, onNewStyle);
         cache.key = key;
-        hydrate(cache, STYLES_HYDRATOR, element.textContent);
+        hydrateStyles(cache, STYLES_HYDRATOR, element.textContent);
+        this.styleCache.caches[key] = cache;
       }
     }
 
@@ -155,12 +167,12 @@ class StyletronClient implements StandardEngine {
   }
 
   renderFontFace(fontFace: fontFaceT): string {
-    const key = JSON.stringify(fontFace);
+    const key = declarationsToBlock(fontFace);
     return this.fontFaceCache.addValue(key, fontFace);
   }
 
   renderKeyframes(keyframes: keyframesT): string {
-    const key = JSON.stringify(keyframes);
+    const key = keyframesToBlock(keyframes);
     return this.keyframesCache.addValue(key, keyframes);
   }
 }
