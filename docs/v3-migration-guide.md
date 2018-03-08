@@ -1,5 +1,14 @@
 # Styletron v3 to v4 Migration Guide
 
+## Automated codemods
+For convenience, there are automated codemod scripts for migrating:
+```
+npm i --no-package-lock --no-save styletron-codemods
+npx babel-codemod --plugin styletron-codemods/transform-styled-composition src/**/**.js
+npx babel-codemod --plugin styletron-codemods/transform-provider src/**/**.js
+npx babel-codemod --plugin transform-styletron-client src/**/**.js
+npx babel-codemod --plugin transform-styletron-server src/**/**.js
+```
 
 ## Replacing browser and server Styletron instances
 
