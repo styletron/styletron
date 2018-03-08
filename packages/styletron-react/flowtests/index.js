@@ -9,7 +9,7 @@ import {styled, withStyle} from "../src/index.js";
 import type {baseStyleT, StandardEngine} from "styletron-standard";
 import type {styleArgT, styletronComponentT} from "styletron-react-core";
 
-const Yo = styled("div", {color: "red", fontFamily: "asdf"});
+const Yo = styled("div", {color: "red", fontFamily: "asdf", marginTop: 0});
 <Yo $as="a" foo={23} />;
 
 // $FlowFixMe

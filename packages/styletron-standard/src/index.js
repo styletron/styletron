@@ -7,9 +7,9 @@ type fontFaceT = {
 };
 
 type keyframesT = {
-  from?: Properties<string>,
-  to?: Properties<string>,
-  [string]: Properties<string>,
+  from?: Properties<string | 0>,
+  to?: Properties<string | 0>,
+  [string]: Properties<string | 0>,
 };
 
 // TODO: investigate why $Shape is needed
@@ -21,10 +21,10 @@ type NestedStyleT<T> = $Shape<{
   },
 }>;
 
-type baseStyleT = NestedStyleT<Properties<string>>;
+type baseStyleT = NestedStyleT<Properties<string | 0>>;
 
 type declarativeStyleT = NestedStyleT<
-  Properties<string, string | fontFaceT, string | keyframesT>,
+  Properties<string | 0, string | fontFaceT, string | keyframesT>,
 >;
 
 export interface StandardEngine {
