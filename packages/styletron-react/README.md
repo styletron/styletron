@@ -67,7 +67,7 @@ const StyledInput = styled("input", props => ({
 #### `$as`
 
 ```jsx
-const Foo = styled("div" /* ... */);
+const Foo = styled("div", /* ... */);
 
 <Foo />;
 <Foo $as="span" />;
