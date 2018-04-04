@@ -1,3 +1,5 @@
+// @flow
+
 /* eslint-env browser */
 
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
