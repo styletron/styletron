@@ -41,7 +41,7 @@ const RedAnchor = styled("a", {color: "red"});
 
 // Or pass a function that takes props and returns a style object
 const Panel = styled("div", props => {
-  return {backgroundColor: props.$alert < "orange" : "lightblue"};
+  return {backgroundColor: props.$alert ? "orange" : "lightblue"};
 });
 
 <Panel $alert>Hello!</Panel>;
