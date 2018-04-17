@@ -12,9 +12,9 @@ import {createElement} from "react";
 
 export {default as Provider} from "./provider.js";
 
-export type styledElementProps<Base: ElementType> = {
+export type styledElementProps<Base> = {
   $as?: Base,
-  $ref?: Ref<Base>,
+  $ref?: Ref<*>,
 };
 
 export type reducerT<Style: Object, Props: Object = {}> = (
@@ -51,12 +51,7 @@ export type wrapperT = (
 ) => StatelessFunctionalComponent<*>;
 
 /* eslint-disable no-unused-vars */
-export type styletronT<
-  Style: Object,
-  Props: Object,
-  Base: ElementType,
-  Engine,
-> = {|
+export type styletronT<Style: Object, Props: Object, Base, Engine> = {|
   // TODO: Variadic generics for multiple reducer prop types?
   // Look into $Compose?
   reducers: Array<reducerItemT<Style, *>>,
@@ -71,7 +66,7 @@ export type styletronT<
 export type styletronComponentT<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   Engine,
 > = StatelessFunctionalComponent<
   Props &
@@ -80,10 +75,7 @@ export type styletronComponentT<
 >;
 /* eslint-enable no-unused-vars */
 
-export type styledFnT<Style: Object, Engine> = <
-  Props: Object,
-  Base: ElementType,
->(
+export type styledFnT<Style: Object, Engine> = <Props: Object, Base>(
   Base,
   styleArgT<Style, Props>,
 ) => styletronComponentT<Style, Props, Base, Engine>;
@@ -99,13 +91,15 @@ export function createStyled<Style: Object, Engine>({
   driver,
   wrapper,
 }: styledConfig<Style, Engine>): styledFnT<Style, Engine> {
-  return function styled<Props: Object, Base: ElementType>(
-    base: ElementType,
+  return function styled<Props: Object, Base>(
+    base: Base,
     styleArg: styleArgT<Style, Props>,
   ): styletronComponentT<Style, Props, Base, Engine> {
     const baseStyletron: styletronT<Style, {}, Base, Engine> = {
       reducers: [],
-      base: base,
+      // TODO: use typed generic instead of coercion once
+      // https://github.com/facebook/flow/issues/6157 is resolved
+      base: ((base: any): ElementType),
       driver,
       getInitialStyle,
       wrapper,
@@ -120,7 +114,7 @@ export function createStyled<Style: Object, Engine>({
 export function withTransform<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   TransformerProps: Object,
   Engine,
 >(
@@ -145,7 +139,7 @@ export type styleArgT<Style: Object, Props: Object> =
 export function withStyle<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -162,7 +156,7 @@ export function withStyle<
 export function withStyleDeep<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -173,12 +167,7 @@ export function withStyleDeep<
   return createStyledElementComponent(autoComposeDeep(styletron, styleArg), {});
 }
 
-export function withWrapper<
-  Style: Object,
-  Props: Object,
-  Base: ElementType,
-  Engine,
->(
+export function withWrapper<Style: Object, Props: Object, Base, Engine>(
   component: styletronComponentT<Style, Props, Base, Engine>,
   wrapper: any,
 ): styletronComponentT<Style, Props, Base, Engine> {
@@ -198,7 +187,7 @@ export function withWrapper<
 export function autoComposeShallow<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -215,7 +204,7 @@ export function autoComposeShallow<
 export function autoComposeDeep<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -232,7 +221,7 @@ export function autoComposeDeep<
 export function staticComposeShallow<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   Engine,
 >(
   styletron: styletronT<Style, Props, Base, Engine>,
@@ -244,12 +233,7 @@ export function staticComposeShallow<
   });
 }
 
-export function staticComposeDeep<
-  Style: Object,
-  Props: Object,
-  Base: ElementType,
-  Engine,
->(
+export function staticComposeDeep<Style: Object, Props: Object, Base, Engine>(
   styletron: styletronT<Style, Props, Base, Engine>,
   style: Style,
 ): styletronT<Style, Props, Base, Engine> {
@@ -262,7 +246,7 @@ export function staticComposeDeep<
 export function dynamicComposeShallow<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -278,7 +262,7 @@ export function dynamicComposeShallow<
 export function dynamicComposeDeep<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -322,12 +306,7 @@ export function createDeepMergeReducer<Style: Object>(
   return deepMergeReducer;
 }
 
-export function composeStatic<
-  Style: Object,
-  Props: Object,
-  Base: ElementType,
-  Engine,
->(
+export function composeStatic<Style: Object, Props: Object, Base, Engine>(
   styletron: styletronT<Style, Props, Base, Engine>,
   reducer: reducerItemT<Style, Props>,
 ): styletronT<Style, Props, Base, Engine> {
@@ -367,7 +346,7 @@ export function composeStatic<
 export function composeDynamic<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   ReducerProps: Object,
   Engine,
 >(
@@ -386,7 +365,7 @@ export function composeDynamic<
 export function createStyledElementComponent<
   Style: Object,
   Props: Object,
-  Base: ElementType,
+  Base,
   Engine,
 >(
   {
