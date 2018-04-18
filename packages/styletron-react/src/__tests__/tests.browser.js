@@ -9,27 +9,6 @@ import {styled, withWrapper, withStyle, Provider} from "../index.js";
 
 Enzyme.configure({adapter: new Adapter()});
 
-test("Provider", t => {
-  t.plan(1);
-  const styletron = {};
-
-  const MockComponent = (props, context) => {
-    t.equal(
-      context.styletron,
-      styletron,
-      "styletron instance override provided",
-    );
-    return <div />;
-  };
-  MockComponent.contextTypes = {styletron: () => {}};
-
-  Enzyme.mount(
-    <Provider value={styletron}>
-      <MockComponent />
-    </Provider>,
-  );
-});
-
 test("$as works", t => {
   t.plan(2);
   const Widget = styled("div", {});
@@ -37,22 +16,26 @@ test("$as works", t => {
     t.equal(props.className, "foo", "styled class is passed");
     return <div />;
   };
-  Enzyme.mount(<Widget $as={MockComponent} />, {
-    context: {
-      styletron: {
+  Enzyme.mount(
+    <Provider
+      value={{
         renderStyle: () => {
           return "foo";
         },
-      },
-    },
-  });
-  const wrapper = Enzyme.mount(<Widget $as="span" />, {
-    context: {
-      styletron: {
+      }}
+    >
+      <Widget $as={MockComponent} />
+    </Provider>,
+  );
+  const wrapper = Enzyme.mount(
+    <Provider
+      value={{
         renderStyle: () => {},
-      },
-    },
-  });
+      }}
+    >
+      <Widget $as="span" />
+    </Provider>,
+  );
   t.equal(wrapper.find("span").length, 1, "span rendered");
   t.end();
 });
@@ -76,15 +59,17 @@ test("$-prefixed props not passed", t => {
 
   const Widget = styled(InnerComponent, {color: "red"});
 
-  Enzyme.mount(<Widget $foo="foo" $baz="baz" data-bar="bar" />, {
-    context: {
-      styletron: {
+  Enzyme.mount(
+    <Provider
+      value={{
         renderStyle: () => {
           return "styleclass";
         },
-      },
-    },
-  });
+      }}
+    >
+      <Widget $foo="foo" $baz="baz" data-bar="bar" />
+    </Provider>,
+  );
 });
 
 test("$ref", t => {
@@ -158,5 +143,60 @@ test("withWrapper", t => {
     "wrapper rendered after composition",
   );
 
+  t.end();
+});
+
+test("font-face injection", t => {
+  t.plan(2);
+  const fontFace = {
+    src: "foo",
+  };
+  const style = {fontFamily: fontFace};
+  const Widget = styled("div", style);
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            fontFamily: "foo",
+          });
+        },
+        renderFontFace: x => {
+          t.deepEqual(x, fontFace);
+          return "foo";
+        },
+      }}
+    >
+      <Widget />
+    </Provider>,
+  );
+  t.end();
+});
+
+test("keyframes injection", t => {
+  t.plan(2);
+  const keyframes = {
+    from: {color: "red"},
+    to: {color: "green"},
+  };
+  const style = {animationName: keyframes};
+  const Widget = styled("div", style);
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            animationName: "foo",
+          });
+        },
+        renderKeyframes: x => {
+          t.deepEqual(x, keyframes);
+          return "foo";
+        },
+      }}
+    >
+      <Widget />
+    </Provider>,
+  );
   t.end();
 });

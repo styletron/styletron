@@ -10,7 +10,13 @@ import type {
 } from "react";
 import {createElement} from "react";
 
-export {default as Provider} from "./provider.js";
+import createReactContext, {type Context} from "create-react-context";
+
+const StyletronContext: Context<any> = createReactContext();
+
+export const Provider = StyletronContext.Provider;
+
+const Consumer = StyletronContext.Consumer;
 
 export type styledElementProps<Base> = {
   $as?: Base,
@@ -106,7 +112,6 @@ export function createStyled<Style: Object, Engine>({
     };
     return createStyledElementComponent(
       autoComposeShallow(baseStyletron, styleArg),
-      {},
     );
   };
 }
@@ -126,7 +131,6 @@ export function withTransform<
       assignCommutative: false,
       reducer: transformer,
     }),
-    {},
   );
 }
 
@@ -147,10 +151,7 @@ export function withStyle<
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
-  return createStyledElementComponent(
-    autoComposeShallow(styletron, styleArg),
-    {},
-  );
+  return createStyledElementComponent(autoComposeShallow(styletron, styleArg));
 }
 
 export function withStyleDeep<
@@ -164,7 +165,7 @@ export function withStyleDeep<
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
-  return createStyledElementComponent(autoComposeDeep(styletron, styleArg), {});
+  return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
 }
 
 export function withWrapper<Style: Object, Props: Object, Base, Engine>(
@@ -172,16 +173,13 @@ export function withWrapper<Style: Object, Props: Object, Base, Engine>(
   wrapper: any,
 ): styletronComponentT<Style, Props, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
-  return createStyledElementComponent(
-    {
-      getInitialStyle: styletron.getInitialStyle,
-      base: styletron.base,
-      driver: styletron.driver,
-      wrapper: wrapper,
-      reducers: styletron.reducers,
-    },
-    {},
-  );
+  return createStyledElementComponent({
+    getInitialStyle: styletron.getInitialStyle,
+    base: styletron.base,
+    driver: styletron.driver,
+    wrapper: wrapper,
+    reducers: styletron.reducers,
+  });
 }
 
 export function autoComposeShallow<
@@ -367,16 +365,18 @@ export function createStyledElementComponent<
   Props: Object,
   Base,
   Engine,
->(
-  {
-    reducers,
-    base,
-    driver,
-    wrapper,
-    getInitialStyle,
-  }: styletronT<Style, Props, Base, Engine>,
-  {contextTypes}: any,
-): styletronComponentT<Style, Props, Base, Engine> {
+>({
+  reducers,
+  base,
+  driver,
+  wrapper,
+  getInitialStyle,
+}: styletronT<Style, Props, Base, Engine>): styletronComponentT<
+  Style,
+  Props,
+  Base,
+  Engine,
+> {
   // TODO: make casting not necessary
   function omitPrefixedKeys<T>(source: T): $Diff<T, Props> {
     const result = ({}: any);
@@ -388,24 +388,24 @@ export function createStyledElementComponent<
     return ((result: any): $Diff<T, Props>);
   }
 
-  function StyledElement(props, context) {
-    const elementProps = omitPrefixedKeys(props);
-    const style = resolveStyle(getInitialStyle, reducers, props);
-    const styleClassString = driver(style, context.styletron);
-    const element = props.$as ? props.$as : base;
+  function StyledElement(props) {
+    return createElement(Consumer, null, styletron => {
+      const elementProps = omitPrefixedKeys(props);
+      const style = resolveStyle(getInitialStyle, reducers, props);
+      const styleClassString = driver(style, styletron);
+      const element = props.$as ? props.$as : base;
 
-    elementProps.className = props.className
-      ? `${props.className} ${styleClassString}`
-      : styleClassString;
+      elementProps.className = props.className
+        ? `${props.className} ${styleClassString}`
+        : styleClassString;
 
-    if (props.$ref) {
-      elementProps.ref = props.$ref;
-    }
+      if (props.$ref) {
+        elementProps.ref = props.$ref;
+      }
 
-    return createElement(element, elementProps);
+      return createElement(element, elementProps);
+    });
   }
-
-  StyledElement.contextTypes = {...contextTypes, styletron: noop};
 
   const Wrapped = wrapper(StyledElement);
 
@@ -424,7 +424,6 @@ export function createStyledElementComponent<
     }
     Wrapped.displayName = `Styled(${displayName})`;
   }
-
   return Wrapped;
 }
 
