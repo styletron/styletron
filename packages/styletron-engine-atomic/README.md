@@ -2,7 +2,7 @@
 
 [![npm version][npm-badge]][npm-href] [![dependencies status][deps-badge]][deps-href]
 
-Atomic implementation of the [`styletron-standard`](packages/styletron-standard) engine interface.
+Atomic implementation of the [`styletron-standard`](../styletron-standard) engine interface.
 
 ## Installation
 
