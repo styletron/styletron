@@ -1,6 +1,7 @@
 // @flow
 
 declare var __DEV__: boolean;
+declare var __BROWSER__: boolean;
 
 import type {
   Ref,
@@ -11,6 +12,8 @@ import type {
 import {createElement} from "react";
 
 import createReactContext, {type Context} from "create-react-context";
+
+import {addDebugClass} from "./dev-tool.js";
 
 const StyletronContext: Context<any> = createReactContext();
 
@@ -65,6 +68,7 @@ export type styletronT<Style: Object, Props: Object, Base, Engine> = {|
   getInitialStyle: () => Style,
   driver: driverT<Style, Engine>,
   wrapper: any,
+  debugClass?: string,
 |};
 /* eslint-enable no-unused-vars */
 
@@ -110,6 +114,9 @@ export function createStyled<Style: Object, Engine>({
       getInitialStyle,
       wrapper,
     };
+    if (__BROWSER__ && __DEV__) {
+      addDebugClass(baseStyletron, 3);
+    }
     return createStyledElementComponent(
       autoComposeShallow(baseStyletron, styleArg),
     );
@@ -126,8 +133,13 @@ export function withTransform<
   component: styletronComponentT<Style, Props, Base, Engine>,
   transformer: (style: Style, props: TransformerProps) => Style,
 ): styletronComponentT<Style, Props & TransformerProps, Base, Engine> {
+  const styletron = (component: any).__STYLETRON__;
+  if (__BROWSER__ && __DEV__) {
+    addDebugClass(styletron, 3);
+  }
+
   return createStyledElementComponent(
-    composeDynamic((component: any).__STYLETRON__, {
+    composeDynamic(styletron, {
       assignCommutative: false,
       reducer: transformer,
     }),
@@ -151,6 +163,9 @@ export function withStyle<
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
+  if (__BROWSER__ && __DEV__) {
+    addDebugClass(styletron, 3);
+  }
   return createStyledElementComponent(autoComposeShallow(styletron, styleArg));
 }
 
@@ -165,6 +180,9 @@ export function withStyleDeep<
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
+  if (__BROWSER__ && __DEV__) {
+    addDebugClass(styletron, 3);
+  }
   return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
 }
 
@@ -173,13 +191,17 @@ export function withWrapper<Style: Object, Props: Object, Base, Engine>(
   wrapper: any,
 ): styletronComponentT<Style, Props, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
-  return createStyledElementComponent({
+  const composed = {
     getInitialStyle: styletron.getInitialStyle,
     base: styletron.base,
     driver: styletron.driver,
     wrapper: wrapper,
     reducers: styletron.reducers,
-  });
+  };
+  if (__BROWSER__ && __DEV__) {
+    addDebugClass(composed, 3);
+  }
+  return createStyledElementComponent(composed);
 }
 
 export function autoComposeShallow<
@@ -315,6 +337,7 @@ export function composeStatic<Style: Object, Props: Object, Base, Engine>(
       reducers: styletron.reducers,
       base: styletron.base,
       driver: styletron.driver,
+      debugClass: styletron.debugClass,
       wrapper: styletron.wrapper,
       getInitialStyle: () => style,
     };
@@ -327,6 +350,7 @@ export function composeStatic<Style: Object, Props: Object, Base, Engine>(
       return {
         getInitialStyle: styletron.getInitialStyle,
         base: styletron.base,
+        debugClass: styletron.debugClass,
         driver: styletron.driver,
         wrapper: styletron.wrapper,
         reducers: [
@@ -354,6 +378,7 @@ export function composeDynamic<
   return {
     getInitialStyle: styletron.getInitialStyle,
     base: styletron.base,
+    debugClass: styletron.debugClass,
     driver: styletron.driver,
     wrapper: styletron.wrapper,
     reducers: [reducer].concat(styletron.reducers),
@@ -369,6 +394,7 @@ export function createStyledElementComponent<
   reducers,
   base,
   driver,
+  debugClass,
   wrapper,
   getInitialStyle,
 }: styletronT<Style, Props, Base, Engine>): styletronComponentT<
@@ -398,6 +424,10 @@ export function createStyledElementComponent<
       elementProps.className = props.className
         ? `${props.className} ${styleClassString}`
         : styleClassString;
+
+      if (__DEV__ && __BROWSER__ && debugClass) {
+        elementProps.className += " " + debugClass;
+      }
 
       if (props.$ref) {
         elementProps.ref = props.$ref;

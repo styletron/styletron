@@ -31,7 +31,9 @@
   },
   "dependencies": {
     "create-react-context": "^0.2.2",
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "sourcemap-codec": "^1.4.1",
+    "stacktrace-js": "^2.0.0"
   },
   "peerDependencies": {
     "react": "0.14.x - 16.x"
