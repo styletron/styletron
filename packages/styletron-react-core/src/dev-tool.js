@@ -11,6 +11,28 @@ const schedule = window.requestIdleCallback
 
 let counter = 0;
 let queue = [];
+let debugEnabled = false;
+
+export function enableDebug() {
+  debugEnabled = true;
+}
+
+export function addDebugClass(baseStyletron, stackIndex) {
+  if (!debugEnabled) {
+    return;
+  }
+  const {className, selector} = getUniqueId();
+  baseStyletron.debugClass = className;
+
+  const trace = getTrace();
+
+  trace
+    .then(stackframes => {
+      const {fileName, lineNumber} = stackframes[stackIndex];
+      addToQueue({selector, lineNumber, fileName});
+    })
+    .catch(err => console.log(err)); // eslint-disable-line no-console
+}
 
 function flush() {
   const {rules, segments, sources} = queue.reduce(
@@ -52,20 +74,6 @@ function addToQueue(item) {
   if (prevCount === 0) {
     schedule(flush);
   }
-}
-
-export function addDebugClass(baseStyletron, stackIndex) {
-  const {className, selector} = getUniqueId();
-  baseStyletron.debugClass = className;
-
-  const trace = getTrace();
-
-  trace
-    .then(stackframes => {
-      const {fileName, lineNumber} = stackframes[stackIndex];
-      addToQueue({selector, lineNumber, fileName});
-    })
-    .catch(err => console.log(err)); // eslint-disable-line no-console
 }
 
 function getTrace() {

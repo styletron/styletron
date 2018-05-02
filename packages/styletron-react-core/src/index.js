@@ -15,6 +15,8 @@ import createReactContext, {type Context} from "create-react-context";
 
 import {addDebugClass} from "./dev-tool.js";
 
+export {enableDebug} from "./dev-tool.js";
+
 const StyletronContext: Context<any> = createReactContext();
 
 export const Provider = StyletronContext.Provider;
@@ -499,5 +501,3 @@ export function assign<Style: Object>(target: Style, source: Style): Style {
   }
   return target;
 }
-
-export function noop() {}
