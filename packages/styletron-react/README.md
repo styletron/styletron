@@ -19,6 +19,7 @@ The `styletron-react` package consists of the following named exports:
 * [`withStyleDeep`](#withstyledeep)
 * [`withTransform`](#withtransform)
 * [`withWrapper`](#withwrapper)
+* [`Provider`](#provider)
 
 ## Creating styled components
 
@@ -234,6 +235,72 @@ const Wrapped = withWrapper(Foo, Styled => props => (
 
 // Style composition still works as normal
 const Bar = withStyle(Wrapped, {background: "red"});
+```
+
+## Context provider
+
+### `Provider`
+
+```js
+import {Provider} from "styletron-react";
+```
+
+A Styletron engine must be provided using the `Provider` component.
+
+#### Props
+
+- `value` (`StyletronEngine`)
+- `debugMode?` (`true` | `"ssr"` | `false`)
+
+#### Examples
+
+```jsx
+import {Provider} from "styletron-react";
+import {Client as Styletron} from "styletron-engine-atomic";
+
+const engine = new Styletron();
+
+const App = () => (
+  <Provider value={engine}>
+    <RootComponent/>
+  </Provider>
+);
+```
+
+
+#### Browser debug mode
+
+In the browser, there's an optional debug mode which will render debug classes to styled elements which point to the JS source location of the styled component. This mode can be enabled with the `debugMode` prop on the client side `Provider`.
+
+##### Example
+
+<img height="550" src="https://user-images.githubusercontent.com/780408/39457018-ac42410e-4c9f-11e8-91e7-ac2da8bfe230.gif"></img>
+
+**Client-side only rendering**
+
+When simply rendering client side, set the `debugMode` prop to `true`.
+
+```diff
+const App = () => (
+- <Provider value={engine}>
++ <Provider value={engine} debugMode={true}>
+    <RootComponent/>
+  </Provider>
+);
+```
+
+
+**Hydrating from SSR**
+
+When hydrating from SSR, set the `debugMode` to `"ssr"` to prevent errors from mismatched client/server rendered markup. This will trigger a one-time extra initial re-render to add the debug classes.
+
+```diff
+const App = () => (
+- <Provider value={engine}>
++ <Provider value={engine} debugMode="ssr">
+    <RootComponent/>
+  </Provider>
+);
 ```
 
 [deps-badge]: https://david-dm.org/rtsao/styletron-react.svg
