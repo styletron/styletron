@@ -46,7 +46,8 @@
     "eslint-plugin-react": "^7.6.1",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "unitest": "^2.1.1"
+    "unitest": "^2.1.1",
+    "xhr-mock": "^2.3.2"
   },
   "license": "MIT"
 }

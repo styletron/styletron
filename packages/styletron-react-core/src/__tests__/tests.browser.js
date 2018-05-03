@@ -4,6 +4,7 @@ import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import * as React from "react";
+import mock from "xhr-mock";
 
 import {
   withWrapper,
@@ -317,5 +318,57 @@ test("withWrapper", t => {
     "wrapper rendered after composition",
   );
 
+  t.end();
+});
+
+test("styled debug mode (client only)", t => {
+  t.plan(3);
+  mock.setup();
+  mock.use((req, res) => {
+    mock.teardown();
+    t.ok(req.url().path.endsWith(".js"), "requests source");
+    return res.status(200);
+  });
+
+  const style = {size: 1};
+  const Widget = styled("div", style);
+  const wrapper = Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: () => "bar",
+      }}
+      debugMode={true}
+    >
+      <Widget className="foo" />
+    </Provider>,
+  );
+  const divs = wrapper.find("div");
+  t.equal(divs.length, 1, "single div rendered");
+  t.ok(divs.hasClass("foo bar __debug_18"), "adds debug class");
+});
+
+test("styled debug mode (ssr)", t => {
+  const style = {size: 1};
+  let count = 0;
+  const Widget = styled("div", style);
+  const wrapper = Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: () => {
+          count++;
+          return "foo";
+        },
+      }}
+      debugMode="ssr"
+    >
+      <Widget />
+    </Provider>,
+  );
+  const divs = wrapper.find("div");
+  t.equal(count, 2, "renders twice");
+  t.ok(
+    divs.hasClass("foo __debug_19"),
+    "explicit and generated class names merged",
+  );
   t.end();
 });
