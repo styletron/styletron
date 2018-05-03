@@ -11,27 +11,30 @@ const schedule = window.requestIdleCallback
 
 let counter = 0;
 let queue = [];
-let debugEnabled = false;
-
-export function enableDebug() {
-  debugEnabled = true;
-}
 
 export function addDebugClass(baseStyletron, stackIndex) {
-  if (!debugEnabled) {
-    return;
-  }
+  const error = new Error("stacktrace source");
   const {className, selector} = getUniqueId();
-  baseStyletron.debugClass = className;
 
-  const trace = getTrace();
+  let rendered = false;
 
-  trace
-    .then(stackframes => {
-      const {fileName, lineNumber} = stackframes[stackIndex];
-      addToQueue({selector, lineNumber, fileName});
-    })
-    .catch(err => console.log(err)); // eslint-disable-line no-console
+  // make side effects lazy
+  baseStyletron.debugClass = () => {
+    if (rendered) {
+      return className;
+    }
+    rendered = true;
+    const trace = StackTrace.fromError(error, {sourceCache: cache});
+
+    trace
+      .then(stackframes => {
+        const {fileName, lineNumber} = stackframes[stackIndex];
+        addToQueue({selector, lineNumber, fileName});
+      })
+      .catch(err => console.log(err)); // eslint-disable-line no-console
+
+    return className;
+  };
 }
 
 function flush() {
@@ -74,10 +77,6 @@ function addToQueue(item) {
   if (prevCount === 0) {
     schedule(flush);
   }
-}
-
-function getTrace() {
-  return StackTrace.get({sourceCache: cache});
 }
 
 function getUniqueId() {
