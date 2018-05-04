@@ -344,7 +344,7 @@ test("styled debug mode (client only)", t => {
   );
   const divs = wrapper.find("div");
   t.equal(divs.length, 1, "single div rendered");
-  t.ok(divs.hasClass("foo bar __debug_18"), "adds debug class");
+  t.ok(divs.hasClass("__debug_18 foo bar"), "adds debug class");
 });
 
 test("styled debug mode (ssr)", t => {
@@ -367,7 +367,7 @@ test("styled debug mode (ssr)", t => {
   const divs = wrapper.find("div");
   t.equal(count, 2, "renders twice");
   t.ok(
-    divs.hasClass("foo __debug_19"),
+    divs.hasClass("__debug_19 foo"),
     "explicit and generated class names merged",
   );
   t.end();

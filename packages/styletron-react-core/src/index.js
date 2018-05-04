@@ -45,7 +45,7 @@ class DevProvider extends Component<any, {renderDebug: boolean}> {
 }
 
 export const Provider =
-  __DEV__ && __BROWSER__ ? DevProvider : StyletronContext.Provider;
+  __BROWSER__ && __DEV__ ? DevProvider : StyletronContext.Provider;
 
 export function DevConsumer(props: any) {
   return (
@@ -60,7 +60,7 @@ export function DevConsumer(props: any) {
 }
 
 const Consumer =
-  __DEV__ && __BROWSER__ ? DevConsumer : StyletronContext.Consumer;
+  __BROWSER__ && __DEV__ ? DevConsumer : StyletronContext.Consumer;
 
 export type styledElementProps<Base> = {
   $as?: Base,
@@ -469,7 +469,9 @@ export function createStyledElementComponent<
             : styleClassString;
 
           if (__DEV__ && __BROWSER__ && renderDebug && debugClass) {
-            elementProps.className += " " + debugClass();
+            elementProps.className = `${debugClass()} ${
+              elementProps.className
+            }`;
           }
 
           if (props.$ref) {

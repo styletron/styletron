@@ -5,9 +5,11 @@ import {encode} from "sourcemap-codec";
 
 const cache = {};
 
-const schedule = window.requestIdleCallback
-  ? task => window.requestIdleCallback(task, {timeout: 180})
-  : window.requestAnimationFrame;
+const schedule = __BROWSER__
+  ? window.requestIdleCallback
+    ? task => window.requestIdleCallback(task, {timeout: 180})
+    : window.requestAnimationFrame
+  : () => {};
 
 let counter = 0;
 let queue = [];
