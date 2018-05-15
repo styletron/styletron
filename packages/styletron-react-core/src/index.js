@@ -104,7 +104,7 @@ export type wrapperT = (
 export type styletronT<Style: Object, Props: Object, Base, Engine> = {|
   // TODO: Variadic generics for multiple reducer prop types?
   // Look into $Compose?
-  reducers: Array<reducerItemT<Style, *>>,
+  reducers: Array<reducerItemT<Style, any>>,
   base: ElementType,
   getInitialStyle: () => Style,
   driver: driverT<Style, Engine>,
