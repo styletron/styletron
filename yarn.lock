@@ -997,7 +997,7 @@ babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
     esutils "^2.0.2"
     js-tokens "^3.0.2"
 
-babel-eslint@^8.2.2:
+babel-eslint@8.2.2:
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-8.2.2.tgz#1102273354c6f0b29b4ea28a65f97d122296b68b"
   dependencies:
@@ -2063,7 +2063,7 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
-enzyme-adapter-react-16@^1.1.1:
+enzyme-adapter-react-16@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.1.1.tgz#a8f4278b47e082fbca14f5bfb1ee50ee650717b4"
   dependencies:
@@ -2083,7 +2083,7 @@ enzyme-adapter-utils@^1.3.0:
     object.assign "^4.0.4"
     prop-types "^15.6.0"
 
-enzyme@^3.3.0:
+enzyme@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.3.0.tgz#0971abd167f2d4bf3f5bd508229e1c4b6dc50479"
   dependencies:
@@ -2205,7 +2205,7 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-cup-recommended@^1.0.0:
+eslint-config-cup-recommended@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-cup-recommended/-/eslint-config-cup-recommended-1.0.0.tgz#fe2e2c605ada87fd93cfe3224a9b10c309cab996"
   dependencies:
@@ -2216,13 +2216,13 @@ eslint-config-cup@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-cup/-/eslint-config-cup-1.0.0.tgz#0fcdb787fe254fc9458ec5258143cb0d47052896"
 
-eslint-plugin-cup@^1.0.0:
+eslint-plugin-cup@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-cup/-/eslint-plugin-cup-1.0.0.tgz#6ceced9a06d29e6e7bdc76ca9e398c9bf53072be"
   dependencies:
     globals "^10.0.0"
 
-eslint-plugin-flowtype@^2.46.1:
+eslint-plugin-flowtype@2.46.1:
   version "2.46.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.46.1.tgz#c4f81d580cd89c82bc3a85a1ccf4ae3a915143a4"
   dependencies:
@@ -2235,7 +2235,7 @@ eslint-plugin-prettier@2.6.0, eslint-plugin-prettier@^2.0.1:
     fast-diff "^1.1.1"
     jest-docblock "^21.0.0"
 
-eslint-plugin-react@^7.6.1:
+eslint-plugin-react@7.6.1:
   version "7.6.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.6.1.tgz#5d0e908be599f0c02fbf4eef0c7ed6f29dff7633"
   dependencies:
@@ -2509,7 +2509,7 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.73.0:
+flow-bin@0.73.0:
   version "0.73.0"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.73.0.tgz#da1b90a02b0ef9c439f068c2fc14968db83be425"
 
@@ -3409,7 +3409,7 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-lerna@^2.9.0:
+lerna@2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.9.0.tgz#303f70bc50b1c4541bdcf54eda13c36fe54401f3"
   dependencies:
@@ -4213,7 +4213,7 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.10.2:
+prettier@1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.0.tgz#c024f70cab158c993f50fc0c25ffe738cb8b0f85"
 
@@ -5242,7 +5242,7 @@ unicode-property-aliases-ecmascript@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.0.3.tgz#ac3522583b9e630580f916635333e00c5ead690d"
 
-unitest@^2.1.1:
+unitest@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/unitest/-/unitest-2.1.1.tgz#ca349e320ba3d7ea1843a9f2f74683930595b7b9"
   dependencies:
@@ -5453,7 +5453,7 @@ ws@3.3.x:
     safe-buffer "~5.1.0"
     ultron "~1.1.0"
 
-xhr-mock@^2.3.2:
+xhr-mock@2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/xhr-mock/-/xhr-mock-2.3.2.tgz#dc4336229459845e8653843a6ac4f59b0bd33385"
   dependencies:
