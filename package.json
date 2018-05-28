@@ -22,7 +22,7 @@
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-prettier": "2.6.0",
     "flow-bin": "^0.73.0",
-    "lerna": "^2.9.0",
+    "lerna": "^2.11.0",
     "prettier": "^1.10.2"
   },
   "license": "MIT"
