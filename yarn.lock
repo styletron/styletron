@@ -2205,16 +2205,16 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-cup-recommended@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-cup-recommended/-/eslint-config-cup-recommended-1.0.0.tgz#fe2e2c605ada87fd93cfe3224a9b10c309cab996"
+eslint-config-cup-recommended@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-cup-recommended/-/eslint-config-cup-recommended-1.0.2.tgz#3a602a29e8df93f685efa1e9ac3d899f12420fc8"
   dependencies:
-    eslint-config-cup "^1.0.0"
-    eslint-plugin-prettier "^2.0.1"
+    eslint-config-cup "^1.0.2"
+    eslint-plugin-prettier "^2.6.0"
 
-eslint-config-cup@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-cup/-/eslint-config-cup-1.0.0.tgz#0fcdb787fe254fc9458ec5258143cb0d47052896"
+eslint-config-cup@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-cup/-/eslint-config-cup-1.0.2.tgz#b155337b2a4788e403e367408b3d72cc2a4283e9"
 
 eslint-plugin-cup@^1.0.0:
   version "1.0.0"
@@ -2228,7 +2228,7 @@ eslint-plugin-flowtype@^2.46.1:
   dependencies:
     lodash "^4.15.0"
 
-eslint-plugin-prettier@2.6.0, eslint-plugin-prettier@^2.0.1:
+eslint-plugin-prettier@2.6.0, eslint-plugin-prettier@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.6.0.tgz#33e4e228bdb06142d03c560ce04ec23f6c767dd7"
   dependencies:
