@@ -23,7 +23,7 @@
     "eslint-plugin-prettier": "2.6.0",
     "flow-bin": "^0.73.0",
     "lerna": "^2.9.0",
-    "prettier": "^1.10.2"
+    "prettier": "^1.13.2"
   },
   "license": "MIT"
 }
