@@ -21,4 +21,5 @@ export {
   withStyleDeep,
   withTransform,
   withWrapper,
+  DebugEngine,
 } from "styletron-react-core";

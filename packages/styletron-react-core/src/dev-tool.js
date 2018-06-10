@@ -1,91 +1,54 @@
 /* eslint-env browser */
+/* global module */
 
-import StackTrace from "stacktrace-js";
-import {encode} from "sourcemap-codec";
-
-const cache = {};
-
-const schedule = __BROWSER__
-  ? window.requestIdleCallback
-    ? task => window.requestIdleCallback(task, {timeout: 180})
-    : window.requestAnimationFrame
-  : () => {};
-
-let counter = 0;
-let queue = [];
-
-export function addDebugClass(baseStyletron, stackIndex) {
-  const error = new Error("stacktrace source");
-  const {className, selector} = getUniqueId();
-
-  let rendered = false;
-
-  // make side effects lazy
-  baseStyletron.debugClass = () => {
-    if (rendered) {
-      return className;
-    }
-    rendered = true;
-    const trace = StackTrace.fromError(error, {sourceCache: cache});
-
-    trace
-      .then(stackframes => {
-        const {fileName, lineNumber} = stackframes[stackIndex];
-        addToQueue({selector, lineNumber, fileName});
-      })
-      .catch(err => console.log(err)); // eslint-disable-line no-console
-
-    return className;
-  };
+export function addDebugMetadata(instance, stackIndex) {
+  const {stack, stacktrace, message} = new Error("stacktrace source");
+  instance.debugStackInfo = {stack, stacktrace, message};
+  instance.debugStackIndex = stackIndex;
 }
 
-function flush() {
-  const {rules, segments, sources} = queue.reduce(
-    (acc, {selector, lineNumber, fileName}) => {
-      let sourceIndex = acc.sources.indexOf(fileName);
-      if (sourceIndex === -1) {
-        sourceIndex = acc.sources.push(fileName) - 1;
+export class DebugEngine {
+  constructor(worker) {
+    if (!worker) {
+      worker = new Worker(
+        "https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/worker.js",
+      );
+      worker.postMessage({
+        id: "init_wasm",
+        url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/mappings.wasm",
+      });
+      worker.postMessage({
+        id: "set_render_interval",
+        interval: 120,
+      });
+      if (module.hot) {
+        module.hot.addStatusHandler(status => {
+          if (status === "dispose") {
+            worker.postMessage({id: "invalidate"});
+          }
+        });
       }
-      acc.rules.push(`${selector} {}`);
-      acc.segments.push([[0, sourceIndex, lineNumber - 1, 0]]);
-      return acc;
-    },
-    {rules: [], segments: [], sources: []},
-  );
-  queue = [];
-
-  const mappings = encode(segments);
-  const map = {
-    version: 3,
-    sources,
-    mappings,
-    sourcesContent: sources.map(source => cache[source]),
-  };
-
-  const json = JSON.stringify(map);
-  const base64 = window.btoa(json);
-
-  const css =
-    rules.join("\n") +
-    `\n\/*# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64} */`;
-  const style = document.createElement("style");
-  style.appendChild(document.createTextNode(css));
-  document.head.appendChild(style);
-}
-
-function addToQueue(item) {
-  const prevCount = queue.length;
-  queue.push(item);
-  if (prevCount === 0) {
-    schedule(flush);
+    }
+    this.worker = worker;
+    this.counter = 0;
+    this.worker.onmessage = msg => {
+      const {id, css} = msg.data;
+      if (id === "render_css" && css) {
+        const style = document.createElement("style");
+        style.appendChild(document.createTextNode(css));
+        document.head.appendChild(style);
+      }
+    };
   }
-}
 
-function getUniqueId() {
-  const id = counter++;
-  const className = `__debug_${id}`;
-  return {
-    selector: `.${className}`,
-    className,
-  };
+  debug({stackIndex, stackInfo}) {
+    const className = `__debug-${this.counter++}`;
+    this.worker.postMessage({
+      id: "add_mapped_class",
+      className,
+      stackInfo,
+      stackIndex,
+    });
+    return className;
+  }
 }
