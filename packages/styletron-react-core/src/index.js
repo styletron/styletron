@@ -13,32 +13,40 @@ import React, {createElement, Component} from "react";
 
 import createReactContext, {type Context} from "create-react-context";
 
-import {addDebugClass} from "./dev-tool.js";
+import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
+
+export {DebugEngine};
 
 const StyletronContext: Context<any> = createReactContext();
 
-const HydratedContext: Context<boolean> = createReactContext(false);
+const HydrationContext: Context<boolean> = createReactContext(false);
 
-class DevProvider extends Component<any, {renderDebug: boolean}> {
+const DebugEngineContext: Context<any> = createReactContext();
+
+class DevProvider extends Component<any, {hydrating: boolean}> {
   constructor(props: any) {
     super();
     this.state = {
-      renderDebug: props.debugMode === "ssr" ? false : props.debugMode,
+      hydrating: Boolean(props.debugAfterHydration),
     };
   }
 
   componentDidMount() {
-    if (this.props.debugMode === "ssr" && !this.state.renderDebug) {
-      this.setState({renderDebug: true});
+    if (__BROWSER__) {
+      if (this.state.hydrating === true) {
+        this.setState({hydrating: false});
+      }
     }
   }
 
   render() {
     return (
       <StyletronContext.Provider value={this.props.value}>
-        <HydratedContext.Provider value={this.state.renderDebug}>
-          {this.props.children}
-        </HydratedContext.Provider>
+        <DebugEngineContext.Provider value={this.props.debug}>
+          <HydrationContext.Provider value={this.state.hydrating}>
+            {this.props.children}
+          </HydrationContext.Provider>
+        </DebugEngineContext.Provider>
       </StyletronContext.Provider>
     );
   }
@@ -49,13 +57,19 @@ export const Provider =
 
 export function DevConsumer(props: any) {
   return (
-    <HydratedContext.Consumer>
-      {renderDebug => (
-        <StyletronContext.Consumer>
-          {engine => props.children(engine, renderDebug)}
-        </StyletronContext.Consumer>
+    <StyletronContext.Consumer>
+      {styletronEngine => (
+        <DebugEngineContext.Consumer>
+          {debugEngine => (
+            <HydrationContext.Consumer>
+              {hydrating =>
+                props.children(styletronEngine, debugEngine, hydrating)
+              }
+            </HydrationContext.Consumer>
+          )}
+        </DebugEngineContext.Consumer>
       )}
-    </HydratedContext.Consumer>
+    </StyletronContext.Consumer>
   );
 }
 
@@ -109,7 +123,8 @@ export type styletronT<Style: Object, Props: Object, Base, Engine> = {|
   getInitialStyle: () => Style,
   driver: driverT<Style, Engine>,
   wrapper: any,
-  debugClass?: any,
+  debugStackInfo?: any,
+  debugStackIndex?: any,
 |};
 /* eslint-enable no-unused-vars */
 
@@ -156,7 +171,7 @@ export function createStyled<Style: Object, Engine>({
       wrapper,
     };
     if (__BROWSER__ && __DEV__) {
-      addDebugClass(baseStyletron, 2);
+      addDebugMetadata(baseStyletron, 2);
     }
     return createStyledElementComponent(
       autoComposeShallow(baseStyletron, styleArg),
@@ -176,7 +191,7 @@ export function withTransform<
 ): styletronComponentT<Style, Props & TransformerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
   if (__BROWSER__ && __DEV__) {
-    addDebugClass(styletron, 2);
+    addDebugMetadata(styletron, 2);
   }
 
   return createStyledElementComponent(
@@ -205,7 +220,7 @@ export function withStyle<
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
   if (__BROWSER__ && __DEV__) {
-    addDebugClass(styletron, 2);
+    addDebugMetadata(styletron, 2);
   }
   return createStyledElementComponent(autoComposeShallow(styletron, styleArg));
 }
@@ -222,7 +237,7 @@ export function withStyleDeep<
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
   if (__BROWSER__ && __DEV__) {
-    addDebugClass(styletron, 2);
+    addDebugMetadata(styletron, 2);
   }
   return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
 }
@@ -240,7 +255,7 @@ export function withWrapper<Style: Object, Props: Object, Base, Engine>(
     reducers: styletron.reducers,
   };
   if (__BROWSER__ && __DEV__) {
-    addDebugClass(composed, 2);
+    addDebugMetadata(composed, 2);
   }
   return createStyledElementComponent(composed);
 }
@@ -378,7 +393,8 @@ export function composeStatic<Style: Object, Props: Object, Base, Engine>(
       reducers: styletron.reducers,
       base: styletron.base,
       driver: styletron.driver,
-      debugClass: styletron.debugClass,
+      debugStackIndex: styletron.debugStackIndex,
+      debugStackInfo: styletron.debugStackInfo,
       wrapper: styletron.wrapper,
       getInitialStyle: () => style,
     };
@@ -391,7 +407,8 @@ export function composeStatic<Style: Object, Props: Object, Base, Engine>(
       return {
         getInitialStyle: styletron.getInitialStyle,
         base: styletron.base,
-        debugClass: styletron.debugClass,
+        debugStackIndex: styletron.debugStackIndex,
+        debugStackInfo: styletron.debugStackInfo,
         driver: styletron.driver,
         wrapper: styletron.wrapper,
         reducers: [
@@ -419,7 +436,8 @@ export function composeDynamic<
   return {
     getInitialStyle: styletron.getInitialStyle,
     base: styletron.base,
-    debugClass: styletron.debugClass,
+    debugStackIndex: styletron.debugStackIndex,
+    debugStackInfo: styletron.debugStackInfo,
     driver: styletron.driver,
     wrapper: styletron.wrapper,
     reducers: [reducer].concat(styletron.reducers),
@@ -435,7 +453,8 @@ export function createStyledElementComponent<
   reducers,
   base,
   driver,
-  debugClass,
+  debugStackInfo,
+  debugStackIndex,
   wrapper,
   getInitialStyle,
 }: styletronT<Style, Props, Base, Engine>): styletronComponentT<
@@ -455,10 +474,14 @@ export function createStyledElementComponent<
     return ((result: any): $Diff<T, Props>);
   }
 
+  if (__DEV__ && __BROWSER__) {
+    var debugClassName;
+  }
+
   function StyledElement(props) {
     return (
       <Consumer>
-        {(styletron, renderDebug) => {
+        {(styletron, debugEngine, hydrating) => {
           const elementProps = omitPrefixedKeys(props);
           const style = resolveStyle(getInitialStyle, reducers, props);
           const styleClassString = driver(style, styletron);
@@ -468,10 +491,15 @@ export function createStyledElementComponent<
             ? `${props.className} ${styleClassString}`
             : styleClassString;
 
-          if (__DEV__ && __BROWSER__ && renderDebug && debugClass) {
-            elementProps.className = `${debugClass()} ${
-              elementProps.className
-            }`;
+          if (__DEV__ && __BROWSER__ && debugEngine && !hydrating) {
+            if (!debugClassName) {
+              debugClassName = debugEngine.debug({
+                stackInfo: debugStackInfo,
+                stackIndex: debugStackIndex,
+              });
+            }
+            const joined = `${debugClassName} ${elementProps.className}`;
+            elementProps.className = joined;
           }
 
           if (props.$ref) {

@@ -31,9 +31,7 @@
   },
   "dependencies": {
     "create-react-context": "^0.2.2",
-    "prop-types": "^15.6.0",
-    "sourcemap-codec": "^1.4.1",
-    "stacktrace-js": "^2.0.0"
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "0.14.x - 16.x"
@@ -46,8 +44,7 @@
     "eslint-plugin-react": "^7.6.1",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "unitest": "^2.1.1",
-    "xhr-mock": "^2.3.2"
+    "unitest": "^2.1.1"
   },
   "license": "MIT"
 }

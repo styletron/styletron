@@ -272,35 +272,56 @@ const App = () => (
 
 In the browser, there's an optional debug mode which will render debug classes to styled elements which point to the JS source location of the styled component. This mode can be enabled with the `debugMode` prop on the client side `Provider`.
 
+
+
 ##### Example
 
 <img height="550" src="https://user-images.githubusercontent.com/780408/39457018-ac42410e-4c9f-11e8-91e7-ac2da8bfe230.gif"></img>
 
-**Client-side only rendering**
+**Providing the debug utility**
 
-When simply rendering client side, set the `debugMode` prop to `true`.
+Instantiate the debug utility and pass it to the Provider.
 
 ```diff
++ import {DebugUtility} from "styletron-react";
+
++ const debug = process.env.NODE_ENV === "production"
++   ? void 0
++   : new DebugUtility();
+
 const App = () => (
 - <Provider value={engine}>
-+ <Provider value={engine} debugMode={true}>
++ <Provider value={engine} debug={debug}>
     <RootComponent/>
   </Provider>
 );
 ```
 
-
 **Hydrating from SSR**
 
-When hydrating from SSR, set the `debugMode` to `"ssr"` to prevent errors from mismatched client/server rendered markup. This will trigger a one-time extra initial re-render to add the debug classes.
+When hydrating from SSR, set the `debugAfterHydration` prop to `true` to prevent warnings from mismatched client/server rendered markup. This will trigger a one-time re-render after initial hydration to add the debug classes.
 
 ```diff
+import {Provider, DebugUtility} from "styletron-react";
+
+const debug = process.env.NODE_ENV === "production"
+  ? void 0
+  : new DebugUtility();
+
 const App = () => (
-- <Provider value={engine}>
-+ <Provider value={engine} debugMode="ssr">
+-  <Provider value={engine} debug={debug}>
++  <Provider value={engine} debug={debug} debugAfterHydration>
     <RootComponent/>
   </Provider>
 );
+```
+
+**Debug utility interface**
+
+```
+interface DebugUtility {
+  debug({stackIndex, stackInfo}) : string
+}
 ```
 
 [deps-badge]: https://david-dm.org/rtsao/styletron-react.svg

@@ -4,7 +4,6 @@ import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import * as React from "react";
-import mock from "xhr-mock";
 
 import {
   withWrapper,
@@ -322,32 +321,52 @@ test("withWrapper", t => {
 });
 
 test("styled debug mode (client only)", t => {
-  t.plan(3);
-  mock.setup();
-  mock.use((req, res) => {
-    mock.teardown();
-    t.ok(req.url().path.endsWith(".js"), "requests source");
-    return res.status(200);
-  });
+  t.plan(7);
+
+  let debugCallCount = 0;
 
   const style = {size: 1};
   const Widget = styled("div", style);
+
   const wrapper = Enzyme.mount(
     <Provider
       value={{
         renderStyle: () => "bar",
       }}
-      debugMode={true}
+      debug={{
+        debug: ({stackIndex, stackInfo}) => {
+          debugCallCount++;
+          t.equal(stackIndex, 2, "stackIndex matches expected");
+          t.equal(typeof stackInfo, "object", "stackInfo is an object");
+          t.equal(
+            typeof stackInfo.stack,
+            "string",
+            "stackInfo.stack is a string (chrome)",
+          );
+          t.equal(
+            typeof stackInfo.message,
+            "string",
+            "stackInfo.message is a string (chrome)",
+          );
+          return "__arbitrary_debug_class__";
+        },
+      }}
     >
       <Widget className="foo" />
     </Provider>,
   );
+
   const divs = wrapper.find("div");
   t.equal(divs.length, 1, "single div rendered");
-  t.ok(divs.hasClass("__debug_18 foo bar"), "adds debug class");
+  t.ok(divs.hasClass("__arbitrary_debug_class__ foo bar"), "adds debug class");
+  wrapper.unmount();
+  wrapper.mount();
+  wrapper.unmount();
+  t.equal(debugCallCount, 1, "debug only called on initial render");
 });
 
 test("styled debug mode (ssr)", t => {
+  t.plan(3);
   const style = {size: 1};
   let count = 0;
   const Widget = styled("div", style);
@@ -359,7 +378,13 @@ test("styled debug mode (ssr)", t => {
           return "foo";
         },
       }}
-      debugMode="ssr"
+      debug={{
+        debug: () => {
+          t.equal(count, 2, "debug class fetched during second render");
+          return "__some_debug_class";
+        },
+      }}
+      debugAfterHydration
     >
       <Widget />
     </Provider>,
@@ -367,7 +392,7 @@ test("styled debug mode (ssr)", t => {
   const divs = wrapper.find("div");
   t.equal(count, 2, "renders twice");
   t.ok(
-    divs.hasClass("__debug_19 foo"),
+    divs.hasClass("__some_debug_class foo"),
     "explicit and generated class names merged",
   );
   t.end();
