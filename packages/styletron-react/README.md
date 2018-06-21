@@ -283,11 +283,11 @@ In the browser, there's an optional debug mode which will render debug classes t
 Instantiate the debug utility and pass it to the Provider.
 
 ```diff
-+ import {DebugUtility} from "styletron-react";
++ import {DebugEngine} from "styletron-react";
 
 + const debug = process.env.NODE_ENV === "production"
 +   ? void 0
-+   : new DebugUtility();
++   : new DebugEngine();
 
 const App = () => (
 - <Provider value={engine}>
@@ -302,11 +302,11 @@ const App = () => (
 When hydrating from SSR, set the `debugAfterHydration` prop to `true` to prevent warnings from mismatched client/server rendered markup. This will trigger a one-time re-render after initial hydration to add the debug classes.
 
 ```diff
-import {Provider, DebugUtility} from "styletron-react";
+import {Provider, DebugEngine} from "styletron-react";
 
 const debug = process.env.NODE_ENV === "production"
   ? void 0
-  : new DebugUtility();
+  : new DebugEngine();
 
 const App = () => (
 -  <Provider value={engine} debug={debug}>
@@ -319,7 +319,7 @@ const App = () => (
 **Debug utility interface**
 
 ```
-interface DebugUtility {
+interface DebugEngine {
   debug({stackIndex, stackInfo}) : string
 }
 ```
