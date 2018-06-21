@@ -10,9 +10,13 @@ export function addDebugMetadata(instance, stackIndex) {
 export class DebugEngine {
   constructor(worker) {
     if (!worker) {
-      worker = new Worker(
-        "https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/worker.js",
+      const workerBlob = new Blob(
+        [
+          `importScripts("https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/worker.js")`,
+        ],
+        {type: "application/javascript"},
       );
+      worker = new Worker(URL.createObjectURL(workerBlob));
       worker.postMessage({
         id: "init_wasm",
         url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/mappings.wasm",
