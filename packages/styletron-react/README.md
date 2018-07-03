@@ -162,10 +162,10 @@ const Baz = withStyle(Foo, props => ({
 ### `withStyleDeep`
 
 ```js
-import {withStyle} from "styletron-react";
+import {withStyleDeep} from "styletron-react";
 ```
 
-Use withStyle for style composition via deep object merging.
+Use `withStyleDeep` for style composition via deep object merging.
 
 #### Params
 
@@ -176,7 +176,14 @@ Use withStyle for style composition via deep object merging.
 
 ```jsx
 const Foo = styled("div");
-const Bar = withStyle(Foo, {});
+
+// Static styles
+const Bar = withStyleDeep(Foo, {":hover": {background: "green"}});
+
+// Props-driven styles
+const Bar = withStyleDeep(Foo, props => ({
+  ":hover": {background: props.$green ? "green" : "white"}
+});
 ```
 
 ### `withTransform`
