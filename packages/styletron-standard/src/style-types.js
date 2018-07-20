@@ -158,6 +158,7 @@ export type StandardLonghandProperties<
   inlineSize?: InlineSizeProperty<TLength>,
   isolation?: IsolationProperty,
   justifyContent?: JustifyContentProperty,
+  justifySelf?: JustifyContentProperty,
   left?: LeftProperty<TLength>,
   letterSpacing?: LetterSpacingProperty<TLength>,
   lineBreak?: LineBreakProperty,
