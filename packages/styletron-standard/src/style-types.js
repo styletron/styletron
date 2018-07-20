@@ -2114,9 +2114,7 @@ type MozOrientProperty =
   | "inline"
   | "vertical";
 
-type MozOsxFontSmoothingProperty =
-  | "auto"
-  | "grayscale";
+type MozOsxFontSmoothingProperty = "auto" | "grayscale";
 
 type MozStackSizingProperty = Globals | "ignore" | "stretch-to-fit";
 
@@ -2170,7 +2168,7 @@ type WebKitFontSmoothingProperty =
   | "auto"
   | "none"
   | "antialiased"
-  | "subpixel-antialiased"
+  | "subpixel-antialiased";
 
 type WebkitMaskAttachmentProperty = Globals | Attachment | string;
 
