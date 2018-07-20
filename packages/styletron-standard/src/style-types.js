@@ -2164,7 +2164,7 @@ type WebkitBoxReflectProperty<TLength> =
   | "right"
   | string;
 
-type WebKitFontSmoothingProperty =
+type WebkitFontSmoothingProperty =
   | "auto"
   | "none"
   | "antialiased"
