@@ -365,6 +365,7 @@ export type VendorLonghandProperties<
   mozForceBrokenImageIcon?: GlobalsNumber,
   mozImageRegion?: MozImageRegionProperty,
   mozOrient?: MozOrientProperty,
+  mozOsxFontSmoothing?: MozOsxFontSmoothingProperty,
   mozOutlineRadiusBottomleft?: GlobalsString,
   mozOutlineRadiusBottomright?: GlobalsString,
   mozOutlineRadiusTopleft?: GlobalsString,
@@ -380,6 +381,7 @@ export type VendorLonghandProperties<
   webkitBorderBeforeStyle?: WebkitBorderBeforeStyleProperty,
   webkitBorderBeforeWidth?: WebkitBorderBeforeWidthProperty<TLength>,
   webkitBoxReflect?: WebkitBoxReflectProperty<TLength>,
+  WebkitFontSmoothing?: WebkitFontSmoothingProperty,
   webkitMaskAttachment?: WebkitMaskAttachmentProperty,
   webkitMaskClip?: WebkitMaskClipProperty,
   webkitMaskComposite?: WebkitMaskCompositeProperty,
@@ -2112,6 +2114,10 @@ type MozOrientProperty =
   | "inline"
   | "vertical";
 
+type MozOsxFontSmoothingProperty =
+  | "auto"
+  | "grayscale";
+
 type MozStackSizingProperty = Globals | "ignore" | "stretch-to-fit";
 
 type MozTextBlinkProperty = Globals | "blink" | "none";
@@ -2159,6 +2165,12 @@ type WebkitBoxReflectProperty<TLength> =
   | "left"
   | "right"
   | string;
+
+type WebKitFontSmoothingProperty =
+  | "auto"
+  | "none"
+  | "antialiased"
+  | "subpixel-antialiased"
 
 type WebkitMaskAttachmentProperty = Globals | Attachment | string;
 
