@@ -33,7 +33,7 @@
     "inline-style-prefixer": "^4.0.0"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
+    "create-universal-package": "3.4.6",
     "tape": "4.8.0",
     "unitest": "^2.1.1"
   },
