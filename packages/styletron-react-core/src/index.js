@@ -482,6 +482,19 @@ export function createStyledElementComponent<
     return (
       <Consumer>
         {(styletron, debugEngine, hydrating) => {
+          if (__DEV__ && styletron === void 0) {
+            throw new Error(`
+A Styletron styled component was rendered, but no Styletron engine instance was provided in React context.
+
+Did you forget to provide a Styletron engine instance to React context via using the Styletron provider component?
+
+Note: Providers and Consumers must come from the exact same React.createContext call to work.
+If your app has multiple instances of the "styletron-react-core" package in your node_module tree,
+your Provider may be coming from a different React.createContext call, which means the styled components
+will not recieve the provided engine instance. This scenario can arise, for example, when using "npm link".
+`);
+          }
+
           const elementProps = omitPrefixedKeys(props);
           const style = resolveStyle(getInitialStyle, reducers, props);
           const styleClassString = driver(style, styletron);
