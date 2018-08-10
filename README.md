@@ -1,4 +1,4 @@
-# [![Styletron logo](https://cdn.rawgit.com/rtsao/styletron/logo/logo.svg "Styletron")](https://github.com/rtsao/styletron)
+# [![Styletron logo](https://cdn.rawgit.com/styletron/styletron/logo/logo.svg "Styletron")](https://github.com/styletron/styletron)
 
 [![build status][build-badge]][build-href]
 
@@ -139,5 +139,5 @@ See [packages/styletron-engine-atomic](packages/styletron-engine-atomic/README.m
 
 See [TRADEOFFS.md](TRADEOFFS.md)
 
-[build-badge]: https://travis-ci.org/rtsao/styletron.svg?branch=master
-[build-href]: https://travis-ci.org/rtsao/styletron
+[build-badge]: https://travis-ci.org/styletron/styletron.svg?branch=master
+[build-href]: https://travis-ci.org/styletron/styletron
