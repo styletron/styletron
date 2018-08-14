@@ -81,7 +81,7 @@ The `fontFamily` property takes a string, fonts can also be used declaratively.
 import type {fontT} from "styletron-standard";
 
 const font: fontT = {
-  src: "..."
+  src: "url(/path/to/font.woff)"
 };
 
 const style: styleT = {
