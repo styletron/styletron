@@ -161,6 +161,19 @@ export function createStyled<Style: Object, Engine>({
     base: Base,
     styleArg: styleArgT<Style, Props>,
   ): styletronComponentT<Style, Props, Base, Engine> {
+    if (__DEV__) {
+      if ((base: any).__STYLETRON__) {
+        /* eslint-disable no-console */
+        console.warn(
+          "It appears you are passing a styled component into `styled`.",
+        );
+        console.warn(
+          "For composition with existing styled components, use `withStyle`, `withStyleDeep`, or `withTransform` instead.",
+        );
+        /* eslint-enable no-console */
+      }
+    }
+
     const baseStyletron: styletronT<Style, {}, Base, Engine> = {
       reducers: [],
       // TODO: use typed generic instead of coercion once
