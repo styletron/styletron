@@ -158,12 +158,12 @@ function injectFixtureStyles(styletron) {
 
 function injectFixtureKeyframes(styletron) {
   const Keyframes = function Keyframes() {};
-  Keyframes.prototype.someProperty = 'not-serialized';
+  Keyframes.prototype.someProperty = "not-serialized";
 
   const keyframeInstance = new Keyframes();
-  keyframeInstance.from = {color: 'purple'};
-  keyframeInstance['50%'] = {color: 'yellow'};
-  keyframeInstance.to = {color: 'orange'};
+  keyframeInstance.from = {color: "purple"};
+  keyframeInstance["50%"] = {color: "yellow"};
+  keyframeInstance.to = {color: "orange"};
 
   return styletron.renderKeyframes(keyframeInstance);
 }
