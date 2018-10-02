@@ -156,16 +156,38 @@ function injectFixtureStyles(styletron) {
   });
 }
 
+test("non-pojo animation value", t => {
+  const styletron = new Styletron();
+
+  function Foo() {}
+  Foo.prototype.bar = "should not be serialized";
+  const foo = new Foo();
+  foo.from = {color: "purple"};
+  foo["50%"] = {color: "yellow"};
+  foo.to = {color: "orange"};
+
+  styletron.renderKeyframes(foo);
+
+  t.equal(
+    styletron.getCss(),
+    "@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}",
+  );
+
+  t.end();
+});
+
 function injectFixtureKeyframes(styletron) {
-  const Keyframes = function Keyframes() {};
-  Keyframes.prototype.someProperty = "not-serialized";
-
-  const keyframeInstance = new Keyframes();
-  keyframeInstance.from = {color: "purple"};
-  keyframeInstance["50%"] = {color: "yellow"};
-  keyframeInstance.to = {color: "orange"};
-
-  return styletron.renderKeyframes(keyframeInstance);
+  return styletron.renderKeyframes({
+    from: {
+      color: "purple",
+    },
+    "50%": {
+      color: "yellow",
+    },
+    to: {
+      color: "orange",
+    },
+  });
 }
 
 function injectFixtureFontFace(styletron) {
