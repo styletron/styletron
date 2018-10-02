@@ -13,7 +13,9 @@ export function atomicSelector(id: string, pseudo: string): string {
 export function keyframesToBlock(keyframes: Object): string {
   let result = "";
   for (const thing in keyframes) {
-    result += `${thing}{${declarationsToBlock(keyframes[thing])}}`;
+    if (Object.prototype.hasOwnProperty.call(keyframes, thing)) {
+      result += `${thing}{${declarationsToBlock(keyframes[thing])}}`;
+    }
   }
   return result;
 }

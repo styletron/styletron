@@ -157,17 +157,15 @@ function injectFixtureStyles(styletron) {
 }
 
 function injectFixtureKeyframes(styletron) {
-  return styletron.renderKeyframes({
-    from: {
-      color: "purple",
-    },
-    "50%": {
-      color: "yellow",
-    },
-    to: {
-      color: "orange",
-    },
-  });
+  const Keyframes = function Keyframes() {};
+  Keyframes.prototype.someProperty = 'not-serialized';
+
+  const keyframeInstance = new Keyframes();
+  keyframeInstance.from = {color: 'purple'};
+  keyframeInstance['50%'] = {color: 'yellow'};
+  keyframeInstance.to = {color: 'orange'};
+
+  return styletron.renderKeyframes(keyframeInstance);
 }
 
 function injectFixtureFontFace(styletron) {
