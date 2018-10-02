@@ -1,5 +1,7 @@
 // @flow strict
 
+declare var __DEV__: boolean;
+
 import hyphenate from "./hyphenate-style-name.js";
 
 export function atomicSelector(id: string, pseudo: string): string {
@@ -11,10 +13,19 @@ export function atomicSelector(id: string, pseudo: string): string {
 }
 
 export function keyframesToBlock(keyframes: Object): string {
+  if (__DEV__ && typeof Object.getPrototypeOf(keyframes) !== "undefined") {
+    if (Object.getPrototypeOf(keyframes) !== Object.getPrototypeOf({})) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "Only plain objects should be used as animation values. Unexpectedly recieved:",
+        keyframes,
+      );
+    }
+  }
   let result = "";
-  for (const thing in keyframes) {
-    if (Object.prototype.hasOwnProperty.call(keyframes, thing)) {
-      result += `${thing}{${declarationsToBlock(keyframes[thing])}}`;
+  for (const prop in keyframes) {
+    if (Object.prototype.hasOwnProperty.call(keyframes, prop)) {
+      result += `${prop}{${declarationsToBlock(keyframes[prop])}}`;
     }
   }
   return result;
