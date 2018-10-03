@@ -1,6 +1,9 @@
 // @flow strict
 
+declare var __DEV__: boolean;
+
 import hyphenate from "./hyphenate-style-name.js";
+import validateKeyframesObject from "./validate-keyframes-object.js";
 
 export function atomicSelector(id: string, pseudo: string): string {
   let selector = `.${id}`;
@@ -10,10 +13,15 @@ export function atomicSelector(id: string, pseudo: string): string {
   return selector;
 }
 
-export function keyframesToBlock(keyframes: Object): string {
+export function keyframesToBlock(keyframes: {[string]: Object}): string {
+  if (__DEV__) {
+    validateKeyframesObject(keyframes);
+  }
   let result = "";
-  for (const thing in keyframes) {
-    result += `${thing}{${declarationsToBlock(keyframes[thing])}}`;
+  for (const animationState in keyframes) {
+    result += `${animationState}{${declarationsToBlock(
+      keyframes[animationState],
+    )}}`;
   }
   return result;
 }
