@@ -109,7 +109,7 @@ const html = React.render(
 );
 
 // 3. Extract critical styles after SSR
-const styles = engine.getStyleSheetsHTML();
+const styles = engine.getStylesheetsHtml();
 // → "<style ..."
 ```
 
