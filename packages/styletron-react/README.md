@@ -67,6 +67,8 @@ const StyledInput = styled("input", props => ({
 
 #### `$as`
 
+The `$as` prop can be used to render a different element/component than what was passed into the original `styled` call.
+
 ```jsx
 const Foo = styled("div", /* ... */);
 
