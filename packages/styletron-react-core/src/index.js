@@ -232,6 +232,15 @@ export function withStyle<
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
+  if (__DEV__) {
+    if (!styletron) {
+      /* eslint-disable no-console */
+      console.warn(
+        "The first parameter to `withStyle` must be a styled component (without extra wrappers).",
+      );
+      /* eslint-enable no-console */
+    }
+  }
   if (__BROWSER__ && __DEV__) {
     addDebugMetadata(styletron, 2);
   }
@@ -249,6 +258,15 @@ export function withStyleDeep<
   styleArg: styleArgT<Style, ReducerProps>,
 ): styletronComponentT<Style, Props & ReducerProps, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
+  if (__DEV__) {
+    if (!styletron) {
+      /* eslint-disable no-console */
+      console.warn(
+        "The first parameter to `withStyleDeep` must be a styled component (without extra wrappers).",
+      );
+      /* eslint-enable no-console */
+    }
+  }
   if (__BROWSER__ && __DEV__) {
     addDebugMetadata(styletron, 2);
   }
@@ -260,6 +278,15 @@ export function withWrapper<Style: Object, Props: Object, Base, Engine>(
   wrapper: any,
 ): styletronComponentT<Style, Props, Base, Engine> {
   const styletron = (component: any).__STYLETRON__;
+  if (__DEV__) {
+    if (!styletron) {
+      /* eslint-disable no-console */
+      console.warn(
+        "The first parameter to `withWrapper` must be a styled component (without extra wrappers).",
+      );
+      /* eslint-enable no-console */
+    }
+  }
   const composed = {
     getInitialStyle: styletron.getInitialStyle,
     base: styletron.base,
