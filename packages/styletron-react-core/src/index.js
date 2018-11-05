@@ -55,6 +55,14 @@ class DevProvider extends Component<any, {hydrating: boolean}> {
 export const Provider =
   __BROWSER__ && __DEV__ ? DevProvider : StyletronContext.Provider;
 
+export function ProdConsumer(props: any) {
+  return (
+    <StyletronContext.Consumer>
+      {styletronEngine => props.children(styletronEngine)}
+    </StyletronContext.Consumer>
+  );
+}
+
 export function DevConsumer(props: any) {
   return (
     <StyletronContext.Consumer>
@@ -73,8 +81,7 @@ export function DevConsumer(props: any) {
   );
 }
 
-const Consumer =
-  __BROWSER__ && __DEV__ ? DevConsumer : StyletronContext.Consumer;
+const Consumer = __BROWSER__ && __DEV__ ? DevConsumer : ProdConsumer;
 
 export type styledElementProps<Base> = {
   $as?: Base,
