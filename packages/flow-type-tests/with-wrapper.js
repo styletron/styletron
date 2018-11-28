@@ -9,3 +9,5 @@ const Bar = withWrapper(Foo, StyledComponent => props => (
     <StyledComponent {...props} />
   </div>
 ));
+
+<Bar />;
