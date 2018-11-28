@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 declare var __DEV__: boolean;
 

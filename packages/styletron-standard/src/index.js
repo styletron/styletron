@@ -1,71 +1,69 @@
 // @flow
 
-import type {Properties} from "./style-types.js";
+import type {Properties, FontFace as FontFaceObject} from "csstype";
 
-type fontFaceT = {
-  src?: string,
+export type {FontFaceObject};
+
+export type KeyframesObject = {
+  from?: Properties<>,
+  to?: Properties<>,
+  [string]: Properties<>,
 };
 
-type keyframesT = {
-  from?: Properties<string | 0>,
-  to?: Properties<string | 0>,
-  [string]: Properties<string | 0>,
+export type StyleProperties = $Diff<
+  Properties<>,
+  {fontFamily: any, animationName: any},
+> & {
+  fontFamily: string | FontFaceObject,
+  animationName: string | KeyframesObject,
 };
 
-// TODO: investigate why $Shape is needed
-type NestedStyleT<T> = $Shape<{
-  ...T,
-  [string]: {
-    ...T,
-    [string]: T,
-  },
+// Note: $Shape is needed to make polymorphic withStyle refinements work correctly
+// It seems functions satisfy this type without $Shape
+// See: https://github.com/facebook/flow/issues/6784
+//
+//
+//
+//
+//
+//
+export type StyleObject = $Shape<{
+  ...StyleProperties,
+  [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
 }>;
 
-type baseStyleT = NestedStyleT<Properties<string | 0>>;
-
-type declarativeStyleT = NestedStyleT<
-  Properties<string | 0, string | fontFaceT, string | keyframesT>,
->;
-
 export interface StandardEngine {
-  renderStyle(style: baseStyleT): string;
-  renderKeyframes(keyframes: keyframesT): string;
-  renderFontFace(fontFace: fontFaceT): string;
+  renderStyle(style: StyleObject): string;
+  renderKeyframes(keyframes: KeyframesObject): string;
+  renderFontFace(fontFace: FontFaceObject): string;
 }
 
-export function driver(style: declarativeStyleT, styletron: StandardEngine) {
+export function driver(style: StyleObject, styletron: StandardEngine): string {
   const tx = renderDeclarativeRules(style, styletron);
   return styletron.renderStyle(tx);
 }
 
-export function getInitialStyle(): declarativeStyleT {
+export function getInitialStyle(): StyleObject {
   return {};
 }
 
-function renderDeclarativeRules(
-  style: declarativeStyleT,
+export function renderDeclarativeRules(
+  style: StyleObject,
   styletron: StandardEngine,
-): baseStyleT {
+) {
   for (const key in style) {
     const val = style[key];
     if (key === "animationName" && typeof val !== "string") {
-      style.animationName = ((styletron.renderKeyframes(
-        ((val: any): keyframesT),
-      ): any): keyframesT);
+      style.animationName = styletron.renderKeyframes((val: any));
       continue;
     }
     if (key === "fontFamily" && typeof val !== "string") {
-      style.fontFamily = ((styletron.renderFontFace(
-        ((val: any): fontFaceT),
-      ): any): fontFaceT);
+      style.fontFamily = styletron.renderFontFace((val: any));
       continue;
     }
     if (typeof val === "object" && val !== null) {
-      renderDeclarativeRules((val: any), styletron);
+      renderDeclarativeRules(val, styletron);
     }
   }
-  // TODO avoid type casting
-  return (style: any);
+  return style;
 }
-
-export type {baseStyleT, declarativeStyleT, keyframesT, fontFaceT};

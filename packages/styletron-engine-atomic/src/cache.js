@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 import SequentialIDGenerator from "./sequential-id-generator.js";
 

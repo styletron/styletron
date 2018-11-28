@@ -30,9 +30,9 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "create-react-context": "^0.2.2",
     "prop-types": "^15.6.0",
-    "styletron-react-core": "^1.3.3",
-    "styletron-standard": "^1.0.7"
+    "styletron-standard": "^2.0.0"
   },
   "peerDependencies": {
     "react": "0.14.x - 16.x"

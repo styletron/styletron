@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 export default class SequentialIDGenerator {
   prefix: string;

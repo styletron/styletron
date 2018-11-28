@@ -23,7 +23,6 @@ Toolkit for component-oriented styling
    * No extra tooling (e.g. Webpack loaders, Babel plugins, etc.)
 3. Portability and flexibility
    * Portability of styled components across different rendering engines (e.g. atomic CSS)
-   * Core implementation agnostic of shape of style objects
 
 See [docs/design.md](docs/design.md) for more details.
 
