@@ -5,6 +5,6 @@
   "license": "MIT",
   "dependencies": {
     "styletron-react": "4.3.6",
-    "styletron-standard": "^2.0.0"
+    "styletron-standard": "^1.0.7"
   }
 }
