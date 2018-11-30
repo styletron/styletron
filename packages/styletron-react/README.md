@@ -20,6 +20,7 @@ The `styletron-react` package consists of the following named exports:
 * [`withTransform`](#withtransform)
 * [`withWrapper`](#withwrapper)
 * [`Provider`](#provider)
+* [`createStyled`](#createstyled)
 
 ## Creating styled components
 
@@ -332,6 +333,56 @@ interface DebugEngine {
   debug({stackIndex, stackInfo}) : string
 }
 ```
+
+## Customizing `styled`
+
+### `createStyled`
+
+```js
+import {createStyled} from "styletron-react-core";
+```
+
+Returns a `styled` function.
+
+#### Params
+
+1. `opts`
+
+* `opts.getInitialStyle`: (`void => Style`)
+* `opts.driver`: (`(Style, Engine) => string`)
+* `opts.wrapper`: (`StatelessFunctionalComponent<*> => StatelessFunctionalComponent<*>`)
+
+#### Examples
+
+```js
+import {createStyled} from "styletron-react-core";
+
+type customStyleT = $Shape<{
+  angle?: number,
+  velocity?: number
+}>;
+
+interface CustomEngine {
+  someMethod: customStyleT => string;
+}
+
+function driver(style: customStyleT, engine: CustomEngine): string {
+  return engine.someMethod(style);
+}
+
+function getInitialStyle(): customStyleT {
+  return {};
+}
+
+const wrapper = StyledComponent => props => (
+  <div>
+    <StyledComponent {...props} />
+  </div>
+);
+
+const styled = createStyled({getInitialStyle, driver, wrapper});
+```
+
 
 [deps-badge]: https://david-dm.org/rtsao/styletron-react.svg
 [deps-href]: https://david-dm.org/rtsao/styletron-react

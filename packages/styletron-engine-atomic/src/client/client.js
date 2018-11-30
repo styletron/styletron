@@ -1,3 +1,5 @@
+// @flow
+
 /* eslint-env browser */
 
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
@@ -32,9 +34,9 @@ import SequentialIDGenerator from "../sequential-id-generator.js";
 
 import type {
   StandardEngine,
-  keyframesT,
-  fontFaceT,
-  baseStyleT,
+  KeyframesObject,
+  FontFaceObject,
+  StyleObject,
 } from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache.js";
@@ -68,8 +70,8 @@ class StyletronClient implements StandardEngine {
   keyframesSheet: HTMLStyleElement;
 
   styleCache: MultiCache<{pseudo: string, block: string}>;
-  keyframesCache: Cache<keyframesT>;
-  fontFaceCache: Cache<fontFaceT>;
+  keyframesCache: Cache<KeyframesObject>;
+  fontFaceCache: Cache<FontFaceObject>;
 
   constructor(opts?: optionsT = {}) {
     this.styleElements = {};
@@ -162,16 +164,16 @@ class StyletronClient implements StandardEngine {
     }
   }
 
-  renderStyle(style: baseStyleT): string {
+  renderStyle(style: StyleObject): string {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 
-  renderFontFace(fontFace: fontFaceT): string {
+  renderFontFace(fontFace: FontFaceObject): string {
     const key = declarationsToBlock(fontFace);
     return this.fontFaceCache.addValue(key, fontFace);
   }
 
-  renderKeyframes(keyframes: keyframesT): string {
+  renderKeyframes(keyframes: KeyframesObject): string {
     const key = keyframesToBlock(keyframes);
     return this.keyframesCache.addValue(key, keyframes);
   }

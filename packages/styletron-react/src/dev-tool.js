@@ -3,8 +3,10 @@
 
 export function addDebugMetadata(instance, stackIndex) {
   const {stack, stacktrace, message} = new Error("stacktrace source");
-  instance.debugStackInfo = {stack, stacktrace, message};
-  instance.debugStackIndex = stackIndex;
+  instance.debug = {
+    stackInfo: {stack, stacktrace, message},
+    stackIndex: stackIndex,
+  };
 }
 
 export class DebugEngine {
@@ -12,14 +14,14 @@ export class DebugEngine {
     if (!worker) {
       const workerBlob = new Blob(
         [
-          `importScripts("https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/worker.js")`,
+          `importScripts("https://unpkg.com/css-to-js-sourcemap-worker@2.0.4/worker.js")`,
         ],
         {type: "application/javascript"},
       );
       worker = new Worker(URL.createObjectURL(workerBlob));
       worker.postMessage({
         id: "init_wasm",
-        url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.1/mappings.wasm",
+        url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.4/mappings.wasm",
       });
       worker.postMessage({
         id: "set_render_interval",

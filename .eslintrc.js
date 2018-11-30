@@ -2,18 +2,24 @@ module.exports = {
   parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 2017,
-    jsx: true
+    jsx: true,
   },
 
   extends: [
     require.resolve("eslint-config-cup"),
-    require.resolve("eslint-config-cup-recommended")
+    require.resolve("eslint-config-cup-recommended"),
   ],
 
-  plugins: ["eslint-plugin-prettier", "eslint-plugin-flowtype"],
+  plugins: [
+    "eslint-plugin-prettier",
+    "eslint-plugin-flowtype",
+    "eslint-plugin-react",
+  ],
 
   rules: {
     "flowtype/define-flow-type": 1,
+
+    "no-unused-vars": ["error", {argsIgnorePattern: "^_"}],
 
     "prettier/prettier": [
       "error",
@@ -26,8 +32,11 @@ module.exports = {
         bracketSpacing: false,
         jsxBracketSameLine: false,
         parser: "babylon",
-        semi: true
-      }
-    ]
-  }
+        semi: true,
+      },
+    ],
+
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+  },
 };

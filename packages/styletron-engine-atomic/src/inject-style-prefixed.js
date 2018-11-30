@@ -6,13 +6,13 @@ import hyphenate from "./hyphenate-style-name.js";
 import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
 import prefixAll from "inline-style-prefixer/static";
 
-import type {baseStyleT} from "styletron-standard";
+import type {StyleObject} from "styletron-standard";
 
 import {MultiCache} from "./cache.js";
 
 export default function injectStylePrefixed(
   styleCache: MultiCache<{pseudo: string, block: string}>,
-  styles: baseStyleT,
+  styles: StyleObject,
   media: string,
   pseudo: string,
 ) {
