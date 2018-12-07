@@ -10,7 +10,6 @@ Toolkit for component-oriented styling
 
 * [`styletron-engine-atomic`](packages/styletron-engine-atomic)
 * [`styletron-react`](packages/styletron-react)
-* [`styletron-react-core`](packages/styletron-react-core)
 * [`styletron-standard`](packages/styletron-standard)
 
 ## Design principles
