@@ -1,6 +1,6 @@
 {
   "name": "styletron-engine-atomic",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "rtsao/styletron",
