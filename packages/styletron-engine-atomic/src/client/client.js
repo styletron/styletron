@@ -2,6 +2,8 @@
 
 /* eslint-env browser */
 
+declare var __DEV__: boolean;
+
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 const KEYFRAMES_HYRDATOR = /@keyframes ([^{]+)\{((?:[^{]+\{[^}]*\})*)\}/g;
 const FONT_FACE_HYDRATOR = /@font-face\{font-family:([^;]+);([^}]*)\}/g;
@@ -80,10 +82,17 @@ class StyletronClient implements StandardEngine {
     const onNewStyle = (cache, id, value) => {
       const {pseudo, block} = value;
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
-      sheet.insertRule(
-        styleBlockToRule(atomicSelector(id, pseudo), block),
-        sheet.cssRules.length,
-      );
+      const rule = styleBlockToRule(atomicSelector(id, pseudo), block);
+      try {
+        sheet.insertRule(rule, sheet.cssRules.length);
+      } catch (e) {
+        if (__DEV__) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `Failed to inject CSS: "${rule}". Perhaps this has invalid or un-prefixed properties?`,
+          );
+        }
+      }
     };
 
     // Setup style cache
@@ -103,10 +112,17 @@ class StyletronClient implements StandardEngine {
       (cache, id, value) => {
         this.styleCache.getCache("");
         const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
-        sheet.insertRule(
-          keyframesBlockToRule(id, keyframesToBlock(value)),
-          sheet.cssRules.length,
-        );
+        const rule = keyframesBlockToRule(id, keyframesToBlock(value));
+        try {
+          sheet.insertRule(rule, sheet.cssRules.length);
+        } catch (e) {
+          if (__DEV__) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `Failed to inject CSS: "${rule}". Perhaps this has invalid or un-prefixed properties?`,
+            );
+          }
+        }
       },
     );
 
@@ -115,10 +131,17 @@ class StyletronClient implements StandardEngine {
       (cache, id, value) => {
         this.styleCache.getCache("");
         const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
-        sheet.insertRule(
-          fontFaceBlockToRule(id, declarationsToBlock(value)),
-          sheet.cssRules.length,
-        );
+        const rule = fontFaceBlockToRule(id, declarationsToBlock(value));
+        try {
+          sheet.insertRule(rule, sheet.cssRules.length);
+        } catch (e) {
+          if (__DEV__) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `Failed to inject CSS: "${rule}". Perhaps this has invalid or un-prefixed properties?`,
+            );
+          }
+        }
       },
     );
 
