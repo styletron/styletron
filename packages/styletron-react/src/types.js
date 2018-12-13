@@ -1,20 +1,20 @@
 // @flow
 
 import type {ComponentType, StatelessFunctionalComponent} from "react";
-import type {StyleObject} from "styletron-standard";
+import type {baseStyleT} from "styletron-standard";
 
 export type Reducer = {
   // Static reducer
-  (StyleObject): StyleObject,
+  (baseStyleT): baseStyleT,
   // Dynamic reducer
-  (StyleObject, Object): StyleObject,
+  (baseStyleT, Object): baseStyleT,
 };
 
 export type AssignmentCommutativeReducerContainer = {
   assignmentCommutative: true,
   reducer: Reducer,
-  style: StyleObject,
-  factory: StyleObject => AssignmentCommutativeReducerContainer,
+  style: baseStyleT,
+  factory: baseStyleT => AssignmentCommutativeReducerContainer,
 };
 
 export type NonAssignmentCommutativeReducerContainer = {
@@ -47,15 +47,15 @@ export type StyletronComponent<Props> = StatelessFunctionalComponent<Props> & {
 };
 
 export type StyledFn = {
-  (string, StyleObject): StyletronComponent<{}>,
-  <Props>(string, (Props) => StyleObject): StyletronComponent<Props>,
+  (string, baseStyleT): StyletronComponent<{}>,
+  <Props>(string, (Props) => baseStyleT): StyletronComponent<Props>,
   <Base: ComponentType<any>>(
     Base,
-    StyleObject,
+    baseStyleT,
   ): StyletronComponent<$Diff<$Call<ExtractPropTypes, Base>, {className: any}>>,
   <Base: ComponentType<any>, Props>(
     Base,
-    (Props) => StyleObject,
+    (Props) => baseStyleT,
   ): StyletronComponent<
     $Diff<$Call<ExtractPropTypes, Base>, {className: any}> & Props,
   >,
@@ -64,17 +64,17 @@ export type StyledFn = {
 export type WithStyleFn = {
   <Base: StyletronComponent<any>, Props>(
     Base,
-    (Props) => StyleObject,
+    (Props) => baseStyleT,
   ): StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>,
   <Base: StyletronComponent<any>>(
     Base,
-    StyleObject,
+    baseStyleT,
   ): StyletronComponent<$Call<ExtractPropTypes2, Base>>,
 };
 
 export type WithTransformFn = <Base: StyletronComponent<any>, Props>(
   Base,
-  (StyleObject, Props) => StyleObject,
+  (baseStyleT, Props) => baseStyleT,
 ) => StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>;
 
 export type WithWrapperFn = <Base: StyletronComponent<any>>(

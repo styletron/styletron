@@ -8,11 +8,7 @@ import {Cache, MultiCache} from "../cache.js";
 
 import injectStylePrefixed from "../inject-style-prefixed.js";
 
-import type {
-  StyleObject,
-  FontFaceObject,
-  KeyframesObject,
-} from "styletron-standard";
+import type {baseStyleT, fontFaceT, keyframesT} from "styletron-standard";
 
 import {
   styleBlockToRule,
@@ -34,8 +30,8 @@ type optionsT = {
 
 class StyletronServer implements StandardEngine {
   styleCache: MultiCache<{pseudo: string, block: string}>;
-  keyframesCache: Cache<KeyframesObject>;
-  fontFaceCache: Cache<FontFaceObject>;
+  keyframesCache: Cache<keyframesT>;
+  fontFaceCache: Cache<fontFaceT>;
   styleRules: {[string]: string};
   keyframesRules: string;
   fontFaceRules: string;
@@ -79,16 +75,16 @@ class StyletronServer implements StandardEngine {
     );
   }
 
-  renderStyle(style: StyleObject): string {
+  renderStyle(style: baseStyleT): string {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 
-  renderFontFace(fontFace: FontFaceObject): string {
+  renderFontFace(fontFace: fontFaceT): string {
     const key = JSON.stringify(fontFace);
     return this.fontFaceCache.addValue(key, fontFace);
   }
 
-  renderKeyframes(keyframes: KeyframesObject): string {
+  renderKeyframes(keyframes: keyframesT): string {
     const key = JSON.stringify(keyframes);
     return this.keyframesCache.addValue(key, keyframes);
   }

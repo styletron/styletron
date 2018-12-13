@@ -11,7 +11,7 @@ import {
   driver,
   getInitialStyle,
   type StandardEngine,
-  type StyleObject,
+  type baseStyleT,
 } from "styletron-standard";
 
 import type {
@@ -100,7 +100,7 @@ const Consumer =
   __BROWSER__ && __DEV__ ? DevConsumer : StyletronContext.Consumer;
 
 type createStyledOpts = {
-  getInitialStyle: () => StyleObject,
+  getInitialStyle: () => baseStyleT,
   driver: typeof driver,
   wrapper: (
     React.StatelessFunctionalComponent<any>,
@@ -236,7 +236,7 @@ export function withWrapper(component, wrapper) {
 
 export function autoComposeShallow<Props>(
   styletron: Styletron,
-  styleArg: StyleObject | (Props => StyleObject),
+  styleArg: baseStyleT | (Props => baseStyleT),
 ) {
   if (typeof styleArg === "function") {
     return dynamicComposeShallow(styletron, styleArg);
@@ -247,7 +247,7 @@ export function autoComposeShallow<Props>(
 
 export function autoComposeDeep<Props>(
   styletron: Styletron,
-  styleArg: StyleObject | (Props => StyleObject),
+  styleArg: baseStyleT | (Props => baseStyleT),
 ) {
   if (typeof styleArg === "function") {
     return dynamicComposeDeep(styletron, styleArg);
@@ -256,17 +256,17 @@ export function autoComposeDeep<Props>(
   return staticComposeDeep(styletron, styleArg);
 }
 
-export function staticComposeShallow(styletron: Styletron, style: StyleObject) {
+export function staticComposeShallow(styletron: Styletron, style: baseStyleT) {
   return composeStatic(styletron, createShallowMergeReducer(style));
 }
 
-export function staticComposeDeep(styletron: Styletron, style: StyleObject) {
+export function staticComposeDeep(styletron: Styletron, style: baseStyleT) {
   return composeStatic(styletron, createDeepMergeReducer(style));
 }
 
 export function dynamicComposeShallow<Props>(
   styletron: Styletron,
-  styleFn: Props => StyleObject,
+  styleFn: Props => baseStyleT,
 ) {
   return composeDynamic(styletron, (style, props) =>
     shallowMerge(style, styleFn(props)),
@@ -275,7 +275,7 @@ export function dynamicComposeShallow<Props>(
 
 export function dynamicComposeDeep<Props>(
   styletron: Styletron,
-  styleFn: Props => StyleObject,
+  styleFn: Props => baseStyleT,
 ) {
   return composeDynamic(styletron, (style, props) =>
     deepMerge(style, styleFn(props)),
@@ -283,7 +283,7 @@ export function dynamicComposeDeep<Props>(
 }
 
 export function createShallowMergeReducer(
-  style: StyleObject,
+  style: baseStyleT,
 ): AssignmentCommutativeReducerContainer {
   return {
     reducer: inputStyle => shallowMerge(inputStyle, style),
@@ -294,7 +294,7 @@ export function createShallowMergeReducer(
 }
 
 export function createDeepMergeReducer(
-  style: StyleObject,
+  style: baseStyleT,
 ): AssignmentCommutativeReducerContainer {
   return {
     reducer: inputStyle => deepMerge(inputStyle, style),
@@ -351,7 +351,7 @@ export function composeStatic(
 
 export function composeDynamic<Props>(
   styletron: Styletron,
-  reducer: (StyleObject, Props) => StyleObject,
+  reducer: (baseStyleT, Props) => baseStyleT,
 ) {
   const composed: Styletron = {
     getInitialStyle: styletron.getInitialStyle,
@@ -461,7 +461,7 @@ will not recieve the provided engine instance. This scenario can arise, for exam
 // Utility functions
 
 export function resolveStyle(
-  getInitialStyle: void => StyleObject,
+  getInitialStyle: void => baseStyleT,
   reducers: Array<ReducerContainer>,
   props: Object,
 ) {

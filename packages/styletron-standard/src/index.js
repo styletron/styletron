@@ -1,10 +1,10 @@
 // @flow
 
-import type {Properties, FontFace as FontFaceObject} from "csstype";
+import type {Properties, FontFace as fontFaceT} from "csstype";
 
-export type {FontFaceObject};
+export type {fontFaceT};
 
-export type KeyframesObject = {
+export type keyframesT = {
   from?: Properties<>,
   to?: Properties<>,
   [string]: Properties<>,
@@ -14,8 +14,8 @@ export type StyleProperties = $Diff<
   Properties<>,
   {fontFamily: any, animationName: any},
 > & {
-  fontFamily: string | FontFaceObject,
-  animationName: string | KeyframesObject,
+  fontFamily: string | fontFaceT,
+  animationName: string | keyframesT,
 };
 
 // Note: $Shape is needed to make polymorphic withStyle refinements work correctly
@@ -27,28 +27,28 @@ export type StyleProperties = $Diff<
 //
 //
 //
-export type StyleObject = $Shape<{
+export type baseStyleT = $Shape<{
   ...StyleProperties,
-  [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
+  [string]: baseStyleT, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
 }>;
 
 export interface StandardEngine {
-  renderStyle(style: StyleObject): string;
-  renderKeyframes(keyframes: KeyframesObject): string;
-  renderFontFace(fontFace: FontFaceObject): string;
+  renderStyle(style: baseStyleT): string;
+  renderKeyframes(keyframes: keyframesT): string;
+  renderFontFace(fontFace: fontFaceT): string;
 }
 
-export function driver(style: StyleObject, styletron: StandardEngine): string {
+export function driver(style: baseStyleT, styletron: StandardEngine): string {
   const tx = renderDeclarativeRules(style, styletron);
   return styletron.renderStyle(tx);
 }
 
-export function getInitialStyle(): StyleObject {
+export function getInitialStyle(): baseStyleT {
   return {};
 }
 
 export function renderDeclarativeRules(
-  style: StyleObject,
+  style: baseStyleT,
   styletron: StandardEngine,
 ) {
   for (const key in style) {

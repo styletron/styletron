@@ -348,21 +348,21 @@ Returns a `styled` function.
 
 1. `opts`
 
-* `opts.getInitialStyle`: (`void => StyleObject`)
-* `opts.driver`: (`(StyleObject, Engine) => string`)
+* `opts.getInitialStyle`: (`void => baseStyleT`)
+* `opts.driver`: (`(baseStyleT, Engine) => string`)
 * `opts.wrapper`: (`StatelessFunctionalComponent<*> => StatelessFunctionalComponent<*>`)
 
 #### Examples
 
 ```js
 import {createStyled} from "styletron-react";
-import type {StyleObject, StandardEngine} from "styletron-standard";
+import type {baseStyleT, StandardEngine} from "styletron-standard";
 
-function driver(style: StyleObject, engine: any): string {
+function driver(style: baseStyleT, engine: any): string {
   return engine.someMethod(style);
 }
 
-function getInitialStyle(): StyleObject {
+function getInitialStyle(): baseStyleT {
   return {};
 }
 

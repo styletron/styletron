@@ -15,7 +15,7 @@ yarn add styletron-standard
 ### Style object interface
 
 ```js
-import type {StyleObject} from "styletron-standard";
+import type {baseStyleT} from "styletron-standard";
 ```
 
 `styletron-standard` defines a specific style object interface (along with corresponding Flow type definitions).
@@ -25,7 +25,7 @@ import type {StyleObject} from "styletron-standard";
 CSS property names are camel cased.
 
 ```js
-const style: StyleObject = {
+const style: baseStyleT = {
   textAlign: "center"
 };
 ```
@@ -35,7 +35,7 @@ const style: StyleObject = {
 Nesting is used for pseudo selectors.
 
 ```js
-const style: StyleObject = {
+const style: baseStyleT = {
   textAlign: "center"
   ":hover": {
     color: "red"
@@ -48,7 +48,7 @@ const style: StyleObject = {
 To define styles that correspond to media queries, use nested style object.
 
 ```js
-const style: StyleObject = {
+const style: baseStyleT = {
   textAlign: "center"
   "@media (max-width: 800px)": {
     color: "red"
@@ -61,14 +61,14 @@ const style: StyleObject = {
 The `animationName` property takes a string, but declarative animation is also supported.
 
 ```js
-import type {KeyframesObject} from "styletron-standard";
+import type {keyframesT} from "styletron-standard";
 
-const animation: KeyframesObject = {
+const animation: keyframesT = {
   to: {},
   from: {}
 };
 
-const style: KeyframesObject = {
+const style: keyframesT = {
   animationName: animation
 };
 ```
@@ -78,13 +78,13 @@ const style: KeyframesObject = {
 The `fontFamily` property takes a string, fonts can also be used declaratively.
 
 ```js
-import type {FontFaceObject} from "styletron-standard";
+import type {fontFaceT} from "styletron-standard";
 
-const font: FontFaceObject = {
+const font: fontFaceT = {
   src: "url(/path/to/font.woff)"
 };
 
-const style: StyleObject = {
+const style: baseStyleT = {
   fontFamily: font
 };
 ```

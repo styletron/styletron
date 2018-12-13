@@ -36,9 +36,9 @@ import SequentialIDGenerator from "../sequential-id-generator.js";
 
 import type {
   StandardEngine,
-  KeyframesObject,
-  FontFaceObject,
-  StyleObject,
+  keyframesT,
+  fontFaceT,
+  baseStyleT,
 } from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache.js";
@@ -72,8 +72,8 @@ class StyletronClient implements StandardEngine {
   keyframesSheet: HTMLStyleElement;
 
   styleCache: MultiCache<{pseudo: string, block: string}>;
-  keyframesCache: Cache<KeyframesObject>;
-  fontFaceCache: Cache<FontFaceObject>;
+  keyframesCache: Cache<keyframesT>;
+  fontFaceCache: Cache<fontFaceT>;
 
   constructor(opts?: optionsT = {}) {
     this.styleElements = {};
@@ -187,16 +187,16 @@ class StyletronClient implements StandardEngine {
     }
   }
 
-  renderStyle(style: StyleObject): string {
+  renderStyle(style: baseStyleT): string {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 
-  renderFontFace(fontFace: FontFaceObject): string {
+  renderFontFace(fontFace: fontFaceT): string {
     const key = declarationsToBlock(fontFace);
     return this.fontFaceCache.addValue(key, fontFace);
   }
 
-  renderKeyframes(keyframes: KeyframesObject): string {
+  renderKeyframes(keyframes: keyframesT): string {
     const key = keyframesToBlock(keyframes);
     return this.keyframesCache.addValue(key, keyframes);
   }
