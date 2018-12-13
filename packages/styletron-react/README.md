@@ -355,22 +355,14 @@ Returns a `styled` function.
 #### Examples
 
 ```js
-import {createStyled} from "styletron-react-core";
+import {createStyled} from "styletron-react";
+import type {StyleObject, StandardEngine} from "styletron-standard";
 
-type customStyleT = $Shape<{
-  angle?: number,
-  velocity?: number
-}>;
-
-interface CustomEngine {
-  someMethod: customStyleT => string;
-}
-
-function driver(style: customStyleT, engine: CustomEngine): string {
+function driver(style: StyleObject, engine: StandardEngine): string {
   return engine.someMethod(style);
 }
 
-function getInitialStyle(): customStyleT {
+function getInitialStyle(): StyleObject {
   return {};
 }
 
