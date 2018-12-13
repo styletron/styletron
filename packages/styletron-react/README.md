@@ -348,8 +348,8 @@ Returns a `styled` function.
 
 1. `opts`
 
-* `opts.getInitialStyle`: (`void => Style`)
-* `opts.driver`: (`(Style, Engine) => string`)
+* `opts.getInitialStyle`: (`void => StyleObject`)
+* `opts.driver`: (`(StyleObject, Engine) => string`)
 * `opts.wrapper`: (`StatelessFunctionalComponent<*> => StatelessFunctionalComponent<*>`)
 
 #### Examples
@@ -358,7 +358,7 @@ Returns a `styled` function.
 import {createStyled} from "styletron-react";
 import type {StyleObject, StandardEngine} from "styletron-standard";
 
-function driver(style: StyleObject, engine: StandardEngine): string {
+function driver(style: StyleObject, engine: any): string {
   return engine.someMethod(style);
 }
 
