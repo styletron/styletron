@@ -1,22 +1,12 @@
 // @flow
 
-import type {Properties, FontFace as FontFaceObject} from "csstype";
+import type {
+  Properties,
+  FontFace as FontFaceObject,
+  KeyframesObject,
+} from "./style-types";
 
-export type {FontFaceObject};
-
-export type KeyframesObject = {
-  from?: Properties<>,
-  to?: Properties<>,
-  [string]: Properties<>,
-};
-
-export type StyleProperties = $Diff<
-  Properties<>,
-  {fontFamily: any, animationName: any},
-> & {
-  fontFamily: string | FontFaceObject,
-  animationName: string | KeyframesObject,
-};
+export type {FontFaceObject, KeyframesObject};
 
 // Note: $Shape is needed to make polymorphic withStyle refinements work correctly
 // It seems functions satisfy this type without $Shape
@@ -28,7 +18,7 @@ export type StyleProperties = $Diff<
 //
 //
 export type StyleObject = $Shape<{
-  ...StyleProperties,
+  ...Properties,
   [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
 }>;
 
