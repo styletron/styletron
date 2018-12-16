@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import {styled, withStyle} from "styletron-react";
+import {styled, withStyle, withWrapper} from "styletron-react";
 
 // Note: explicit generic annotation is here because this is not inferred correctly
 const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
@@ -66,3 +66,28 @@ const Qux = withStyle(Baz, (_props: {qux: "qux"}) => ({color: "red"}));
 <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
 
 <Qux foo="foo" bar="bar" baz="baz" qux="qux" />;
+
+const WrappedQux = withWrapper(Qux, StyledComponent => props => (
+  <div>
+    <StyledComponent {...props} />
+  </div>
+));
+
+// $FlowFixMe
+<WrappedQux bar="bar" baz="baz" qux="qux" />; // Missing foo
+// $FlowFixMe
+<WrappedQux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+// $FlowFixMe
+<WrappedQux foo="foo" baz="baz" qux="qux" />; // Missing bar
+// $FlowFixMe
+<WrappedQux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+// $FlowFixMe
+<WrappedQux foo="foo" bar="bar" qux="qux" />; // Missing baz
+// $FlowFixMe
+<WrappedQux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+// $FlowFixMe
+<WrappedQux foo="foo" bar="bar" baz="baz" />; // Missing qux
+// $FlowFixMe
+<WrappedQux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+
+<WrappedQux foo="foo" bar="bar" baz="baz" qux="qux" />;
