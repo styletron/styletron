@@ -77,7 +77,7 @@ export type WithTransformFn = <Base: StyletronComponent<any>, Props>(
   (StyleObject, Props) => StyleObject,
 ) => StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>;
 
-export type WithWrapperFn = <Base: StyletronComponent<any>>(
+export type WithWrapperFn = <Base: StyletronComponent<any>, Props>(
   Base,
-  (Base) => ComponentType<$Call<ExtractPropTypes2, Base>>,
-) => StyletronComponent<$Call<ExtractPropTypes2, Base>>;
+  (Base) => ComponentType<Props>,
+) => StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>;
