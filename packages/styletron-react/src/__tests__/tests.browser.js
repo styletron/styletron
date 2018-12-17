@@ -7,12 +7,15 @@ import * as React from "react";
 
 import {
   styled,
+  createStyled,
   withWrapper,
   withStyle,
   withStyleDeep,
   withTransform,
   Provider,
 } from "../index.js";
+
+import {getInitialStyle, driver} from "styletron-standard";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -113,7 +116,11 @@ test("withStyle (dynamic)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {color: "red", background: "green", fontSize: "14px"});
+          t.deepEqual(x, {
+            color: "red",
+            background: "green",
+            fontSize: "14px",
+          });
           return "";
         },
         renderKeyframes: () => "",
@@ -505,6 +512,32 @@ test("keyframes injection", t => {
       }}
     >
       <Widget />
+    </Provider>,
+  );
+  t.end();
+});
+
+test.only("createStyled wrapper", t => {
+  t.plan(1);
+
+  const customStyled = createStyled({
+    driver,
+    getInitialStyle,
+    wrapper: _Component => props => {
+      t.equal(props.foo, "foo");
+      return <div>hello world</div>;
+    },
+  });
+  const Widget = customStyled("div", {color: "red"});
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: () => "",
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+    >
+      <Widget foo="foo" />
     </Provider>,
   );
   t.end();
