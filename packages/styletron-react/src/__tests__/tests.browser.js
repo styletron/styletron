@@ -116,11 +116,7 @@ test("withStyle (dynamic)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
-            color: "red",
-            background: "green",
-            fontSize: "14px",
-          });
+          t.deepEqual(x, {color: "red", background: "green", fontSize: "14px"});
           return "";
         },
         renderKeyframes: () => "",
@@ -517,7 +513,7 @@ test("keyframes injection", t => {
   t.end();
 });
 
-test.only("createStyled wrapper", t => {
+test("createStyled wrapper", t => {
   t.plan(1);
 
   const customStyled = createStyled({
