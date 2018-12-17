@@ -1,10 +1,10 @@
 {
   "name": "flow-type-tests",
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "dependencies": {
-    "styletron-react": "^4.4.3",
+    "styletron-react": "^4.4.4",
     "styletron-standard": "^2.0.1"
   }
 }
