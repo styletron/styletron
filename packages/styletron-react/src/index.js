@@ -131,7 +131,7 @@ export function createStyled({
       base: base,
       driver,
       getInitialStyle,
-      wrapper: Component => Component,
+      wrapper,
     };
 
     if (__BROWSER__ && __DEV__) {
