@@ -30,16 +30,29 @@ Descendant combinators such as `.parent > .child` or `.ancestor .descendant`/`.a
 
 ### Using React Hooks
 
-Managing hover state is less burdensome than you would think. For example, using [`useHover` from https://usehooks.com](https://usehooks.com/#useHover):
+Managing hover state with hooks is less burdensome than you would think. For example:
 
 ```js
+import React, {useState, useMemo} from "react";
+
 function App() {
-  const [hoverRef, isHovered] = useHover();
+  const [targetProps, isHovered] = useHover();
+
   return (
-    <div ref={hoverRef}>
+    <div {...targetProps}>
       Hover me!
       <Button highlighted={isHovered}>Click me</Button>
     </div>
   );
 }
+
+function useHover() {
+  const [value, setValue] = useState(false);
+  const [onMouseOver, onMouseOut] = useMemo(
+    () => [() => setValue(true), () => setValue(false)],
+    []
+  );
+  return [{onMouseOver, onMouseOut}, value];
+}
+
 ```
