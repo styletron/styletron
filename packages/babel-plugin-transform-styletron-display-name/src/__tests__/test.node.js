@@ -1,3 +1,5 @@
+/* global require __dirname */
+
 const fs = require("fs");
 const path = require("path");
 
@@ -15,7 +17,7 @@ function readFixtureFile(fixture, name) {
 function compare(fixture) {
   const input = readFixtureFile(fixture, "input.js");
   const output = readFixtureFile(fixture, "output.js");
-  const { code } = babel.transform(input, { plugins: [plugin] });
+  const {code} = babel.transform(input, {plugins: [plugin]});
   test(fixture, t => {
     t.equal(code.trim(), output.trim());
     t.end();

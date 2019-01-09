@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Foo = styled("div", {
   color: "red"
 });

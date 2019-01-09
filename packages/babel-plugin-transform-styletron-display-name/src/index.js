@@ -1,3 +1,5 @@
+/* global require module */
+
 const t = require("@babel/core").types;
 
 // Referenced: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-display-name
@@ -8,9 +10,9 @@ function addDisplayName(name, path) {
       t.assignmentExpression(
         "=",
         t.memberExpression(t.identifier(name), t.identifier("displayName")),
-        t.stringLiteral(name)
-      )
-    )
+        t.stringLiteral(name),
+      ),
+    ),
   );
 }
 
@@ -26,16 +28,16 @@ module.exports = function() {
     name: "transform-styletron-display-name",
     visitor: {
       CallExpression(path) {
-        const { node } = path;
+        const {node} = path;
         if (!isStyletronMethod(node)) return;
 
         let id;
-        path.find(function(path) {
-          if (path.isAssignmentExpression()) {
-            id = path.node.left;
-          } else if (path.isVariableDeclarator()) {
-            id = path.node.id;
-          } else if (path.isStatement()) {
+        path.find(function(p) {
+          if (p.isAssignmentExpression()) {
+            id = p.node.left;
+          } else if (p.isVariableDeclarator()) {
+            id = p.node.id;
+          } else if (p.isStatement()) {
             // we've hit a statement, we should stop crawling up
             return true;
           }
@@ -53,7 +55,7 @@ module.exports = function() {
         if (t.isIdentifier(id)) {
           addDisplayName(id.name, path.parentPath.parentPath);
         }
-      }
-    }
+      },
+    },
   };
 };
