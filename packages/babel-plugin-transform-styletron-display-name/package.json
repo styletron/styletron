@@ -11,7 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
-    "tape": "4.9.1",
+    "tape": "^4.9.2",
     "unitest": "^2.1.1"
   },
   "peerDependencies": {
