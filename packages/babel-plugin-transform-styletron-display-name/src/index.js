@@ -1,61 +1,69 @@
 /* global require module */
 
-const t = require("@babel/core").types;
-
-// Referenced: https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-display-name
-
-function addDisplayName(name, path) {
-  path.insertAfter(
-    t.expressionStatement(
-      t.assignmentExpression(
-        "=",
-        t.memberExpression(t.identifier(name), t.identifier("displayName")),
-        t.stringLiteral(name),
-      ),
-    ),
-  );
-}
-
-function isStyletronMethod(node) {
-  if (!node || !t.isCallExpression(node)) return false;
-
-  const methods = ["styled", "withStyle", "withStyleDeep"];
-  return methods.includes(node.callee.name);
-}
+const types = require("@babel/core").types;
 
 module.exports = function() {
   return {
     name: "transform-styletron-display-name",
-    visitor: {
-      CallExpression(path) {
-        const {node} = path;
-        if (!isStyletronMethod(node)) return;
+    visitor: createNamedModuleVisitor(
+      types,
+      ["styled", "withStyle", "withStyleDeep"],
+      ["styletron-react", "fusion-plugin-styletron-react", "baseui"],
+      (t, state, refPaths) => {
+        refPaths.forEach(path => {
+          if (path.parentPath.type === "CallExpression") {
+            if (path.parentPath.parentPath.type === "VariableDeclarator") {
+              const name = path.parentPath.parentPath.node.id;
 
-        let id;
-        path.find(function(p) {
-          if (p.isAssignmentExpression()) {
-            id = p.node.left;
-          } else if (p.isVariableDeclarator()) {
-            id = p.node.id;
-          } else if (p.isStatement()) {
-            // we've hit a statement, we should stop crawling up
-            return true;
+              path.parentPath.parentPath.parentPath.insertAfter(
+                t.expressionStatement(
+                  t.assignmentExpression(
+                    "=",
+                    t.memberExpression(name, t.identifier("displayName")),
+                    t.stringLiteral(name.name),
+                  ),
+                ),
+              );
+            }
           }
-
-          // we've got an id! no need to continue
-          if (id) return true;
         });
-
-        // foo.bar -> bar
-        if (t.isMemberExpression(id)) {
-          id = id.property;
-        }
-
-        // identifiers are the only thing we can reliably get a name from
-        if (t.isIdentifier(id)) {
-          addDisplayName(id.name, path.parentPath.parentPath);
-        }
       },
-    },
+    ),
   };
 };
+
+function createNamedModuleVisitor(t, moduleNames, packageNames, refsHandler) {
+  return {
+    // Handle ES imports
+    // import {moduleName} from 'packageName';
+    ImportDeclaration(path, state) {
+      const sourceName = path.get("source").node.value;
+
+      if (packageNames.indexOf(sourceName) === -1) {
+        return;
+      }
+
+      state.importedPackageName = sourceName;
+      path.get("specifiers").forEach(specifier => {
+        const localPath = specifier.get("local");
+        const localName = localPath.node.name;
+
+        if (!localPath.scope.bindings[localName]) {
+          return;
+        }
+
+        const refPaths = localPath.scope.bindings[localName].referencePaths;
+        if (t.isImportSpecifier(specifier)) {
+          // import {moduleName} from 'packageName';
+          const specifierName = specifier.get("imported").node.name;
+          if (moduleNames.includes(specifierName)) {
+            refsHandler(t, state, refPaths, specifierName);
+          } else if (t.isImportNamespaceSpecifier(specifier)) {
+            // import * as pkg from 'packageName';
+            // TODO(#5): Handle this case, or issue a warning because this may not be 100% robust
+          }
+        }
+      });
+    },
+  };
+}

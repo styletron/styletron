@@ -15,9 +15,12 @@ function readFixtureFile(fixture, name) {
 }
 
 function compare(fixture) {
-  const input = readFixtureFile(fixture, "input.js");
-  const output = readFixtureFile(fixture, "output.js");
-  const {code} = babel.transform(input, {plugins: [plugin]});
+  const input = readFixtureFile(fixture, "input");
+  const output = readFixtureFile(fixture, "output");
+  const {code} = babel.transformSync(input, {
+    plugins: [plugin],
+    retainLines: true,
+  });
   test(fixture, t => {
     t.equal(code.trim(), output.trim());
     t.end();

@@ -1,0 +1,3 @@
+import { unrelated } from "styletron-react";
+const Foo = unrelated();
+const Bar = unrelated();

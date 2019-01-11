@@ -1,0 +1,4 @@
+import { styled, withStyleDeep } from "styletron-react";
+const Baz = styled("div");
+const Foo = withStyleDeep(Baz, { ":hover": { background: "green" } });
+const Bar = withStyleDeep(Baz, { ":hover": { background: "green" } });
