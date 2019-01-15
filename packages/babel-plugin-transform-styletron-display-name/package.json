@@ -1,0 +1,20 @@
+{
+  "name": "babel-plugin-transform-styletron-display-name",
+  "version": "1.0.0",
+  "description": "Babel plugin to add displayName to styletron-react components",
+  "author": "Chase Starr <chasestarr@gmail.com>",
+  "repository": "styletron/styletron",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "unitest --node=src/__tests__/test.node.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "tape": "^4.9.2",
+    "unitest": "^2.1.1"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0-0"
+  }
+}

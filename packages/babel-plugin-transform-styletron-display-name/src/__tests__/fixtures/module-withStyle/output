@@ -1,0 +1,4 @@
+import { styled, withStyleDeep } from "styletron-react";
+const Baz = styled("div");Baz.displayName = "Baz";
+const Foo = withStyleDeep(Baz, { background: "green" });Foo.displayName = "Foo";
+const Bar = withStyleDeep(Baz, { background: "green" });Bar.displayName = "Bar";

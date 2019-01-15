@@ -1,0 +1,3 @@
+import { styled as s } from "styletron-react";
+const Foo = s("div", { color: "red" });Foo.displayName = "Foo";
+const Bar = s("div", { color: "red" });Bar.displayName = "Bar";
