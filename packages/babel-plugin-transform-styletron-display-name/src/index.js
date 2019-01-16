@@ -1,11 +1,11 @@
-/* global require module */
+/* global module */
 
-module.exports = function(babel, state) {
+module.exports = function(babel, s) {
   return {
     name: "transform-styletron-display-name",
     visitor: createNamedModuleVisitor(
       babel.types,
-      state,
+      s,
       ["styled", "withStyle", "withStyleDeep"],
       ["styletron-react", "fusion-plugin-styletron-react", "baseui"],
       (t, state, refPaths) => {
