@@ -1,12 +1,11 @@
 /* global require module */
 
-const types = require("@babel/core").types;
-
-module.exports = function() {
+module.exports = function(babel, state) {
   return {
     name: "transform-styletron-display-name",
     visitor: createNamedModuleVisitor(
-      types,
+      babel.types,
+      state,
       ["styled", "withStyle", "withStyleDeep"],
       ["styletron-react", "fusion-plugin-styletron-react", "baseui"],
       (t, state, refPaths) => {
@@ -32,14 +31,22 @@ module.exports = function() {
   };
 };
 
-function createNamedModuleVisitor(t, moduleNames, packageNames, refsHandler) {
+function createNamedModuleVisitor(
+  t,
+  s,
+  moduleNames,
+  packageNames,
+  refsHandler,
+) {
   return {
     // Handle ES imports
     // import {moduleName} from 'packageName';
     ImportDeclaration(path, state) {
       const sourceName = path.get("source").node.value;
 
-      if (packageNames.indexOf(sourceName) === -1) {
+      // {ignorePackageName: true} enables plugin to transform any imported module
+      // with a matching moduleName. Allows for relative path imports.
+      if (packageNames.indexOf(sourceName) === -1 && !s.ignorePackageName) {
         return;
       }
 
