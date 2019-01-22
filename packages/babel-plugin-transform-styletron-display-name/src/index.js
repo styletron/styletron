@@ -1,13 +1,19 @@
 /* global module */
 
-module.exports = function(babel, s) {
+module.exports = function(babel, opts) {
+  const packageWhitelist =
+    opts.importSources === "any"
+      ? void 0
+      : Array.isArray(opts.importSources)
+        ? opts.importSources
+        : ["styletron-react", "fusion-plugin-styletron-react", "baseui"];
+
   return {
     name: "transform-styletron-display-name",
     visitor: createNamedModuleVisitor(
       babel.types,
-      s,
       ["styled", "withStyle", "withStyleDeep"],
-      ["styletron-react", "fusion-plugin-styletron-react", "baseui"],
+      packageWhitelist,
       (t, state, refPaths) => {
         refPaths.forEach(path => {
           if (path.parentPath.type === "CallExpression") {
@@ -31,22 +37,16 @@ module.exports = function(babel, s) {
   };
 };
 
-function createNamedModuleVisitor(
-  t,
-  s,
-  moduleNames,
-  packageNames,
-  refsHandler,
-) {
+function createNamedModuleVisitor(t, moduleNames, packageNames, refsHandler) {
   return {
     // Handle ES imports
     // import {moduleName} from 'packageName';
     ImportDeclaration(path, state) {
       const sourceName = path.get("source").node.value;
 
-      // {ignorePackageName: true} enables plugin to transform any imported module
-      // with a matching moduleName. Allows for relative path imports.
-      if (packageNames.indexOf(sourceName) === -1 && !s.ignorePackageName) {
+      // If specific package names are provided,
+      // skip the transform if the import doesn't match
+      if (packageNames && !packageNames.includes(sourceName)) {
         return;
       }
 
