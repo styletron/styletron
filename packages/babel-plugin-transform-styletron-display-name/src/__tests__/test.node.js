@@ -14,11 +14,24 @@ function readFixtureFile(fixture, name) {
   return fs.readFileSync(path.resolve(FIXTURES_PATH, fixture, name), "utf8");
 }
 
+function readFixtureConfig(fixture) {
+  try {
+    const raw = fs.readFileSync(
+      path.resolve(FIXTURES_PATH, fixture, "config.json"),
+      "utf8",
+    );
+    return JSON.parse(raw);
+  } catch (error) {
+    return {};
+  }
+}
+
 function compare(fixture) {
   const input = readFixtureFile(fixture, "input");
   const output = readFixtureFile(fixture, "output");
+  const config = readFixtureConfig(fixture);
   const {code} = babel.transformSync(input, {
-    plugins: [plugin],
+    plugins: [[plugin, config]],
     retainLines: true,
   });
   test(fixture, t => {

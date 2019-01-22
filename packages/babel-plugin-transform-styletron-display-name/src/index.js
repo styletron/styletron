@@ -1,14 +1,19 @@
-/* global require module */
+/* global module */
 
-const types = require("@babel/core").types;
+module.exports = function(babel, opts) {
+  const packageWhitelist =
+    opts.importSources === "any"
+      ? void 0
+      : Array.isArray(opts.importSources)
+        ? opts.importSources
+        : ["styletron-react", "fusion-plugin-styletron-react", "baseui"];
 
-module.exports = function() {
   return {
     name: "transform-styletron-display-name",
     visitor: createNamedModuleVisitor(
-      types,
+      babel.types,
       ["styled", "withStyle", "withStyleDeep"],
-      ["styletron-react", "fusion-plugin-styletron-react", "baseui"],
+      packageWhitelist,
       (t, state, refPaths) => {
         refPaths.forEach(path => {
           if (path.parentPath.type === "CallExpression") {
@@ -39,7 +44,9 @@ function createNamedModuleVisitor(t, moduleNames, packageNames, refsHandler) {
     ImportDeclaration(path, state) {
       const sourceName = path.get("source").node.value;
 
-      if (packageNames.indexOf(sourceName) === -1) {
+      // If specific package names are provided,
+      // skip the transform if the import doesn't match
+      if (packageNames && !packageNames.includes(sourceName)) {
         return;
       }
 
