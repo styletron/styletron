@@ -3,9 +3,9 @@
 import * as React from "react";
 import {styled, withStyle, withWrapper} from "styletron-react";
 
-const Foo = styled("div", (props: {foo: "foo"}) => {
-  color: props.foo;
-});
+const Foo = styled("div", (props: {foo: "foo"}) => ({
+  color: props.foo,
+}));
 const Bar = withWrapper(
   Foo,
   StyledComponent => (props: {foo: "foo", bar: "bar"}) => (

@@ -1,6 +1,10 @@
 // @flow
 
-import type {ComponentType, StatelessFunctionalComponent} from "react";
+import type {
+  ComponentType,
+  StatelessFunctionalComponent,
+  ElementProps,
+} from "react";
 import type {StyleObject} from "styletron-standard";
 
 export type Reducer = {
@@ -39,8 +43,7 @@ export type Styletron = {
   },
 };
 
-type ExtractPropTypes = <T>(ComponentType<T>) => T;
-type ExtractPropTypes2 = <T>(StyletronComponent<T>) => T;
+type ExtractPropTypes = <T>(StyletronComponent<T>) => T;
 
 export type StyletronComponent<Props> = StatelessFunctionalComponent<Props> & {
   __STYLETRON__: any,
@@ -52,32 +55,30 @@ export type StyledFn = {
   <Base: ComponentType<any>>(
     Base,
     StyleObject,
-  ): StyletronComponent<$Diff<$Call<ExtractPropTypes, Base>, {className: any}>>,
+  ): StyletronComponent<$Diff<ElementProps<Base>, {className: any}>>,
   <Base: ComponentType<any>, Props>(
     Base,
     (Props) => StyleObject,
-  ): StyletronComponent<
-    $Diff<$Call<ExtractPropTypes, Base>, {className: any}> & Props,
-  >,
+  ): StyletronComponent<$Diff<ElementProps<Base>, {className: any}> & Props>,
 };
 
 export type WithStyleFn = {
   <Base: StyletronComponent<any>, Props>(
     Base,
     (Props) => StyleObject,
-  ): StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>,
+  ): StyletronComponent<$Call<ExtractPropTypes, Base> & Props>,
   <Base: StyletronComponent<any>>(
     Base,
     StyleObject,
-  ): StyletronComponent<$Call<ExtractPropTypes2, Base>>,
+  ): StyletronComponent<$Call<ExtractPropTypes, Base>>,
 };
 
 export type WithTransformFn = <Base: StyletronComponent<any>, Props>(
   Base,
   (StyleObject, Props) => StyleObject,
-) => StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>;
+) => StyletronComponent<$Call<ExtractPropTypes, Base> & Props>;
 
 export type WithWrapperFn = <Base: StyletronComponent<any>, Props>(
   Base,
   (Base) => ComponentType<Props>,
-) => StyletronComponent<$Call<ExtractPropTypes2, Base> & Props>;
+) => StyletronComponent<$Call<ExtractPropTypes, Base> & Props>;
