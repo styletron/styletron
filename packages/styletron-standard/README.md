@@ -4,6 +4,8 @@
 
 Opinionated, standard interfaces for Styletron.
 
+**Check our documentation at [styletron.js.org](https://styletron.js.org)**.
+
 ## Installation
 
 ```

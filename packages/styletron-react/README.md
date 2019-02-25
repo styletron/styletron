@@ -4,6 +4,8 @@
 
 React bindings for Styletron, inspired by the excellent [styled-components](https://github.com/styled-components/styled-components) library. Adheres to `styletron-standard` interface.
 
+**Check our documentation at [styletron.js.org](https://styletron.js.org)**.
+
 ## Installation
 
 ```
@@ -339,7 +341,7 @@ interface DebugEngine {
 ### `createStyled`
 
 ```js
-import {createStyled} from "styletron-react-core";
+import {createStyled} from "styletron-react";
 ```
 
 Returns a `styled` function.

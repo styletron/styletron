@@ -4,6 +4,8 @@
 
 Atomic implementation of the [`styletron-standard`](../styletron-standard) engine interface.
 
+**Check our documentation at [styletron.js.org](https://styletron.js.org)**.
+
 ## Installation
 
 ```
