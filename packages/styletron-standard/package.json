@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "description": "Standard interfaces for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
-  "repository": "rtsao/styletron",
+  "repository": "styletron/styletron",
   "files": [
     "dist",
     "src",
