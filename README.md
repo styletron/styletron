@@ -4,7 +4,7 @@
 
 Toolkit for component-oriented styling
 
-**Check our documentation at [styletron.js.org](https://styletron.js.org)**.
+**Check our documentation at [styletron.org](https://www.styletron.org)**.
 
 [*Looking for v3.x docs?*](http://styletron.js.org/) | [*v3.x to v4.x migration guide*](docs/v3-migration-guide.md)
 
