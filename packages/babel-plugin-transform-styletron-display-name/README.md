@@ -1,5 +1,7 @@
 # babel-plugin-transform-styletron-display-name
 
+**Check our documentation at [styletron.org](https://www.styletron.org)**.
+
 > Adds displayName to styletron-react components.
 
 before

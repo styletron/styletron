@@ -3,7 +3,7 @@
   "version": "4.4.4",
   "description": "React bindings for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
-  "repository": "rtsao/styletron",
+  "repository": "styletron/styletron",
   "sideEffects": false,
   "files": [
     "dist",
