@@ -50,14 +50,14 @@ test("rendering", t => {
   ]);
   t.equal(
     instance.renderStyle({
-      "@media (max-width: 800px)": {color: "purple"},
+      "@media (min-width: 800px)": {color: "purple"},
     }),
     "af",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {media: "", rules: [".ae { color: purple; }"]},
-    {media: "(max-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
   instance.renderStyle({
     userSelect: "none",
@@ -67,7 +67,7 @@ test("rendering", t => {
       media: "",
       rules: [".ae { color: purple; }", ".ag { user-select: none; }"],
     },
-    {media: "(max-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
   instance.renderStyle({
     display: "flex",
@@ -81,8 +81,29 @@ test("rendering", t => {
         ".ah { display: flex; }",
       ],
     },
-    {media: "(max-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
+  instance.renderStyle({
+    "@media (min-width: 600px)": {
+      color: "red",
+    },
+  });
+  t.deepEqual(
+    sheetsToRules(document.styleSheets),
+    [
+      {
+        media: "",
+        rules: [
+          ".ae { color: purple; }",
+          ".ag { user-select: none; }",
+          ".ah { display: flex; }",
+        ],
+      },
+      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
+      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    ],
+    "media queries are mobile first sorted",
+  );
   instance.container.remove();
   t.end();
 });
@@ -156,12 +177,17 @@ function injectFixtureStyles(styletron) {
   styletron.renderStyle({color: "red"});
   styletron.renderStyle({color: "green"});
   styletron.renderStyle({
-    "@media (max-width: 800px)": {
+    "@media (min-width: 800px)": {
       color: "green",
     },
   });
   styletron.renderStyle({
-    "@media (max-width: 800px)": {
+    "@media (min-width: 600px)": {
+      color: "red",
+    },
+  });
+  styletron.renderStyle({
+    "@media (min-width: 800px)": {
       ":hover": {
         color: "green",
       },
