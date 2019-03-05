@@ -98,10 +98,17 @@ class StyletronClient implements StandardEngine {
     // Setup style cache
     this.styleCache = new MultiCache(
       styleIdGenerator,
-      media => {
+      (media, _cache, insertAtIndex) => {
         const styleElement = document.createElement("style");
         styleElement.media = media;
-        this.container.appendChild(styleElement);
+        if (insertAtIndex >= this.container.children.length) {
+          this.container.appendChild(styleElement);
+        } else {
+          this.container.insertBefore(
+            styleElement,
+            this.container.children[insertAtIndex],
+          );
+        }
         this.styleElements[media] = styleElement;
       },
       onNewStyle,

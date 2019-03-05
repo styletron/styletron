@@ -103,7 +103,7 @@ class StyletronServer implements StandardEngine {
             },
           ]
         : []),
-      ...sheetify(this.styleRules),
+      ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),
       ...(this.keyframesRules.length
         ? [
             {
@@ -121,7 +121,9 @@ class StyletronServer implements StandardEngine {
 
   getCss() {
     return (
-      this.fontFaceRules + stringify(this.styleRules) + this.keyframesRules
+      this.fontFaceRules +
+      stringify(this.styleRules, this.styleCache.getSortedCacheKeys()) +
+      this.keyframesRules
     );
   }
 }
@@ -155,26 +157,29 @@ function attrsToString(attrs) {
   return result;
 }
 
-function stringify(styleRules) {
+function stringify(styleRules, sortedCacheKeys) {
   let result = "";
-  for (const media in styleRules) {
-    const rules = styleRules[media];
-    if (media) {
-      result += `@media ${media}{${rules}}`;
+  sortedCacheKeys.forEach(cacheKey => {
+    const rules = styleRules[cacheKey];
+    if (cacheKey !== "") {
+      result += `@media ${cacheKey}{${rules}}`;
     } else {
       result += rules;
     }
-  }
+  });
   return result;
 }
 
-function sheetify(styleRules) {
-  const sheets = [];
-  for (const media in styleRules) {
-    // omit media attribute if empty
-    const attrs = media ? {media} : {};
-    sheets.push({css: styleRules[media], attrs});
+function sheetify(styleRules, sortedCacheKeys) {
+  if (sortedCacheKeys.length === 0) {
+    return [{css: "", attrs: {}}];
   }
+  const sheets = [];
+  sortedCacheKeys.forEach(cacheKey => {
+    // omit media (cacheKey) attribute if empty
+    const attrs = cacheKey === "" ? {} : {media: cacheKey};
+    sheets.push({css: styleRules[cacheKey], attrs});
+  });
   return sheets;
 }
 
