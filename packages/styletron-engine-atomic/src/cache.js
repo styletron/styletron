@@ -28,9 +28,7 @@ export class MultiCache<T> {
       cache.key = key;
       this.sortedCacheKeys.push(key);
       this.sortedCacheKeys.sort(sortMq);
-      const insertAtIndex = this.sortedCacheKeys.findIndex(
-        media => media === key,
-      );
+      const insertAtIndex = this.sortedCacheKeys.indexOf(key);
       this.caches[key] = cache;
       this.onNewCache(key, cache, insertAtIndex);
     }
