@@ -3,7 +3,7 @@
 import type {
   ComponentType,
   StatelessFunctionalComponent,
-  ElementProps,
+  ElementConfig,
 } from "react";
 import type {StyleObject} from "styletron-standard";
 
@@ -55,11 +55,11 @@ export type StyledFn = {
   <Base: ComponentType<any>>(
     Base,
     StyleObject,
-  ): StyletronComponent<$Diff<ElementProps<Base>, {className: any}>>,
+  ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}>>,
   <Base: ComponentType<any>, Props>(
     Base,
     (Props) => StyleObject,
-  ): StyletronComponent<$Diff<ElementProps<Base>, {className: any}> & Props>,
+  ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
 };
 
 export type WithStyleFn = {
