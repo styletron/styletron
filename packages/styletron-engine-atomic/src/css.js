@@ -17,6 +17,15 @@ export function keyframesToBlock(keyframes: {[string]: Object}): string {
   if (__DEV__) {
     validateKeyframesObject(keyframes);
   }
+  if (__DEV__ && typeof Object.getPrototypeOf(keyframes) !== "undefined") {
+    if (Object.getPrototypeOf(keyframes) !== Object.getPrototypeOf({})) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "Only plain objects should be used as animation values. Unexpectedly recieved:",
+        keyframes,
+      );
+    }
+  }
   let result = "";
   for (const animationState in keyframes) {
     result += `${animationState}{${declarationsToBlock(
