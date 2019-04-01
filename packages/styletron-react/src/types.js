@@ -43,6 +43,16 @@ export type Styletron = {
   },
 };
 
+export type StyletronExtension = {
+  component: {
+    name?: string,
+    base?: string,
+    getInitialStyle: any,
+    styles?: any,
+  },
+  style: any,
+};
+
 type ExtractPropTypes = <T>(StyletronComponent<T>) => T;
 
 export type StyletronComponent<Props> = StatelessFunctionalComponent<Props> & {

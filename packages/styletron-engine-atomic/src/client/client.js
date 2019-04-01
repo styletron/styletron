@@ -3,6 +3,7 @@
 /* eslint-env browser */
 
 declare var __DEV__: boolean;
+declare var __BROWSER__: boolean;
 
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 const KEYFRAMES_HYRDATOR = /@keyframes ([^{]+)\{((?:[^{]+\{[^}]*\})*)\}/g;
@@ -82,9 +83,32 @@ class StyletronClient implements StandardEngine {
     const onNewStyle = (cache, id, value) => {
       const {pseudo, block} = value;
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
-      const rule = styleBlockToRule(atomicSelector(id, pseudo), block);
+      const selector = atomicSelector(id, pseudo);
+      const rule = styleBlockToRule(selector, block);
       try {
         sheet.insertRule(rule, sheet.cssRules.length);
+        if (__BROWSER__ && window.__STYLETRON_DEVTOOLS__) {
+          // start after the . combinator and cut at the first : if there is one to cut out the pseudo classes
+          const key = selector.substring(
+            1,
+            selector.indexOf(":") !== -1
+              ? selector.indexOf(":")
+              : selector.length,
+          );
+          const styles = {};
+          // split the declaration to catch vendor prefixing
+          for (const decl of block.split(";")) {
+            if (
+              decl.trim() !== "" &&
+              !window.__STYLETRON_DEVTOOLS__.atomicMap[key]
+            )
+              styles[decl.substring(0, decl.indexOf(":"))] = decl.substring(
+                decl.indexOf(":") + 1,
+                decl.length,
+              );
+          }
+          window.__STYLETRON_DEVTOOLS__.atomicMap[key] = styles;
+        }
       } catch (e) {
         if (__DEV__) {
           // eslint-disable-next-line no-console
