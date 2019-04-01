@@ -6,7 +6,6 @@ declare var __DEV__: boolean;
 declare var __BROWSER__: boolean;
 
 import * as React from "react";
-import createReactContext, {type Context} from "create-react-context";
 import {
   driver,
   getInitialStyle,
@@ -30,9 +29,9 @@ import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
 
 export {DebugEngine};
 
-const StyletronContext: Context<any> = createReactContext();
-const HydrationContext = createReactContext(false);
-const DebugEngineContext = createReactContext();
+const StyletronContext = React.createContext<*>();
+const HydrationContext = React.createContext(false);
+const DebugEngineContext = React.createContext();
 
 type DevProviderProps = {
   children: React.Node,
