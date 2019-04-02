@@ -59,6 +59,8 @@ class BrowserDebugEngine {
   }
 }
 
-class NoopDebugEngine {}
+class NoopDebugEngine {
+  debug() {}
+}
 
 export const DebugEngine = __BROWSER__ ? BrowserDebugEngine : NoopDebugEngine;
