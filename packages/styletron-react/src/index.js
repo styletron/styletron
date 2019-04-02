@@ -29,16 +29,25 @@ import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
 
 export {DebugEngine};
 
-const StyletronContext = React.createContext<*>();
+const StyletronContext = React.createContext<StandardEngine>({
+  renderStyle: () => "",
+  renderKeyframes: () => "",
+  renderFontFace: () => "",
+});
 const HydrationContext = React.createContext(false);
 const DebugEngineContext = React.createContext();
+const ThemeContext = React.createContext();
 
-type DevProviderProps = {
+type ProdProviderProps = {
   children: React.Node,
-  debugAfterHydration?: boolean,
   value: StandardEngine,
+  theme?: any,
+};
+type DevProviderProps = ProdProviderProps & {
+  debugAfterHydration?: boolean,
   debug?: any,
 };
+
 class DevProvider extends React.Component<
   DevProviderProps,
   {hydrating: boolean},
@@ -63,18 +72,31 @@ class DevProvider extends React.Component<
   render() {
     return (
       <StyletronContext.Provider value={this.props.value}>
-        <DebugEngineContext.Provider value={this.props.debug}>
-          <HydrationContext.Provider value={this.state.hydrating}>
-            {this.props.children}
-          </HydrationContext.Provider>
-        </DebugEngineContext.Provider>
+        <ThemeContext.Provider value={this.props.theme}>
+          <DebugEngineContext.Provider value={this.props.debug}>
+            <HydrationContext.Provider value={this.state.hydrating}>
+              {this.props.children}
+            </HydrationContext.Provider>
+          </DebugEngineContext.Provider>
+        </ThemeContext.Provider>
       </StyletronContext.Provider>
     );
   }
 }
 
-export const Provider =
-  __BROWSER__ && __DEV__ ? DevProvider : StyletronContext.Provider;
+class ProdProvider extends React.Component<ProdProviderProps> {
+  render() {
+    return (
+      <StyletronContext.Provider value={this.props.value}>
+        <ThemeContext.Provider value={this.props.theme}>
+          {this.props.children}
+        </ThemeContext.Provider>
+      </StyletronContext.Provider>
+    );
+  }
+}
+
+export const Provider = __BROWSER__ && __DEV__ ? DevProvider : ProdProvider;
 
 // TODO: more precise types
 export function DevConsumer(props: {children: (any, any, any) => React.Node}) {
@@ -105,6 +127,24 @@ type createStyledOpts = {
     React.StatelessFunctionalComponent<any>,
   ) => React.ComponentType<any>,
 };
+
+export function useStyletron() {
+  const styletronEngine: StandardEngine = React.useContext(StyletronContext);
+  const debugEngine = React.useContext(DebugEngineContext);
+  const hydrating = React.useContext(HydrationContext);
+  const theme = React.useContext(ThemeContext);
+  return {
+    css: (style: StyleObject) => {
+      const className = driver(style, styletronEngine);
+      if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
+        const debugClassName = debugEngine.debug();
+        return `${debugClassName} ${className}`;
+      }
+      return className;
+    },
+    theme,
+  };
+}
 
 export function createStyled({
   getInitialStyle,
@@ -148,7 +188,15 @@ export function createStyled({
 export const styled: StyledFn = createStyled({
   getInitialStyle,
   driver,
-  wrapper: Component => Component,
+  wrapper: StyledComponent => {
+    return function withThemeHOC(props) {
+      return (
+        <ThemeContext.Consumer>
+          {theme => <StyledComponent $theme={theme} {...props} />}
+        </ThemeContext.Consumer>
+      );
+    };
+  },
 });
 
 declare var withTransform: WithTransformFn;
@@ -386,21 +434,29 @@ export function createStyledElementComponent(styletron: Styletron) {
     return (
       <Consumer>
         {(styletron, debugEngine, hydrating) => {
-          if (__DEV__ && styletron === void 0) {
-            throw new Error(`
+          {
+            /* if (!styletron) {
+            throw new Error(
+              __DEV__
+                ? `
 A Styletron styled component was rendered, but no Styletron engine instance was provided in React context.
 
 Did you forget to provide a Styletron engine instance to React context via using the Styletron provider component?
 
 Note: Providers and Consumers must come from the exact same React.createContext call to work.
-If your app has multiple instances of the "styletron-react-core" package in your node_module tree,
+If your app has multiple instances of the "styletron-react" package in your node_module tree,
 your Provider may be coming from a different React.createContext call, which means the styled components
 will not recieve the provided engine instance. This scenario can arise, for example, when using "npm link".
-`);
+`
+                : `Styletron Provider is not correctly setup.`,
+            );
+            return;
+          } */
           }
 
           const elementProps = omitPrefixedKeys(props);
           const style = resolveStyle(getInitialStyle, reducers, props);
+
           const styleClassString = driver(style, styletron);
           const Element = props.$as ? props.$as : base;
           elementProps.className = props.className
