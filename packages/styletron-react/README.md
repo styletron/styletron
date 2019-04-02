@@ -262,7 +262,8 @@ A Styletron engine must be provided using the `Provider` component.
 #### Props
 
 - `value` (`StyletronEngine`)
-- `debugMode?` (`true` | `"ssr"` | `false`)
+- `debug?` (`DebugEngine`)
+- `debugAfterHydration?` (`boolean`)
 
 #### Examples
 
