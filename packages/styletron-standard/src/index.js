@@ -26,6 +26,7 @@ export interface StandardEngine {
   renderStyle(style: StyleObject): string;
   renderKeyframes(keyframes: KeyframesObject): string;
   renderFontFace(fontFace: FontFaceObject): string;
+  noopEngine?: boolean;
 }
 
 export function driver(style: StyleObject, styletron: StandardEngine): string {
