@@ -9,7 +9,7 @@ export function addDebugMetadata(instance, stackIndex) {
   };
 }
 
-export class DebugEngine {
+class BrowserDebugEngine {
   constructor(worker) {
     if (!worker) {
       const workerBlob = new Blob(
@@ -58,3 +58,7 @@ export class DebugEngine {
     return className;
   }
 }
+
+class NoopDebugEngine {}
+
+export const DebugEngine = __BROWSER__ ? BrowserDebugEngine : NoopDebugEngine;
