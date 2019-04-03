@@ -13,6 +13,7 @@ import {
   withStyleDeep,
   withTransform,
   Provider,
+  useStyletron,
 } from "../index.js";
 
 import {getInitialStyle, driver} from "styletron-standard";
@@ -536,5 +537,85 @@ test("createStyled wrapper", t => {
       <Widget foo="foo" />
     </Provider>,
   );
+  t.end();
+});
+
+test("theme support", t => {
+  t.plan(1);
+
+  const Widget = styled<any>("div", ({$theme}) => ({
+    color: $theme.textColor,
+  }));
+
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            color: "blue",
+          });
+          return "";
+        },
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+      theme={{
+        textColor: "blue",
+      }}
+    >
+      <Widget />
+    </Provider>,
+  );
+  t.end();
+});
+
+test("useStyletron css and theme", t => {
+  t.plan(2);
+
+  function Link() {
+    const {css, theme} = useStyletron();
+    const className = css({color: theme && theme.textColor});
+    t.equal(className, ".abc");
+    return <a className={className}>Foo</a>;
+  }
+
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            color: "blue",
+          });
+          return ".abc";
+        },
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+      theme={{
+        textColor: "blue",
+      }}
+    >
+      <Link />
+    </Provider>,
+  );
+  t.end();
+});
+
+test("no-op engine", t => {
+  t.plan(1);
+  const consoleWarn = console.warn; // eslint-disable-line
+
+  (console: any).warn = message => {
+    t.equal(
+      message.split("\n")[1],
+      "Styletron has been switched to a no-op (test) mode.",
+    );
+  };
+  const Widget = styled("div", {
+    color: "red",
+  });
+  Enzyme.mount(<Widget />);
+
+  (console: any).warn = consoleWarn;
   t.end();
 });
