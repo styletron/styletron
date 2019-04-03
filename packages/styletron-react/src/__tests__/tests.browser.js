@@ -540,41 +540,12 @@ test("createStyled wrapper", t => {
   t.end();
 });
 
-test("theme support", t => {
-  t.plan(1);
-
-  const Widget = styled<any>("div", ({$theme}) => ({
-    color: $theme.textColor,
-  }));
-
-  Enzyme.mount(
-    <Provider
-      value={{
-        renderStyle: x => {
-          t.deepEqual(x, {
-            color: "blue",
-          });
-          return "";
-        },
-        renderKeyframes: () => "",
-        renderFontFace: () => "",
-      }}
-      theme={{
-        textColor: "blue",
-      }}
-    >
-      <Widget />
-    </Provider>,
-  );
-  t.end();
-});
-
-test("useStyletron css and theme", t => {
+test("useStyletron css", t => {
   t.plan(2);
 
   function Link() {
-    const {css, theme} = useStyletron();
-    const className = css({color: theme && theme.textColor});
+    const [css] = useStyletron();
+    const className = css({color: "blue"});
     t.equal(className, ".abc");
     return <a className={className}>Foo</a>;
   }
@@ -590,9 +561,6 @@ test("useStyletron css and theme", t => {
         },
         renderKeyframes: () => "",
         renderFontFace: () => "",
-      }}
-      theme={{
-        textColor: "blue",
       }}
     >
       <Link />

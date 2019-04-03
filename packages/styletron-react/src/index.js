@@ -40,12 +40,9 @@ const HydrationContext = React.createContext(false);
 const DebugEngineContext = React.createContext();
 const ThemeContext = React.createContext();
 
-type ProdProviderProps = {
+type DevProviderProps = {
   children: React.Node,
   value: StandardEngine,
-  theme?: any,
-};
-type DevProviderProps = ProdProviderProps & {
   debugAfterHydration?: boolean,
   debug?: any,
 };
@@ -74,31 +71,18 @@ class DevProvider extends React.Component<
   render() {
     return (
       <StyletronContext.Provider value={this.props.value}>
-        <ThemeContext.Provider value={this.props.theme}>
-          <DebugEngineContext.Provider value={this.props.debug}>
-            <HydrationContext.Provider value={this.state.hydrating}>
-              {this.props.children}
-            </HydrationContext.Provider>
-          </DebugEngineContext.Provider>
-        </ThemeContext.Provider>
+        <DebugEngineContext.Provider value={this.props.debug}>
+          <HydrationContext.Provider value={this.state.hydrating}>
+            {this.props.children}
+          </HydrationContext.Provider>
+        </DebugEngineContext.Provider>
       </StyletronContext.Provider>
     );
   }
 }
 
-class ProdProvider extends React.Component<ProdProviderProps> {
-  render() {
-    return (
-      <StyletronContext.Provider value={this.props.value}>
-        <ThemeContext.Provider value={this.props.theme}>
-          {this.props.children}
-        </ThemeContext.Provider>
-      </StyletronContext.Provider>
-    );
-  }
-}
-
-export const Provider = __BROWSER__ && __DEV__ ? DevProvider : ProdProvider;
+export const Provider =
+  __BROWSER__ && __DEV__ ? DevProvider : StyletronContext.Provider;
 
 // TODO: more precise types
 export function DevConsumer(props: {children: (any, any, any) => React.Node}) {
@@ -159,9 +143,8 @@ export function useStyletron() {
   const styletronEngine: StandardEngine = React.useContext(StyletronContext);
   const debugEngine = React.useContext(DebugEngineContext);
   const hydrating = React.useContext(HydrationContext);
-  const theme = React.useContext(ThemeContext);
-  return {
-    css: (style: StyleObject) => {
+  return [
+    function css(style: StyleObject) {
       checkNoopEngine(styletronEngine);
       const className = driver(style, styletronEngine);
       // TODO: Fix/enable debuging mode for this API
@@ -176,8 +159,7 @@ export function useStyletron() {
       // }
       return className;
     },
-    theme,
-  };
+  ];
 }
 
 export function createStyled({
@@ -222,15 +204,7 @@ export function createStyled({
 export const styled: StyledFn = createStyled({
   getInitialStyle,
   driver,
-  wrapper: StyledComponent => {
-    return function withThemeHOC(props) {
-      return (
-        <ThemeContext.Consumer>
-          {theme => <StyledComponent $theme={theme} {...props} />}
-        </ThemeContext.Consumer>
-      );
-    };
-  },
+  wrapper: Component => Component,
 });
 
 declare var withTransform: WithTransformFn;
