@@ -147,16 +147,14 @@ export function useStyletron() {
     function css(style: StyleObject) {
       checkNoopEngine(styletronEngine);
       const className = driver(style, styletronEngine);
-      // TODO: Fix/enable debuging mode for this API
-      //
-      // if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
-      //   const {stack, stacktrace, message} = new Error("stacktrace source");
-      //   const debugClassName = debugEngine.debug({
-      //     stackInfo: {stack, stacktrace, message},
-      //     stackIndex: 2,
-      //   });
-      //   return `${debugClassName} ${className}`;
-      // }
+      if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
+        const {stack, message} = new Error("stacktrace source");
+        const debugClassName = debugEngine.debug({
+          stackInfo: {stack, message},
+          stackIndex: 1,
+        });
+        return `${debugClassName} ${className}`;
+      }
       return className;
     },
   ];
