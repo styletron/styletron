@@ -143,9 +143,9 @@ export function useStyletron() {
   const styletronEngine: StandardEngine = React.useContext(StyletronContext);
   const debugEngine = React.useContext(DebugEngineContext);
   const hydrating = React.useContext(HydrationContext);
+  checkNoopEngine(styletronEngine);
   return [
     function css(style: StyleObject) {
-      checkNoopEngine(styletronEngine);
       const className = driver(style, styletronEngine);
       if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
         const {stack, message} = new Error("stacktrace source");
