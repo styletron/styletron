@@ -147,15 +147,23 @@ export function useStyletron() {
   return [
     function css(style: StyleObject) {
       const className = driver(style, styletronEngine);
-      if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
-        const {stack, message} = new Error("stacktrace source");
-        const debugClassName = debugEngine.debug({
-          stackInfo: {stack, message},
-          stackIndex: 1,
-        });
-        return `${debugClassName} ${className}`;
+      if (!(__BROWSER__ && __DEV__)) {
+        return className;
       }
-      return className;
+      const {stack, message} = new Error("stacktrace source");
+      const debugClassName = React.useMemo(
+        () => {
+          if (debugEngine && !hydrating) {
+            return debugEngine.debug({
+              stackInfo: {stack, message},
+              stackIndex: 1,
+            });
+          }
+          return "";
+        },
+        [debugEngine, hydrating],
+      );
+      return debugClassName ? `${debugClassName} ${className}` : className;
     },
   ];
 }
