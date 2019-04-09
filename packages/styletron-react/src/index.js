@@ -30,12 +30,13 @@ import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
 
 export {DebugEngine};
 
-const StyletronContext = React.createContext<StandardEngine>({
+const noopEngine = {
   renderStyle: () => "",
   renderKeyframes: () => "",
   renderFontFace: () => "",
-  noopEngine: true,
-});
+};
+
+const StyletronContext = React.createContext<StandardEngine>(noopEngine);
 const HydrationContext = React.createContext(false);
 const DebugEngineContext = React.createContext();
 const ThemeContext = React.createContext();
@@ -118,7 +119,7 @@ function checkNoopEngine(engine: StandardEngine) {
   // if no engine provided, we default to no-op, handy for tests
   // however, print a warning in other envs
   if (process.env.NODE_ENV !== "test") {
-    engine.noopEngine &&
+    engine === noopEngine &&
       // eslint-disable-next-line no-console
       console.warn(
         __DEV__
