@@ -13,6 +13,7 @@ import {
   withStyleDeep,
   withTransform,
   Provider,
+  useStyletron,
 } from "../index.js";
 
 import {getInitialStyle, driver} from "styletron-standard";
@@ -536,5 +537,53 @@ test("createStyled wrapper", t => {
       <Widget foo="foo" />
     </Provider>,
   );
+  t.end();
+});
+
+test("useStyletron css", t => {
+  t.plan(2);
+
+  function Link() {
+    const [css] = useStyletron();
+    const className = css({color: "blue"});
+    t.equal(className, ".abc");
+    return <a className={className}>Foo</a>;
+  }
+
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            color: "blue",
+          });
+          return ".abc";
+        },
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+    >
+      <Link />
+    </Provider>,
+  );
+  t.end();
+});
+
+test("no-op engine", t => {
+  t.plan(1);
+  const consoleWarn = console.warn; // eslint-disable-line
+
+  (console: any).warn = message => {
+    t.equal(
+      message.split("\n")[1],
+      "Styletron has been switched to a no-op (test) mode.",
+    );
+  };
+  const Widget = styled("div", {
+    color: "red",
+  });
+  Enzyme.mount(<Widget />);
+
+  (console: any).warn = consoleWarn;
   t.end();
 });

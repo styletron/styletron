@@ -4,9 +4,9 @@
 
 declare var __DEV__: boolean;
 declare var __BROWSER__: boolean;
+declare var process: any;
 
 import * as React from "react";
-import createReactContext, {type Context} from "create-react-context";
 import {
   driver,
   getInitialStyle,
@@ -30,16 +30,24 @@ import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
 
 export {DebugEngine};
 
-const StyletronContext: Context<any> = createReactContext();
-const HydrationContext = createReactContext(false);
-const DebugEngineContext = createReactContext();
+const noopEngine = {
+  renderStyle: () => "",
+  renderKeyframes: () => "",
+  renderFontFace: () => "",
+};
+
+const StyletronContext = React.createContext<StandardEngine>(noopEngine);
+const HydrationContext = React.createContext(false);
+const DebugEngineContext = React.createContext();
+const ThemeContext = React.createContext();
 
 type DevProviderProps = {
   children: React.Node,
-  debugAfterHydration?: boolean,
   value: StandardEngine,
+  debugAfterHydration?: boolean,
   debug?: any,
 };
+
 class DevProvider extends React.Component<
   DevProviderProps,
   {hydrating: boolean},
@@ -106,6 +114,60 @@ type createStyledOpts = {
     React.StatelessFunctionalComponent<any>,
   ) => React.ComponentType<any>,
 };
+
+function checkNoopEngine(engine: StandardEngine) {
+  // if no engine provided, we default to no-op, handy for tests
+  // however, print a warning in other envs
+  if (process.env.NODE_ENV !== "test") {
+    engine === noopEngine &&
+      // eslint-disable-next-line no-console
+      console.warn(
+        __DEV__
+          ? `
+Styletron has been switched to a no-op (test) mode.
+
+A Styletron styled component was rendered, but no Styletron engine instance was provided in React context.
+
+Did you forget to provide a Styletron engine instance to React context via using the Styletron provider component?
+
+Note: Providers and Consumers must come from the exact same React.createContext call to work.
+If your app has multiple instances of the "styletron-react" package in your node_module tree,
+your Provider may be coming from a different React.createContext call, which means the styled components
+will not recieve the provided engine instance. This scenario can arise, for example, when using "npm link".
+`
+          : `Styletron Provider is not set up. Defaulting to no-op.`,
+      );
+  }
+}
+
+export function useStyletron() {
+  const styletronEngine: StandardEngine = React.useContext(StyletronContext);
+  const debugEngine = React.useContext(DebugEngineContext);
+  const hydrating = React.useContext(HydrationContext);
+  checkNoopEngine(styletronEngine);
+  return [
+    function css(style: StyleObject) {
+      const className = driver(style, styletronEngine);
+      if (!(__BROWSER__ && __DEV__)) {
+        return className;
+      }
+      const {stack, message} = new Error("stacktrace source");
+      const debugClassName = React.useMemo(
+        () => {
+          if (debugEngine && !hydrating) {
+            return debugEngine.debug({
+              stackInfo: {stack, message},
+              stackIndex: 1,
+            });
+          }
+          return "";
+        },
+        [debugEngine, hydrating],
+      );
+      return debugClassName ? `${debugClassName} ${className}` : className;
+    },
+  ];
+}
 
 export function createStyled({
   getInitialStyle,
@@ -387,21 +449,11 @@ export function createStyledElementComponent(styletron: Styletron) {
     return (
       <Consumer>
         {(styletron, debugEngine, hydrating) => {
-          if (__DEV__ && styletron === void 0) {
-            throw new Error(`
-A Styletron styled component was rendered, but no Styletron engine instance was provided in React context.
-
-Did you forget to provide a Styletron engine instance to React context via using the Styletron provider component?
-
-Note: Providers and Consumers must come from the exact same React.createContext call to work.
-If your app has multiple instances of the "styletron-react-core" package in your node_module tree,
-your Provider may be coming from a different React.createContext call, which means the styled components
-will not recieve the provided engine instance. This scenario can arise, for example, when using "npm link".
-`);
-          }
+          checkNoopEngine(styletron);
 
           const elementProps = omitPrefixedKeys(props);
           const style = resolveStyle(getInitialStyle, reducers, props);
+
           const styleClassString = driver(style, styletron);
           const Element = props.$as ? props.$as : base;
           elementProps.className = props.className

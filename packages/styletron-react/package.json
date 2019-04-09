@@ -30,12 +30,11 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "create-react-context": "^0.2.2",
     "prop-types": "^15.6.0",
     "styletron-standard": "^2.0.2"
   },
   "peerDependencies": {
-    "react": "0.14.x - 16.x"
+    "react": "^16.8.0"
   },
   "devDependencies": {
     "@babel/preset-react": "7.0.0-beta.56",
@@ -43,8 +42,8 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint-plugin-react": "^7.6.1",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "unitest": "^2.1.1"
   },
   "license": "MIT"
