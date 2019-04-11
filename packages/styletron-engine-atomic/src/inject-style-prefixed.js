@@ -20,13 +20,19 @@ export default function injectStylePrefixed(
   let classString = "";
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
-
-    if (typeof originalVal !== "object") {
+    const hasFallbacks =
+      typeof originalVal === "object" &&
+      Array.isArray(originalVal) &&
+      !originalKey.includes(":");
+    if (typeof originalVal !== "object" || hasFallbacks) {
       // Primitive value
       if (__DEV__) {
-        validateValueType(originalVal);
+        if (!hasFallbacks) validateValueType(originalVal);
+        else {
+          const fallbacks: any = originalVal;
+          for (const fallback of fallbacks) validateValueType(fallback);
+        }
       }
-
       const propValPair = `${hyphenate(
         originalKey,
       )}:${((originalVal: any): string)}`;
@@ -39,26 +45,32 @@ export default function injectStylePrefixed(
       } else {
         // cache miss
         let block = "";
-        const prefixed = prefixAll({[originalKey]: originalVal});
-        for (const prefixedKey in prefixed) {
-          const prefixedVal = prefixed[prefixedKey];
-          const prefixedValType = typeof prefixedVal;
-          if (prefixedValType === "string" || prefixedValType === "number") {
-            const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
-            if (prefixedPair !== propValPair) {
-              block += `${prefixedPair};`;
-            }
-          } else if (Array.isArray(prefixedVal)) {
-            const hyphenated = hyphenate(prefixedKey);
-            for (let i = 0; i < prefixedVal.length; i++) {
-              const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
+        const addPrefixToBlock = value => {
+          const prefixed = prefixAll({[originalKey]: value});
+          for (const prefixedKey in prefixed) {
+            const prefixedVal = prefixed[prefixedKey];
+            const prefixedValType = typeof prefixedVal;
+            if (prefixedValType === "string" || prefixedValType === "number") {
+              const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
               if (prefixedPair !== propValPair) {
                 block += `${prefixedPair};`;
               }
+            } else if (Array.isArray(prefixedVal)) {
+              const hyphenated = hyphenate(prefixedKey);
+              for (let i = 0; i < prefixedVal.length; i++) {
+                const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
+                if (prefixedPair !== propValPair) {
+                  block += `${prefixedPair};`;
+                }
+              }
             }
           }
-        }
-        block += propValPair; // ensure original prop/val is last (for hydration)
+        };
+        if (hasFallbacks) {
+          const fallbacks: any = originalVal;
+          for (const fallback of fallbacks) addPrefixToBlock(fallback);
+        } else addPrefixToBlock(originalVal);
+        if (!hasFallbacks) block += propValPair;
         const id = cache.addValue(key, {pseudo, block});
         classString += " " + id;
       }
