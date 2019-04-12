@@ -92,7 +92,7 @@ type StyletronStyles = {
   styles?: any,
   extends?: any,
 };
-if (__BROWSER__ && !window.__STYLETRON_DEVTOOLS__) {
+if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
   const atomicMap = new Object();
   const extensionsMap = new WeakMap();
   const stylesMap = new WeakMap();
@@ -546,7 +546,7 @@ export function createStyledElementComponent(
 <<<<<<< HEAD
 =======
 
-          if (__BROWSER__ && window.__STYLETRON_DEVTOOLS__) {
+          if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
             const existingRef = elementProps.ref;
             elementProps.ref = element => {
               if (element) {

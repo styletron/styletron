@@ -87,7 +87,7 @@ class StyletronClient implements StandardEngine {
       const rule = styleBlockToRule(selector, block);
       try {
         sheet.insertRule(rule, sheet.cssRules.length);
-        if (__BROWSER__ && window.__STYLETRON_DEVTOOLS__) {
+        if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
           // start after the . combinator and cut at the first : if there is one to cut out the pseudo classes
           const key = selector.substring(
             1,
