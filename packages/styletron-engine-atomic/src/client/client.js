@@ -199,8 +199,22 @@ class StyletronClient implements StandardEngine {
   }
 
   renderFontFace(fontFace: FontFaceObject): string {
-    const key = declarationsToBlock(fontFace);
-    return this.fontFaceCache.addValue(key, fontFace);
+    let result = "";
+    if (Array.isArray(fontFace)) {
+      for (const font of fontFace) {
+        if (typeof font === "object") {
+          const key = declarationsToBlock(fontFace);
+          result += `${this.fontFaceCache.addValue(key, font)},`;
+        } else if (typeof font === "string") {
+          result += `${font},`;
+        }
+      }
+      result = result.slice(0, -1);
+    } else {
+      const key = declarationsToBlock(fontFace);
+      result += this.fontFaceCache.addValue(key, fontFace);
+    }
+    return result;
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {
