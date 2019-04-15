@@ -445,7 +445,7 @@ export function createStyledElementComponent(styletron: Styletron) {
     var debugClassName;
   }
 
-  function StyledElement(props) {
+  const StyledElement = React.forwardRef((props, ref) => {
     return (
       <Consumer>
         {(styletron, debugEngine, hydrating) => {
@@ -471,16 +471,11 @@ export function createStyledElementComponent(styletron: Styletron) {
             const joined = `${debugClassName} ${elementProps.className}`;
             elementProps.className = joined;
           }
-
-          if (props.$ref) {
-            elementProps.ref = props.$ref;
-          }
-
-          return <Element {...elementProps} />;
+          return <Element {...elementProps} ref={ref} />;
         }}
       </Consumer>
     );
-  }
+  });
 
   const Wrapped = wrapper(StyledElement);
   Wrapped.__STYLETRON__ = {
