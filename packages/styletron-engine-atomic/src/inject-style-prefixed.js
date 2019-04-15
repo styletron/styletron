@@ -20,13 +20,15 @@ export default function injectStylePrefixed(
   let classString = "";
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
-    const hasFallbacks =
-      typeof originalVal === "object" &&
-      Array.isArray(originalVal) &&
-      !originalKey.includes(":");
+    const hasFallbacks = Array.isArray(originalVal);
     if (typeof originalVal !== "object" || hasFallbacks) {
       // Primitive value
       if (__DEV__) {
+        if (hasFallbacks && originalKey.includes(":"))
+          // eslint-disable-next-line no-console
+          console.warn(
+            "Providing fallback values to pseudo selectors may result in unexpected behavior.",
+          );
         if (!hasFallbacks) validateValueType(originalVal);
         else {
           const fallbacks: any = originalVal;
@@ -69,8 +71,11 @@ export default function injectStylePrefixed(
         if (hasFallbacks) {
           const fallbacks: any = originalVal;
           for (const fallback of fallbacks) addPrefixToBlock(fallback);
-        } else addPrefixToBlock(originalVal);
-        if (!hasFallbacks) block += propValPair;
+        } else {
+          addPrefixToBlock(originalVal);
+          // ensure original prop/val is last for hydration
+          block += propValPair;
+        }
         const id = cache.addValue(key, {pseudo, block});
         classString += " " + id;
       }
