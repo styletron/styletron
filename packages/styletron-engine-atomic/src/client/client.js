@@ -198,7 +198,9 @@ class StyletronClient implements StandardEngine {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 
-  renderFontFace(fontFace: FontFaceObject): string {
+  renderFontFace(
+    fontFace: FontFaceObject | Array<FontFaceObject | string>,
+  ): string {
     let result = "";
     if (Array.isArray(fontFace)) {
       for (const font of fontFace) {

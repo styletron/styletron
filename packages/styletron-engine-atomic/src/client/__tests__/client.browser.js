@@ -141,6 +141,19 @@ test("prefix", t => {
   t.end();
 });
 
+test("fallbacks", t => {
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container});
+  t.equal(
+    instance.renderFontFace([{src: "url(blah)"}, "arial"]),
+    "ae,arial",
+    "font face fallbacks are supported",
+  );
+  instance.container.remove();
+  t.end();
+});
+
 test("hydration", t => {
   const {getSheets, cleanup, container} = setup();
 
