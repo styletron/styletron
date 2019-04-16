@@ -108,6 +108,28 @@ test("rendering", t => {
   t.end();
 });
 
+test("fallbacks", t => {
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container});
+  instance.renderStyle({fontSize: ["4px", "4vw"]});
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [".ae { font-size: 4vw; }"],
+    },
+  ]);
+  instance.renderStyle({fontSize: ["4px", "4notsupportedunit"]});
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [".ae { font-size: 4vw; }", ".af { font-size: 4px; }"],
+    },
+  ]);
+  instance.container.remove();
+  t.end();
+});
+
 test("prefix", t => {
   const container = document.createElement("div");
   document.body && document.body.appendChild(container);
