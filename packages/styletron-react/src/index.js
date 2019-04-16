@@ -471,7 +471,13 @@ export function createStyledElementComponent(styletron: Styletron) {
             const joined = `${debugClassName} ${elementProps.className}`;
             elementProps.className = joined;
           }
-          return <Element {...elementProps} ref={ref} />;
+          if (props.$ref) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
+            );
+          }
+          return <Element {...elementProps} ref={ref || props.$ref} />;
         }}
       </Consumer>
     );
