@@ -198,25 +198,9 @@ class StyletronClient implements StandardEngine {
     return injectStylePrefixed(this.styleCache, style, "", "");
   }
 
-  renderFontFace(
-    fontFace: FontFaceObject | Array<FontFaceObject | string>,
-  ): string {
-    let result = "";
-    if (Array.isArray(fontFace)) {
-      for (const font of fontFace) {
-        if (typeof font === "object") {
-          const key = declarationsToBlock(fontFace);
-          result += `${this.fontFaceCache.addValue(key, font)},`;
-        } else if (typeof font === "string") {
-          result += `${font},`;
-        }
-      }
-      result = result.slice(0, -1);
-    } else {
-      const key = declarationsToBlock(fontFace);
-      result += this.fontFaceCache.addValue(key, fontFace);
-    }
-    return result;
+  renderFontFace(fontFace: FontFaceObject): string {
+    const key = declarationsToBlock(fontFace);
+    return this.fontFaceCache.addValue(key, fontFace);
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {

@@ -1483,7 +1483,12 @@ export type FontProperty =
   | "status-bar"
   | string;
 
-export type FontFamilyProperty = Globals | GenericFamily | string | FontFace;
+export type FontFamilyProperty =
+  | Globals
+  | GenericFamily
+  | string
+  | FontFace
+  | Array<Globals | GenericFamily | string | FontFace>;
 
 export type FontFeatureSettingsProperty = Globals | "normal" | string;
 
