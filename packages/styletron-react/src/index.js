@@ -445,7 +445,7 @@ export function createStyledElementComponent(styletron: Styletron) {
     var debugClassName;
   }
 
-  function StyledElement(props) {
+  const StyledElement = React.forwardRef((props, ref) => {
     return (
       <Consumer>
         {(styletron, debugEngine, hydrating) => {
@@ -471,16 +471,17 @@ export function createStyledElementComponent(styletron: Styletron) {
             const joined = `${debugClassName} ${elementProps.className}`;
             elementProps.className = joined;
           }
-
           if (props.$ref) {
-            elementProps.ref = props.$ref;
+            // eslint-disable-next-line no-console
+            console.warn(
+              "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
+            );
           }
-
-          return <Element {...elementProps} />;
+          return <Element {...elementProps} ref={ref || props.$ref} />;
         }}
       </Consumer>
     );
-  }
+  });
 
   const Wrapped = wrapper(StyledElement);
   Wrapped.__STYLETRON__ = {

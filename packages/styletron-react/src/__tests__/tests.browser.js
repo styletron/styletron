@@ -288,7 +288,7 @@ test("$-prefixed props not passed", t => {
   );
 });
 
-test("$ref", t => {
+test("ref forwarding", t => {
   t.plan(1);
 
   const Widget = styled("button", {color: "red"});
@@ -308,7 +308,7 @@ test("$ref", t => {
           }}
         >
           <Widget
-            $ref={c => {
+            ref={c => {
               this.widgetInner = c;
             }}
           />
