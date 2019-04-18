@@ -434,7 +434,15 @@ export function createStyledElementComponent(styletron: Styletron) {
           checkNoopEngine(styletron);
 
           const elementProps = omitPrefixedKeys(props);
-          const style = resolveStyle(getInitialStyle, reducers, props);
+          let style = resolveStyle(getInitialStyle, reducers, props);
+
+          if (props.$style) {
+            if (typeof props.$style === "function") {
+              style = deepMerge(style, props.$style(props));
+            } else {
+              style = deepMerge(style, props.$style);
+            }
+          }
 
           const styleClassString = driver(style, styletron);
           const Element = props.$as ? props.$as : base;

@@ -142,6 +142,108 @@ test("withStyle (dynamic)", t => {
   t.end();
 });
 
+test("$style prop (static)", t => {
+  t.plan(1);
+  const Widget = styled("div", {
+    lineHeight: 1,
+    color: "red",
+    ":hover": {fontSize: "12px"},
+  });
+
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            color: "blue",
+            lineHeight: 1,
+            ":hover": {fontSize: "12px"},
+          });
+          return "";
+        },
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+    >
+      <Widget $style={{color: "blue"}} />
+    </Provider>,
+  );
+  t.end();
+});
+
+test("$style prop (dynamic)", t => {
+  t.plan(1);
+  const Widget = styled("div", {
+    lineHeight: 1,
+    color: "red",
+    ":hover": {fontSize: "12px"},
+  });
+
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            color: "blue",
+            background: "yellow",
+            lineHeight: 1,
+            ":hover": {fontSize: "12px", borderWidth: 0},
+          });
+          return "";
+        },
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+    >
+      <Widget
+        $style={props => ({
+          color: "blue",
+          background: props.$round ? "yellow" : "green",
+          ":hover": {borderWidth: 0},
+        })}
+        $round={true}
+      />
+    </Provider>,
+  );
+  t.end();
+});
+
+test("$style overrides nested withStyle", t => {
+  t.plan(1);
+  const Widget = styled("div", {
+    color: "red",
+    fontSize: "12px",
+  });
+
+  const WidgetColor = withStyle(Widget, {color: "blue"});
+  const WidgetFontSize = withStyle(WidgetColor, {fontSize: "14px"});
+
+  Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: x => {
+          t.deepEqual(x, {
+            color: "yellow",
+            fontSize: "14px",
+            padding: "10px",
+          });
+          return "";
+        },
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+    >
+      <WidgetFontSize
+        $style={{
+          color: "yellow",
+          padding: "10px",
+        }}
+      />
+    </Provider>,
+  );
+  t.end();
+});
+
 test("withTransform", t => {
   t.plan(1);
   const Widget = styled("div", {color: "red", background: "green"});
