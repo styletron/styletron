@@ -1499,7 +1499,8 @@ export type FontSizeProperty =
   | TLength
   | "larger"
   | "smaller"
-  | string;
+  | string
+  | Array<Globals | AbsoluteSize | TLength | "larger" | "smaller" | string>;
 
 export type FontSizeAdjustProperty = Globals | "none" | number;
 
@@ -2455,7 +2456,11 @@ export type TransformOriginProperty =
 
 export type TransformStyleProperty = Globals | "flat" | "preserve-3d";
 
-export type TransitionProperty = Globals | SingleTransition | string;
+export type TransitionProperty =
+  | Globals
+  | SingleTransition
+  | string
+  | Array<Globals | SingleTransition | string>;
 
 export type TransitionPropertyProperty = Globals | "all" | "none" | string;
 

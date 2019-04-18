@@ -10,6 +10,9 @@ import type {StyleObject} from "styletron-standard";
 
 import {MultiCache} from "./cache.js";
 
+const createPair = (key, value) =>
+  `${hyphenate(key)}:${((value: any): string)}`;
+
 export default function injectStylePrefixed(
   styleCache: MultiCache<{pseudo: string, block: string}>,
   styles: StyleObject,
@@ -35,9 +38,7 @@ export default function injectStylePrefixed(
           for (const fallback of fallbacks) validateValueType(fallback);
         }
       }
-      const propValPair = `${hyphenate(
-        originalKey,
-      )}:${((originalVal: any): string)}`;
+      const propValPair = createPair(originalKey, originalVal);
       const key = `${pseudo}${propValPair}`;
       const cachedId = cache.cache[key];
       if (cachedId !== void 0) {
@@ -48,20 +49,21 @@ export default function injectStylePrefixed(
         // cache miss
         let block = "";
         const addPrefixToBlock = value => {
+          const originalPair = createPair(originalKey, value);
           const prefixed = prefixAll({[originalKey]: value});
           for (const prefixedKey in prefixed) {
             const prefixedVal = prefixed[prefixedKey];
             const prefixedValType = typeof prefixedVal;
             if (prefixedValType === "string" || prefixedValType === "number") {
               const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
-              if (prefixedPair !== propValPair) {
+              if (prefixedPair !== originalPair) {
                 block += `${prefixedPair};`;
               }
             } else if (Array.isArray(prefixedVal)) {
               const hyphenated = hyphenate(prefixedKey);
               for (let i = 0; i < prefixedVal.length; i++) {
                 const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
-                if (prefixedPair !== propValPair) {
+                if (prefixedPair !== originalPair) {
                   block += `${prefixedPair};`;
                 }
               }
@@ -70,7 +72,11 @@ export default function injectStylePrefixed(
         };
         if (hasFallbacks) {
           const fallbacks: any = originalVal;
-          for (const fallback of fallbacks) addPrefixToBlock(fallback);
+          for (const fallback of fallbacks) {
+            addPrefixToBlock(fallback);
+            // ensure original prop/val is last for hydration
+            block += `${createPair(originalKey, fallback)};`;
+          }
         } else {
           addPrefixToBlock(originalVal);
           // ensure original prop/val is last for hydration
