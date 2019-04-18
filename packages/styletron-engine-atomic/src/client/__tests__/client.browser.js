@@ -126,6 +126,33 @@ test("fallbacks", t => {
       rules: [".ae { font-size: 4vw; }", ".af { font-size: 4px; }"],
     },
   ]);
+  instance.renderStyle({
+    transition: ["opacity 0.2s ease 0s", "opacity 0.4s ease 0s"],
+  });
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        ".ae { font-size: 4vw; }",
+        ".af { font-size: 4px; }",
+        ".ag { transition: opacity 0.4s ease 0s; }",
+      ],
+    },
+  ]);
+  instance.renderStyle({
+    transition: ["color 0.2s ease 0s", "color 12parsecs ease 0parsecs"],
+  });
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        ".ae { font-size: 4vw; }",
+        ".af { font-size: 4px; }",
+        ".ag { transition: opacity 0.4s ease 0s; }",
+        ".ah { transition: color 0.2s ease 0s; }",
+      ],
+    },
+  ]);
   instance.container.remove();
   t.end();
 });
