@@ -182,7 +182,7 @@ export function createStyled({
           "It appears you are passing a styled component into `styled`.",
         );
         console.warn(
-          "For composition with existing styled components, use `withStyle`, `withStyleDeep`, or `withTransform` instead.",
+          "For composition with existing styled components, use `withStyle` or `withTransform` instead.",
         );
         /* eslint-enable no-console */
       }
@@ -226,25 +226,7 @@ export function withTransform(component, transformer) {
 }
 
 declare var withStyle: WithStyleFn;
-export function withStyle(component, styleArg) {
-  const styletron = component.__STYLETRON__;
-
-  if (__DEV__) {
-    if (!styletron) {
-      /* eslint-disable no-console */
-      console.warn(
-        "The first parameter to `withStyle` must be a styled component (without extra wrappers).",
-      );
-      /* eslint-enable no-console */
-    }
-  }
-
-  if (__BROWSER__ && __DEV__) {
-    addDebugMetadata(styletron, 2);
-  }
-
-  return createStyledElementComponent(autoComposeShallow(styletron, styleArg));
-}
+export var withStyle = withStyleDeep;
 
 declare var withStyleDeep: WithStyleFn;
 export function withStyleDeep(component, styleArg) {
@@ -254,7 +236,7 @@ export function withStyleDeep(component, styleArg) {
     if (!styletron) {
       /* eslint-disable no-console */
       console.warn(
-        "The first parameter to `withStyleDeep` must be a styled component (without extra wrappers).",
+        "The first parameter to `withStyle` must be a styled component (without extra wrappers).",
       );
       /* eslint-enable no-console */
     }

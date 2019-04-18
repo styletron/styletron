@@ -10,7 +10,6 @@ import {
   createStyled,
   withWrapper,
   withStyle,
-  withStyleDeep,
   withTransform,
   Provider,
   useStyletron,
@@ -80,64 +79,12 @@ test("styled (dynamic)", t => {
 
 test("withStyle (static)", t => {
   t.plan(1);
-  const Widget = styled("div", {background: "green", color: "red"});
-  const SuperWidget = withStyle(Widget, {
-    color: "blue",
-    fontSize: "14px",
-  });
-  Enzyme.mount(
-    <Provider
-      value={{
-        renderStyle: x => {
-          t.deepEqual(x, {
-            background: "green",
-            color: "blue",
-            fontSize: "14px",
-          });
-          return "";
-        },
-        renderKeyframes: () => "",
-        renderFontFace: () => "",
-      }}
-    >
-      <SuperWidget />
-    </Provider>,
-  );
-  t.end();
-});
-
-test("withStyle (dynamic)", t => {
-  t.plan(1);
-  const Widget = styled("div", {color: "red", background: "yellow"});
-  const SuperWidget = withStyle(Widget, props => ({
-    background: props.$round ? "green" : "yellow",
-    fontSize: "14px",
-  }));
-  Enzyme.mount(
-    <Provider
-      value={{
-        renderStyle: x => {
-          t.deepEqual(x, {color: "red", background: "green", fontSize: "14px"});
-          return "";
-        },
-        renderKeyframes: () => "",
-        renderFontFace: () => "",
-      }}
-    >
-      <SuperWidget $round={true} />
-    </Provider>,
-  );
-  t.end();
-});
-
-test("withStyleDeep (static)", t => {
-  t.plan(1);
   const Widget = styled("div", {
     borderWidth: 0,
     color: "red",
     ":hover": {fontSize: "12px"},
   });
-  const SuperWidget = withStyleDeep(Widget, {
+  const SuperWidget = withStyle(Widget, {
     color: "blue",
     ":hover": {borderWidth: "10px"},
   });
@@ -162,14 +109,14 @@ test("withStyleDeep (static)", t => {
   t.end();
 });
 
-test("withStyleDeep (dynamic)", t => {
+test("withStyle (dynamic)", t => {
   t.plan(1);
   const Widget = styled("div", {
     lineHeight: 1,
     color: "red",
     ":hover": {fontSize: "12px"},
   });
-  const SuperWidget = withStyleDeep(Widget, props => ({
+  const SuperWidget = withStyle(Widget, props => ({
     background: props.$round ? "yellow" : "green",
     ":hover": {borderWidth: 0},
   }));
