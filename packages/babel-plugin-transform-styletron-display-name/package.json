@@ -9,7 +9,7 @@
     "test": "unitest --node=src/__tests__/test.node.js"
   },
   "files": [
-    "./src/index.js"
+    "src/index.js"
   ],
   "license": "MIT",
   "devDependencies": {
