@@ -50,6 +50,7 @@ import {
   atomicSelector,
   keyframesBlockToRule,
   declarationsToBlock,
+  supportsBlockToRule,
   keyframesToBlock,
   fontFaceBlockToRule,
 } from "../css.js";
@@ -82,7 +83,12 @@ class StyletronClient implements StandardEngine {
     const onNewStyle = (cache, id, value) => {
       const {pseudo, block} = value;
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
-      const rule = styleBlockToRule(atomicSelector(id, pseudo), block);
+      let rule;
+      if (pseudo.includes("@supports")) {
+        rule = supportsBlockToRule(pseudo, atomicSelector(id), block);
+      } else {
+        rule = styleBlockToRule(atomicSelector(id, pseudo), block);
+      }
       try {
         sheet.insertRule(rule, sheet.cssRules.length);
       } catch (e) {

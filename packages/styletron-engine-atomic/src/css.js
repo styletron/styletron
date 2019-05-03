@@ -55,6 +55,14 @@ export function fontFaceBlockToRule(id: string, block: string): string {
   return `@font-face{font-family:${id};${block}}`;
 }
 
+export function supportsBlockToRule(
+  pseudo: string,
+  selector: string,
+  block: string,
+): string {
+  return `${pseudo}{${selector}{${block}}}`;
+}
+
 export function styleBlockToRule(selector: string, block: string): string {
   return `${selector}{${block}}`;
 }

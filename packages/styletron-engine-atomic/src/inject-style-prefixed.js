@@ -10,9 +10,6 @@ import type {StyleObject} from "styletron-standard";
 
 import {MultiCache} from "./cache.js";
 
-const createPair = (key, value) =>
-  `${hyphenate(key)}:${((value: any): string)}`;
-
 export default function injectStylePrefixed(
   styleCache: MultiCache<{pseudo: string, block: string}>,
   styles: StyleObject,
@@ -23,22 +20,16 @@ export default function injectStylePrefixed(
   let classString = "";
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
-    const hasFallbacks = Array.isArray(originalVal);
-    if (typeof originalVal !== "object" || hasFallbacks) {
+
+    if (typeof originalVal !== "object") {
       // Primitive value
       if (__DEV__) {
-        if (hasFallbacks && originalKey.includes(":"))
-          // eslint-disable-next-line no-console
-          console.warn(
-            "Providing fallback values to pseudo selectors may result in unexpected behavior.",
-          );
-        if (!hasFallbacks) validateValueType(originalVal);
-        else {
-          const fallbacks: any = originalVal;
-          for (const fallback of fallbacks) validateValueType(fallback);
-        }
+        validateValueType(originalVal);
       }
-      const propValPair = createPair(originalKey, originalVal);
+
+      const propValPair = `${hyphenate(
+        originalKey,
+      )}:${((originalVal: any): string)}`;
       const key = `${pseudo}${propValPair}`;
       const cachedId = cache.cache[key];
       if (cachedId !== void 0) {
@@ -48,40 +39,26 @@ export default function injectStylePrefixed(
       } else {
         // cache miss
         let block = "";
-        const addPrefixToBlock = value => {
-          const originalPair = createPair(originalKey, value);
-          const prefixed = prefixAll({[originalKey]: value});
-          for (const prefixedKey in prefixed) {
-            const prefixedVal = prefixed[prefixedKey];
-            const prefixedValType = typeof prefixedVal;
-            if (prefixedValType === "string" || prefixedValType === "number") {
-              const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
-              if (prefixedPair !== originalPair) {
+        const prefixed = prefixAll({[originalKey]: originalVal});
+        for (const prefixedKey in prefixed) {
+          const prefixedVal = prefixed[prefixedKey];
+          const prefixedValType = typeof prefixedVal;
+          if (prefixedValType === "string" || prefixedValType === "number") {
+            const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
+            if (prefixedPair !== propValPair) {
+              block += `${prefixedPair};`;
+            }
+          } else if (Array.isArray(prefixedVal)) {
+            const hyphenated = hyphenate(prefixedKey);
+            for (let i = 0; i < prefixedVal.length; i++) {
+              const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
+              if (prefixedPair !== propValPair) {
                 block += `${prefixedPair};`;
-              }
-            } else if (Array.isArray(prefixedVal)) {
-              const hyphenated = hyphenate(prefixedKey);
-              for (let i = 0; i < prefixedVal.length; i++) {
-                const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
-                if (prefixedPair !== originalPair) {
-                  block += `${prefixedPair};`;
-                }
               }
             }
           }
-        };
-        if (hasFallbacks) {
-          const fallbacks: any = originalVal;
-          for (const fallback of fallbacks) {
-            addPrefixToBlock(fallback);
-            // ensure original prop/val is last for hydration
-            block += `${createPair(originalKey, fallback)};`;
-          }
-        } else {
-          addPrefixToBlock(originalVal);
-          // ensure original prop/val is last for hydration
-          block += propValPair;
         }
+        block += propValPair; // ensure original prop/val is last (for hydration)
         const id = cache.addValue(key, {pseudo, block});
         classString += " " + id;
       }
@@ -96,6 +73,10 @@ export default function injectStylePrefixed(
             media,
             pseudo + originalKey,
           );
+      } else if (originalKey.substring(0, 9) === "@supports") {
+        classString +=
+          " " +
+          injectStylePrefixed(styleCache, originalVal, media, originalKey);
       } else if (originalKey.substring(0, 6) === "@media") {
         classString +=
           " " +
