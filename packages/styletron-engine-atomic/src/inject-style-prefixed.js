@@ -64,7 +64,10 @@ export default function injectStylePrefixed(
       }
     } else {
       // Object value
-      if (originalKey[0] === ":") {
+      if (
+        originalKey[0] === ":" ||
+        originalKey.substring(0, 9) === "@supports"
+      ) {
         classString +=
           " " +
           injectStylePrefixed(
@@ -73,10 +76,6 @@ export default function injectStylePrefixed(
             media,
             pseudo + originalKey,
           );
-      } else if (originalKey.substring(0, 9) === "@supports") {
-        classString +=
-          " " +
-          injectStylePrefixed(styleCache, originalVal, media, originalKey);
       } else if (originalKey.substring(0, 6) === "@media") {
         classString +=
           " " +

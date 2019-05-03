@@ -21,6 +21,7 @@ import {
   declarationsToBlock,
   keyframesToBlock,
   fontFaceBlockToRule,
+  supportsBlockToRule,
 } from "../css.js";
 
 export type sheetT = {|
@@ -49,10 +50,18 @@ class StyletronServer implements StandardEngine {
       },
       (cache, id, value) => {
         const {pseudo, block} = value;
-        this.styleRules[cache.key] += styleBlockToRule(
-          atomicSelector(id, pseudo),
-          block,
-        );
+        if (pseudo.includes("@supports")) {
+          this.styleRules[cache.key] += supportsBlockToRule(
+            pseudo,
+            atomicSelector(id, ""),
+            block,
+          );
+        } else {
+          this.styleRules[cache.key] += styleBlockToRule(
+            atomicSelector(id, pseudo),
+            block,
+          );
+        }
       },
     );
 

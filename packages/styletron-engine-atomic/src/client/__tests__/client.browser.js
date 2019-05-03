@@ -104,6 +104,28 @@ test("rendering", t => {
     ],
     "media queries are mobile first sorted",
   );
+  instance.renderStyle({
+    "@supports(font-size: 4vw)": {
+      fontSize: "4vw",
+    },
+  });
+  t.deepEqual(
+    sheetsToRules(document.styleSheets),
+    [
+      {
+        media: "",
+        rules: [
+          ".ae { color: purple; }",
+          ".ag { user-select: none; }",
+          ".ah { display: flex; }",
+          "@supports (font-size: 4vw) {\n  .aj { font-size: 4vw; }\n}",
+        ],
+      },
+      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
+      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    ],
+    "supports queries are injected correctly",
+  );
   instance.container.remove();
   t.end();
 });

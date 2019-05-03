@@ -85,7 +85,7 @@ class StyletronClient implements StandardEngine {
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
       let rule;
       if (pseudo.includes("@supports")) {
-        rule = supportsBlockToRule(pseudo, atomicSelector(id), block);
+        rule = supportsBlockToRule(pseudo, atomicSelector(id, ""), block);
       } else {
         rule = styleBlockToRule(atomicSelector(id, pseudo), block);
       }
