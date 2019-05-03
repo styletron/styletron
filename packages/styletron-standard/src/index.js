@@ -48,8 +48,21 @@ export function renderDeclarativeRules(
       continue;
     }
     if (key === "fontFamily" && typeof val !== "string") {
-      style.fontFamily = styletron.renderFontFace((val: any));
-      continue;
+      if (Array.isArray(val)) {
+        let result = "";
+        for (const font of val) {
+          if (typeof font === "object") {
+            result += `${styletron.renderFontFace((font: any))},`;
+          } else if (typeof font === "string") {
+            result += `${font},`;
+          }
+        }
+        style.fontFamily = result.slice(0, -1);
+        continue;
+      } else {
+        style.fontFamily = styletron.renderFontFace((val: any));
+        continue;
+      }
     }
     if (typeof val === "object" && val !== null) {
       renderDeclarativeRules(val, styletron);
