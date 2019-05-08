@@ -14,14 +14,14 @@ class BrowserDebugEngine {
     if (!worker) {
       const workerBlob = new Blob(
         [
-          `importScripts("https://unpkg.com/css-to-js-sourcemap-worker@2.0.4/worker.js")`,
+          `importScripts("https://unpkg.com/css-to-js-sourcemap-worker@2.0.5/worker.js")`,
         ],
         {type: "application/javascript"},
       );
       worker = new Worker(URL.createObjectURL(workerBlob));
       worker.postMessage({
         id: "init_wasm",
-        url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.4/mappings.wasm",
+        url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.5/mappings.wasm",
       });
       worker.postMessage({
         id: "set_render_interval",
