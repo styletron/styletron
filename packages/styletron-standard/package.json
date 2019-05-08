@@ -1,6 +1,6 @@
 {
   "name": "styletron-standard",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Standard interfaces for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
