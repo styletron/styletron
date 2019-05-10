@@ -27,7 +27,12 @@ import type {
   WithTransformFn,
   WithWrapperFn,
 } from "./types.js";
-import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
+import {
+  addDebugMetadata,
+  createDevtoolsRef,
+  setupDevtoolsExtension,
+  DebugEngine,
+} from "./dev-tool.js";
 
 export {DebugEngine};
 
@@ -86,41 +91,8 @@ class DevProvider extends React.Component<
 export const Provider =
   __BROWSER__ && __DEV__ ? DevProvider : StyletronContext.Provider;
 
-// DEVTOOLS SETUP
-type StyletronStyles = {
-  classes?: any,
-  styles?: any,
-  extends?: any,
-};
 if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
-  const atomicMap = new Object();
-  const extensionsMap = new WeakMap();
-  const stylesMap = new WeakMap();
-  const getStyles: StyletronStyles = element => {
-    const styles: StyletronStyles = {};
-    if (stylesMap.has(element)) {
-      styles.styles = stylesMap.get(element);
-      if (element.classList.length) {
-        const classes = {};
-        for (const className of element.classList) {
-          // $FlowFixMe
-          classes[className] = atomicMap[className];
-        }
-        styles.classes = classes;
-      }
-      if (extensionsMap.has(element)) {
-        const extension = extensionsMap.get(element);
-        styles.extends = extension;
-      }
-      return styles;
-    }
-  };
-  window.__STYLETRON_DEVTOOLS__ = {
-    atomicMap,
-    extensionsMap,
-    stylesMap,
-    getStyles,
-  };
+  setupDevtoolsExtension();
 }
 
 // TODO: more precise types
@@ -264,32 +236,7 @@ export function withTransform(component, transformer) {
 }
 
 declare var withStyle: WithStyleFn;
-<<<<<<< HEAD
 export var withStyle = withStyleDeep;
-=======
-export function withStyle(component, styleArg) {
-  const styletron = component.__STYLETRON__;
-  if (__DEV__) {
-    if (!styletron) {
-      /* eslint-disable no-console */
-      console.warn(
-        "The first parameter to `withStyle` must be a styled component (without extra wrappers).",
-      );
-      /* eslint-enable no-console */
-    }
-  }
-
-  if (__BROWSER__ && __DEV__) {
-    addDebugMetadata(styletron, 2);
-  }
-
-  // Send extension through to creation function and apply to map at creation level
-  return createStyledElementComponent(
-    autoComposeShallow(styletron, styleArg),
-    composeExtension(component, styleArg),
-  );
-}
->>>>>>> feat: foundation for devtools
 
 declare var withStyleDeep: WithStyleFn;
 export function withStyleDeep(component, styleArg) {
@@ -543,43 +490,23 @@ export function createStyledElementComponent(
             const joined = `${debugClassName} ${elementProps.className}`;
             elementProps.className = joined;
           }
-<<<<<<< HEAD
-=======
 
           if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-            const existingRef = elementProps.ref;
-            elementProps.ref = element => {
-              if (element) {
-                window.__STYLETRON_DEVTOOLS__.stylesMap.set(element, style);
-                if (extension) {
-                  window.__STYLETRON_DEVTOOLS__.extensionsMap.set(element, {
-                    base: extension.component.base,
-                    displayName: extension.component.name,
-                    initialStyles: extension.component.getInitialStyle(
-                      {},
-                      props,
-                    ),
-                    styleOverrides:
-                      typeof extension.style === "function"
-                        ? extension.style(props)
-                        : extension.style,
-                  });
-                }
-              }
-              if (existingRef) {
-                return existingRef(element);
-              }
-            };
+            elementProps.ref = createDevtoolsRef(extension, style, props, ref);
           }
 
->>>>>>> feat: foundation for devtools
           if (props.$ref) {
             // eslint-disable-next-line no-console
             console.warn(
               "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
             );
           }
-          return <Element {...elementProps} ref={ref || props.$ref} />;
+          return (
+            <Element
+              {...elementProps}
+              ref={elementProps.ref || ref || props.$ref}
+            />
+          );
         }}
       </Consumer>
     );

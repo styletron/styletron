@@ -1,15 +1,8 @@
 {
   "name": "styletron-devtools",
-  "private": true,
   "version": "0.0.1",
   "description": "Chrome devtools extension for inspecting Styletron styles",
   "author": "Jhey Tompkins <jhey@jhey.dev>",
-  "homepage": "https://github.com/styletron/styletron",
-  "repository": "git@github.com:styletron/styletron.git",
-  "bugs": "https://github.com/styletron/styletron/issues",
-  "scripts": {},
-  "dependencies": {},
-  "peerDependencies": {},
-  "devDependencies": {},
+  "repository": "styletron/styletron",
   "license": "MIT"
 }
