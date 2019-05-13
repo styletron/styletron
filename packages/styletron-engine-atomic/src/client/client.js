@@ -18,6 +18,9 @@ function hydrateStyles<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   let match;
   while ((match = hydrator.exec(css))) {
     const [, id, pseudo, key] = match;
+    if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+      hydrateDevtoolsRule(match[0])
+    }
     const fullKey = pseudo ? `${pseudo}${key}` : key;
     cache.cache[fullKey] = id; // set cache without triggering side effects
     cache.idGenerator.increment(); // increment id
@@ -28,6 +31,9 @@ function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   let match;
   while ((match = hydrator.exec(css))) {
     const [, id, key] = match;
+    if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+      hydrateDevtoolsRule(match[0])
+    }
     cache.cache[key] = id; // set cache without triggering side effects
     cache.idGenerator.increment(); // increment id
   }
@@ -54,7 +60,7 @@ import {
   keyframesToBlock,
   fontFaceBlockToRule,
 } from "../css.js";
-import {insertRuleIntoDevtools} from "../dev-tool.js";
+import {insertRuleIntoDevtools, hydrateDevtoolsRule} from "../dev-tool.js";
 
 type hydrateT =
   | HTMLCollection<HTMLStyleElement>
