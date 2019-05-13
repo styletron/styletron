@@ -18,8 +18,8 @@ export const insertRuleIntoDevtools = (selector, block) => {
   window.__STYLETRON_DEVTOOLS__.atomicMap[key] = styles;
 };
 
-export const hydrateDevtoolsRule = (cssString) => {
-  const id = cssString.substring(0, 3)
-  const block = cssString.substring(4, cssString.length - 1)
+export const hydrateDevtoolsRule = cssString => {
+  const id = cssString.substring(0, 3);
+  const block = cssString.substring(4, cssString.length - 1);
   insertRuleIntoDevtools(id, block);
-}
+};
