@@ -394,6 +394,7 @@ export type Properties = {
   MozMarginEnd?: MarginInlineEndProperty,
   MozMarginStart?: MarginInlineStartProperty,
   MozOrient?: MozOrientProperty,
+  MozOsxFontSmoothing?: MozOsxFontSmoothingProperty,
   MozOutlineRadiusBottomleft?: MozOutlineRadiusBottomleftProperty,
   MozOutlineRadiusBottomright?: MozOutlineRadiusBottomrightProperty,
   MozOutlineRadiusTopleft?: MozOutlineRadiusTopleftProperty,
@@ -518,6 +519,7 @@ export type Properties = {
   WebkitFlexWrap?: FlexWrapProperty,
   WebkitFontFeatureSettings?: FontFeatureSettingsProperty,
   WebkitFontKerning?: FontKerningProperty,
+  WebkitFontSmoothing?: WebkitFontSmoothingProperty,
   WebkitFontVariantLigatures?: FontVariantLigaturesProperty,
   WebkitHyphens?: HyphensProperty,
   WebkitJustifyContent?: JustifyContentProperty,
@@ -3674,3 +3676,7 @@ export type AzimuthProperty =
   | "right-side"
   | "rightwards"
   | string;
+
+type WebkitFontSmoothingProperty = "auto" | "none" | "antialiased" | "subpixel-antialiased";
+
+type MozOsxFontSmoothingProperty = "auto" | "grayscale";
