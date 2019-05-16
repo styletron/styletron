@@ -14,13 +14,13 @@ export const createDevtoolsRef = (extension, style, props, ref) => element => {
     window.__STYLETRON_DEVTOOLS__.stylesMap.set(element, style);
     if (extension) {
       window.__STYLETRON_DEVTOOLS__.extensionsMap.set(element, {
-        base: extension.component.base,
-        displayName: extension.component.name,
-        initialStyles: extension.component.getInitialStyle({}, props),
+        base: extension.base,
+        displayName: extension.name,
+        initialStyles: extension.getInitialStyle({}, props),
         styleOverrides:
-          typeof extension.style === "function"
-            ? extension.style(props)
-            : extension.style,
+          typeof extension.with === "function"
+            ? extension.with(props)
+            : extension.with,
       });
     }
   }

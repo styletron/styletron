@@ -254,12 +254,12 @@ export function withStyleDeep(component, styleArg) {
 
   if (__BROWSER__ && __DEV__) {
     addDebugMetadata(styletron, 2);
+    return createStyledElementComponent(
+      addExtension(autoComposeDeep(styletron, styleArg), component, styleArg),
+    );
+  } else {
+    return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
   }
-
-  return createStyledElementComponent(
-    autoComposeDeep(styletron, styleArg),
-    composeExtension(component, styleArg),
-  );
 }
 
 declare var withWrapper: WithWrapperFn;
@@ -302,16 +302,17 @@ export function autoComposeShallow<Props>(
   return staticComposeShallow(styletron, styleArg);
 }
 
-function composeExtension(component, styleArg) {
+function addExtension(composed, component, styleArg) {
   return {
-    component: {
+    ...composed,
+    ext: {
+      with: styleArg,
       name: component.displayName,
       base: component.__STYLETRON__.base,
       getInitialStyle: component.__STYLETRON__.reducers.length
         ? component.__STYLETRON__.reducers[0].reducer
         : component.__STYLETRON__.getInitialStyle,
     },
-    style: styleArg,
   };
 }
 
@@ -438,11 +439,8 @@ export function composeDynamic<Props>(
   return composed;
 }
 
-export function createStyledElementComponent(
-  styletron: Styletron,
-  extension?: StyletronExtension,
-) {
-  const {reducers, base, driver, wrapper, getInitialStyle} = styletron;
+export function createStyledElementComponent(styletron: Styletron) {
+  const {reducers, base, driver, wrapper, getInitialStyle, ext} = styletron;
 
   if (__BROWSER__ && __DEV__) {
     var debugStackInfo, debugStackIndex;
@@ -492,7 +490,7 @@ export function createStyledElementComponent(
           }
 
           if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-            elementProps.ref = createDevtoolsRef(extension, style, props, ref);
+            elementProps.ref = createDevtoolsRef(ext, style, props, ref);
           }
 
           if (props.$ref) {

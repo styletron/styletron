@@ -35,8 +35,15 @@ export type Styletron = {
   reducers: Array<ReducerContainer>,
   base: any,
   driver: any,
+  name?: string,
   wrapper: any,
   getInitialStyle: any,
+  ext?: {
+    name?: string,
+    base: any,
+    getInitialStyle: any,
+    with: any,
+  },
   debug?: {
     stackIndex: number,
     stackInfo: {stack: any, stacktrace: any, message: any},
@@ -45,12 +52,9 @@ export type Styletron = {
 
 export type StyletronExtension = {
   component: {
-    name?: string,
     base?: string,
     getInitialStyle: any,
-    styles?: any,
   },
-  style: any,
 };
 
 type ExtractPropTypes = <T>(StyletronComponent<T>) => T;
