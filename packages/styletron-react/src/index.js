@@ -17,7 +17,6 @@ import {
 import type {
   Styletron,
   StyletronComponent,
-  StyletronExtension,
   ReducerContainer,
   AssignmentCommutativeReducerContainer,
   NonAssignmentCommutativeReducerContainer,
