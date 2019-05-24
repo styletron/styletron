@@ -1,0 +1,13 @@
+{
+  "name":"styletron-devtools",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Inspect styletron styles",
+  "icons": {
+    "16": "./icons/16x16.png",
+    "48": "./icons/48x48.png",
+    "128": "./icons/128x128.png"
+  },
+  "permissions": [],
+  "devtools_page": "devtools_page.html"
+}

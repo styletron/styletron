@@ -3,6 +3,7 @@
 /* eslint-env browser */
 
 declare var __DEV__: boolean;
+declare var __BROWSER__: boolean;
 
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
 const KEYFRAMES_HYRDATOR = /@keyframes ([^{]+)\{((?:[^{]+\{[^}]*\})*)\}/g;
@@ -17,6 +18,9 @@ function hydrateStyles<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   let match;
   while ((match = hydrator.exec(css))) {
     const [, id, pseudo, key] = match;
+    if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+      hydrateDevtoolsRule(match[0]);
+    }
     const fullKey = pseudo ? `${pseudo}${key}` : key;
     cache.cache[fullKey] = id; // set cache without triggering side effects
     cache.idGenerator.increment(); // increment id
@@ -27,6 +31,9 @@ function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   let match;
   while ((match = hydrator.exec(css))) {
     const [, id, key] = match;
+    if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+      hydrateDevtoolsRule(match[0]);
+    }
     cache.cache[key] = id; // set cache without triggering side effects
     cache.idGenerator.increment(); // increment id
   }
@@ -53,6 +60,7 @@ import {
   keyframesToBlock,
   fontFaceBlockToRule,
 } from "../css.js";
+import {insertRuleIntoDevtools, hydrateDevtoolsRule} from "../dev-tool.js";
 
 type hydrateT =
   | HTMLCollection<HTMLStyleElement>
@@ -82,9 +90,13 @@ class StyletronClient implements StandardEngine {
     const onNewStyle = (cache, id, value) => {
       const {pseudo, block} = value;
       const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
-      const rule = styleBlockToRule(atomicSelector(id, pseudo), block);
+      const selector = atomicSelector(id, pseudo);
+      const rule = styleBlockToRule(selector, block);
       try {
         sheet.insertRule(rule, sheet.cssRules.length);
+        if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+          insertRuleIntoDevtools(selector, block);
+        }
       } catch (e) {
         if (__DEV__) {
           // eslint-disable-next-line no-console

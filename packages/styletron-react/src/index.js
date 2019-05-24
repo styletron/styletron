@@ -1,5 +1,5 @@
 // @flow
-
+/* eslint-env browser */
 /* eslint-disable no-unused-vars, no-redeclare, no-shadow */
 
 declare var __DEV__: boolean;
@@ -26,7 +26,12 @@ import type {
   WithTransformFn,
   WithWrapperFn,
 } from "./types.js";
-import {addDebugMetadata, DebugEngine} from "./dev-tool.js";
+import {
+  addDebugMetadata,
+  createDevtoolsRef,
+  setupDevtoolsExtension,
+  DebugEngine,
+} from "./dev-tool.js";
 
 export {DebugEngine};
 
@@ -84,6 +89,10 @@ class DevProvider extends React.Component<
 
 export const Provider =
   __BROWSER__ && __DEV__ ? DevProvider : StyletronContext.Provider;
+
+if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
+  setupDevtoolsExtension();
+}
 
 // TODO: more precise types
 export function DevConsumer(props: {children: (any, any, any) => React.Node}) {
@@ -244,9 +253,12 @@ export function withStyleDeep(component, styleArg) {
 
   if (__BROWSER__ && __DEV__) {
     addDebugMetadata(styletron, 2);
+    return createStyledElementComponent(
+      addExtension(autoComposeDeep(styletron, styleArg), component, styleArg),
+    );
+  } else {
+    return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
   }
-
-  return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
 }
 
 declare var withWrapper: WithWrapperFn;
@@ -287,6 +299,20 @@ export function autoComposeShallow<Props>(
   }
 
   return staticComposeShallow(styletron, styleArg);
+}
+
+function addExtension(composed, component, styleArg) {
+  return {
+    ...composed,
+    ext: {
+      with: styleArg,
+      name: component.displayName,
+      base: component.__STYLETRON__.base,
+      getInitialStyle: component.__STYLETRON__.reducers.length
+        ? component.__STYLETRON__.reducers[0].reducer
+        : component.__STYLETRON__.getInitialStyle,
+    },
+  };
 }
 
 export function autoComposeDeep<Props>(
@@ -413,7 +439,7 @@ export function composeDynamic<Props>(
 }
 
 export function createStyledElementComponent(styletron: Styletron) {
-  const {reducers, base, driver, wrapper, getInitialStyle} = styletron;
+  const {reducers, base, driver, wrapper, getInitialStyle, ext} = styletron;
 
   if (__BROWSER__ && __DEV__) {
     var debugStackInfo, debugStackIndex;
@@ -461,13 +487,23 @@ export function createStyledElementComponent(styletron: Styletron) {
             const joined = `${debugClassName} ${elementProps.className}`;
             elementProps.className = joined;
           }
+
+          if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+            elementProps.ref = createDevtoolsRef(ext, style, props, ref);
+          }
+
           if (props.$ref) {
             // eslint-disable-next-line no-console
             console.warn(
               "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
             );
           }
-          return <Element {...elementProps} ref={ref || props.$ref} />;
+          return (
+            <Element
+              {...elementProps}
+              ref={elementProps.ref || ref || props.$ref}
+            />
+          );
         }}
       </Consumer>
     );

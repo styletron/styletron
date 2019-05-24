@@ -9,6 +9,61 @@ export function addDebugMetadata(instance, stackIndex) {
   };
 }
 
+export const createDevtoolsRef = (extension, style, props, ref) => element => {
+  if (element) {
+    window.__STYLETRON_DEVTOOLS__.stylesMap.set(element, style);
+    if (extension) {
+      window.__STYLETRON_DEVTOOLS__.extensionsMap.set(element, {
+        base: extension.base,
+        displayName: extension.name,
+        initialStyles: extension.getInitialStyle({}, props),
+        styleOverrides:
+          typeof extension.with === "function"
+            ? extension.with(props)
+            : extension.with,
+      });
+    }
+  }
+  if (ref) {
+    return ref(element);
+  }
+};
+// DEVTOOLS SETUP
+type StyletronStyles = {
+  classes?: any,
+  styles?: any,
+  extends?: any,
+};
+export const setupDevtoolsExtension = () => {
+  const atomicMap = {};
+  const extensionsMap = new WeakMap();
+  const stylesMap = new WeakMap();
+  const getStyles: StyletronStyles = element => {
+    const styles: StyletronStyles = {};
+    if (stylesMap.has(element)) {
+      styles.styles = stylesMap.get(element);
+      if (element.classList.length) {
+        const classes = {};
+        for (const className of element.classList) {
+          classes[className] = atomicMap[className];
+        }
+        styles.classes = classes;
+      }
+      if (extensionsMap.has(element)) {
+        const extension = extensionsMap.get(element);
+        styles.extends = extension;
+      }
+      return styles;
+    }
+  };
+  window.__STYLETRON_DEVTOOLS__ = {
+    atomicMap,
+    extensionsMap,
+    stylesMap,
+    getStyles,
+  };
+};
+
 class BrowserDebugEngine {
   constructor(worker) {
     if (!worker) {
