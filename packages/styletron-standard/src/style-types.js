@@ -3677,6 +3677,10 @@ export type AzimuthProperty =
   | "rightwards"
   | string;
 
-type WebkitFontSmoothingProperty = "auto" | "none" | "antialiased" | "subpixel-antialiased";
+type WebkitFontSmoothingProperty =
+  | "auto"
+  | "none"
+  | "antialiased"
+  | "subpixel-antialiased";
 
 type MozOsxFontSmoothingProperty = "auto" | "grayscale";
