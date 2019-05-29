@@ -1,5 +1,6 @@
 {
   "name": "styletron-devtools",
+  "private": true,
   "version": "0.0.1",
   "description": "Chrome devtools extension for inspecting Styletron styles",
   "author": "Jhey Tompkins <jhey@jhey.dev>",
