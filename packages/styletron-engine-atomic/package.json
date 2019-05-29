@@ -30,7 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "inline-style-prefixer": "^4.0.0",
+    "inline-style-prefixer": "^5.1.0",
     "styletron-standard": "^2.0.3"
   },
   "devDependencies": {
