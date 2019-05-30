@@ -25,7 +25,11 @@ export const createDevtoolsRef = (extension, style, props, ref) => element => {
     }
   }
   if (ref) {
-    return ref(element);
+    if (typeof ref === "function") {
+      return ref(element);
+    }
+    ref.current = element;
+    return ref;
   }
 };
 // DEVTOOLS SETUP
