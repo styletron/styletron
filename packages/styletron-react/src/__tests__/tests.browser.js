@@ -337,7 +337,7 @@ test("$-prefixed props not passed", t => {
   );
 });
 
-test("ref forwarding", t => {
+test("callback ref forwarding", t => {
   t.plan(1);
 
   const Widget = styled("button", {color: "red"});
@@ -361,6 +361,64 @@ test("ref forwarding", t => {
               this.widgetInner = c;
             }}
           />
+        </Provider>
+      );
+    }
+  }
+  Enzyme.mount(<TestComponent />);
+});
+
+test("React.createRef() ref forwarding", t => {
+  t.plan(1);
+
+  const Widget = styled("button", {color: "red"});
+  class TestComponent extends React.Component<{}> {
+    widgetInner: {current: null | HTMLButtonElement};
+
+    constructor(props: any) {
+      super(props);
+      this.widgetInner = React.createRef();
+    }
+
+    componentDidMount() {
+      t.ok(this.widgetInner.current instanceof HTMLButtonElement, "is button");
+    }
+
+    render() {
+      return (
+        <Provider
+          value={{
+            renderStyle: () => "",
+            renderKeyframes: () => "",
+            renderFontFace: () => "",
+          }}
+        >
+          <Widget ref={this.widgetInner} />
+        </Provider>
+      );
+    }
+  }
+  Enzyme.mount(<TestComponent />);
+});
+
+test("legacy string ref forwarding", t => {
+  t.plan(1);
+
+  const Widget = styled("button", {color: "red"});
+  class TestComponent extends React.Component<{}> {
+    componentDidMount() {
+      t.ok(this.refs.myButton instanceof HTMLButtonElement, "is button");
+    }
+    render() {
+      return (
+        <Provider
+          value={{
+            renderStyle: () => "",
+            renderKeyframes: () => "",
+            renderFontFace: () => "",
+          }}
+        >
+          <Widget ref="myButton" />
         </Provider>
       );
     }
