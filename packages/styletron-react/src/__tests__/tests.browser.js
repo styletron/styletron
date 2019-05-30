@@ -373,12 +373,9 @@ test("React.createRef() ref forwarding", t => {
 
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
-    widgetInner: {current: null | HTMLButtonElement};
-
-    constructor(props: any) {
-      super(props);
-      this.widgetInner = React.createRef();
-    }
+    widgetInner: {
+      current: React.ElementRef<any> | null,
+    } = React.createRef();
 
     componentDidMount() {
       t.ok(this.widgetInner.current instanceof HTMLButtonElement, "is button");
