@@ -31,6 +31,7 @@ import {
   createDevtoolsRef,
   setupDevtoolsExtension,
   DebugEngine,
+  canAcceptRef,
 } from "./dev-tool.js";
 
 export {DebugEngine};
@@ -488,8 +489,18 @@ export function createStyledElementComponent(styletron: Styletron) {
             elementProps.className = joined;
           }
 
-          if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-            elementProps.ref = createDevtoolsRef(ext, style, props, ref);
+          if (
+            __BROWSER__ &&
+            __DEV__ &&
+            window.__STYLETRON_DEVTOOLS__ &&
+            canAcceptRef(Element)
+          ) {
+            elementProps.ref = createDevtoolsRef(
+              ext,
+              style,
+              props,
+              ref || props.$ref,
+            );
           }
 
           if (props.$ref) {

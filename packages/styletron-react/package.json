@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "prop-types": "^15.6.0",
+    "react-is": "^16.8.6",
     "styletron-standard": "^2.0.3"
   },
   "peerDependencies": {

@@ -1,5 +1,7 @@
 /* eslint-env browser */
 /* global module */
+import * as React from "react";
+import {isForwardRef} from "react-is";
 
 export function addDebugMetadata(instance, stackIndex) {
   const {stack, stacktrace, message} = new Error("stacktrace source");
@@ -7,6 +9,19 @@ export function addDebugMetadata(instance, stackIndex) {
     stackInfo: {stack, stacktrace, message},
     stackIndex: stackIndex,
   };
+}
+
+export function canAcceptRef(Component) {
+  if (typeof Component === "string") {
+    return true;
+  }
+  if (isForwardRef(<Component />)) {
+    return true;
+  }
+  if (Component.prototype && Component.prototype.isReactComponent) {
+    return true;
+  }
+  return false;
 }
 
 export const createDevtoolsRef = (extension, style, props, ref) => element => {
