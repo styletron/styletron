@@ -1,7 +1,7 @@
 /* eslint-env browser */
 /* global module */
 import * as React from "react";
-import * as ReactIs from "react-is";
+import {isForwardRef} from "react-is";
 
 export function addDebugMetadata(instance, stackIndex) {
   const {stack, stacktrace, message} = new Error("stacktrace source");
