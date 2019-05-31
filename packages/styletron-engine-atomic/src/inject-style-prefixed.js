@@ -4,7 +4,7 @@ declare var __DEV__: boolean;
 
 import hyphenate from "./hyphenate-style-name.js";
 import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
-import prefixAll from "inline-style-prefixer/static";
+import {prefix} from "inline-style-prefixer";
 
 import type {StyleObject} from "styletron-standard";
 
@@ -39,7 +39,7 @@ export default function injectStylePrefixed(
       } else {
         // cache miss
         let block = "";
-        const prefixed = prefixAll({[originalKey]: originalVal});
+        const prefixed = prefix({[originalKey]: originalVal});
         for (const prefixedKey in prefixed) {
           const prefixedVal = prefixed[prefixedKey];
           const prefixedValType = typeof prefixedVal;
