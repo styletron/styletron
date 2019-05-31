@@ -707,6 +707,7 @@ test("canAcceptRef", t => {
   const LazyComponent = React.lazy(() => Component);
   const MemoComponent = React.memo(Component);
   const Context = React.createContext(false);
+  t.ok(canAcceptRef("div"), "string component accepts refs");
   t.ok(canAcceptRef(Component), "class component accepts refs");
   t.ok(
     !canAcceptRef(FunctionComponent),

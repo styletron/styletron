@@ -12,6 +12,9 @@ export function addDebugMetadata(instance, stackIndex) {
 }
 
 export function canAcceptRef(Component) {
+  if (typeof Component === "string") {
+    return true;
+  }
   if (ReactIs.isForwardRef(<Component />)) {
     return true;
   }
