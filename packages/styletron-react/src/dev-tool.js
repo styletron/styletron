@@ -15,7 +15,7 @@ export function canAcceptRef(Component) {
   if (typeof Component === "string") {
     return true;
   }
-  if (ReactIs.isForwardRef(<Component />)) {
+  if (isForwardRef(<Component />)) {
     return true;
   }
   if (Component.prototype && Component.prototype.isReactComponent) {
