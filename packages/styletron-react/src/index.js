@@ -429,7 +429,8 @@ export function composeDynamic<Props>(
     base: styletron.base,
     driver: styletron.driver,
     wrapper: styletron.wrapper,
-    reducers: [{assignmentCommutative: false, reducer}].concat(
+    // safely casts to any because reducer is type checked in the function arguments
+    reducers: [{assignmentCommutative: false, reducer: (reducer: any)}].concat(
       styletron.reducers,
     ),
   };
