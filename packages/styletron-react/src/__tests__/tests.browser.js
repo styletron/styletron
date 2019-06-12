@@ -716,32 +716,3 @@ test("no-op engine", t => {
   (console: any).warn = consoleWarn;
   t.end();
 });
-
-test("canAcceptRef", t => {
-  class Component extends React.Component<{}> {
-    render() {
-      return React.createElement("div");
-    }
-  }
-  const FunctionComponent = () => React.createElement("div");
-  const ForwardRefComponent = React.forwardRef((props, ref) =>
-    React.createElement(Component, {forwardedRef: ref, ...props}),
-  );
-  //$FlowFixMe
-  const LazyComponent = React.lazy(() => Component);
-  const MemoComponent = React.memo(Component);
-  const Context = React.createContext(false);
-  t.ok(canAcceptRef("div"), "string component accepts refs");
-  t.ok(canAcceptRef(Component), "class component accepts refs");
-  t.ok(
-    !canAcceptRef(FunctionComponent),
-    "function component doesn't accept refs",
-  );
-  t.ok(canAcceptRef(ForwardRefComponent), "forwardRef component accepts refs");
-  t.ok(!canAcceptRef(LazyComponent), "lazy component doesn't accept refs");
-  t.ok(!canAcceptRef(MemoComponent), "memo component doesn't accept refs");
-  t.ok(!canAcceptRef(Context.Provider), "context provider doesn't accept refs");
-  t.ok(!canAcceptRef(Context.Consumer), "context consumer doesn't accept refs");
-  t.ok(!canAcceptRef(Context.Provider), "context provider doesn't accept refs");
-  t.end();
-});
