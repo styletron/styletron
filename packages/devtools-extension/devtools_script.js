@@ -13,7 +13,7 @@ elementsPanel.createSidebarPane("Styletron", sidebar => {
         if (res) {
           sidebar.setObject(res, "Styletron Styles");
         } else {
-          sidebar.setObject(null, "Not a styledddd element");
+          sidebar.setObject(null, "Not a styled element");
         }
       },
     );
