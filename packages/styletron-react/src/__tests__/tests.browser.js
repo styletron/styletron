@@ -399,6 +399,30 @@ test("React.createRef() ref forwarding", t => {
   Enzyme.mount(<TestComponent />);
 });
 
+test("React.useRef() ref forwarding", t => {
+  t.plan(1);
+  const Widget = styled("button", {color: "red"});
+  const TestComponent = () => {
+    const widgetInner = React.useRef(null);
+    React.useEffect(() => {
+      t.ok(widgetInner.current instanceof HTMLButtonElement, "is button");
+    }, []);
+    return (
+      <Provider
+        value={{
+          renderStyle: () => "",
+          renderKeyframes: () => "",
+          renderFontFace: () => "",
+        }}
+      >
+        <Widget ref={widgetInner} />
+      </Provider>
+    );
+  };
+
+  Enzyme.mount(<TestComponent />);
+});
+
 test("legacy string ref forwarding", t => {
   t.plan(1);
 
