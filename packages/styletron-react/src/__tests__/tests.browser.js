@@ -3,7 +3,6 @@
 import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {canAcceptRef} from "../dev-tool";
 import * as React from "react";
 
 import {
