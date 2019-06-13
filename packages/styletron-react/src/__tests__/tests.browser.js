@@ -3,7 +3,6 @@
 import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {canAcceptRef} from "../dev-tool";
 import * as React from "react";
 
 import {
@@ -399,6 +398,30 @@ test("React.createRef() ref forwarding", t => {
   Enzyme.mount(<TestComponent />);
 });
 
+test("React.useRef() ref forwarding", t => {
+  t.plan(1);
+  const Widget = styled("button", {color: "red"});
+  const TestComponent = () => {
+    const widgetInner = React.useRef(null);
+    React.useEffect(() => {
+      t.ok(widgetInner.current instanceof HTMLButtonElement, "is button");
+    }, []);
+    return (
+      <Provider
+        value={{
+          renderStyle: () => "",
+          renderKeyframes: () => "",
+          renderFontFace: () => "",
+        }}
+      >
+        <Widget ref={widgetInner} />
+      </Provider>
+    );
+  };
+
+  Enzyme.mount(<TestComponent />);
+});
+
 test("legacy string ref forwarding", t => {
   t.plan(1);
 
@@ -690,34 +713,5 @@ test("no-op engine", t => {
   Enzyme.mount(<Widget />);
 
   (console: any).warn = consoleWarn;
-  t.end();
-});
-
-test("canAcceptRef", t => {
-  class Component extends React.Component<{}> {
-    render() {
-      return React.createElement("div");
-    }
-  }
-  const FunctionComponent = () => React.createElement("div");
-  const ForwardRefComponent = React.forwardRef((props, ref) =>
-    React.createElement(Component, {forwardedRef: ref, ...props}),
-  );
-  //$FlowFixMe
-  const LazyComponent = React.lazy(() => Component);
-  const MemoComponent = React.memo(Component);
-  const Context = React.createContext(false);
-  t.ok(canAcceptRef("div"), "string component accepts refs");
-  t.ok(canAcceptRef(Component), "class component accepts refs");
-  t.ok(
-    !canAcceptRef(FunctionComponent),
-    "function component doesn't accept refs",
-  );
-  t.ok(canAcceptRef(ForwardRefComponent), "forwardRef component accepts refs");
-  t.ok(!canAcceptRef(LazyComponent), "lazy component doesn't accept refs");
-  t.ok(!canAcceptRef(MemoComponent), "memo component doesn't accept refs");
-  t.ok(!canAcceptRef(Context.Provider), "context provider doesn't accept refs");
-  t.ok(!canAcceptRef(Context.Consumer), "context consumer doesn't accept refs");
-  t.ok(!canAcceptRef(Context.Provider), "context provider doesn't accept refs");
   t.end();
 });

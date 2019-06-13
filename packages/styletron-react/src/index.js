@@ -28,10 +28,8 @@ import type {
 } from "./types.js";
 import {
   addDebugMetadata,
-  createDevtoolsRef,
   setupDevtoolsExtension,
   DebugEngine,
-  canAcceptRef,
 } from "./dev-tool.js";
 
 export {DebugEngine};
@@ -490,18 +488,23 @@ export function createStyledElementComponent(styletron: Styletron) {
             elementProps.className = joined;
           }
 
-          if (
-            __BROWSER__ &&
-            __DEV__ &&
-            window.__STYLETRON_DEVTOOLS__ &&
-            canAcceptRef(Element)
-          ) {
-            elementProps.ref = createDevtoolsRef(
-              ext,
+          if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+            window.__STYLETRON_DEVTOOLS__.stylesMap.set(
+              elementProps.className,
               style,
-              props,
-              ref || props.$ref,
             );
+            if (ext) {
+              window.__STYLETRON_DEVTOOLS__.extensionsMap.set(
+                elementProps.className,
+                {
+                  base: ext.base,
+                  displayName: ext.name,
+                  initialStyles: ext.getInitialStyle({}, props),
+                  styleOverrides:
+                    typeof ext.with === "function" ? ext.with(props) : ext.with,
+                },
+              );
+            }
           }
 
           if (props.$ref) {
@@ -510,12 +513,7 @@ export function createStyledElementComponent(styletron: Styletron) {
               "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
             );
           }
-          return (
-            <Element
-              {...elementProps}
-              ref={elementProps.ref || ref || props.$ref}
-            />
-          );
+          return <Element {...elementProps} ref={ref || props.$ref} />;
         }}
       </Consumer>
     );

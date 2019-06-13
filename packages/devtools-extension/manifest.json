@@ -1,6 +1,6 @@
 {
-  "name":"styletron-devtools",
-  "version": "0.0.1",
+  "name": "styletron-devtools",
+  "version": "0.1.0",
   "manifest_version": 2,
   "description": "Inspect styletron styles",
   "icons": {

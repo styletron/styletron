@@ -1,7 +1,5 @@
 /* eslint-env browser */
 /* global module */
-import * as React from "react";
-import {isForwardRef} from "react-is";
 
 export function addDebugMetadata(instance, stackIndex) {
   const {stack, stacktrace, message} = new Error("stacktrace source");
@@ -11,42 +9,6 @@ export function addDebugMetadata(instance, stackIndex) {
   };
 }
 
-export function canAcceptRef(Component) {
-  if (typeof Component === "string") {
-    return true;
-  }
-  if (isForwardRef(<Component />)) {
-    return true;
-  }
-  if (Component.prototype && Component.prototype.isReactComponent) {
-    return true;
-  }
-  return false;
-}
-
-export const createDevtoolsRef = (extension, style, props, ref) => element => {
-  if (element) {
-    window.__STYLETRON_DEVTOOLS__.stylesMap.set(element, style);
-    if (extension) {
-      window.__STYLETRON_DEVTOOLS__.extensionsMap.set(element, {
-        base: extension.base,
-        displayName: extension.name,
-        initialStyles: extension.getInitialStyle({}, props),
-        styleOverrides:
-          typeof extension.with === "function"
-            ? extension.with(props)
-            : extension.with,
-      });
-    }
-  }
-  if (ref) {
-    if (typeof ref === "function") {
-      return ref(element);
-    }
-    ref.current = element;
-    return ref;
-  }
-};
 // DEVTOOLS SETUP
 type StyletronStyles = {
   classes?: any,
@@ -55,21 +17,25 @@ type StyletronStyles = {
 };
 export const setupDevtoolsExtension = () => {
   const atomicMap = {};
-  const extensionsMap = new WeakMap();
-  const stylesMap = new WeakMap();
-  const getStyles: StyletronStyles = element => {
+  const extensionsMap = new Map();
+  const stylesMap = new Map();
+  const getStyles: StyletronStyles = className => {
     const styles: StyletronStyles = {};
-    if (stylesMap.has(element)) {
-      styles.styles = stylesMap.get(element);
-      if (element.classList.length) {
+    if (typeof className !== "string") {
+      return styles;
+    }
+    if (stylesMap.has(className)) {
+      styles.styles = stylesMap.get(className);
+      const classList = className.split(" ");
+      if (classList.length) {
         const classes = {};
-        for (const className of element.classList) {
-          classes[className] = atomicMap[className];
-        }
+        classList.forEach(singleClassName => {
+          classes[singleClassName] = atomicMap[singleClassName];
+        });
         styles.classes = classes;
       }
-      if (extensionsMap.has(element)) {
-        const extension = extensionsMap.get(element);
+      if (extensionsMap.has(className)) {
+        const extension = extensionsMap.get(className);
         styles.extends = extension;
       }
       return styles;
