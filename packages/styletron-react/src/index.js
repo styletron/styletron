@@ -553,14 +553,13 @@ export function resolveStyle(
   getInitialStyle: void => StyleObject,
   reducers: Array<ReducerContainer>,
   props: Object,
-) {
+): StyleObject {
   let result = getInitialStyle();
   let i = reducers.length;
   while (i--) {
-    const reducer = reducers[i];
-    result = reducer.assignmentCommutative
-      ? reducer.reducer(result)
-      : reducer.reducer(result, props);
+    // Cast to allow passing unused props param in case of static reducer
+    const reducer /*: any */ = reducers[i].reducer;
+    result = reducer(result, props);
   }
   return result;
 }
