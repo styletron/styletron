@@ -558,7 +558,7 @@ export function resolveStyle(
   let i = reducers.length;
   while (i--) {
     // Cast to allow passing unused props param in case of static reducer
-    const reducer /*: any */ = reducers[i].reducer;
+    const reducer = (reducers[i].reducer: (StyleObject, Object) => StyleObject);
     result = reducer(result, props);
   }
   return result;
