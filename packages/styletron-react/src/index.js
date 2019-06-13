@@ -20,7 +20,6 @@ import type {
   ReducerContainer,
   AssignmentCommutativeReducerContainer,
   NonAssignmentCommutativeReducerContainer,
-  Reducer,
   StyledFn,
   WithStyleFn,
   WithTransformFn,
@@ -375,10 +374,10 @@ export function createDeepMergeReducer(
 
 export function composeStatic(
   styletron: Styletron,
-  reducerContainer: ReducerContainer,
+  reducerContainer: AssignmentCommutativeReducerContainer,
 ) {
   if (styletron.reducers.length === 0) {
-    const style = reducerContainer.reducer(styletron.getInitialStyle(), {});
+    const style = reducerContainer.reducer(styletron.getInitialStyle());
     const result: Styletron = {
       reducers: styletron.reducers,
       base: styletron.base,
@@ -427,8 +426,7 @@ export function composeDynamic<Props>(
     base: styletron.base,
     driver: styletron.driver,
     wrapper: styletron.wrapper,
-    // safely casts to any because reducer is type checked in the function arguments
-    reducers: [{assignmentCommutative: false, reducer: (reducer: any)}].concat(
+    reducers: [{assignmentCommutative: false, reducer}].concat(
       styletron.reducers,
     ),
   };
@@ -553,11 +551,13 @@ export function resolveStyle(
   getInitialStyle: void => StyleObject,
   reducers: Array<ReducerContainer>,
   props: Object,
-) {
+): StyleObject {
   let result = getInitialStyle();
   let i = reducers.length;
   while (i--) {
-    result = reducers[i].reducer(result, props);
+    // Cast to allow passing unused props param in case of static reducer
+    const reducer = (reducers[i].reducer: (StyleObject, Object) => StyleObject);
+    result = reducer(result, props);
   }
   return result;
 }

@@ -7,23 +7,16 @@ import type {
 } from "react";
 import type {StyleObject} from "styletron-standard";
 
-export type Reducer = {
-  // Static reducer
-  (StyleObject): StyleObject,
-  // Dynamic reducer
-  (StyleObject, Object): StyleObject,
-};
-
 export type AssignmentCommutativeReducerContainer = {
   assignmentCommutative: true,
-  reducer: Reducer,
+  reducer: StyleObject => StyleObject,
   style: StyleObject,
   factory: StyleObject => AssignmentCommutativeReducerContainer,
 };
 
 export type NonAssignmentCommutativeReducerContainer = {
   assignmentCommutative: false,
-  reducer: Reducer,
+  reducer: (StyleObject, Object) => StyleObject,
 };
 
 export type ReducerContainer =
