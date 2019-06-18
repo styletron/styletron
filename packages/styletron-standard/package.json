@@ -30,7 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "csstype": "^2.6.5",
+    "csstype": "2.6.5",
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
