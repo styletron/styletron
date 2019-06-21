@@ -35,6 +35,19 @@ Check [the documentation](https://www.styletron.org/getting-started/) to setup S
 
 [_Looking for v3.x docs?_](https://www.styletron.org/v3/) | [_v3.x to v4.x migration guide_](docs/v3-migration-guide.md)
 
+## Design principles
+
+1.  Component-oriented
+    - Stateless, single-element styled components as base styling primitive
+    - Prop interfaces for conditional/dynamic styling
+2.  Embrace typed JavaScript
+    - Composition of styles via (typed) JavaScript objects
+    - No extra tooling (e.g. Webpack loaders, Babel plugins, etc.)
+3.  Portability and flexibility
+    - Portability of styled components across different rendering engines (e.g. atomic CSS)
+
+See [docs/design.md](docs/design.md) for more details.
+
 ## Packages
 
 - [`styletron-engine-atomic`](packages/styletron-engine-atomic)
