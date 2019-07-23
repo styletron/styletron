@@ -19,7 +19,7 @@ export type {FontFaceObject, KeyframesObject};
 //
 export type StyleObject = $Shape<{
   ...Properties,
-  [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
+  [string]: StyleObject | null, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron/tree/master/packages/styletron-standard
 }>;
 
 export interface StandardEngine {
