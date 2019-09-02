@@ -210,8 +210,7 @@ export const styled: StyledFn = createStyled({
   wrapper: Component => Component,
 });
 
-declare var withTransform: WithTransformFn;
-export function withTransform(component, transformer) {
+export const withTransform: WithTransformFn = (component, transformer) => {
   const styletron = component.__STYLETRON__;
 
   if (__BROWSER__ && __DEV__) {
@@ -219,13 +218,9 @@ export function withTransform(component, transformer) {
   }
 
   return createStyledElementComponent(composeDynamic(styletron, transformer));
-}
+};
 
-declare var withStyle: WithStyleFn;
-export var withStyle = withStyleDeep;
-
-declare var withStyleDeep: WithStyleFn;
-export function withStyleDeep(component, styleArg) {
+export const withStyleDeep: WithStyleFn = (component, styleArg) => {
   const styletron = component.__STYLETRON__;
 
   if (__DEV__) {
@@ -246,10 +241,11 @@ export function withStyleDeep(component, styleArg) {
   } else {
     return createStyledElementComponent(autoComposeDeep(styletron, styleArg));
   }
-}
+};
 
-declare var withWrapper: WithWrapperFn;
-export function withWrapper(component, wrapper) {
+export var withStyle: WithStyleFn = withStyleDeep;
+
+export const withWrapper: WithWrapperFn = (component, wrapper) => {
   const styletron = component.__STYLETRON__;
 
   if (__DEV__) {
@@ -275,7 +271,7 @@ export function withWrapper(component, wrapper) {
   }
 
   return createStyledElementComponent(composed);
-}
+};
 
 export function autoComposeShallow<Props>(
   styletron: Styletron,
