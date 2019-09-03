@@ -159,18 +159,15 @@ export function useStyletron() {
         return className;
       }
       const {stack, message} = new Error("stacktrace source");
-      const debugClassName = React.useMemo(
-        () => {
-          if (debugEngine && !hydrating) {
-            return debugEngine.debug({
-              stackInfo: {stack, message},
-              stackIndex: 1,
-            });
-          }
-          return "";
-        },
-        [debugEngine, hydrating],
-      );
+      const debugClassName = React.useMemo(() => {
+        if (debugEngine && !hydrating) {
+          return debugEngine.debug({
+            stackInfo: {stack, message},
+            stackIndex: 1,
+          });
+        }
+        return "";
+      }, [debugEngine, hydrating]);
       return debugClassName ? `${debugClassName} ${className}` : className;
     },
   ];

@@ -5,8 +5,8 @@ module.exports = function(babel, opts) {
     opts.importSources === "any"
       ? void 0
       : Array.isArray(opts.importSources)
-        ? opts.importSources
-        : ["styletron-react", "fusion-plugin-styletron-react", "baseui"];
+      ? opts.importSources
+      : ["styletron-react", "fusion-plugin-styletron-react", "baseui"];
 
   return {
     name: "transform-styletron-display-name",
