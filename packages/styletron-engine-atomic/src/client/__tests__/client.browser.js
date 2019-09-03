@@ -173,6 +173,56 @@ test("hydration", t => {
   t.end();
 });
 
+test("sort a new media query after hydration", t => {
+  const {getSheets, cleanup, container} = setup();
+
+  // SSR
+  const server = new StyletronServer();
+  injectFixtureStyles(server);
+  container.innerHTML = server.getStylesheetsHtml();
+
+  //Hydration
+  const instance = new StyletronClient({
+    hydrate: getSheets(),
+  });
+
+  //render a client-only and unique media query
+  instance.renderStyle({
+    "@media (min-width: 700px)": {
+      color: "pink",
+    },
+  });
+
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: ['@font-face { font-family: ae; src: url("blah"); }']},
+    {
+      media: "",
+      rules: [
+        ".ae { color: red; }",
+        ".af { color: green; }",
+        ".aj:hover { display: none; }",
+        ".ak { user-select: none; }",
+        ".al { display: flex; }",
+      ],
+    },
+    {media: "(min-width: 600px)", rules: [".ah { color: red; }"]},
+    {media: "(min-width: 700px)", rules: [".am { color: pink; }"]},
+    {
+      media: "(min-width: 800px)",
+      rules: [".ag { color: green; }", ".ai:hover { color: green; }"],
+    },
+    {
+      media: "",
+      rules: [
+        "@keyframes ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+      ],
+    },
+  ]);
+
+  cleanup();
+  t.end();
+});
+
 function injectFixtureStyles(styletron) {
   styletron.renderStyle({color: "red"});
   styletron.renderStyle({color: "green"});
