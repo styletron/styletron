@@ -173,6 +173,26 @@ test("hydration", t => {
   t.end();
 });
 
+test("sort client media queries", t => {
+  const {cleanup, container} = setup();
+
+  const styletron = new StyletronClient({container});
+
+  styletron.renderStyle({
+    "@media (min-width: 700px)": {
+      color: "pink",
+    },
+  });
+
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: []},
+    {media: "(min-width: 700px)", rules: [".ae { color: pink; }"]},
+  ]);
+
+  cleanup();
+  t.end();
+});
+
 test("sort a new media query after hydration", t => {
   const {getSheets, cleanup, container} = setup();
 
@@ -184,16 +204,30 @@ test("sort a new media query after hydration", t => {
   //Hydration
   const instance = new StyletronClient({
     hydrate: getSheets(),
+    container,
   });
 
-  //render a client-only and unique media query
+  //render a client-only and unique media query (mid position)
   instance.renderStyle({
     "@media (min-width: 700px)": {
       color: "pink",
     },
   });
 
+  //render a client-only and unique media query (end position)
+  instance.renderStyle({
+    "@media (min-width: 1000px)": {
+      color: "black",
+    },
+  });
+
   t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        "@keyframes ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+      ],
+    },
     {media: "", rules: ['@font-face { font-family: ae; src: url("blah"); }']},
     {
       media: "",
@@ -211,12 +245,7 @@ test("sort a new media query after hydration", t => {
       media: "(min-width: 800px)",
       rules: [".ag { color: green; }", ".ai:hover { color: green; }"],
     },
-    {
-      media: "",
-      rules: [
-        "@keyframes ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
-      ],
-    },
+    {media: "(min-width: 1000px)", rules: [".an { color: black; }"]},
   ]);
 
   cleanup();

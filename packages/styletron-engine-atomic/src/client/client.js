@@ -110,17 +110,26 @@ class StyletronClient implements StandardEngine {
     // Setup style cache
     this.styleCache = new MultiCache(
       styleIdGenerator,
-      (media, _cache, insertAtIndex) => {
+      (media, _cache, insertBeforeMedia) => {
         const styleElement = document.createElement("style");
         styleElement.media = media;
-        if (insertAtIndex >= this.container.children.length) {
+        if (insertBeforeMedia === "") {
           this.container.appendChild(styleElement);
         } else {
+          const insertBeforeIndex = Array.from(
+            this.container.children,
+          ).findIndex(
+            headChild =>
+              headChild.tagName === "STYLE" &&
+              //$FlowFixMe
+              headChild.media === insertBeforeMedia,
+          );
           this.container.insertBefore(
             styleElement,
-            this.container.children[insertAtIndex],
+            this.container.children[insertBeforeIndex],
           );
         }
+
         this.styleElements[media] = styleElement;
       },
       onNewStyle,
@@ -194,6 +203,7 @@ class StyletronClient implements StandardEngine {
         const cache = new Cache(styleIdGenerator, onNewStyle);
         cache.key = key;
         hydrateStyles(cache, STYLES_HYDRATOR, element.textContent);
+        this.styleCache.sortedCacheKeys.push(key);
         this.styleCache.caches[key] = cache;
       }
     }

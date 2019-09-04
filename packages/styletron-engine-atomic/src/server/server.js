@@ -95,6 +95,14 @@ class StyletronServer implements StandardEngine {
 
   getStylesheets(): Array<sheetT> {
     return [
+      ...(this.keyframesRules.length
+        ? [
+            {
+              css: this.keyframesRules,
+              attrs: {"data-hydrate": "keyframes"},
+            },
+          ]
+        : []),
       ...(this.fontFaceRules.length
         ? [
             {
@@ -104,14 +112,6 @@ class StyletronServer implements StandardEngine {
           ]
         : []),
       ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),
-      ...(this.keyframesRules.length
-        ? [
-            {
-              css: this.keyframesRules,
-              attrs: {"data-hydrate": "keyframes"},
-            },
-          ]
-        : []),
     ];
   }
 
@@ -121,9 +121,9 @@ class StyletronServer implements StandardEngine {
 
   getCss() {
     return (
+      this.keyframesRules +
       this.fontFaceRules +
-      stringify(this.styleRules, this.styleCache.getSortedCacheKeys()) +
-      this.keyframesRules
+      stringify(this.styleRules, this.styleCache.getSortedCacheKeys())
     );
   }
 }
