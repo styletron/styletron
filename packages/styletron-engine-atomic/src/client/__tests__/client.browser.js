@@ -173,6 +173,85 @@ test("hydration", t => {
   t.end();
 });
 
+test("sort client media queries", t => {
+  const {cleanup, container} = setup();
+
+  const styletron = new StyletronClient({container});
+
+  styletron.renderStyle({
+    "@media (min-width: 700px)": {
+      color: "pink",
+    },
+  });
+
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: []},
+    {media: "(min-width: 700px)", rules: [".ae { color: pink; }"]},
+  ]);
+
+  cleanup();
+  t.end();
+});
+
+test("sort a new media query after hydration", t => {
+  const {getSheets, cleanup, container} = setup();
+
+  // SSR
+  const server = new StyletronServer();
+  injectFixtureStyles(server);
+  container.innerHTML = server.getStylesheetsHtml();
+
+  //Hydration
+  const instance = new StyletronClient({
+    hydrate: getSheets(),
+    container,
+  });
+
+  //render a client-only and unique media query (mid position)
+  instance.renderStyle({
+    "@media (min-width: 700px)": {
+      color: "pink",
+    },
+  });
+
+  //render a client-only and unique media query (end position)
+  instance.renderStyle({
+    "@media (min-width: 1000px)": {
+      color: "black",
+    },
+  });
+
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        "@keyframes ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+      ],
+    },
+    {media: "", rules: ['@font-face { font-family: ae; src: url("blah"); }']},
+    {
+      media: "",
+      rules: [
+        ".ae { color: red; }",
+        ".af { color: green; }",
+        ".aj:hover { display: none; }",
+        ".ak { user-select: none; }",
+        ".al { display: flex; }",
+      ],
+    },
+    {media: "(min-width: 600px)", rules: [".ah { color: red; }"]},
+    {media: "(min-width: 700px)", rules: [".am { color: pink; }"]},
+    {
+      media: "(min-width: 800px)",
+      rules: [".ag { color: green; }", ".ai:hover { color: green; }"],
+    },
+    {media: "(min-width: 1000px)", rules: [".an { color: black; }"]},
+  ]);
+
+  cleanup();
+  t.end();
+});
+
 function injectFixtureStyles(styletron) {
   styletron.renderStyle({color: "red"});
   styletron.renderStyle({color: "green"});

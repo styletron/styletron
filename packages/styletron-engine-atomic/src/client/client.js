@@ -110,17 +110,22 @@ class StyletronClient implements StandardEngine {
     // Setup style cache
     this.styleCache = new MultiCache(
       styleIdGenerator,
-      (media, _cache, insertAtIndex) => {
+      (media, _cache, insertBeforeMedia) => {
         const styleElement = document.createElement("style");
         styleElement.media = media;
-        if (insertAtIndex >= this.container.children.length) {
+        if (insertBeforeMedia === void 0) {
           this.container.appendChild(styleElement);
         } else {
+          const insertBeforeIndex = findSheetIndexWithMedia(
+            this.container.children,
+            insertBeforeMedia,
+          );
           this.container.insertBefore(
             styleElement,
-            this.container.children[insertAtIndex],
+            this.container.children[insertBeforeIndex],
           );
         }
+
         this.styleElements[media] = styleElement;
       },
       onNewStyle,
@@ -194,6 +199,7 @@ class StyletronClient implements StandardEngine {
         const cache = new Cache(styleIdGenerator, onNewStyle);
         cache.key = key;
         hydrateStyles(cache, STYLES_HYDRATOR, element.textContent);
+        this.styleCache.sortedCacheKeys.push(key);
         this.styleCache.caches[key] = cache;
       }
     }
@@ -222,3 +228,18 @@ class StyletronClient implements StandardEngine {
 }
 
 export default StyletronClient;
+
+function findSheetIndexWithMedia(children, media) {
+  let index = 0;
+  for (; index < children.length; index++) {
+    const child = children[index];
+    if (
+      child.tagName === "STYLE" &&
+      ((child: any): HTMLStyleElement).media === media
+    ) {
+      return index;
+    }
+  }
+
+  return -1;
+}
