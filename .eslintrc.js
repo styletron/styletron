@@ -11,31 +11,21 @@ module.exports = {
   ],
 
   plugins: [
-    "eslint-plugin-prettier",
     "eslint-plugin-flowtype",
     "eslint-plugin-react",
+    "eslint-plugin-prettier",
   ],
 
   rules: {
     "flowtype/define-flow-type": 1,
-
-    "no-unused-vars": ["error", {argsIgnorePattern: "^_"}],
-
     "prettier/prettier": [
       "error",
+      {},
       {
-        useTabs: false,
-        printWidth: 80,
-        tabWidth: 2,
-        singleQuote: false,
-        trailingComma: "all",
-        bracketSpacing: false,
-        jsxBracketSameLine: false,
-        parser: "babylon",
-        semi: true,
+        usePrettierrc: true,
       },
     ],
-
+    "no-unused-vars": ["error", {argsIgnorePattern: "^_"}],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
   },
