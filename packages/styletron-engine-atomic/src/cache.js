@@ -6,7 +6,7 @@ import sortMq from "./sort-css-media-queries.js";
 export class MultiCache<T> {
   caches: {[string]: Cache<T>};
   idGenerator: SequentialIDGenerator;
-  onNewCache: (string, Cache<T>, string) => any;
+  onNewCache: (string, Cache<T>, ?string) => any;
   onNewValue: (cache: Cache<T>, id: string, value: T) => any;
   sortedCacheKeys: string[];
 
@@ -32,7 +32,7 @@ export class MultiCache<T> {
       const insertBeforeMedia =
         keyIndex < this.sortedCacheKeys.length - 1
           ? this.sortedCacheKeys[keyIndex + 1]
-          : "";
+          : void 0;
       this.caches[key] = cache;
       this.onNewCache(key, cache, insertBeforeMedia);
     }

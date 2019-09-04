@@ -113,7 +113,7 @@ class StyletronClient implements StandardEngine {
       (media, _cache, insertBeforeMedia) => {
         const styleElement = document.createElement("style");
         styleElement.media = media;
-        if (insertBeforeMedia === "") {
+        if (typeof insertBeforeMedia === "undefined") {
           this.container.appendChild(styleElement);
         } else {
           const insertBeforeIndex = findSheetIndexWithMedia(
