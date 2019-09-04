@@ -116,13 +116,9 @@ class StyletronClient implements StandardEngine {
         if (insertBeforeMedia === "") {
           this.container.appendChild(styleElement);
         } else {
-          const insertBeforeIndex = Array.from(
+          const insertBeforeIndex = findSheetIndexWithMedia(
             this.container.children,
-          ).findIndex(
-            headChild =>
-              headChild.tagName === "STYLE" &&
-              //$FlowFixMe
-              headChild.media === insertBeforeMedia,
+            insertBeforeMedia,
           );
           this.container.insertBefore(
             styleElement,
@@ -232,3 +228,18 @@ class StyletronClient implements StandardEngine {
 }
 
 export default StyletronClient;
+
+function findSheetIndexWithMedia(children, media) {
+  let index = 0;
+  for (; index < children.length; index++) {
+    const child = children[index];
+    if (
+      child.tagName === "STYLE" &&
+      ((child: any): HTMLStyleElement).media === media
+    ) {
+      return index;
+    }
+  }
+
+  return -1;
+}
