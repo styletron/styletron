@@ -30,7 +30,13 @@ export type Properties = {
   MozAnimationName?: AnimationNameProperty;
   WebkitAnimationName?: AnimationNameProperty;
   OAnimationName?: AnimationNameProperty;
-} & StandardProperties<TLength> &
+} & Omit<StandardProperties<TLength> &
   VendorProperties<TLength> &
   ObsoleteProperties<TLength> &
-  SvgProperties<TLength>;
+  SvgProperties<TLength>,
+  'animationName' |
+  'fontFamily' |
+  'MozAnimationName' |
+  'WebkitAnimationName' |
+  'OAnimationName'
+  >;
