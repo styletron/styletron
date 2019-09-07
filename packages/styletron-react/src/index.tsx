@@ -480,7 +480,7 @@ export function createStyledElementComponent(styletron: Styletron) {
     var debugClassName;
   }
 
-  const StyledElement = React.forwardRef<StyletronProps, any>((props, ref) => {
+  const StyledElement = React.forwardRef<any, StyletronProps>((props, ref) => {
     return (
       <Consumer>
         {(styletron, debugEngine, hydrating) => {
