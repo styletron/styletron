@@ -1,19 +1,22 @@
 import SequentialIDGenerator from "./sequential-id-generator";
 import sortMq from "./sort-css-media-queries";
 
+type OnNewCacheFn<T> = (c: string, b: Cache<T>, a?: string | null) => any;
+type OnNewValueFn<T> = (cache: Cache<T>, id: string, value: T) => any;
+
 export class MultiCache<T> {
   caches: {
     [x: string]: Cache<T>;
   };
   idGenerator: SequentialIDGenerator;
-  onNewCache: (c: string, b: Cache<T>, a?: string | null) => any;
-  onNewValue: (cache: Cache<T>, id: string, value: T) => any;
+  onNewCache: OnNewCacheFn<T>;
+  onNewValue: OnNewValueFn<T>;
   sortedCacheKeys: string[];
 
   constructor(
     idGenerator: SequentialIDGenerator,
-    onNewCache: Function,
-    onNewValue: Function,
+    onNewCache: OnNewCacheFn<T>,
+    onNewValue: OnNewValueFn<T>,
   ) {
     this.idGenerator = idGenerator;
     this.onNewCache = onNewCache;
