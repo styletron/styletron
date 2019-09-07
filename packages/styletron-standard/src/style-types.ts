@@ -8,10 +8,13 @@ import type {
   FontFace as CTFontFace,
 } from "@rtsao/csstype";
 
-export type KeyframesObject = {
+export interface KeyframesPercentageObject {
+  [key: string]: Properties;
+}
+
+export type KeyframesObject = KeyframesPercentageObject & {
   from?: Properties;
   to?: Properties;
-  [x: string]: Properties;
 };
 
 export type AnimationNameProperty = CTAnimationNameProperty | KeyframesObject;

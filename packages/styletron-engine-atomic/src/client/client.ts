@@ -62,9 +62,9 @@ import {
 import {insertRuleIntoDevtools, hydrateDevtoolsRule} from "../dev-tool";
 
 type hydrateT =
-  | HTMLCollection<HTMLStyleElement>
+  | HTMLCollectionOf<HTMLStyleElement>
   | Array<HTMLStyleElement>
-  | NodeList<HTMLStyleElement>;
+  | NodeListOf<HTMLStyleElement>;
 
 type optionsT = {
   hydrate?: hydrateT;

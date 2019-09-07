@@ -14,6 +14,7 @@ import {
 } from "../index";
 
 import {getInitialStyle, driver} from "styletron-standard";
+import {StyleObject} from "styletron-standard";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -114,7 +115,7 @@ test("withStyle (dynamic)", t => {
     color: "red",
     ":hover": {fontSize: "12px"},
   });
-  const SuperWidget = withStyle(Widget, props => ({
+  const SuperWidget = withStyle(Widget, (props: {$round: boolean}) => ({
     background: props.$round ? "yellow" : "green",
     ":hover": {borderWidth: 0},
   }));
@@ -171,7 +172,7 @@ test("$style prop (static)", t => {
 
 test("$style prop (dynamic)", t => {
   t.plan(1);
-  const Widget = styled("div", {
+  const Widget = styled<'div', {$round: boolean}>("div", {
     lineHeight: 1,
     color: "red",
     ":hover": {fontSize: "12px"},
@@ -245,9 +246,9 @@ test("$style overrides nested withStyle", t => {
 test("withTransform", t => {
   t.plan(1);
   const Widget = styled("div", {color: "red", background: "green"});
-  const SuperWidget = withTransform(Widget, (style, props) => ({
+  const SuperWidget = withTransform(Widget, (style, props: { $round: boolean }) => ({
     ...style,
-    background: props.$round ? "yellow" : "green",
+    background: props.$round ? 'yellow' : 'green',
   }));
   Enzyme.mount(
     <Provider
@@ -307,7 +308,7 @@ test("$-prefixed props not passed", t => {
   t.plan(1);
 
   class InnerComponent extends React.Component<{
-    className: string;
+    className?: string;
   }> {
     render() {
       t.deepEqual(
@@ -322,7 +323,7 @@ test("$-prefixed props not passed", t => {
     }
   }
 
-  const Widget = styled(InnerComponent, {color: "red"});
+  const Widget = styled<typeof InnerComponent, {$foo: any, $baz: any}>(InnerComponent, {color: "red"});
 
   Enzyme.mount(
     <Provider
@@ -373,9 +374,7 @@ test("React.createRef() ref forwarding", t => {
 
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
-    widgetInner: {
-      current: React.RefObject<any> | null;
-    } = React.createRef();
+    widgetInner = React.createRef<any>();
 
     componentDidMount() {
       t.ok(this.widgetInner.current instanceof HTMLButtonElement, "is button");
@@ -402,7 +401,7 @@ test("React.useRef() ref forwarding", t => {
   t.plan(1);
   const Widget = styled("button", {color: "red"});
   const TestComponent = () => {
-    const widgetInner = React.useRef(null);
+    const widgetInner = React.useRef<HTMLButtonElement>(null);
     React.useEffect(() => {
       t.ok(widgetInner.current instanceof HTMLButtonElement, "is button");
     }, []);
@@ -449,7 +448,9 @@ test("legacy string ref forwarding", t => {
 
 test("withWrapper", t => {
   t.plan(6);
-  const Widget = styled("button", {color: "red"});
+  const Widget = styled<'button',{foo?: string}>("button", {
+    color: "red",
+  });
   const WrappedWidget = withWrapper(Widget, StyledElement => props => {
     t.deepEqual(props, {foo: "bar"}, "props passed");
     return (
@@ -589,7 +590,7 @@ test("font-face injection", t => {
   const fontFace = {
     src: "foo",
   };
-  const style = {fontFamily: fontFace};
+  const style = {fontFamily: fontFace} as StyleObject;
   const Widget = styled("div", style);
   Enzyme.mount(
     <Provider
@@ -654,7 +655,9 @@ test("createStyled wrapper", t => {
       return <div>hello world</div>;
     },
   });
-  const Widget = customStyled("div", {color: "red"});
+  const Widget = customStyled<'div', {foo: string}>("div", {
+    color: "red",
+  });
   Enzyme.mount(
     <Provider
       value={{
