@@ -233,7 +233,7 @@ export function validateNoMixedHand(style: any) {
   const hyphenatedProperties = Object.keys(style).reduce((acc, property) => {
     acc[hyphenate(property)] = property;
     return acc;
-  }, {});
+  }, {} as any);
 
   const mixed = [];
   for (const property in hyphenatedProperties) {

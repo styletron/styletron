@@ -6,20 +6,10 @@ import type {
 
 export type {FontFaceObject, KeyframesObject};
 
-// Note: $Shape is needed to make polymorphic withStyle refinements work correctly
-// It seems functions satisfy this type without $Shape
-// See: https://github.com/facebook/flow/issues/6784
-//
-//
-//
-//
-//
-//
-export type StyleObject = Partial<
-  {
-    [x: string]: StyleObject;
-  } & Properties
->;
+export interface NestedStyleObject {
+  [x: string]: StyleObject;
+}
+export type StyleObject = NestedStyleObject | Properties;
 
 export interface StandardEngine {
   renderStyle(style: StyleObject): string;

@@ -27,7 +27,7 @@ function _getQueryLength(length: string) {
   if (matches === null) {
     return maxValue;
   }
-  let number = matches[1];
+  let number: number | string = matches[1];
   const unit = matches[2];
   switch (unit) {
     case "ch":

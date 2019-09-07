@@ -20,10 +20,7 @@ import {
 } from "../css";
 
 declare var __DEV__: boolean;
-type hydrateT =
-  | HTMLCollection<HTMLStyleElement>
-  | Array<HTMLStyleElement>
-  | NodeList<HTMLStyleElement>;
+type hydrateT = HTMLCollection | Array<HTMLStyleElement> | NodeList;
 
 type optionsT = {
   hydrate?: hydrateT;
@@ -69,7 +66,7 @@ class StyletronClient implements StandardEngine {
       }
       // there is a single style tag coming from the monolithic server
       const element = opts.hydrate[0];
-      const dataHydrate = element.getAttribute("data-hydrate");
+      const dataHydrate = (element as Element).getAttribute("data-hydrate");
       if (dataHydrate) {
         dataHydrate.split(" ").forEach(hashKey => {
           // cache keys are unique across fonts, keyframes and other css so

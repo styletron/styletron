@@ -371,7 +371,7 @@ function setup() {
   return {
     container,
     getSheets() {
-      return container.children as any as HTMLCollection<HTMLStyleElement>;
+      return container.children as any as HTMLCollectionOf<HTMLStyleElement>;
     },
     cleanup() {
       container.remove();

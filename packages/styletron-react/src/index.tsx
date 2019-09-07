@@ -4,6 +4,12 @@
 declare var __DEV__: boolean;
 
 declare var __BROWSER__: boolean;
+declare global {
+  interface Window {
+    __STYLETRON_DEVTOOLS__: any;
+  }
+}
+
 declare var process: any;
 
 import * as React from "react";
@@ -24,6 +30,7 @@ import type {
   WithStyleFn,
   WithTransformFn,
   WithWrapperFn,
+  StyletronProps,
 } from "./types";
 import {
   addDebugMetadata,
@@ -33,6 +40,7 @@ import {
 
 export {DebugEngine};
 export type {StyleObject};
+export type {StyletronProps};
 
 const noopEngine = {
   renderStyle: () => "",
@@ -42,8 +50,10 @@ const noopEngine = {
 
 const StyletronContext = React.createContext<StandardEngine>(noopEngine);
 const HydrationContext = React.createContext(false);
-const DebugEngineContext = React.createContext();
-const ThemeContext = React.createContext();
+const DebugEngineContext = React.createContext<
+  InstanceType<typeof DebugEngine> | undefined
+>(undefined);
+//todo: theme context removed
 
 type DevProviderProps = {
   children: React.ReactNode;
@@ -59,7 +69,7 @@ class DevProvider extends React.Component<
   }
 > {
   constructor(props: DevProviderProps) {
-    super();
+    super(props);
     this.state = {
       hydrating: Boolean(props.debugAfterHydration),
     };
@@ -98,7 +108,7 @@ if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
 type createStyledOpts = {
   getInitialStyle: () => StyleObject;
   driver: typeof driver;
-  wrapper: (a: React.FunctionComponent<any>) => React.ComponentType<any>;
+  wrapper: (fc: React.FC<any>) => React.ComponentType<any>;
 };
 
 function checkNoopEngine(engine: StandardEngine) {
@@ -126,13 +136,13 @@ will not recieve the provided engine instance. This scenario can arise, for exam
   }
 }
 
-export function useStyletron() {
+export function useStyletron(): [(style: StyleObject) => string] {
   const styletronEngine: StandardEngine = React.useContext(StyletronContext);
   const debugEngine = React.useContext(DebugEngineContext);
   const hydrating = React.useContext(HydrationContext);
   checkNoopEngine(styletronEngine);
 
-  const debugClassName = React.useRef("");
+  const debugClassName = React.useRef<string | undefined>("");
   const prevDebugClassNameDeps = React.useRef([]);
 
   return [
@@ -212,6 +222,7 @@ export const styled: StyledFn = createStyled({
 });
 
 export const withTransform: WithTransformFn = (component, transformer) => {
+  // @ts-ignore
   const styletron = component.__STYLETRON__;
 
   if (__BROWSER__ && __DEV__) {
@@ -222,6 +233,7 @@ export const withTransform: WithTransformFn = (component, transformer) => {
 };
 
 export const withStyleDeep: WithStyleFn = (component, styleArg) => {
+  // @ts-ignore
   const styletron = component.__STYLETRON__;
 
   if (__DEV__) {
@@ -244,9 +256,10 @@ export const withStyleDeep: WithStyleFn = (component, styleArg) => {
   }
 };
 
-export var withStyle: WithStyleFn = withStyleDeep;
+export const withStyle = withStyleDeep;
 
 export const withWrapper: WithWrapperFn = (component, wrapper) => {
+  // @ts-ignore
   const styletron = component.__STYLETRON__;
 
   if (__DEV__) {
@@ -322,7 +335,7 @@ export function dynamicComposeShallow<Props>(
   styletron: Styletron,
   styleFn: (a: Props) => StyleObject,
 ) {
-  return composeDynamic(styletron, (style, props) =>
+  return composeDynamic<Props>(styletron, (style, props) =>
     shallowMerge(style, styleFn(props)),
   );
 }
@@ -331,7 +344,7 @@ export function dynamicComposeDeep<Props>(
   styletron: Styletron,
   styleFn: (a: Props) => StyleObject,
 ) {
-  return composeDynamic(styletron, (style, props) =>
+  return composeDynamic<Props>(styletron, (style, props) =>
     deepMerge(style, styleFn(props)),
   );
 }
@@ -389,7 +402,9 @@ export function composeStatic(
         base: styletron.base,
         driver: styletron.driver,
         wrapper: styletron.wrapper,
-        reducers: [last.factory(composed)].concat(styletron.reducers.slice(1)),
+        reducers: [last.factory(composed)].concat(
+          styletron.reducers.slice(1) as any,
+        ),
       };
 
       if (__BROWSER__ && __DEV__) {
@@ -412,6 +427,7 @@ export function composeDynamic<Props>(
     base: styletron.base,
     driver: styletron.driver,
     wrapper: styletron.wrapper,
+    // @ts-ignore
     reducers: [{assignmentCommutative: false, reducer}].concat(
       styletron.reducers,
     ),
@@ -437,13 +453,13 @@ export function createStyledElementComponent(styletron: Styletron) {
     var debugClassName;
   }
 
-  const StyledElement = React.forwardRef((props, ref) => {
+  const StyledElement = React.forwardRef<StyletronProps, any>((props, ref) => {
     const styletron: StandardEngine = React.useContext(StyletronContext);
     const debugEngine = React.useContext(DebugEngineContext);
     const hydrating = React.useContext(HydrationContext);
     checkNoopEngine(styletron);
 
-    const elementProps = omitPrefixedKeys(props);
+    const elementProps: any = omitPrefixedKeys(props);
     let style = resolveStyle(getInitialStyle, reducers, props);
 
     if (props.$style) {

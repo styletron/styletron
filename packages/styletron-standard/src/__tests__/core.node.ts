@@ -1,20 +1,20 @@
 import test from "tape";
 import {Server as ServerMonolithic} from "styletron-engine-monolithic";
 import {Server as ServerAtomic} from "styletron-engine-atomic";
-import {driver} from "../index";
+import {driver, StyleObject} from "../index";
 
 test("driver atomic", t => {
   let cssString;
   const instance = new ServerAtomic();
   const styleObject = {
     color: "red",
-  };
+  } as StyleObject;
   driver(styleObject, instance);
   cssString = ".ae{color:red}";
   t.strictEqual(instance.getCss(), cssString, "injects basic style");
   const fontFallback = {
     fontFamily: ["Arial", "sans-serif"],
-  };
+  } as StyleObject;
   driver(fontFallback, instance);
   cssString = `${cssString}.af{font-family:Arial,sans-serif}`;
   t.strictEqual(instance.getCss(), cssString, "injects font fallbacks - basic");
@@ -23,7 +23,7 @@ test("driver atomic", t => {
   };
   const declaredFontFaceFallback = {
     fontFamily: [fontFace, "cursive"],
-  };
+  } as StyleObject;
   driver(declaredFontFaceFallback, instance);
   cssString = `@font-face{font-family:ae;src:url(some-awesome-font.ttf)}${cssString}.ag{font-family:ae,cursive}`;
   t.strictEqual(

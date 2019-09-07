@@ -6,12 +6,15 @@ import type {
   AnimationNameProperty as CTAnimationNameProperty,
   FontFamilyProperty as CTFontFamilyProperty,
   FontFace as CTFontFace,
-} from "@rtsao/csstype";
+} from "csstype";
 
-export type KeyframesObject = {
+export interface KeyframesPercentageObject {
+  [key: string]: Properties;
+}
+
+export type KeyframesObject = KeyframesPercentageObject & {
   from?: Properties;
   to?: Properties;
-  [x: string]: Properties;
 };
 
 export type AnimationNameProperty = CTAnimationNameProperty | KeyframesObject;
@@ -27,7 +30,14 @@ export type Properties = {
   MozAnimationName?: AnimationNameProperty;
   WebkitAnimationName?: AnimationNameProperty;
   OAnimationName?: AnimationNameProperty;
-} & StandardProperties<TLength> &
-  VendorProperties<TLength> &
-  ObsoleteProperties<TLength> &
-  SvgProperties<TLength>;
+} & Omit<
+  StandardProperties<TLength> &
+    VendorProperties<TLength> &
+    ObsoleteProperties<TLength> &
+    SvgProperties<TLength>,
+  | "animationName"
+  | "fontFamily"
+  | "MozAnimationName"
+  | "WebkitAnimationName"
+  | "OAnimationName"
+>;

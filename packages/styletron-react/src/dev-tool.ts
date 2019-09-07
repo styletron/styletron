@@ -2,6 +2,7 @@
 /* global module */
 
 export function addDebugMetadata(instance, stackIndex) {
+  // @ts-ignore todo: stacktrace does not exist on error (non standard browser?)
   const {stack, stacktrace, message} = new Error("stacktrace source");
   instance.debug = {
     stackInfo: {stack, stacktrace, message},
@@ -20,7 +21,7 @@ export const setupDevtoolsExtension = () => {
   const atomicMap = {};
   const extensionsMap = new Map();
   const stylesMap = new Map();
-  const getStyles: StyletronStyles = className => {
+  const getStyles: (className: string) => StyletronStyles = className => {
     const styles: StyletronStyles = {};
     if (typeof className !== "string") {
       return styles;
@@ -50,8 +51,11 @@ export const setupDevtoolsExtension = () => {
   };
 };
 
-class BrowserDebugEngine {
-  constructor(worker) {
+// todo: export debug engine interface
+export class BrowserDebugEngine {
+  private worker: any;
+  private counter: number;
+  constructor(worker?) {
     if (!worker) {
       const workerBlob = new Blob(
         [
@@ -100,8 +104,14 @@ class BrowserDebugEngine {
   }
 }
 
-class NoopDebugEngine {
-  debug() {}
+// todo: export debug engine interface
+export class NoopDebugEngine {
+  debug(): undefined {
+    return;
+  }
 }
 
+declare global {
+  var __BROWSER__: boolean;
+}
 export const DebugEngine = __BROWSER__ ? BrowserDebugEngine : NoopDebugEngine;

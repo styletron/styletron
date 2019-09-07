@@ -109,7 +109,7 @@ class StyletronServer implements StandardEngine {
             {
               css: this.keyframesRules,
               attrs: {"data-hydrate": "keyframes"},
-            },
+            } as sheetT,
           ]
         : []),
       ...(this.fontFaceRules.length
@@ -117,7 +117,7 @@ class StyletronServer implements StandardEngine {
             {
               css: this.fontFaceRules,
               attrs: {"data-hydrate": "font-face"},
-            },
+            } as sheetT,
           ]
         : []),
       ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),

@@ -1,12 +1,6 @@
-import type {ComponentType, FunctionComponent, ComponentProps} from "react";
+import * as React from "react";
+import type {ComponentType} from "react";
 import type {StyleObject} from "styletron-standard";
-
-type $Call1<F extends (...args: any) => any, A> = F extends (
-  a: A,
-  ...args: any
-) => infer R
-  ? R
-  : never;
 
 export type AssignmentCommutativeReducerContainer = {
   assignmentCommutative: true;
@@ -48,42 +42,55 @@ export type Styletron = {
   };
 };
 
-type ExtractPropTypes = <T>(a: StyletronComponent<T>) => T;
+export type StyletronProps<Props = {}> = Partial<{
+  $style: StyleObject | ((props: Props) => StyleObject);
+  $as: ComponentType<any> | keyof JSX.IntrinsicElements;
+  className: string;
+  /** @deprecated */
+  $ref: Props extends {ref?: infer T} ? T : React.Ref<any>;
+  ref: Props extends {ref?: infer T} ? T : React.Ref<any>;
+}>;
 
-export type StyletronComponent<Props> = FunctionComponent<Props> & {
+export type StyletronComponent<Props> = React.FC<
+  Props & StyletronProps<Props>
+> & {
   __STYLETRON__: any;
 };
 
 export type StyledFn = {
-  (b: string, a: StyleObject): StyletronComponent<{}>;
-  <Props>(b: string, a: (a: Props) => StyleObject): StyletronComponent<Props>;
-  <Base extends ComponentType<any>>(
-    b: Base,
-    a: StyleObject,
-  ): StyletronComponent<Omit<ComponentProps<Base>, "className">>;
-  <Base extends ComponentType<any>, Props>(
-    b: Base,
-    a: (a: Props) => StyleObject,
-  ): StyletronComponent<Omit<ComponentProps<Base>, "className"> & Props>;
+  <T extends keyof JSX.IntrinsicElements | ComponentType<any>, Props>(
+    component: T,
+    style: StyleObject | ((props: Props) => StyleObject),
+  ): StyletronComponent<
+    (T extends ComponentType<infer BaseProps>
+      ? BaseProps
+      : T extends keyof JSX.IntrinsicElements
+      ? JSX.IntrinsicElements[T]
+      : {}) &
+      Props
+  >;
 };
 
 export type WithStyleFn = {
-  <Base extends StyletronComponent<any>, Props>(
-    b: Base,
-    a: (a: Props) => StyleObject,
-  ): StyletronComponent<$Call1<ExtractPropTypes, Base> & Props>;
-  <Base extends StyletronComponent<any>>(
-    b: Base,
-    a: StyleObject,
-  ): StyletronComponent<$Call1<ExtractPropTypes, Base>>;
+  <Base extends StyletronComponent<any>, Props = {}>(
+    component: Base,
+    style: StyleObject | ((props: Props) => StyleObject),
+  ): StyletronComponent<
+    (Base extends StyletronComponent<infer BaseProps> ? BaseProps : never) &
+      Props
+  >;
 };
 
 export type WithTransformFn = <Base extends StyletronComponent<any>, Props>(
-  b: Base,
-  a: (b: StyleObject, a: Props) => StyleObject,
-) => StyletronComponent<$Call1<ExtractPropTypes, Base> & Props>;
+  component: Base,
+  style: (style: StyleObject, props: Props) => StyleObject,
+) => StyletronComponent<
+  (Base extends StyletronComponent<infer BaseProps> ? BaseProps : never) & Props
+>;
 
 export type WithWrapperFn = <Base extends StyletronComponent<any>, Props>(
-  b: Base,
-  a: (a: Base) => ComponentType<Props>,
-) => StyletronComponent<$Call1<ExtractPropTypes, Base> & Props>;
+  component: Base,
+  wrapper: (component: Base) => ComponentType<Props>,
+) => StyletronComponent<
+  (Base extends StyletronComponent<infer BaseProps> ? BaseProps : never) & Props
+>;
