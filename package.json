@@ -8,10 +8,11 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "lint": "eslint --ignore-path .gitignore --ext js,ts,tsx .",
-    "pretest": "yarn run lint && yarn run tscheck",
+    "pretest": "yarn run lint && yarn run tscheck && yarn run flow",
     "test": "lerna run test",
     "build": "lerna run build",
     "flow": "flow --max-warnings=0",
+    "tscheck": "tsc -b",
     "publish": "lerna publish --npm-client=npm",
     "playground": "lerna run --scope playground dev --stream"
   },
