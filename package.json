@@ -8,10 +8,10 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "lint": "eslint --ignore-path .gitignore .",
-    "pretest": "yarn run lint && yarn run flow",
+    "pretest": "yarn run lint && yarn run tscheck",
     "test": "lerna run test",
     "build": "lerna run build",
-    "flow": "flow --max-warnings=0",
+    "tscheck": "tsc -b",
     "publish": "lerna publish --npm-client=npm",
     "playground": "lerna run --scope playground dev --stream"
   },
@@ -23,7 +23,6 @@
     "eslint-plugin-flowtype": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "flow-bin": "^0.110.0",
     "lerna": "^2.11.0",
     "prettier": "^2.0.5",
     "typescript": "^3.9.6"
