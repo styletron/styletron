@@ -23,6 +23,7 @@
     "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
     "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
   },
+  "types": "./src/index.d.ts",
   "scripts": {
     "build": "cup build --force-flow",
     "pretest": "cup build-tests",
