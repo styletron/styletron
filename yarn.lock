@@ -1804,14 +1804,14 @@
   integrity sha1-fyrX7FX5FEgvybHsS7GuYCjUYGY=
 
 "@types/node@*":
-  version "10.12.20"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.20.tgz#f79f959acd3422d0889bd1ead1664bd2d17cd367"
-  integrity sha512-9spv6SklidqxevvZyOUGjZVz4QRXGu2dNaLyXIFzFYZW0AGDykzPRIUFJXTlQXyfzAucddwTcGtJNim8zqSOPA==
+  version "12.7.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.4.tgz#64db61e0359eb5a8d99b55e05c729f130a678b04"
+  integrity sha512-W0+n1Y+gK/8G2P/piTkBBN38Qc5Q1ZSO6B5H3QmPCUewaiXOo2GCAWZ4ElZCcNhjJuBSUSLGFUJnmlCn5+nxOQ==
 
 "@types/node@^9.3.0":
-  version "9.6.23"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.23.tgz#fc429962c1b75f32bd66214a3997f660e8434f0d"
-  integrity sha512-d2SJJpwkiPudEQ3+9ysANN2Nvz4QJKUPoe/WL5zyQzI0RaEeZWH5K5xjvUIGszTItHQpFPdH+u51f6G/LkS8Cg==
+  version "9.6.51"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.51.tgz#37318c930f1d1929f8a70d71f2893ac1ad0c5594"
+  integrity sha512-5lhC7QM2J3b/+epdwaNfRuG2peN4c9EX+mkd27+SqLKhJSdswHTZvc4aZLBZChi+Wo32+E1DeMZs0fSpu/uBXQ==
 
 "@types/rimraf@^0.0.28":
   version "0.0.28"
@@ -9591,6 +9591,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
+  integrity sha512-lmQ4L+J6mnu3xweP8+rOrUwzmN+MRAj7TgtJtDaXE5PMyX2kCrklhg3rvOsOIfNeAWMQWO2F1GPc1kMD2vLAfw==
 
 uglify-js@^2.6, uglify-js@^2.8.29:
   version "2.8.29"

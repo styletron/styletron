@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "jsx": "react",
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./packages",
+    "paths": {
+      "styletron-engine-atomic": [
+        "styletron-engine-atomic/src"
+      ],
+      "styletron-standard": [
+        "styletron-standard/src"
+      ],
+      "styletron-react": [
+        "styletron-react/src"
+      ]
+    }
+  },
+  "exclude": [
+    "packages/*/dist"
+  ]
+}
