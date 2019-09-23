@@ -35,10 +35,13 @@
     "styletron-standard": "^3.0.4"
   },
   "peerDependencies": {
+    "@types/react": "^16.8.23",
     "react": "^16.8.0"
   },
   "devDependencies": {
     "@babel/preset-react": "7.0.0-beta.56",
+    "@types/react": "^16.8.23",
+    "@types/webpack-env": "^1.13.9",
     "create-universal-package": "3.2.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
