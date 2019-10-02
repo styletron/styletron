@@ -152,6 +152,10 @@ export function useStyletron() {
   const debugEngine = React.useContext(DebugEngineContext);
   const hydrating = React.useContext(HydrationContext);
   checkNoopEngine(styletronEngine);
+
+  const debugClassName = React.useRef("");
+  const prevDebugClassNameDeps = React.useRef([]);
+
   return [
     function css(style: StyleObject) {
       const className = driver(style, styletronEngine);
@@ -159,16 +163,26 @@ export function useStyletron() {
         return className;
       }
       const {stack, message} = new Error("stacktrace source");
-      const debugClassName = React.useMemo(() => {
+
+      const nextDeps = [debugEngine, hydrating];
+      if (
+        prevDebugClassNameDeps[0] !== nextDeps[0] ||
+        prevDebugClassNameDeps[1] !== nextDeps[1]
+      ) {
         if (debugEngine && !hydrating) {
-          return debugEngine.debug({
+          debugClassName.current = debugEngine.debug({
             stackInfo: {stack, message},
             stackIndex: 1,
           });
         }
-        return "";
-      }, [debugEngine, hydrating]);
-      return debugClassName ? `${debugClassName} ${className}` : className;
+        prevDebugClassNameDeps.current = nextDeps;
+      }
+
+      if (debugClassName.current) {
+        return `${debugClassName.current} ${className}`;
+      }
+
+      return className;
     },
   ];
 }
