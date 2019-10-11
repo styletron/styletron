@@ -2,9 +2,8 @@
 /* eslint-env node */
 
 import test from "tape";
-import StyletronServer from "../server.js";
 
-// @flow
+import StyletronServer from "../server.js";
 
 test("rendering", t => {
   const instance = new StyletronServer();

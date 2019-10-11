@@ -1,5 +1,4 @@
 // @flow
-
 /* eslint-env browser */
 
 import test from "tape";
