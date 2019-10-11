@@ -30,7 +30,8 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "json-stable-stringify": "^1.0.1"
+    "json-stable-stringify": "^1.0.1",
+    "prettier": "^1.18.2"
   },
   "peerDependencies": {
     "styletron-standard": "^3.0.1"
