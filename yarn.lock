@@ -4189,7 +4189,7 @@ json-stable-stringify-without-jsonify@^1.0.1:
 
 json-stable-stringify@^1.0.1:
   version "1.0.1"
-  resolved "https://unpm.uberinternal.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
+  resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
   integrity sha1-mnWdOcXy/1A/1TAGRu1EX4jE+a8=
   dependencies:
     jsonify "~0.0.0"
@@ -4220,7 +4220,7 @@ jsonfile@^4.0.0:
 
 jsonify@~0.0.0:
   version "0.0.0"
-  resolved "https://unpm.uberinternal.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+  resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
 
 jsonparse@^1.2.0:
