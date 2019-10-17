@@ -26,21 +26,25 @@ export default function createRender(kind: string) {
       return "";
     }
 
-    return prettier
-      .format(`${kind} = ${stringify(obj)}`, {
-        // babylon is treated as 'babel'
-        parser: "babel",
-        plugins: [babylonParser],
+    const prettySortedJSON = prettier.format(stringify(obj), {
+      /**
+        even though we are using the json5 parser, it is actually packaged inside the
+        babylon parser in source
+        @see: https://github.com/prettier/prettier/blob/a093bb3f7b9f59d8cbaf7e20f97f6fafceaef21b/src/common/internal-plugins.js#L28
+       */
+      parser: "json5",
+      plugins: [babylonParser],
 
-        // don't add a semicolon at the end of the declaration
-        semi: false,
+      // don't add a semicolon at the end of the declaration
+      semi: false,
 
-        // default/prefer use of `'` for strings when needed
-        singleQuote: true,
+      // default/prefer use of `'` for strings when needed
+      singleQuote: true,
 
-        // force newline insertions more often
-        printWidth: 40,
-      })
-      .replace(`${kind} = `, `${kind}=`);
+      // force newline insertions more often
+      printWidth: 40,
+    });
+
+    return `${kind}=${prettySortedJSON}`;
   };
 }
