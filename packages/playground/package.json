@@ -1,0 +1,13 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}
