@@ -12,7 +12,8 @@
     "test": "lerna run test",
     "build": "lerna run build",
     "flow": "flow --max-warnings=0",
-    "publish": "lerna publish --npm-client=npm"
+    "publish": "lerna publish --npm-client=npm",
+    "playground": "lerna run --scope playground dev --stream"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
