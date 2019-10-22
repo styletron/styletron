@@ -154,6 +154,13 @@ function injectFixtureStyles(styletron) {
     },
   });
   styletron.renderStyle({
+    zIndex: void 0, // Should be silently ignored
+  });
+  styletron.renderStyle({
+    // $FlowFixMe
+    opacity: null, // Should be silently ignored at runtime
+  });
+  styletron.renderStyle({
     ":hover": {
       display: "none",
     },
