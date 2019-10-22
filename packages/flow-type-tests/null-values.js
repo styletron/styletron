@@ -9,8 +9,9 @@ const Foo = styled("div", {
 });
 
 const Bar = styled("div", {
-  // $FlowFixMe
-  zIndex: void 0, // undefined is not a valid value
+  // zIndex is an optional property, so undefined is allowed as a value by Flow
+  // Using undefined as a value is also convenient when optionally setting a value
+  zIndex: void 0,
 });
 
 <Foo />;
