@@ -21,70 +21,67 @@ export default function injectStylePrefixed(
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
 
-    if (originalVal !== null && typeof originalVal !== "undefined") {
-      if (typeof originalVal !== "object") {
-        // Primitive value
-        // ie. could be: string, number, boolean, and Symbol
-        if (__DEV__) {
-          validateValueType(originalVal);
-        }
+    if (typeof originalVal !== "object") {
+      // Primitive value
+      if (__DEV__) {
+        validateValueType(originalVal, originalKey);
+      }
 
-        const propValPair = `${hyphenate(
-          originalKey,
-        )}:${((originalVal: any): string)}`;
-        const key = `${pseudo}${propValPair}`;
-        const cachedId = cache.cache[key];
-        if (cachedId !== void 0) {
-          // cache hit
-          classString += " " + cachedId;
-          continue;
-        } else {
-          // cache miss
-          let block = "";
-          const prefixed = prefix({[originalKey]: originalVal});
-          for (const prefixedKey in prefixed) {
-            const prefixedVal = prefixed[prefixedKey];
-            const prefixedValType = typeof prefixedVal;
-            if (prefixedValType === "string" || prefixedValType === "number") {
-              const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
+      const propValPair = `${hyphenate(
+        originalKey,
+      )}:${((originalVal: any): string)}`;
+      const key = `${pseudo}${propValPair}`;
+      const cachedId = cache.cache[key];
+      if (cachedId !== void 0) {
+        // cache hit
+        classString += " " + cachedId;
+        continue;
+      } else {
+        // cache miss
+        let block = "";
+        const prefixed = prefix({[originalKey]: originalVal});
+        for (const prefixedKey in prefixed) {
+          const prefixedVal = prefixed[prefixedKey];
+          const prefixedValType = typeof prefixedVal;
+          if (prefixedValType === "string" || prefixedValType === "number") {
+            const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
+            if (prefixedPair !== propValPair) {
+              block += `${prefixedPair};`;
+            }
+          } else if (Array.isArray(prefixedVal)) {
+            const hyphenated = hyphenate(prefixedKey);
+            for (let i = 0; i < prefixedVal.length; i++) {
+              const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
               if (prefixedPair !== propValPair) {
                 block += `${prefixedPair};`;
               }
-            } else if (Array.isArray(prefixedVal)) {
-              const hyphenated = hyphenate(prefixedKey);
-              for (let i = 0; i < prefixedVal.length; i++) {
-                const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
-                if (prefixedPair !== propValPair) {
-                  block += `${prefixedPair};`;
-                }
-              }
             }
           }
-          block += propValPair; // ensure original prop/val is last (for hydration)
-          const id = cache.addValue(key, {pseudo, block});
-          classString += " " + id;
         }
-      } else {
-        // Object value
-        if (originalKey[0] === ":") {
-          classString +=
-            " " +
-            injectStylePrefixed(
-              styleCache,
-              originalVal,
-              media,
-              pseudo + originalKey,
-            );
-        } else if (originalKey.substring(0, 6) === "@media") {
-          classString +=
-            " " +
-            injectStylePrefixed(
-              styleCache,
-              originalVal,
-              originalKey.substr(7),
-              pseudo,
-            );
-        }
+        block += propValPair; // ensure original prop/val is last (for hydration)
+        const id = cache.addValue(key, {pseudo, block});
+        classString += " " + id;
+      }
+    } else {
+      // Object value
+      if (originalKey[0] === ":") {
+        classString +=
+          " " +
+          injectStylePrefixed(
+            styleCache,
+            originalVal,
+            media,
+            pseudo + originalKey,
+          );
+      } else if (originalKey.substring(0, 6) === "@media") {
+        classString +=
+          " " +
+          injectStylePrefixed(
+            styleCache,
+            originalVal,
+            originalKey.substr(7),
+            pseudo,
+          );
       }
     }
   }
@@ -109,12 +106,16 @@ export default function injectStylePrefixed(
   return classString.slice(1);
 }
 
-function validateValueType(value) {
+function validateValueType(value, key) {
   if (
     value === null ||
     Array.isArray(value) ||
     (typeof value !== "number" && typeof value !== "string")
   ) {
-    throw new Error(`Unsupported style value: ${JSON.stringify(value)}`);
+    throw new Error(
+      `Unsupported style value: ${JSON.stringify(
+        value,
+      )} used in property ${JSON.stringify(key)}`,
+    );
   }
 }

@@ -63,8 +63,7 @@ test("rendering", t => {
     userSelect: "none",
   });
   instance.renderStyle({
-    // eslint-disable-next-line no-undefined
-    opacity: undefined,
+    opacity: void 0,
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
