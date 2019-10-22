@@ -12,3 +12,6 @@ const Bar = styled("div", {
   // $FlowFixMe
   zIndex: void 0, // undefined is not a valid value
 });
+
+<Foo />;
+<Bar />;
