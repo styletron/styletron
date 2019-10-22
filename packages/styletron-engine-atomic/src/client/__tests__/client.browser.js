@@ -62,9 +62,6 @@ test("rendering", t => {
   instance.renderStyle({
     userSelect: "none",
   });
-  instance.renderStyle({
-    opacity: void 0,
-  });
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
