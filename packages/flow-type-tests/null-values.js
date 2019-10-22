@@ -4,8 +4,9 @@ import * as React from "react";
 import {styled} from "styletron-react";
 
 const Foo = styled("div", {
-  // $FlowFixMe
-  zIndex: null, // null is not a valid value
+  // Using null values was previously supported, albeit erroneously
+  // So we should continue to support null values in Flow for the time being
+  zIndex: null,
 });
 
 const Bar = styled("div", {

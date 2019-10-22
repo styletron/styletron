@@ -157,8 +157,8 @@ function injectFixtureStyles(styletron) {
     zIndex: void 0, // Should be silently ignored
   });
   styletron.renderStyle({
-    // $FlowFixMe
-    opacity: null, // Should be silently ignored at runtime
+    // null values were historically supported (albeit erronesouly)
+    opacity: null, // Should be silently ignored
   });
   styletron.renderStyle({
     ":hover": {

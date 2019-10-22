@@ -30,7 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "csstype": "frenic/csstype#8969c4b",
+    "csstype": "rtsao/csstype#c4e709f",
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
