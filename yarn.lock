@@ -3662,10 +3662,9 @@ cssnano-simple@1.0.0:
     cssnano-preset-simple "^1.0.0"
     postcss "^7.0.18"
 
-csstype@2.6.5:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.5.tgz#1cd1dff742ebf4d7c991470ae71e12bb6751e034"
-  integrity sha512-JsTaiksRsel5n7XwqPAfB0l3TFKdpjW/kgAELf9vrb5adGA7UCPLajKK5s3nFrcFm3Rkyp/Qkgl73ENc1UY3cA==
+csstype@frenic/csstype#16af68b:
+  version "2.6.4"
+  resolved "https://codeload.github.com/frenic/csstype/tar.gz/16af68b4cf373af95e5522b7975c26ad49887ee3"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
