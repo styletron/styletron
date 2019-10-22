@@ -21,10 +21,13 @@ export default function injectStylePrefixed(
   for (const originalKey in styles) {
     const originalVal = styles[originalKey];
 
+    if (originalVal === void 0 || originalVal === null) {
+      continue;
+    }
     if (typeof originalVal !== "object") {
-      // Primitive value
+      // Non-null and non-undefined primitive value
       if (__DEV__) {
-        validateValueType(originalVal);
+        validateValueType(originalVal, originalKey);
       }
 
       const propValPair = `${hyphenate(
@@ -63,7 +66,7 @@ export default function injectStylePrefixed(
         classString += " " + id;
       }
     } else {
-      // Object value
+      // Non-null object value
       if (originalKey[0] === ":") {
         classString +=
           " " +
@@ -106,12 +109,16 @@ export default function injectStylePrefixed(
   return classString.slice(1);
 }
 
-function validateValueType(value) {
+function validateValueType(value, key) {
   if (
     value === null ||
     Array.isArray(value) ||
     (typeof value !== "number" && typeof value !== "string")
   ) {
-    throw new Error(`Unsupported style value: ${JSON.stringify(value)}`);
+    throw new Error(
+      `Unsupported style value: ${JSON.stringify(
+        value,
+      )} used in property ${JSON.stringify(key)}`,
+    );
   }
 }

@@ -1,8 +1,8 @@
 {
-  "name": "styletron-engine-atomic",
-  "version": "1.4.2",
+  "name": "styletron-engine-snapshot",
+  "version": "0.1.2",
   "description": "Universal, high-performance JavaScript styles",
-  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "author": "Mo Kouli <mohamad.kouli@gmail.com>",
   "repository": "styletron/styletron",
   "files": [
     "dist",
@@ -30,11 +30,15 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "inline-style-prefixer": "^5.1.0",
-    "styletron-standard": "^3.0.2"
+    "json-stable-stringify": "^1.0.1",
+    "prettier": "^1.18.2"
+  },
+  "peerDependencies": {
+    "styletron-standard": "^3.0.1"
   },
   "devDependencies": {
     "create-universal-package": "3.2.4",
+    "styletron-standard": "^3.0.2",
     "tape": "4.9.1",
     "unitest": "^2.1.1"
   },

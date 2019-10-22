@@ -1,6 +1,6 @@
 {
   "name": "styletron-standard",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "Standard interfaces for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
@@ -30,7 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "csstype": "2.6.5",
+    "csstype": "frenic/csstype#8969c4b",
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
