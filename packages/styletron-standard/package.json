@@ -30,6 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "@rtsao/csstype": "2.6.5-forked.0",
     "csstype": "rtsao/csstype#c4e709f",
     "inline-style-prefixer": "^5.1.0"
   },
