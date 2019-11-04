@@ -8,7 +8,7 @@ import type {
   AnimationNameProperty as CTAnimationNameProperty,
   FontFamilyProperty as CTFontFamilyProperty,
   FontFace as CTFontFace,
-} from "csstype";
+} from "@rtsao/csstype";
 
 export type KeyframesObject = {
   from?: Properties,
