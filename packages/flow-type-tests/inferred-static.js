@@ -3,6 +3,14 @@
 import * as React from "react";
 import {styled, withStyle} from "styletron-react";
 
+const Nav = styled("div", {
+  color: 23,
+  zIndex: 1,
+  top: 0,
+});
+
+<Nav />;
+
 const Foo = styled("div", {
   color: "red",
   gridTemplateColumns: "repeat(2, 1fr)",

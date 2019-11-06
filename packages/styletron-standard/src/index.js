@@ -1,26 +1,20 @@
 // @flow
 
+// import type {
+//   Properties,
+//   FontFace as FontFaceObject,
+//   KeyframesObject,
+// } from "./style-types";
+
 import type {
-  Properties,
-  FontFace as FontFaceObject,
+  StandardFlattenedProperties as Properties,
   KeyframesObject,
-} from "./style-types";
+  AtRuleFontFace as FontFaceObject,
+} from "./styles.js";
+
+export type StyleObject = Properties;
 
 export type {FontFaceObject, KeyframesObject};
-
-// Note: $Shape is needed to make polymorphic withStyle refinements work correctly
-// It seems functions satisfy this type without $Shape
-// See: https://github.com/facebook/flow/issues/6784
-//
-//
-//
-//
-//
-//
-export type StyleObject = $Shape<{
-  ...Properties,
-  [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
-}>;
 
 export interface StandardEngine {
   renderStyle(style: StyleObject): string;
