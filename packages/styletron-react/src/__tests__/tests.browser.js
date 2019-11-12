@@ -583,6 +583,7 @@ test("styled debug mode (ssr)", t => {
   );
   t.end();
 });
+
 test("font-face injection", t => {
   t.plan(2);
   const fontFace = {
@@ -695,6 +696,46 @@ test("useStyletron css", t => {
     </Provider>,
   );
   t.end();
+});
+
+test("useStyletron debug mode", t => {
+  t.plan(3);
+
+  function Widget() {
+    const [css] = useStyletron();
+    const [on, setOn] = React.useState(false);
+    const className = css({color: "red"});
+    return (
+      <button onClick={() => setOn(!on)} className={className}>
+        test
+      </button>
+    );
+  }
+
+  let debugCallCount = 0;
+  const wrapper = Enzyme.mount(
+    <Provider
+      value={{
+        renderStyle: () => "bar",
+        renderKeyframes: () => "",
+        renderFontFace: () => "",
+      }}
+      debug={{
+        debug: () => {
+          debugCallCount++;
+          return `__debug-${debugCallCount}`;
+        },
+      }}
+    >
+      <Widget />
+    </Provider>,
+  );
+
+  const button = wrapper.find("button");
+  t.ok(button.hasClass("__debug-1 bar"), "adds debug class");
+  button.simulate("click");
+  t.ok(button.hasClass("__debug-1 bar"), "adds debug class");
+  t.equal(debugCallCount, 1, "debug only called on initial render");
 });
 
 test("no-op engine", t => {
