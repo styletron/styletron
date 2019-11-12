@@ -1,6 +1,6 @@
 {
   "name": "styletron-react",
-  "version": "5.2.5",
+  "version": "5.2.6",
   "description": "React bindings for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
