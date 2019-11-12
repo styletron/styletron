@@ -166,8 +166,8 @@ export function useStyletron() {
 
       const nextDeps = [debugEngine, hydrating];
       if (
-        prevDebugClassNameDeps[0] !== nextDeps[0] ||
-        prevDebugClassNameDeps[1] !== nextDeps[1]
+        prevDebugClassNameDeps.current[0] !== nextDeps[0] ||
+        prevDebugClassNameDeps.current[1] !== nextDeps[1]
       ) {
         if (debugEngine && !hydrating) {
           debugClassName.current = debugEngine.debug({
