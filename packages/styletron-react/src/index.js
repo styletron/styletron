@@ -11,7 +11,7 @@ import {
   driver,
   getInitialStyle,
   type StandardEngine,
-  type StyleObject,
+  type StyleObject as StdStyleObject,
 } from "styletron-standard";
 
 import type {
@@ -32,6 +32,7 @@ import {
 } from "./dev-tool.js";
 
 export {DebugEngine};
+export type StyleObject = StdStyleObject;
 
 const noopEngine = {
   renderStyle: () => "",
