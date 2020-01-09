@@ -11,7 +11,7 @@ import {
   driver,
   getInitialStyle,
   type StandardEngine,
-  type StyleObject as StdStyleObject,
+  type StyleObject,
 } from "styletron-standard";
 
 import type {
