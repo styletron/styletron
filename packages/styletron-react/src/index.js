@@ -32,7 +32,7 @@ import {
 } from "./dev-tool.js";
 
 export {DebugEngine};
-export type StyleObject = StdStyleObject;
+export type {StyleObject};
 
 const noopEngine = {
   renderStyle: () => "",
