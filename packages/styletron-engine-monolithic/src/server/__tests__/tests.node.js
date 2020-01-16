@@ -16,11 +16,11 @@ test("StyletronServer toCss", t => {
     styletron.getCss(),
     ".fw0pf{color:red;border:1px solid black;}.fw0pf:hover{color:green;}@media (min-width: 200px){.fw0pf{color:hotpink;}.fw0pf:hover{color:red;}}@media (min-width: 400px){.fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
   );
-  // injectFixtureKeyframes(styletron);
-  // t.equal(
-  //   styletron.getCss(),
-  //   "@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}.ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (min-width: 600px){.ah{color:red}}@media (min-width: 800px){.ag{color:green}.ai:hover{color:green}}",
-  // );
+  injectFixtureKeyframes(styletron);
+  t.equal(
+    styletron.getCss(),
+    "@keyframes ae{from{color:purple}50%{color:yellow}to{color:orange}}.ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}@media (min-width: 600px){.ah{color:red}}@media (min-width: 800px){.ag{color:green}.ai:hover{color:green}}",
+  );
   t.end();
 });
 
@@ -163,19 +163,19 @@ function injectFixtureStyles(styletron) {
   });
 }
 
-// function injectFixtureKeyframes(styletron) {
-//   return styletron.renderKeyframes({
-//     from: {
-//       color: "purple",
-//     },
-//     "50%": {
-//       color: "yellow",
-//     },
-//     to: {
-//       color: "orange",
-//     },
-//   });
-// }
+function injectFixtureKeyframes(styletron) {
+  return styletron.renderKeyframes({
+    from: {
+      color: "purple",
+    },
+    "50%": {
+      color: "yellow",
+    },
+    to: {
+      color: "orange",
+    },
+  });
+}
 
 // function injectFixtureFontFace(styletron) {
 //   return styletron.renderFontFace({

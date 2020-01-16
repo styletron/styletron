@@ -8,7 +8,11 @@ import hash from "@emotion/hash";
 
 import type {StyleObject} from "styletron-standard";
 
-function buildCacheInput(styles: StyleObject, className: string) {
+function buildCacheInput(
+  styles: StyleObject,
+  className: string,
+  globalPrefix: string,
+) {
   let plainBlock = "";
   let nestedBlock = "";
   for (const originalKey in styles) {
@@ -31,31 +35,37 @@ function buildCacheInput(styles: StyleObject, className: string) {
         if (prefixedValType === "string" || prefixedValType === "number") {
           const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
           if (prefixedPair !== propValPair) {
-            plainBlock += `${prefixedPair};`;
+            plainBlock += `${globalPrefix}${prefixedPair};`;
           }
         } else if (Array.isArray(prefixedVal)) {
           const hyphenated = hyphenate(prefixedKey);
           for (let i = 0; i < prefixedVal.length; i++) {
             const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
             if (prefixedPair !== propValPair) {
-              plainBlock += `${prefixedPair};`;
+              plainBlock += `${globalPrefix}${prefixedPair};`;
             }
           }
         }
       }
-      plainBlock += `${propValPair};`; // ensure original prop/val is last (for hydration)
+      plainBlock += `${globalPrefix}${propValPair};`;
     } else if (originalKey[0] === ":") {
       nestedBlock += `.${className}${originalKey}{${buildCacheInput(
         originalVal,
         "",
+        globalPrefix,
       )}}`;
     } else if (originalKey[0] === "@") {
       nestedBlock += `${originalKey}{${buildCacheInput(
         originalVal,
         className,
+        globalPrefix,
       )}}`;
     } else {
-      nestedBlock += `${originalKey}{${buildCacheInput(originalVal, "")}}`;
+      nestedBlock += `${originalKey}{${buildCacheInput(
+        originalVal,
+        "",
+        globalPrefix,
+      )}}`;
     }
   }
   // we are inside of a pseudo-selector
@@ -71,13 +81,14 @@ function buildCacheInput(styles: StyleObject, className: string) {
 export default function injectStylePrefixed(
   styleCache: any,
   styles: StyleObject,
+  globalPrefix: string,
 ) {
   // is it already cached?
   const className = hash(JSON.stringify(styles));
   if (styleCache[className]) {
     return className;
   }
-  styleCache[className] = buildCacheInput(styles, className);
+  styleCache[className] = buildCacheInput(styles, className, globalPrefix);
   return className;
 }
 

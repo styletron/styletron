@@ -1,10 +1,7 @@
 // @flow
-
-import SequentialIDGenerator from "../sequential-id-generator.js";
-
 import type {StandardEngine} from "styletron-standard";
 
-import {Cache} from "../cache.js";
+import hash from "@emotion/hash";
 
 import injectStylePrefixed from "../inject-style-prefixed.js";
 
@@ -14,59 +11,32 @@ import type {
   KeyframesObject,
 } from "styletron-standard";
 
-import {
-  keyframesBlockToRule,
-  declarationsToBlock,
-  keyframesToBlock,
-  fontFaceBlockToRule,
-} from "../css.js";
+import {keyframesToBlock, keyframesBlockToRule} from "../css";
 
 export type sheetT = {|
   css: string,
   attrs: {[string]: string},
 |};
 
-type optionsT = {
+export type optionsT = {
   prefix?: string,
 };
 
 class StyletronServer implements StandardEngine {
   styleCache: any;
-  keyframesCache: Cache<KeyframesObject>;
-  fontFaceCache: Cache<FontFaceObject>;
-  styleRules: {[string]: string};
-  keyframesRules: string;
-  fontFaceRules: string;
+  keyframesCache: any;
+  fontFaceCache: any;
+  opts: optionsT;
 
   constructor(opts?: optionsT = {}) {
-    this.styleRules = {"": ""};
+    this.opts = opts || {};
     this.styleCache = {};
-
-    this.fontFaceRules = "";
-    this.fontFaceCache = new Cache(
-      new SequentialIDGenerator(opts.prefix),
-      (cache, id, value) => {
-        this.fontFaceRules += fontFaceBlockToRule(
-          id,
-          declarationsToBlock(value),
-        );
-      },
-    );
-
-    this.keyframesRules = "";
-    this.keyframesCache = new Cache(
-      new SequentialIDGenerator(opts.prefix),
-      (cache, id, value) => {
-        this.keyframesRules += keyframesBlockToRule(
-          id,
-          keyframesToBlock(value),
-        );
-      },
-    );
+    this.fontFaceCache = {};
+    this.keyframesCache = {};
   }
 
   renderStyle(style: StyleObject): string {
-    return injectStylePrefixed(this.styleCache, style);
+    return injectStylePrefixed(this.styleCache, style, this.opts.prefix || "");
   }
 
   renderFontFace(fontFace: FontFaceObject): string {
@@ -75,38 +45,40 @@ class StyletronServer implements StandardEngine {
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {
-    const key = JSON.stringify(keyframes);
-    return this.keyframesCache.addValue(key, keyframes);
+    const animationName = hash(JSON.stringify(keyframes));
+    if (!this.keyframesCache[animationName]) {
+      this.keyframesCache[animationName] = keyframesToBlock(keyframes);
+    }
+    return animationName;
   }
 
-  getStylesheets(): Array<sheetT> {
-    return [
-      ...(this.keyframesRules.length
-        ? [
-            {
-              css: this.keyframesRules,
-              attrs: {"data-hydrate": "keyframes"},
-            },
-          ]
-        : []),
-      ...(this.fontFaceRules.length
-        ? [
-            {
-              css: this.fontFaceRules,
-              attrs: {"data-hydrate": "font-face"},
-            },
-          ]
-        : []),
-      ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),
-    ];
-  }
+  // getStylesheets(): Array<sheetT> {
+  //   return [
+  //     ...(this.keyframesRules.length
+  //       ? [
+  //           {
+  //             css: this.keyframesRules,
+  //             attrs: {"data-hydrate": "keyframes"},
+  //           },
+  //         ]
+  //       : []),
+  //     ...(this.fontFaceRules.length
+  //       ? [
+  //           {
+  //             css: this.fontFaceRules,
+  //             attrs: {"data-hydrate": "font-face"},
+  //           },
+  //         ]
+  //       : []),
+  //     ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),
+  //   ];
+  // }
 
-  getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
-    return generateHtmlString(this.getStylesheets(), className);
-  }
-
+  // getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
+  //   return generateHtmlString(this.getStylesheets(), className);
+  // }
   getCss() {
-    return stringify(this.styleCache);
+    return stringifyKeyframes(this.keyframesCache) + stringify(this.styleCache);
   }
 }
 
@@ -147,17 +119,28 @@ function stringify(styleCache) {
   return result;
 }
 
-function sheetify(styleRules, sortedCacheKeys) {
-  if (sortedCacheKeys.length === 0) {
-    return [{css: "", attrs: {}}];
+function stringifyKeyframes(keyframeCache) {
+  let result = "";
+  for (const animationName in keyframeCache) {
+    result += `${keyframesBlockToRule(
+      animationName,
+      keyframeCache[animationName],
+    )};`;
   }
-  const sheets = [];
-  sortedCacheKeys.forEach(cacheKey => {
-    // omit media (cacheKey) attribute if empty
-    const attrs = cacheKey === "" ? {} : {media: cacheKey};
-    sheets.push({css: styleRules[cacheKey], attrs});
-  });
-  return sheets;
+  return result;
 }
+
+// function sheetify(styleRules, sortedCacheKeys) {
+//   if (sortedCacheKeys.length === 0) {
+//     return [{css: "", attrs: {}}];
+//   }
+//   const sheets = [];
+//   sortedCacheKeys.forEach(cacheKey => {
+//     // omit media (cacheKey) attribute if empty
+//     const attrs = cacheKey === "" ? {} : {media: cacheKey};
+//     sheets.push({css: styleRules[cacheKey], attrs});
+//   });
+//   return sheets;
+// }
 
 export default StyletronServer;
