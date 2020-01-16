@@ -1,0 +1,43 @@
+{
+  "name": "styletron-engine-monolithic",
+  "version": "0.0.1",
+  "description": "Universal, high-performance JavaScript styles",
+  "author": "Vojtech Miksu <vojtech@miksu.cz>",
+  "repository": "styletron/styletron",
+  "files": [
+    "dist",
+    "src",
+    "!__tests__"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.es.js",
+  "browser": {
+    "./dist/index.js": "./dist/browser.es5.js",
+    "./dist/index.es.js": "./dist/browser.es5.es.js"
+  },
+  "es2015": {
+    "./dist/browser.es5.es.js": "./dist/browser.es2015.es.js"
+  },
+  "es2017": {
+    "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
+    "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
+  },
+  "scripts": {
+    "build": "cup build --force-flow",
+    "pretest": "cup build-tests",
+    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "@emotion/hash": "^0.7.4",
+    "inline-style-prefixer": "^5.1.0",
+    "styletron-standard": "^3.0.4"
+  },
+  "devDependencies": {
+    "create-universal-package": "3.2.4",
+    "tape": "4.9.1",
+    "unitest": "^2.1.1"
+  },
+  "license": "MIT"
+}
