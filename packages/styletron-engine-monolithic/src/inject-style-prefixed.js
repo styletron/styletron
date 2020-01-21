@@ -7,6 +7,7 @@ import {prefix} from "inline-style-prefixer";
 import hash from "@emotion/hash";
 
 import type {StyleObject} from "styletron-standard";
+import type {cacheT} from "./server/server";
 
 function buildCacheInput(
   styles: StyleObject,
@@ -35,21 +36,21 @@ function buildCacheInput(
         if (prefixedValType === "string" || prefixedValType === "number") {
           const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
           if (prefixedPair !== propValPair) {
-            plainBlock += `${globalPrefix}${prefixedPair};`;
+            plainBlock += `${prefixedPair};`;
           }
         } else if (Array.isArray(prefixedVal)) {
           const hyphenated = hyphenate(prefixedKey);
           for (let i = 0; i < prefixedVal.length; i++) {
             const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
             if (prefixedPair !== propValPair) {
-              plainBlock += `${globalPrefix}${prefixedPair};`;
+              plainBlock += `${prefixedPair};`;
             }
           }
         }
       }
-      plainBlock += `${globalPrefix}${propValPair};`;
+      plainBlock += `${propValPair};`;
     } else if (originalKey[0] === ":") {
-      nestedBlock += `.${className}${originalKey}{${buildCacheInput(
+      nestedBlock += `.${globalPrefix}css-${className}${originalKey}{${buildCacheInput(
         originalVal,
         "",
         globalPrefix,
@@ -75,21 +76,20 @@ function buildCacheInput(
   if (!plainBlock) {
     return nestedBlock;
   }
-  return `.${className}{${plainBlock}}${nestedBlock}`;
+  return `.${globalPrefix}css-${className}{${plainBlock}}${nestedBlock}`;
 }
 
 export default function injectStylePrefixed(
-  styleCache: any,
+  styleCache: cacheT,
   styles: StyleObject,
   globalPrefix: string,
 ) {
   // is it already cached?
   const className = hash(JSON.stringify(styles));
-  if (styleCache[className]) {
-    return className;
+  if (!styleCache[className]) {
+    styleCache[className] = buildCacheInput(styles, className, globalPrefix);
   }
-  styleCache[className] = buildCacheInput(styles, className, globalPrefix);
-  return className;
+  return `${globalPrefix}css-${className}`;
 }
 
 function validateValueType(value, key) {

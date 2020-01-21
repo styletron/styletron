@@ -11,7 +11,12 @@ import type {
   KeyframesObject,
 } from "styletron-standard";
 
-import {keyframesToBlock, keyframesBlockToRule} from "../css";
+import {
+  keyframesToBlock,
+  keyframesBlockToRule,
+  fontFaceBlockToRule,
+  declarationsToBlock,
+} from "../css";
 
 export type sheetT = {|
   css: string,
@@ -22,10 +27,14 @@ export type optionsT = {
   prefix?: string,
 };
 
+export type cacheT = {
+  [key: string]: string,
+};
+
 class StyletronServer implements StandardEngine {
-  styleCache: any;
-  keyframesCache: any;
-  fontFaceCache: any;
+  styleCache: cacheT;
+  keyframesCache: cacheT;
+  fontFaceCache: cacheT;
   opts: optionsT;
 
   constructor(opts?: optionsT = {}) {
@@ -40,45 +49,51 @@ class StyletronServer implements StandardEngine {
   }
 
   renderFontFace(fontFace: FontFaceObject): string {
-    const key = JSON.stringify(fontFace);
-    return this.fontFaceCache.addValue(key, fontFace);
+    const fontName = hash(JSON.stringify(fontFace));
+    if (!this.fontFaceCache[fontName]) {
+      this.fontFaceCache[fontName] = fontFaceBlockToRule(
+        `${this.opts.prefix || ""}font-${fontName}`,
+        declarationsToBlock(fontFace),
+      );
+    }
+    return `${this.opts.prefix || ""}font-${fontName}`;
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {
     const animationName = hash(JSON.stringify(keyframes));
     if (!this.keyframesCache[animationName]) {
-      this.keyframesCache[animationName] = keyframesToBlock(keyframes);
+      this.keyframesCache[animationName] = keyframesBlockToRule(
+        `${this.opts.prefix || ""}animation-${animationName}`,
+        keyframesToBlock(keyframes),
+      );
     }
-    return animationName;
+    return `${this.opts.prefix || ""}animation-${animationName}`;
   }
 
-  // getStylesheets(): Array<sheetT> {
-  //   return [
-  //     ...(this.keyframesRules.length
-  //       ? [
-  //           {
-  //             css: this.keyframesRules,
-  //             attrs: {"data-hydrate": "keyframes"},
-  //           },
-  //         ]
-  //       : []),
-  //     ...(this.fontFaceRules.length
-  //       ? [
-  //           {
-  //             css: this.fontFaceRules,
-  //             attrs: {"data-hydrate": "font-face"},
-  //           },
-  //         ]
-  //       : []),
-  //     ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),
-  //   ];
-  // }
+  getStylesheets(): Array<sheetT> {
+    const hashedNames = [
+      ...Object.keys(this.fontFaceCache),
+      ...Object.keys(this.keyframesCache),
+      ...Object.keys(this.styleCache),
+    ];
+    return [
+      {
+        css: this.getCss(),
+        attrs: {"data-hydrate": hashedNames.join(" ")},
+      },
+    ];
+  }
 
-  // getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
-  //   return generateHtmlString(this.getStylesheets(), className);
-  // }
+  getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
+    return generateHtmlString(this.getStylesheets(), className);
+  }
+
   getCss() {
-    return stringifyKeyframes(this.keyframesCache) + stringify(this.styleCache);
+    return [
+      ...Object.values(this.fontFaceCache),
+      ...Object.values(this.keyframesCache),
+      ...Object.values(this.styleCache),
+    ].join("");
   }
 }
 
@@ -110,37 +125,5 @@ function attrsToString(attrs) {
   }
   return result;
 }
-
-function stringify(styleCache) {
-  let result = "";
-  for (const className in styleCache) {
-    result += styleCache[className];
-  }
-  return result;
-}
-
-function stringifyKeyframes(keyframeCache) {
-  let result = "";
-  for (const animationName in keyframeCache) {
-    result += `${keyframesBlockToRule(
-      animationName,
-      keyframeCache[animationName],
-    )};`;
-  }
-  return result;
-}
-
-// function sheetify(styleRules, sortedCacheKeys) {
-//   if (sortedCacheKeys.length === 0) {
-//     return [{css: "", attrs: {}}];
-//   }
-//   const sheets = [];
-//   sortedCacheKeys.forEach(cacheKey => {
-//     // omit media (cacheKey) attribute if empty
-//     const attrs = cacheKey === "" ? {} : {media: cacheKey};
-//     sheets.push({css: styleRules[cacheKey], attrs});
-//   });
-//   return sheets;
-// }
 
 export default StyletronServer;
