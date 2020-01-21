@@ -1,6 +1,6 @@
 /* eslint-env browser,node */
 
-import {Client, Server} from "styletron-engine-emotion";
+import {Client, Server} from "styletron-engine-monolithic";
 import {DebugEngine} from "styletron-react";
 
 const getHydrateClass = () =>
