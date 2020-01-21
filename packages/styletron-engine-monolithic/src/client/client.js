@@ -39,8 +39,6 @@ function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   }
 }
 
-import SequentialIDGenerator from "../sequential-id-generator.js";
-
 import type {
   StandardEngine,
   KeyframesObject,
@@ -48,13 +46,9 @@ import type {
   StyleObject,
 } from "styletron-standard";
 
-import {Cache, MultiCache} from "../cache.js";
-
 import injectStylePrefixed from "../inject-style-prefixed.js";
 
 import {
-  styleBlockToRule,
-  atomicSelector,
   keyframesBlockToRule,
   declarationsToBlock,
   keyframesToBlock,
