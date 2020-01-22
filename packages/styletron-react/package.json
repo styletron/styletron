@@ -44,7 +44,7 @@
     "eslint-plugin-react": "^7.6.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "unitest": "^2.1.1"
+    "unitest": "^2.1.2"
   },
   "license": "MIT"
 }

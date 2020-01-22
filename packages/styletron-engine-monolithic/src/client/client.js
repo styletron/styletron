@@ -41,7 +41,6 @@ type cacheT = {
 class StyletronClient implements StandardEngine {
   container: Element;
   opts: optionsT;
-  styleElements: {[string]: HTMLStyleElement};
   fontFaceSheet: HTMLStyleElement;
   keyframesSheet: HTMLStyleElement;
 
@@ -52,8 +51,6 @@ class StyletronClient implements StandardEngine {
 
   constructor(opts?: optionsT = {}) {
     this.opts = opts || {};
-    this.styleElements = {};
-
     this.styleCache = {};
     this.fontFaceCache = {};
     this.keyframesCache = {};

@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "start": "next start"
+    "start": "next start",
+    "build": "next build"
   },
   "dependencies": {
     "next": "latest",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }

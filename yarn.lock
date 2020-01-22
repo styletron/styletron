@@ -2956,7 +2956,18 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.3.tgz#42d837d5239688d55f303003a508230fa6727142"
   integrity sha512-i70fVHhmV3DtTl6nqvZOnIjbY0Pe4kAUjwHj8z0zAdgBtYrJyYwLKCCuRBQ5ppkyL0AkN7HKRnETdmdp1zqNXw==
 
-chrome-launcher@0.11.2, chrome-launcher@^0.10.0:
+chrome-launcher@^0.10.0:
+  version "0.10.7"
+  resolved "https://registry.yarnpkg.com/chrome-launcher/-/chrome-launcher-0.10.7.tgz#5e2a9e99f212e0501d9c7024802acd01a812f5d5"
+  integrity sha512-IoQLp64s2n8OQuvKZwt77CscVj3UlV2Dj7yZtd1EBMld9mSdGcsGy9fN5hd/r4vJuWZR09it78n1+A17gB+AIQ==
+  dependencies:
+    "@types/node" "*"
+    is-wsl "^1.1.0"
+    lighthouse-logger "^1.0.0"
+    mkdirp "0.5.1"
+    rimraf "^2.6.1"
+
+chrome-launcher@^0.11.2:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/chrome-launcher/-/chrome-launcher-0.11.2.tgz#c9a248dbccd3a08565553acf61adff879bcc982c"
   integrity sha512-jx0kJDCXdB2ARcDMwNCtrf04oY1Up4rOmVu+fqJ5MTPOOIG8EhRcEU9NZfXZc6dMw9FU8o1r21PNp8V2M0zQ+g==
@@ -8143,7 +8154,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@16.8.6, react-dom@^16.8.0, react-dom@^16.8.6:
+react-dom@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
   integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==
@@ -8183,7 +8194,7 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.7.0"
     scheduler "^0.12.0"
 
-react@16.8.6, react@^16.8.0, react@^16.8.6:
+react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==
@@ -9649,6 +9660,23 @@ unitest@^2.1.1:
   integrity sha1-yjSeMguj1+oYQ6ny90aDkwWVt7k=
   dependencies:
     chrome-launcher "^0.10.0"
+    chrome-remote-interface "^0.25.5"
+    get-port "^3.2.0"
+    is-docker "^1.1.0"
+    istanbul-lib-coverage "^1.1.1"
+    merge2 "1.2.0"
+    minimist "^1.2.0"
+    multistream "^2.1.0"
+    run-parallel "^1.1.6"
+    tap-finished "0.0.1"
+    tap-merge "^0.3.1"
+
+unitest@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/unitest/-/unitest-2.1.2.tgz#33083699f6bd7e871b7da328d6ec5f37730827d5"
+  integrity sha512-Y307fZdBHqVz8aKZ1633qSlvyKRi1UhuX4lW04d16sfUNAjOTv4Ec5mhzNvG2r8iyqFic8UuzQGp5rdMLOxQ8Q==
+  dependencies:
+    chrome-launcher "^0.11.2"
     chrome-remote-interface "^0.25.5"
     get-port "^3.2.0"
     is-docker "^1.1.0"
