@@ -2,42 +2,8 @@
 
 /* eslint-env browser */
 
-// declare var __DEV__: boolean;
-// declare var __BROWSER__: boolean;
-
-// const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
-// const KEYFRAMES_HYRDATOR = /@keyframes ([^{]+)\{((?:[^{]+\{[^}]*\})*)\}/g;
-// const FONT_FACE_HYDRATOR = /@font-face\{font-family:([^;]+);([^}]*)\}/g;
-
-// type hydratorT =
-//   | typeof STYLES_HYDRATOR
-//   | typeof KEYFRAMES_HYRDATOR
-//   | typeof FONT_FACE_HYDRATOR;
-
-// function hydrateStyles<T>(cache: cacheT, hydrator: hydratorT, css: string) {
-//   let match;
-//   while ((match = hydrator.exec(css))) {
-//     const [, id, pseudo, key] = match;
-//     if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-//       hydrateDevtoolsRule(match[0]);
-//     }
-//     const fullKey = pseudo ? `${pseudo}${key}` : key;
-//     cache.cache[fullKey] = id; // set cache without triggering side effects
-//     cache.idGenerator.increment(); // increment id
-//   }
-// }
-
-// function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
-//   let match;
-//   while ((match = hydrator.exec(css))) {
-//     const [, id, key] = match;
-//     if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-//       hydrateDevtoolsRule(match[0]);
-//     }
-//     cache.cache[key] = id; // set cache without triggering side effects
-//     cache.idGenerator.increment(); // increment id
-//   }
-// }
+import {StyleSheet} from "./sheet";
+import hash from "@emotion/hash";
 
 import type {
   StandardEngine,
@@ -46,17 +12,16 @@ import type {
   StyleObject,
 } from "styletron-standard";
 
-import type {cacheT} from "../server/server";
-
 import injectStylePrefixed from "../inject-style-prefixed.js";
 
 import {
-  // keyframesBlockToRule,
+  keyframesBlockToRule,
   declarationsToBlock,
   keyframesToBlock,
-  // fontFaceBlockToRule,
+  fontFaceBlockToRule,
 } from "../css.js";
-//import {hydrateDevtoolsRule} from "../dev-tool.js";
+
+declare var __DEV__: boolean;
 
 type hydrateT =
   | HTMLCollection<HTMLStyleElement>
@@ -69,107 +34,43 @@ type optionsT = {
   prefix?: string,
 };
 
+type cacheT = {
+  [key: string]: string,
+};
+
 class StyletronClient implements StandardEngine {
   container: Element;
+  opts: optionsT;
   styleElements: {[string]: HTMLStyleElement};
   fontFaceSheet: HTMLStyleElement;
   keyframesSheet: HTMLStyleElement;
 
+  styleSheet: StyleSheet;
   styleCache: cacheT;
   keyframesCache: cacheT;
   fontFaceCache: cacheT;
 
   constructor(opts?: optionsT = {}) {
+    this.opts = opts || {};
     this.styleElements = {};
 
-    // const onNewStyle = (cache, id, value) => {
-    //   const {pseudo, block} = value;
-    //   const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
-    //   const selector = atomicSelector(id, pseudo);
-    //   const rule = styleBlockToRule(selector, block);
-    //   try {
-    //     sheet.insertRule(rule, sheet.cssRules.length);
-    //     if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-    //       insertRuleIntoDevtools(selector, block);
-    //     }
-    //   } catch (e) {
-    //     if (__DEV__) {
-    //       // eslint-disable-next-line no-console
-    //       console.warn(
-    //         `Failed to inject CSS: "${rule}". Perhaps this has invalid or un-prefixed properties?`,
-    //       );
-    //     }
-    //   }
-    // };
-
-    // Setup style cache
-    // this.styleCache = new MultiCache(
-    //   styleIdGenerator,
-    //   (media, _cache, insertBeforeMedia) => {
-    //     const styleElement = document.createElement("style");
-    //     styleElement.media = media;
-    //     if (insertBeforeMedia === void 0) {
-    //       this.container.appendChild(styleElement);
-    //     } else {
-    //       const insertBeforeIndex = findSheetIndexWithMedia(
-    //         this.container.children,
-    //         insertBeforeMedia,
-    //       );
-    //       this.container.insertBefore(
-    //         styleElement,
-    //         this.container.children[insertBeforeIndex],
-    //       );
-    //     }
-
-    //     this.styleElements[media] = styleElement;
-    //   },
-    //   onNewStyle,
-    // );
-
-    // this.keyframesCache = new Cache(
-    //   new SequentialIDGenerator(opts.prefix),
-    //   (cache, id, value) => {
-    //     this.styleCache.getCache("");
-    //     const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
-    //     const rule = keyframesBlockToRule(id, keyframesToBlock(value));
-    //     try {
-    //       sheet.insertRule(rule, sheet.cssRules.length);
-    //     } catch (e) {
-    //       if (__DEV__) {
-    //         // eslint-disable-next-line no-console
-    //         console.warn(
-    //           `Failed to inject CSS: "${rule}". Perhaps this has invalid or un-prefixed properties?`,
-    //         );
-    //       }
-    //     }
-    //   },
-    // );
-
-    // this.fontFaceCache = new Cache(
-    //   new SequentialIDGenerator(opts.prefix),
-    //   (cache, id, value) => {
-    //     this.styleCache.getCache("");
-    //     const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
-    //     const rule = fontFaceBlockToRule(id, declarationsToBlock(value));
-    //     try {
-    //       sheet.insertRule(rule, sheet.cssRules.length);
-    //     } catch (e) {
-    //       if (__DEV__) {
-    //         // eslint-disable-next-line no-console
-    //         console.warn(
-    //           `Failed to inject CSS: "${rule}". Perhaps this has invalid or un-prefixed properties?`,
-    //         );
-    //       }
-    //     }
-    //   },
-    // );
+    this.styleCache = {};
+    this.fontFaceCache = {};
+    this.keyframesCache = {};
 
     if (opts.container) {
       this.container = opts.container;
     }
 
-    // Hydrate
-    if (opts.hydrate && opts.hydrate.length > 0) {
+    // hydration
+    if (opts.hydrate && opts.hydrate.length > 1) {
+      if (__DEV__) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          "Client hydration expects only a single style tag from the server. Make sure your server uses styletron-engine-monolithic and not atomic.",
+        );
+      }
+    } else if (opts.hydrate && opts.hydrate.length === 1) {
       // infer container from parent element
       if (!this.container) {
         const parentElement = opts.hydrate[0].parentElement;
@@ -177,25 +78,17 @@ class StyletronClient implements StandardEngine {
           this.container = parentElement;
         }
       }
-
-      for (let i = 0; i < opts.hydrate.length; i++) {
-        const element = opts.hydrate[i];
-        const hydrateType = element.dataset.hydrate;
-        if (hydrateType === "font-face") {
-          //hydrate(this.fontFaceCache, FONT_FACE_HYDRATOR, element.textContent);
-          continue;
-        }
-        if (hydrateType === "keyframes") {
-          //hydrate(this.keyframesCache, KEYFRAMES_HYRDATOR, element.textContent);
-          continue;
-        }
-        const key = element.media ? element.media : "";
-        this.styleElements[key] = element;
-        // const cache = new Cache(styleIdGenerator, onNewStyle);
-        // cache.key = key;
-        // hydrateStyles(cache, STYLES_HYDRATOR, element.textContent);
-        // this.styleCache.sortedCacheKeys.push(key);
-        // this.styleCache.caches[key] = cache;
+      // there is a single style tag coming from the monolithic server
+      const element = opts.hydrate[0];
+      const dataHydrate = element.getAttribute("data-hydrate");
+      if (dataHydrate) {
+        dataHydrate.split(" ").forEach(hashKey => {
+          // cache keys are unique across fonts, keyframes and other css so
+          // we use a single attribute to get them all
+          this.styleCache[hashKey] = "hydrated";
+          this.fontFaceCache[hashKey] = "hydrated";
+          this.keyframesCache[hashKey] = "hydrated";
+        });
       }
     }
 
@@ -205,22 +98,41 @@ class StyletronClient implements StandardEngine {
       }
       this.container = document.head;
     }
+
+    this.styleSheet = new StyleSheet({container: this.container});
   }
 
   renderStyle(style: StyleObject): string {
-    return injectStylePrefixed(this.styleCache, style, "");
+    const className = hash(JSON.stringify(style));
+    if (!this.styleCache[className]) {
+      injectStylePrefixed(this.styleCache, style, this.opts.prefix || "");
+      this.styleSheet.insert(this.styleCache[className]);
+    }
+    return `${this.opts.prefix || ""}css-${className}`;
   }
 
   renderFontFace(fontFace: FontFaceObject): string {
-    const key = declarationsToBlock(fontFace);
-    return key;
-    //return this.fontFaceCache.addValue(key, fontFace);
+    const fontName = hash(JSON.stringify(fontFace));
+    if (!this.fontFaceCache[fontName]) {
+      this.fontFaceCache[fontName] = fontFaceBlockToRule(
+        `${this.opts.prefix || ""}font-${fontName}`,
+        declarationsToBlock(fontFace),
+      );
+      this.styleSheet.insert(this.fontFaceCache[fontName]);
+    }
+    return `${this.opts.prefix || ""}font-${fontName}`;
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {
-    const key = keyframesToBlock(keyframes);
-    return key;
-    //return this.keyframesCache.addValue(key, keyframes);
+    const animationName = hash(JSON.stringify(keyframes));
+    if (!this.keyframesCache[animationName]) {
+      this.keyframesCache[animationName] = keyframesBlockToRule(
+        `${this.opts.prefix || ""}animation-${animationName}`,
+        keyframesToBlock(keyframes),
+      );
+      this.styleSheet.insert(this.keyframesCache[animationName]);
+    }
+    return `${this.opts.prefix || ""}animation-${animationName}`;
   }
 }
 

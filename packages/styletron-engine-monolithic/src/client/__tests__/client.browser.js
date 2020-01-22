@@ -27,7 +27,7 @@ test("automatic stylesheet insertion", t => {
   t.equal(document.styleSheets.length, 0, "sheet not yet instantiated");
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "ae",
+    "css-1qgk86x",
     "new unique class returned",
   );
   t.equal(document.styleSheets.length, 1, "sheet added");
@@ -42,46 +42,57 @@ test("rendering", t => {
   const instance = new StyletronClient({container});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "ae",
+    "css-1qgk86x",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".ae { color: purple; }"]},
+    {media: "", rules: [".css-1qgk86x { color: purple; }"]},
   ]);
   t.equal(
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
     }),
-    "af",
+    "css-1inesgv",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".ae { color: purple; }"]},
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {
+      media: "",
+      rules: [".css-1qgk86x { color: purple; }"],
+    },
+    {
+      media: "",
+      rules: [
+        "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
+      ],
+    },
   ]);
   instance.renderStyle({
     userSelect: "none",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".css-1qgk86x { color: purple; }"]},
     {
       media: "",
-      rules: [".ae { color: purple; }", ".ag { user-select: none; }"],
+      rules: [
+        "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
+      ],
     },
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "", rules: [".css-ubk92s { user-select: none; }"]},
   ]);
   instance.renderStyle({
     display: "flex",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".css-1qgk86x { color: purple; }"]},
     {
       media: "",
       rules: [
-        ".ae { color: purple; }",
-        ".ag { user-select: none; }",
-        ".ah { display: flex; }",
+        "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
       ],
     },
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "", rules: [".css-ubk92s { user-select: none; }"]},
+    {media: "", rules: [".css-1fe3owl { display: flex; }"]},
   ]);
   instance.renderStyle({
     "@media (min-width: 600px)": {
@@ -91,18 +102,23 @@ test("rendering", t => {
   t.deepEqual(
     sheetsToRules(document.styleSheets),
     [
+      {media: "", rules: [".css-1qgk86x { color: purple; }"]},
       {
         media: "",
         rules: [
-          ".ae { color: purple; }",
-          ".ag { user-select: none; }",
-          ".ah { display: flex; }",
+          "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
         ],
       },
-      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
-      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+      {media: "", rules: [".css-ubk92s { user-select: none; }"]},
+      {media: "", rules: [".css-1fe3owl { display: flex; }"]},
+      {
+        media: "",
+        rules: [
+          "@media (min-width: 600px) {\n  .css-1g1gsxb { color: red; }\n}",
+        ],
+      },
     ],
-    "media queries are mobile first sorted",
+    "order of rules is preserved",
   );
   instance.container.remove();
   t.end();
@@ -114,26 +130,29 @@ test("prefix", t => {
   const instance = new StyletronClient({container, prefix: "foo_"});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "foo_ae",
+    "foo_css-1qgk86x",
     "new unique class returned",
   );
   t.equal(
     instance.renderFontFace({src: "url(blah)"}),
-    "foo_ae",
+    "foo_font-t94oac",
     "new unique font family returned",
   );
   t.equal(
     instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
-    "foo_ae",
+    "foo_animation-s5ifmm",
     "new unique animation name returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".foo_css-1qgk86x { color: purple; }"]},
+    {
+      media: "",
+      rules: ['@font-face { font-family: foo_font-t94oac; src: url("blah"); }'],
+    },
     {
       media: "",
       rules: [
-        ".foo_ae { color: purple; }",
-        `@font-face { font-family: foo_ae; src: url("blah"); }`,
-        "@keyframes foo_ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+        "@keyframes foo_animation-s5ifmm { \n  0% { color: red; }\n  100% { color: blue; }\n}",
       ],
     },
   ]);
@@ -169,85 +188,15 @@ test("hydration", t => {
     beforeRules,
     "CSSStylesheet rules not changed after rendering hydrated styles",
   );
-  cleanup();
-  t.end();
-});
-
-test("sort client media queries", t => {
-  const {cleanup, container} = setup();
-
-  const styletron = new StyletronClient({container});
-
-  styletron.renderStyle({
-    "@media (min-width: 700px)": {
-      color: "pink",
-    },
-  });
-
-  t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: []},
-    {media: "(min-width: 700px)", rules: [".ae { color: pink; }"]},
-  ]);
-
-  cleanup();
-  t.end();
-});
-
-test("sort a new media query after hydration", t => {
-  const {getSheets, cleanup, container} = setup();
-
-  // SSR
-  const server = new StyletronServer();
-  injectFixtureStyles(server);
-  container.innerHTML = server.getStylesheetsHtml();
-
-  //Hydration
-  const instance = new StyletronClient({
-    hydrate: getSheets(),
-    container,
-  });
-
-  //render a client-only and unique media query (mid position)
   instance.renderStyle({
-    "@media (min-width: 700px)": {
-      color: "pink",
-    },
+    margin: "10px",
   });
-
-  //render a client-only and unique media query (end position)
-  instance.renderStyle({
-    "@media (min-width: 1000px)": {
-      color: "black",
-    },
-  });
-
-  t.deepEqual(sheetsToRules(document.styleSheets), [
-    {
-      media: "",
-      rules: [
-        "@keyframes ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
-      ],
-    },
-    {media: "", rules: ['@font-face { font-family: ae; src: url("blah"); }']},
-    {
-      media: "",
-      rules: [
-        ".ae { color: red; }",
-        ".af { color: green; }",
-        ".aj:hover { display: none; }",
-        ".ak { user-select: none; }",
-        ".al { display: flex; }",
-      ],
-    },
-    {media: "(min-width: 600px)", rules: [".ah { color: red; }"]},
-    {media: "(min-width: 700px)", rules: [".am { color: pink; }"]},
-    {
-      media: "(min-width: 800px)",
-      rules: [".ag { color: green; }", ".ai:hover { color: green; }"],
-    },
-    {media: "(min-width: 1000px)", rules: [".an { color: black; }"]},
-  ]);
-
+  const afterMarginRules = elementsToRules(getSheets());
+  t.deepEqual(
+    [...afterRules, {media: "", rules: [".css-14bt0hi { margin: 10px; }"]}],
+    afterMarginRules,
+    "CSSStylesheet rules should get a new rule",
+  );
   cleanup();
   t.end();
 });
