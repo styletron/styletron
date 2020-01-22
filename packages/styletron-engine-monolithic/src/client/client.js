@@ -3,7 +3,6 @@
 /* eslint-env browser */
 
 import {StyleSheet} from "./sheet";
-import hash from "@emotion/hash";
 
 import type {
   StandardEngine,
@@ -19,6 +18,7 @@ import {
   declarationsToBlock,
   keyframesToBlock,
   fontFaceBlockToRule,
+  hashCssObject,
 } from "../css.js";
 
 declare var __DEV__: boolean;
@@ -102,17 +102,21 @@ class StyletronClient implements StandardEngine {
     this.styleSheet = new StyleSheet({container: this.container});
   }
 
-  renderStyle(style: StyleObject): string {
-    const className = hash(JSON.stringify(style));
+  renderStyle(styles: StyleObject): string {
+    const className = hashCssObject(styles);
     if (!this.styleCache[className]) {
-      injectStylePrefixed(this.styleCache, style, this.opts.prefix || "");
+      this.styleCache[className] = injectStylePrefixed(
+        styles,
+        className,
+        this.opts.prefix || "",
+      );
       this.styleSheet.insert(this.styleCache[className]);
     }
     return `${this.opts.prefix || ""}css-${className}`;
   }
 
   renderFontFace(fontFace: FontFaceObject): string {
-    const fontName = hash(JSON.stringify(fontFace));
+    const fontName = hashCssObject(fontFace);
     if (!this.fontFaceCache[fontName]) {
       this.fontFaceCache[fontName] = fontFaceBlockToRule(
         `${this.opts.prefix || ""}font-${fontName}`,
@@ -124,7 +128,7 @@ class StyletronClient implements StandardEngine {
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {
-    const animationName = hash(JSON.stringify(keyframes));
+    const animationName = hashCssObject(keyframes);
     if (!this.keyframesCache[animationName]) {
       this.keyframesCache[animationName] = keyframesBlockToRule(
         `${this.opts.prefix || ""}animation-${animationName}`,

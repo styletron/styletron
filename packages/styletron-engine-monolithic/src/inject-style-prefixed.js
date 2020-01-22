@@ -4,12 +4,10 @@ declare var __DEV__: boolean;
 
 import hyphenate from "./hyphenate-style-name.js";
 import {prefix} from "inline-style-prefixer";
-import hash from "@emotion/hash";
 
 import type {StyleObject} from "styletron-standard";
-import type {cacheT} from "./server/server";
 
-function buildCacheInput(
+export default function injectStylePrefixed(
   styles: StyleObject,
   className: string,
   globalPrefix: string,
@@ -50,19 +48,19 @@ function buildCacheInput(
       }
       plainBlock += `${propValPair};`;
     } else if (originalKey[0] === ":") {
-      nestedBlock += `.${globalPrefix}css-${className}${originalKey}{${buildCacheInput(
+      nestedBlock += `.${globalPrefix}css-${className}${originalKey}{${injectStylePrefixed(
         originalVal,
         "",
         globalPrefix,
       )}}`;
     } else if (originalKey[0] === "@") {
-      nestedBlock += `${originalKey}{${buildCacheInput(
+      nestedBlock += `${originalKey}{${injectStylePrefixed(
         originalVal,
         className,
         globalPrefix,
       )}}`;
     } else {
-      nestedBlock += `${originalKey}{${buildCacheInput(
+      nestedBlock += `${originalKey}{${injectStylePrefixed(
         originalVal,
         "",
         globalPrefix,
@@ -77,19 +75,6 @@ function buildCacheInput(
     return nestedBlock;
   }
   return `.${globalPrefix}css-${className}{${plainBlock}}${nestedBlock}`;
-}
-
-export default function injectStylePrefixed(
-  styleCache: cacheT,
-  styles: StyleObject,
-  globalPrefix: string,
-) {
-  // is it already cached?
-  const className = hash(JSON.stringify(styles));
-  if (!styleCache[className]) {
-    styleCache[className] = buildCacheInput(styles, className, globalPrefix);
-  }
-  return `${globalPrefix}css-${className}`;
 }
 
 function validateValueType(value, key) {

@@ -2,8 +2,21 @@
 
 declare var __DEV__: boolean;
 
+import hash from "@emotion/hash";
 import hyphenate from "./hyphenate-style-name.js";
 import validateKeyframesObject from "./validate-keyframes-object.js";
+
+import type {
+  StyleObject,
+  FontFaceObject,
+  KeyframesObject,
+} from "styletron-standard";
+
+export function hashCssObject(
+  cssObject: StyleObject | FontFaceObject | KeyframesObject,
+): string {
+  return hash(JSON.stringify(cssObject));
+}
 
 export function keyframesToBlock(keyframes: {[string]: Object}): string {
   if (__DEV__) {

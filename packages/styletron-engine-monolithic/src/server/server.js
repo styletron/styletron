@@ -1,8 +1,5 @@
 // @flow
 import type {StandardEngine} from "styletron-standard";
-
-import hash from "@emotion/hash";
-
 import injectStylePrefixed from "../inject-style-prefixed.js";
 
 import type {
@@ -16,6 +13,7 @@ import {
   keyframesBlockToRule,
   fontFaceBlockToRule,
   declarationsToBlock,
+  hashCssObject,
 } from "../css";
 
 export type sheetT = {|
@@ -44,12 +42,20 @@ class StyletronServer implements StandardEngine {
     this.keyframesCache = {};
   }
 
-  renderStyle(style: StyleObject): string {
-    return injectStylePrefixed(this.styleCache, style, this.opts.prefix || "");
+  renderStyle(styles: StyleObject): string {
+    const className = hashCssObject(styles);
+    if (!this.styleCache[className]) {
+      this.styleCache[className] = injectStylePrefixed(
+        styles,
+        className,
+        this.opts.prefix || "",
+      );
+    }
+    return `${this.opts.prefix || ""}css-${className}`;
   }
 
   renderFontFace(fontFace: FontFaceObject): string {
-    const fontName = hash(JSON.stringify(fontFace));
+    const fontName = hashCssObject(fontFace);
     if (!this.fontFaceCache[fontName]) {
       this.fontFaceCache[fontName] = fontFaceBlockToRule(
         `${this.opts.prefix || ""}font-${fontName}`,
@@ -60,7 +66,7 @@ class StyletronServer implements StandardEngine {
   }
 
   renderKeyframes(keyframes: KeyframesObject): string {
-    const animationName = hash(JSON.stringify(keyframes));
+    const animationName = hashCssObject(keyframes);
     if (!this.keyframesCache[animationName]) {
       this.keyframesCache[animationName] = keyframesBlockToRule(
         `${this.opts.prefix || ""}animation-${animationName}`,
