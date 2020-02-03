@@ -1,4 +1,4 @@
-/* global require __dirname */
+/* global require __dirname process */
 
 const fs = require("fs").promises;
 const path = require("path");
@@ -53,6 +53,7 @@ async function main() {
       const fixture = path.resolve(FIXTURES, `scenario-${name}.${version}.txt`);
 
       if (process.env.WRITE_FLOW_OUTPUT === "true") {
+        // eslint-disable-next-line no-console
         console.log(`Writing flow error to ${fixture}. No assertion was made.`);
         await fs.writeFile(fixture, message);
         t.end();
@@ -76,6 +77,7 @@ async function main() {
       const fixture = path.resolve(FIXTURES, `fixture-${name}.${version}.txt`);
 
       if (process.env.WRITE_FLOW_OUTPUT === "true") {
+        // eslint-disable-next-line no-console
         console.log(`Writing flow error to ${fixture}. No assertion was made.`);
         await fs.writeFile(fixture, message);
         t.end();
