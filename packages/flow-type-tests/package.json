@@ -9,5 +9,9 @@
   "dependencies": {
     "styletron-react": "^5.2.6",
     "styletron-standard": "^3.0.4"
+  },
+  "devDependencies": {
+    "tape": "^4.9.2",
+    "unitest": "^2.1.1"
   }
 }
