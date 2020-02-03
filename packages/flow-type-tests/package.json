@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.20",
   "license": "MIT",
+  "scripts": {
+    "test": "unitest --node=__tests__/assert-flow-message.node.js"
+  },
   "dependencies": {
     "styletron-react": "^5.2.6",
     "styletron-standard": "^3.0.4"

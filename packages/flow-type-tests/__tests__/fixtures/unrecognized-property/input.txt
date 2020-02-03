@@ -1,0 +1,4 @@
+// @flow
+
+import {styled} from "styletron-react";
+const Foo = styled("div", {invalid: 'property'});
