@@ -105,6 +105,30 @@ test("StyletronServer prefix option", t => {
   t.end();
 });
 
+test("StyletronServer deeply nested rules", t => {
+  const styletron = new Styletron({});
+  t.equal(
+    styletron.renderStyle({
+      "@supports (flex-wrap: wrap)": {
+        "@media (min-width: 50em)": {
+          ":hover": {
+            background: "blue",
+          },
+        },
+      },
+    }),
+    "css-1b78i0g",
+  );
+  t.deepEqual(styletron.getStylesheets(), [
+    {
+      css:
+        "@supports (flex-wrap: wrap){@media (min-width: 50em){.css-1b78i0g:hover{background:blue;}}}",
+      attrs: {"data-hydrate": "1b78i0g"},
+    },
+  ]);
+  t.end();
+});
+
 function injectFixtureStyles(styletron) {
   styletron.renderStyle({
     color: "red",

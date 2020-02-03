@@ -201,6 +201,34 @@ test("hydration", t => {
   t.end();
 });
 
+test("StyletronClient deeply nested rules", t => {
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container});
+  t.equal(
+    instance.renderStyle({
+      "@supports (flex-wrap: wrap)": {
+        "@media (min-width: 50em)": {
+          ":hover": {
+            background: "blue",
+          },
+        },
+      },
+    }),
+    "css-1b78i0g",
+  );
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-1b78i0g:hover { background: blue; }\n}\n}",
+      ],
+    },
+  ]);
+  instance.container.remove();
+  t.end();
+});
+
 function injectFixtureStyles(styletron) {
   styletron.renderStyle({color: "red"});
   styletron.renderStyle({color: "green"});
