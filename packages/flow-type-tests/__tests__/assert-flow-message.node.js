@@ -47,7 +47,7 @@ async function main() {
   const scenarios = await fs.readdir(SCENARIOS);
   scenarios.forEach(filename => {
     const [name] = filename.split(".");
-    test(name, async t => {
+    test(`${name}.${version}`, async t => {
       const raw = await fs.readFile(path.resolve(SCENARIOS, filename), "utf8");
       const message = await flowCheck(raw, name);
       const fixture = path.resolve(FIXTURES, `scenario-${name}.${version}.txt`);
@@ -70,7 +70,7 @@ async function main() {
     const [name, extension] = filename.split(".");
     if (extension !== "js") return;
 
-    test(name, async t => {
+    test(`${name}.${version}`, async t => {
       const raw = await fs.readFile(path.resolve(SOURCES, filename), "utf8");
       const unsuppressed = raw.replace(/\/\/ \$FlowFixMe/gm, "");
       const message = await flowCheck(unsuppressed, name);
