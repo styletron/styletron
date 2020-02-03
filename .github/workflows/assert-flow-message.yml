@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        flow-version: [0.110.0, 0.111.3, 0.112.0, 0.113.0, 0.115.0, 0.116.1, 0.117]
+        flow-version: [0.110.0, 0.111.3, 0.112.0, 0.113.0, 0.115.0, 0.116.1, 0.117.0]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -15,5 +15,5 @@ jobs:
         node-version: 10.x
     - run: yarn install
     - run: yarn bootstrap
-    - run: yarn add ${{ matrix.flow-version }}
+    - run: yarn add flow-bin ${{ matrix.flow-version }}
     - run: yarn lerna run --scope flow-type-tests test
