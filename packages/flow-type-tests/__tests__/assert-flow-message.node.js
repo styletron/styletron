@@ -5,13 +5,11 @@ const path = require("path");
 const {spawn} = require("child_process");
 const test = require("tape");
 
-const FIXTURES_DIR = path.resolve(__dirname, "./fixtures");
+const SOURCES = path.resolve(__dirname, "..");
+const FIXTURES = path.resolve(__dirname, "./fixtures");
+const SCENARIOS = path.resolve(__dirname, "./scenarios");
 const PROJECT_ROOT = path.resolve(__dirname, "../../../");
 const FLOW = path.resolve(PROJECT_ROOT, "node_modules/.bin/flow");
-
-function buildFixturePath(fixture, name) {
-  return path.resolve(FIXTURES_DIR, fixture, name);
-}
 
 function flowVersion() {
   return new Promise(res => {
@@ -26,54 +24,67 @@ function flowVersion() {
   });
 }
 
-async function flowError(fixture) {
+function flowCheck(src, name) {
   return new Promise(async res => {
-    const root = buildFixturePath(fixture, "input");
-    const src = await fs.readFile(`${root}.txt`, "utf8");
-    const jsFilepath = `${root}.js`;
-    await fs.writeFile(jsFilepath, src);
+    const filepath = path.resolve(FIXTURES, `${name}.js`);
+    await fs.writeFile(filepath, src);
 
-    const flow = spawn(FLOW, ["focus-check", jsFilepath], {cwd: PROJECT_ROOT});
+    const flow = spawn(FLOW, ["focus-check", filepath], {cwd: PROJECT_ROOT});
     let message = "";
     flow.stdout.on("data", data => {
       message += String(data);
     });
 
     flow.on("close", async () => {
-      await fs.unlink(jsFilepath);
+      await fs.unlink(filepath);
       res(message);
     });
   });
 }
 
-function compare(fixture) {
-  test(fixture, async t => {
-    const version = await flowVersion();
-    const actual = await flowError(fixture);
-
-    const outputFilepath = buildFixturePath(fixture, `output.${version}.txt`);
-    if (process.env.WRITE_FLOW_OUTPUT === "true") {
-      console.log(`Writing error to ${outputFilepath}. No assertion was made.`);
-      await fs.writeFile(outputFilepath, actual);
-    } else {
-      try {
-        const expected = await fs.readFile(outputFilepath, "utf8");
-        t.equal(actual, expected);
-      } catch (e) {
-        console.error(e);
-        t.fail(`
-          Failed to read from ${outputFilepath}.
-          Either create that file with expected flow error message or run tests with WRITE_FLOW_OUTPUT=true.
-        `);
-      }
-    }
-
-    t.end();
-  });
-}
-
 async function main() {
-  const fixtures = await fs.readdir(FIXTURES_DIR);
-  fixtures.forEach(compare);
+  const version = await flowVersion();
+  const scenarios = await fs.readdir(SCENARIOS);
+  scenarios.forEach(filename => {
+    const [name] = filename.split(".");
+    test(name, async t => {
+      const raw = await fs.readFile(path.resolve(SCENARIOS, filename), "utf8");
+      const message = await flowCheck(raw, name);
+      const fixture = path.resolve(FIXTURES, `scenario-${name}.${version}.txt`);
+
+      if (process.env.WRITE_FLOW_OUTPUT === "true") {
+        console.log(`Writing flow error to ${fixture}. No assertion was made.`);
+        await fs.writeFile(fixture, message);
+        t.end();
+      } else {
+        const expected = await fs.readFile(fixture, "utf8");
+        t.equal(message, expected);
+        t.end();
+      }
+    });
+  });
+
+  const sources = await fs.readdir(SOURCES);
+  sources.forEach(filename => {
+    const [name, extension] = filename.split(".");
+    if (extension !== "js") return;
+
+    test(name, async t => {
+      const raw = await fs.readFile(path.resolve(SOURCES, filename), "utf8");
+      const unsuppressed = raw.replace(/\/\/ \$FlowFixMe/gm, "");
+      const message = await flowCheck(unsuppressed, name);
+      const fixture = path.resolve(FIXTURES, `fixture-${name}.${version}.txt`);
+
+      if (process.env.WRITE_FLOW_OUTPUT === "true") {
+        console.log(`Writing flow error to ${fixture}. No assertion was made.`);
+        await fs.writeFile(fixture, message);
+        t.end();
+      } else {
+        const expected = await fs.readFile(fixture, "utf8");
+        t.equal(message, expected);
+        t.end();
+      }
+    });
+  });
 }
 main();

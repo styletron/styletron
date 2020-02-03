@@ -1,13 +1,13 @@
-Error ---------------------------------- packages/flow-type-tests/__tests__/fixtures/unrecognized-property/input.js:4:13
+Error ---------------------------------------- packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:13
 
 Cannot call `styled` because string [1] is incompatible with `$Shape` of `StyleObject` [2] in property `invalid`.
 
-   packages/flow-type-tests/__tests__/fixtures/unrecognized-property/input.js:4:13
+   packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:13
     4| const Foo = styled("div", {invalid: 'property'});
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 References:
-   packages/flow-type-tests/__tests__/fixtures/unrecognized-property/input.js:4:37
+   packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:37
     4| const Foo = styled("div", {invalid: 'property'});
                                            ^^^^^^^^^^ [1]
    packages/styletron-standard/src/index.js:22:13
