@@ -1,8 +1,6 @@
 name: Assert flow message
 
-on:
-  pull_request:
-  push:
+on: [pull_request, push]
 
 jobs:
   test:
@@ -15,6 +13,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 10.x
+    - run: yarn install
     - run: yarn bootstrap
     - run: yarn add ${{ matrix.flow-version }}
     - run: yarn lerna run --scope flow-type-tests test
