@@ -15,5 +15,5 @@ jobs:
         node-version: 10.x
     - run: yarn install
     - run: yarn bootstrap
-    - run: yarn add flow-bin ${{ matrix.flow-version }}
+    - run: yarn add flow-bin@${{ matrix.flow-version }}
     - run: yarn lerna run --scope flow-type-tests test
