@@ -35,7 +35,7 @@ type optionsT = {
 };
 
 type cacheT = {
-  [key: string]: string,
+  [key: string]: boolean,
 };
 
 class StyletronClient implements StandardEngine {
@@ -82,9 +82,9 @@ class StyletronClient implements StandardEngine {
         dataHydrate.split(" ").forEach(hashKey => {
           // cache keys are unique across fonts, keyframes and other css so
           // we use a single attribute to get them all
-          this.styleCache[hashKey] = "hydrated";
-          this.fontFaceCache[hashKey] = "hydrated";
-          this.keyframesCache[hashKey] = "hydrated";
+          this.styleCache[hashKey] = true;
+          this.fontFaceCache[hashKey] = true;
+          this.keyframesCache[hashKey] = true;
         });
       }
     }
@@ -102,12 +102,10 @@ class StyletronClient implements StandardEngine {
   renderStyle(styles: StyleObject): string {
     const className = hashCssObject(styles);
     if (!this.styleCache[className]) {
-      this.styleCache[className] = injectStylePrefixed(
-        styles,
-        className,
-        this.opts.prefix || "",
+      this.styleCache[className] = true;
+      this.styleSheet.insert(
+        injectStylePrefixed(styles, className, this.opts.prefix || ""),
       );
-      this.styleSheet.insert(this.styleCache[className]);
     }
     return `${this.opts.prefix || ""}css-${className}`;
   }
@@ -115,11 +113,13 @@ class StyletronClient implements StandardEngine {
   renderFontFace(fontFace: FontFaceObject): string {
     const fontName = hashCssObject(fontFace);
     if (!this.fontFaceCache[fontName]) {
-      this.fontFaceCache[fontName] = fontFaceBlockToRule(
-        `${this.opts.prefix || ""}font-${fontName}`,
-        declarationsToBlock(fontFace),
-      );
-      this.styleSheet.insert(this.fontFaceCache[fontName]);
+      this.fontFaceCache[fontName] = true;
+      this.styleSheet.insert([
+        fontFaceBlockToRule(
+          `${this.opts.prefix || ""}font-${fontName}`,
+          declarationsToBlock(fontFace),
+        ),
+      ]);
     }
     return `${this.opts.prefix || ""}font-${fontName}`;
   }
@@ -127,11 +127,13 @@ class StyletronClient implements StandardEngine {
   renderKeyframes(keyframes: KeyframesObject): string {
     const animationName = hashCssObject(keyframes);
     if (!this.keyframesCache[animationName]) {
-      this.keyframesCache[animationName] = keyframesBlockToRule(
-        `${this.opts.prefix || ""}animation-${animationName}`,
-        keyframesToBlock(keyframes),
-      );
-      this.styleSheet.insert(this.keyframesCache[animationName]);
+      this.keyframesCache[animationName] = true;
+      this.styleSheet.insert([
+        keyframesBlockToRule(
+          `${this.opts.prefix || ""}animation-${animationName}`,
+          keyframesToBlock(keyframes),
+        ),
+      ]);
     }
     return `${this.opts.prefix || ""}animation-${animationName}`;
   }

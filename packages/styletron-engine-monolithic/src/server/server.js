@@ -49,7 +49,7 @@ class StyletronServer implements StandardEngine {
         styles,
         className,
         this.opts.prefix || "",
-      );
+      ).join("");
     }
     return `${this.opts.prefix || ""}css-${className}`;
   }
