@@ -16,6 +16,7 @@ jobs:
         node-version: 10.x
     - run: yarn install
     - run: yarn bootstrap
+    - run: yarn build
     - run: yarn add -DW flow-bin@${{ matrix.flow-version }}
     - run: yarn lerna run --scope flow-type-tests test
     - uses: actions/upload-artifact@v1
