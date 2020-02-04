@@ -52,14 +52,14 @@ async function main() {
       const message = await flowCheck(raw, name);
       const fixture = path.resolve(FIXTURES, `scenario-${name}.${version}.txt`);
 
-      if (process.env.WRITE_FLOW_OUTPUT === "true") {
-        // eslint-disable-next-line no-console
-        console.log(`Writing flow error to ${fixture}. No assertion was made.`);
-        await fs.writeFile(fixture, message);
-        t.end();
-      } else {
+      try {
         const expected = await fs.readFile(fixture, "utf8");
         t.equal(message, expected);
+        t.end();
+      } catch (error) {
+        console.log(`Unable to read fixture ${fixture}. Generating fixture.`);
+        await fs.writeFile(fixture, message);
+        t.fail();
         t.end();
       }
     });
@@ -76,14 +76,14 @@ async function main() {
       const message = await flowCheck(unsuppressed, name);
       const fixture = path.resolve(FIXTURES, `fixture-${name}.${version}.txt`);
 
-      if (process.env.WRITE_FLOW_OUTPUT === "true") {
-        // eslint-disable-next-line no-console
-        console.log(`Writing flow error to ${fixture}. No assertion was made.`);
-        await fs.writeFile(fixture, message);
-        t.end();
-      } else {
+      try {
         const expected = await fs.readFile(fixture, "utf8");
         t.equal(message, expected);
+        t.end();
+      } catch (error) {
+        console.log(`Unable to read fixture ${fixture}. Generating fixture.`);
+        await fs.writeFile(fixture, message);
+        t.fail();
         t.end();
       }
     });
