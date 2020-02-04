@@ -1,0 +1,131 @@
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:15:1
+
+Cannot create `Qux` element because property `foo` is missing in props [1] but exists in object type [2].
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:15:1
+   15| <Qux bar="bar" baz="baz" qux="qux" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:7:20
+    7| const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                          ^^^^^^^^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:17:1
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:17:1
+   17| <Qux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:17:10
+   17| <Qux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:7:26
+    7| const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                ^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:19:1
+
+Cannot create `Qux` element because property `bar` (did you mean `baz`?) is missing in props [1] but exists in object
+type [2].
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:19:1
+   19| <Qux foo="foo" baz="baz" qux="qux" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:10:37
+   10| const Bar = withStyle(Foo, (_props: {bar: "bar"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:21:1
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:21:1
+   21| <Qux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:21:20
+   21| <Qux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:10:43
+   10| const Bar = withStyle(Foo, (_props: {bar: "bar"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:23:1
+
+Cannot create `Qux` element because property `baz` (did you mean `bar`?) is missing in props [1] but exists in object
+type [2].
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:23:1
+   23| <Qux foo="foo" bar="bar" qux="qux" />; // Missing baz
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:11:37
+   11| const Baz = withStyle(Bar, (_props: {baz: "baz"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:25:1
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `baz` [2] in property `baz`.
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:25:1
+   25| <Qux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:25:30
+   25| <Qux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+                                    ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:11:43
+   11| const Baz = withStyle(Bar, (_props: {baz: "baz"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:27:1
+
+Cannot create `Qux` element because property `qux` is missing in props [1] but exists in object type [2].
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:27:1
+   27| <Qux foo="foo" bar="bar" baz="baz" />; // Missing qux
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:12:37
+   12| const Qux = withStyle(Baz, (_props: {qux: "qux"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error --------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:29:1
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `qux` [2] in property `qux`.
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:29:1
+   29| <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:29:40
+   29| <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+                                              ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-deep-composition-no-usage.js:12:43
+   12| const Qux = withStyle(Baz, (_props: {qux: "qux"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+
+Found 8 errors
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches
