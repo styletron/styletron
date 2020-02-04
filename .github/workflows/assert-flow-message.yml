@@ -18,6 +18,7 @@ jobs:
     - run: yarn add -DW flow-bin@${{ matrix.flow-version }}
     - run: yarn lerna run --scope flow-type-tests test
     - uses: actions/upload-artifact@v1
+      if: failure()
       with:
         name: flow-error-message-fixtures
         path: packages/flow-type-tests/__tests__/fixtures
