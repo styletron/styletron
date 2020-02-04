@@ -6,6 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         flow-version: [0.110.0, 0.111.3, 0.112.0, 0.113.0, 0.115.0, 0.116.1, 0.117.0]
     steps:

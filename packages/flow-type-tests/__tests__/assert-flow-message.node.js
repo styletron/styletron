@@ -1,4 +1,4 @@
-/* global require __dirname process */
+/* global require __dirname */
 
 const fs = require("fs").promises;
 const path = require("path");
@@ -57,6 +57,7 @@ async function main() {
         t.equal(message, expected);
         t.end();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(`Unable to read fixture ${fixture}. Generating fixture.`);
         await fs.writeFile(fixture, message);
         t.fail();
@@ -81,6 +82,7 @@ async function main() {
         t.equal(message, expected);
         t.end();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(`Unable to read fixture ${fixture}. Generating fixture.`);
         await fs.writeFile(fixture, message);
         t.fail();
