@@ -1,0 +1,36 @@
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-static.js:23:1
+
+Cannot create `Bar` element because property `bar` is missing in props [1] but exists in object type [2].
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-static.js:23:1
+   23| <Bar />; // Missing bar
+       ^^^^^^^ [1]
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-static.js:20:37
+   20| const Bar = withStyle(Foo, (_props: {bar: "bar"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-static.js:26:1
+
+Cannot create `Bar` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-static.js:26:1
+   26| <Bar bar="notbar" />; // Wrong bar
+       ^^^^^^^^^^^^^^^^^^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-static.js:26:10
+   26| <Bar bar="notbar" />; // Wrong bar
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-static.js:20:43
+   20| const Bar = withStyle(Foo, (_props: {bar: "bar"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+
+Found 2 errors
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches
