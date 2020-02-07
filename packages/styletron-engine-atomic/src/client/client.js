@@ -185,7 +185,7 @@ class StyletronClient implements StandardEngine {
 
       for (let i = 0; i < opts.hydrate.length; i++) {
         const element = opts.hydrate[i];
-        const hydrateType = element.dataset.hydrate;
+        const hydrateType = element.getAttribute("data-hydrate");
         if (hydrateType === "font-face") {
           hydrate(this.fontFaceCache, FONT_FACE_HYDRATOR, element.textContent);
           continue;
