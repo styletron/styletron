@@ -30,7 +30,6 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "@emotion/hash": "^0.7.4",
     "inline-style-prefixer": "^5.1.0",
     "styletron-standard": "^3.0.4"
   },

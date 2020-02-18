@@ -9,22 +9,22 @@ test("StyletronServer toCss", t => {
   injectFixtureStyles(styletron);
   t.equal(
     styletron.getCss(),
-    ".css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+    ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
   );
   injectFixtureStyles(styletron);
   t.equal(
     styletron.getCss(),
-    ".css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+    ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
   );
   injectFixtureKeyframes(styletron);
   t.equal(
     styletron.getCss(),
-    "@keyframes animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+    "@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
   );
   injectFixtureFontFace(styletron);
   t.equal(
     styletron.getCss(),
-    "@font-face{font-family:font-1iyw4wu;src:local('Roboto')}@keyframes animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+    "@font-face{font-family:font-WNyjs;src:local('Roboto')}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
   );
   t.end();
 });
@@ -40,25 +40,25 @@ test("StyletronServer getStylesheets", t => {
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        ".css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
-      attrs: {"data-hydrate": "fw0pf 1d8ny0s 60fc11 ubk92s"},
+        ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+      attrs: {"data-hydrate": "gMxcYW PKJb ihRfbR eaGfYw"},
     },
   ]);
   injectFixtureKeyframes(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@keyframes animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
-      attrs: {"data-hydrate": "89735a fw0pf 1d8ny0s 60fc11 ubk92s"},
+        "@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+      attrs: {"data-hydrate": "blGUxF gMxcYW PKJb ihRfbR eaGfYw"},
     },
   ]);
   injectFixtureFontFace(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@font-face{font-family:font-1iyw4wu;src:local('Roboto')}@keyframes animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+        "@font-face{font-family:font-WNyjs;src:local('Roboto')}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
       attrs: {
-        "data-hydrate": "1iyw4wu 89735a fw0pf 1d8ny0s 60fc11 ubk92s",
+        "data-hydrate": "WNyjs blGUxF gMxcYW PKJb ihRfbR eaGfYw",
       },
     },
   ]);
@@ -75,31 +75,31 @@ test("StyletronServer getStylesheetsHtml ", t => {
   injectFixtureStyles(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_" data-hydrate="fw0pf 1d8ny0s 60fc11 ubk92s">.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
+    '<style class="_styletron_hydrate_" data-hydrate="gMxcYW PKJb ihRfbR eaGfYw">.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
   );
   injectFixtureKeyframes(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_" data-hydrate="89735a fw0pf 1d8ny0s 60fc11 ubk92s">@keyframes animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
+    '<style class="_styletron_hydrate_" data-hydrate="blGUxF gMxcYW PKJb ihRfbR eaGfYw">@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
   );
   injectFixtureFontFace(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_" data-hydrate="1iyw4wu 89735a fw0pf 1d8ny0s 60fc11 ubk92s">@font-face{font-family:font-1iyw4wu;src:local(\'Roboto\')}@keyframes animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.css-fw0pf{color:red;border:1px solid black;}.css-fw0pf:hover{color:green;}@media (min-width: 200px){.css-fw0pf{color:hotpink;}.css-fw0pf:hover{color:red;}}@media (min-width: 400px){.css-fw0pf{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-ubk92s{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
+    '<style class="_styletron_hydrate_" data-hydrate="WNyjs blGUxF gMxcYW PKJb ihRfbR eaGfYw">@font-face{font-family:font-WNyjs;src:local(\'Roboto\')}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
   );
   t.end();
 });
 
 test("StyletronServer prefix option", t => {
   const styletron = new Styletron({prefix: "foo_"});
-  t.equal(styletron.renderStyle({color: "red"}), "foo_css-1gao8uk");
-  t.equal(injectFixtureFontFace(styletron), "foo_font-1iyw4wu");
-  t.equal(injectFixtureKeyframes(styletron), "foo_animation-89735a");
+  t.equal(styletron.renderStyle({color: "red"}), "foo_css-jZABor");
+  t.equal(injectFixtureFontFace(styletron), "foo_font-WNyjs");
+  t.equal(injectFixtureKeyframes(styletron), "foo_animation-blGUxF");
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@font-face{font-family:foo_font-1iyw4wu;src:local('Roboto')}@keyframes foo_animation-89735a{from{color:purple}50%{color:yellow}to{color:orange}}.foo_css-1gao8uk{color:red;}",
-      attrs: {"data-hydrate": "1iyw4wu 89735a 1gao8uk"},
+        "@font-face{font-family:foo_font-WNyjs;src:local('Roboto')}@keyframes foo_animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.foo_css-jZABor{color:red;}",
+      attrs: {"data-hydrate": "WNyjs blGUxF jZABor"},
     },
   ]);
   t.end();
@@ -117,13 +117,13 @@ test("StyletronServer deeply nested rules", t => {
         },
       },
     }),
-    "css-1b78i0g",
+    "css-gPyDTX",
   );
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@supports (flex-wrap: wrap){@media (min-width: 50em){.css-1b78i0g:hover{background:blue;}}}",
-      attrs: {"data-hydrate": "1b78i0g"},
+        "@supports (flex-wrap: wrap){@media (min-width: 50em){.css-gPyDTX:hover{background:blue;}}}",
+      attrs: {"data-hydrate": "gPyDTX"},
     },
   ]);
   t.end();

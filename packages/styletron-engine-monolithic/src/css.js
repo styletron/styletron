@@ -2,9 +2,10 @@
 
 declare var __DEV__: boolean;
 
-import hash from "@emotion/hash";
 import hyphenate from "./hyphenate-style-name.js";
 import validateKeyframesObject from "./validate-keyframes-object.js";
+import generateAlphabeticName from "./generate-alphabetic-name";
+import {hash} from "./hash";
 
 import type {
   StyleObject,
@@ -15,7 +16,7 @@ import type {
 export function hashCssObject(
   cssObject: StyleObject | FontFaceObject | KeyframesObject,
 ): string {
-  return hash(JSON.stringify(cssObject));
+  return generateAlphabeticName(hash(JSON.stringify(cssObject)));
 }
 
 export function keyframesToBlock(keyframes: {[string]: Object}): string {

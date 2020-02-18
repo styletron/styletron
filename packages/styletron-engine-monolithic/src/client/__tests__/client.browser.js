@@ -27,7 +27,7 @@ test("automatic stylesheet insertion", t => {
   t.equal(document.styleSheets.length, 0, "sheet not yet instantiated");
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "css-1qgk86x",
+    "css-hZftBk",
     "new unique class returned",
   );
   t.equal(document.styleSheets.length, 1, "sheet added");
@@ -42,28 +42,28 @@ test("rendering", t => {
   const instance = new StyletronClient({container});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "css-1qgk86x",
+    "css-hZftBk",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".css-1qgk86x { color: purple; }"]},
+    {media: "", rules: [".css-hZftBk { color: purple; }"]},
   ]);
   t.equal(
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
     }),
-    "css-1inesgv",
+    "css-hrykRm",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
-      rules: [".css-1qgk86x { color: purple; }"],
+      rules: [".css-hZftBk { color: purple; }"],
     },
     {
       media: "",
       rules: [
-        "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
+        "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
       ],
     },
   ]);
@@ -71,28 +71,28 @@ test("rendering", t => {
     userSelect: "none",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".css-1qgk86x { color: purple; }"]},
+    {media: "", rules: [".css-hZftBk { color: purple; }"]},
     {
       media: "",
       rules: [
-        "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
+        "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
       ],
     },
-    {media: "", rules: [".css-ubk92s { user-select: none; }"]},
+    {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
   ]);
   instance.renderStyle({
     display: "flex",
   });
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".css-1qgk86x { color: purple; }"]},
+    {media: "", rules: [".css-hZftBk { color: purple; }"]},
     {
       media: "",
       rules: [
-        "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
+        "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
       ],
     },
-    {media: "", rules: [".css-ubk92s { user-select: none; }"]},
-    {media: "", rules: [".css-1fe3owl { display: flex; }"]},
+    {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
+    {media: "", rules: [".css-haOmqK { display: flex; }"]},
   ]);
   instance.renderStyle({
     "@media (min-width: 600px)": {
@@ -102,19 +102,19 @@ test("rendering", t => {
   t.deepEqual(
     sheetsToRules(document.styleSheets),
     [
-      {media: "", rules: [".css-1qgk86x { color: purple; }"]},
+      {media: "", rules: [".css-hZftBk { color: purple; }"]},
       {
         media: "",
         rules: [
-          "@media (min-width: 800px) {\n  .css-1inesgv { color: purple; }\n}",
+          "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
         ],
       },
-      {media: "", rules: [".css-ubk92s { user-select: none; }"]},
-      {media: "", rules: [".css-1fe3owl { display: flex; }"]},
+      {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
+      {media: "", rules: [".css-haOmqK { display: flex; }"]},
       {
         media: "",
         rules: [
-          "@media (min-width: 600px) {\n  .css-1g1gsxb { color: red; }\n}",
+          "@media (min-width: 600px) {\n  .css-bWjoTf { color: red; }\n}",
         ],
       },
     ],
@@ -130,29 +130,29 @@ test("prefix", t => {
   const instance = new StyletronClient({container, prefix: "foo_"});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "foo_css-1qgk86x",
+    "foo_css-hZftBk",
     "new unique class returned",
   );
   t.equal(
     instance.renderFontFace({src: "url(blah)"}),
-    "foo_font-t94oac",
+    "foo_font-lfxDGs",
     "new unique font family returned",
   );
   t.equal(
     instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
-    "foo_animation-s5ifmm",
+    "foo_animation-cmOXrn",
     "new unique animation name returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".foo_css-1qgk86x { color: purple; }"]},
+    {media: "", rules: [".foo_css-hZftBk { color: purple; }"]},
     {
       media: "",
-      rules: ['@font-face { font-family: foo_font-t94oac; src: url("blah"); }'],
+      rules: ['@font-face { font-family: foo_font-lfxDGs; src: url("blah"); }'],
     },
     {
       media: "",
       rules: [
-        "@keyframes foo_animation-s5ifmm { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+        "@keyframes foo_animation-cmOXrn { \n  0% { color: red; }\n  100% { color: blue; }\n}",
       ],
     },
   ]);
@@ -193,7 +193,7 @@ test("hydration", t => {
   });
   const afterMarginRules = elementsToRules(getSheets());
   t.deepEqual(
-    [...afterRules, {media: "", rules: [".css-14bt0hi { margin: 10px; }"]}],
+    [...afterRules, {media: "", rules: [".css-iMIAew { margin: 10px; }"]}],
     afterMarginRules,
     "CSSStylesheet rules should get a new rule",
   );
@@ -215,13 +215,13 @@ test("StyletronClient deeply nested rules", t => {
         },
       },
     }),
-    "css-1b78i0g",
+    "css-gPyDTX",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
       rules: [
-        "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-1b78i0g:hover { background: blue; }\n}\n}",
+        "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-gPyDTX:hover { background: blue; }\n}\n}",
       ],
     },
   ]);

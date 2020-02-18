@@ -9214,6 +9214,15 @@ styled-jsx@3.2.2:
     stylis "3.5.4"
     stylis-rule-sheet "0.0.10"
 
+styletron-engine-monolithic@^0.0.1:
+  version "0.0.1"
+  resolved "https://unpm.uberinternal.com/styletron-engine-monolithic/-/styletron-engine-monolithic-0.0.1.tgz#46eb7a1fe7c74505a84f7a80c27fc47f6506609f"
+  integrity sha1-Rut6H+fHRQWoT3qAwn/Ef2UGYJ8=
+  dependencies:
+    "@emotion/hash" "^0.7.4"
+    inline-style-prefixer "^5.1.0"
+    styletron-standard "^3.0.4"
+
 stylis-rule-sheet@0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
