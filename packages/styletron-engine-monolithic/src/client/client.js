@@ -32,6 +32,7 @@ type optionsT = {
   hydrate?: hydrateT,
   container?: Element,
   prefix?: string,
+  strict?: boolean,
 };
 
 type cacheT = {
@@ -95,7 +96,12 @@ class StyletronClient implements StandardEngine {
     if (!this.cache[className]) {
       this.cache[className] = true;
       this.styleSheet.insert(
-        injectStylePrefixed(styles, className, this.opts.prefix || ""),
+        injectStylePrefixed(
+          styles,
+          className,
+          this.opts.prefix || "",
+          Boolean(this.opts.strict),
+        ),
       );
     }
     return `${this.opts.prefix || ""}css-${className}`;

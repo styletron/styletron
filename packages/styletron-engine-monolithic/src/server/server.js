@@ -23,6 +23,7 @@ export type sheetT = {|
 
 export type optionsT = {
   prefix?: string,
+  strict?: boolean,
 };
 
 export type cacheT = {
@@ -45,6 +46,7 @@ class StyletronServer implements StandardEngine {
         styles,
         className,
         this.opts.prefix || "",
+        Boolean(this.opts.strict),
       ).join("");
     }
     return `${this.opts.prefix || ""}css-${className}`;

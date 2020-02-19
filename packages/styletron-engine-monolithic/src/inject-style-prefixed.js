@@ -3,6 +3,7 @@
 declare var __DEV__: boolean;
 
 import hyphenate from "./hyphenate-style-name.js";
+import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
 import {prefix} from "inline-style-prefixer";
 
 import type {StyleObject} from "styletron-standard";
@@ -11,6 +12,7 @@ export default function injectStylePrefixed(
   styles: StyleObject,
   className: string,
   globalPrefix: string,
+  strict: boolean,
 ) {
   const outputRules = [];
   let plainBlock = "";
@@ -53,6 +55,7 @@ export default function injectStylePrefixed(
           originalVal,
           "",
           globalPrefix,
+          strict,
         ).join("")}}`,
       );
     } else if (originalKey[0] === "@") {
@@ -61,6 +64,7 @@ export default function injectStylePrefixed(
           originalVal,
           className,
           globalPrefix,
+          strict,
         ).join("")}}`,
       );
     } else {
@@ -69,8 +73,23 @@ export default function injectStylePrefixed(
           originalVal,
           "",
           globalPrefix,
+          strict,
         ).join("")}}`,
       );
+    }
+  }
+  // strict mode checks for mixed long/shorthands to keep compatibility with atomic engine
+  if (strict && __DEV__) {
+    const conflicts = validateNoMixedHand(styles);
+    if (conflicts.length) {
+      conflicts.forEach(({shorthand, longhand}) => {
+        const short = JSON.stringify({[shorthand.property]: shorthand.value});
+        const long = JSON.stringify({[longhand.property]: longhand.value});
+        // eslint-disable-next-line no-console
+        console.warn(
+          `Styles \`${short}\` and \`${long}\` in object yielding class "${className}" may result in unexpected behavior. Mixing shorthand and longhand properties within the same style object is unsupported with atomic rendering.`,
+        );
+      });
     }
   }
   // we are inside of a pseudo-selector
