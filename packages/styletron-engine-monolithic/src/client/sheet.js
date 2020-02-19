@@ -85,27 +85,9 @@ export class StyleSheet {
       const sheet = sheetForTag(tag);
       rules.forEach(rule => {
         try {
-          // this is a really hot path
-          // we check the second character first because having "i"
-          // as the second character will happen less often than
-          // having "@" as the first character
-          const isImportRule =
-            rule.charCodeAt(1) === 105 && rule.charCodeAt(0) === 64;
           // this is the ultrafast version, works across browsers
           // the big drawback is that the css won't be editable in devtools
-          sheet.insertRule(
-            rule,
-            // we need to insert @import rules before anything else
-            // otherwise there will be an error
-            // technically this means that the @import rules will
-            // _usually_(not always since there could be multiple style tags)
-            // be the first ones in prod and generally later in dev
-            // this shouldn't really matter in the real world though
-            // @import is generally only used for font faces from google fonts and etc.
-            // so while this could be technically correct then it would be slower and larger
-            // for a tiny bit of correctness that won't matter in the real world
-            isImportRule ? 0 : sheet.cssRules.length,
-          );
+          sheet.insertRule(rule, sheet.cssRules.length);
         } catch (e) {
           if (__DEV__) {
             // eslint-disable-next-line no-console
