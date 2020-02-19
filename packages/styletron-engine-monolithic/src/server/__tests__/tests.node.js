@@ -19,12 +19,12 @@ test("StyletronServer toCss", t => {
   injectFixtureKeyframes(styletron);
   t.equal(
     styletron.getCss(),
-    "@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+    ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
   );
   injectFixtureFontFace(styletron);
   t.equal(
     styletron.getCss(),
-    "@font-face{font-family:font-WNyjs;src:local('Roboto')}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+    ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}@font-face{font-family:font-WNyjs;src:local('Roboto')}",
   );
   t.end();
 });
@@ -48,17 +48,17 @@ test("StyletronServer getStylesheets", t => {
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
-      attrs: {"data-hydrate": "blGUxF gMxcYW PKJb ihRfbR eaGfYw"},
+        ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
+      attrs: {"data-hydrate": "gMxcYW PKJb ihRfbR eaGfYw blGUxF"},
     },
   ]);
   injectFixtureFontFace(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@font-face{font-family:font-WNyjs;src:local('Roboto')}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+        ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}@font-face{font-family:font-WNyjs;src:local('Roboto')}",
       attrs: {
-        "data-hydrate": "WNyjs blGUxF gMxcYW PKJb ihRfbR eaGfYw",
+        "data-hydrate": "gMxcYW PKJb ihRfbR eaGfYw blGUxF WNyjs",
       },
     },
   ]);
@@ -80,12 +80,12 @@ test("StyletronServer getStylesheetsHtml ", t => {
   injectFixtureKeyframes(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_" data-hydrate="blGUxF gMxcYW PKJb ihRfbR eaGfYw">@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
+    '<style class="_styletron_hydrate_" data-hydrate="gMxcYW PKJb ihRfbR eaGfYw blGUxF">.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}</style>',
   );
   injectFixtureFontFace(styletron);
   t.equal(
     styletron.getStylesheetsHtml(),
-    '<style class="_styletron_hydrate_" data-hydrate="WNyjs blGUxF gMxcYW PKJb ihRfbR eaGfYw">@font-face{font-family:font-WNyjs;src:local(\'Roboto\')}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>',
+    '<style class="_styletron_hydrate_" data-hydrate="gMxcYW PKJb ihRfbR eaGfYw blGUxF WNyjs">.css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}@font-face{font-family:font-WNyjs;src:local(\'Roboto\')}</style>',
   );
   t.end();
 });
@@ -98,8 +98,8 @@ test("StyletronServer prefix option", t => {
   t.deepEqual(styletron.getStylesheets(), [
     {
       css:
-        "@font-face{font-family:foo_font-WNyjs;src:local('Roboto')}@keyframes foo_animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}.foo_css-jZABor{color:red;}",
-      attrs: {"data-hydrate": "WNyjs blGUxF jZABor"},
+        ".foo_css-jZABor{color:red;}@font-face{font-family:foo_font-WNyjs;src:local('Roboto')}@keyframes foo_animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
+      attrs: {"data-hydrate": "jZABor WNyjs blGUxF"},
     },
   ]);
   t.end();

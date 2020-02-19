@@ -35,25 +35,18 @@ type optionsT = {
 };
 
 type cacheT = {
-  [key: string]: boolean,
+  [key: string]: true,
 };
 
 class StyletronClient implements StandardEngine {
   container: Element;
   opts: optionsT;
-  fontFaceSheet: HTMLStyleElement;
-  keyframesSheet: HTMLStyleElement;
-
   styleSheet: StyleSheet;
-  styleCache: cacheT;
-  keyframesCache: cacheT;
-  fontFaceCache: cacheT;
+  cache: cacheT;
 
   constructor(opts?: optionsT = {}) {
     this.opts = opts || {};
-    this.styleCache = {};
-    this.fontFaceCache = {};
-    this.keyframesCache = {};
+    this.cache = {};
 
     if (opts.container) {
       this.container = opts.container;
@@ -82,9 +75,7 @@ class StyletronClient implements StandardEngine {
         dataHydrate.split(" ").forEach(hashKey => {
           // cache keys are unique across fonts, keyframes and other css so
           // we use a single attribute to get them all
-          this.styleCache[hashKey] = true;
-          this.fontFaceCache[hashKey] = true;
-          this.keyframesCache[hashKey] = true;
+          this.cache[hashKey] = true;
         });
       }
     }
@@ -101,8 +92,8 @@ class StyletronClient implements StandardEngine {
 
   renderStyle(styles: StyleObject): string {
     const className = hashCssObject(styles);
-    if (!this.styleCache[className]) {
-      this.styleCache[className] = true;
+    if (!this.cache[className]) {
+      this.cache[className] = true;
       this.styleSheet.insert(
         injectStylePrefixed(styles, className, this.opts.prefix || ""),
       );
@@ -112,8 +103,8 @@ class StyletronClient implements StandardEngine {
 
   renderFontFace(fontFace: FontFaceObject): string {
     const fontName = hashCssObject(fontFace);
-    if (!this.fontFaceCache[fontName]) {
-      this.fontFaceCache[fontName] = true;
+    if (!this.cache[fontName]) {
+      this.cache[fontName] = true;
       this.styleSheet.insert([
         fontFaceBlockToRule(
           `${this.opts.prefix || ""}font-${fontName}`,
@@ -126,8 +117,8 @@ class StyletronClient implements StandardEngine {
 
   renderKeyframes(keyframes: KeyframesObject): string {
     const animationName = hashCssObject(keyframes);
-    if (!this.keyframesCache[animationName]) {
-      this.keyframesCache[animationName] = true;
+    if (!this.cache[animationName]) {
+      this.cache[animationName] = true;
       this.styleSheet.insert([
         keyframesBlockToRule(
           `${this.opts.prefix || ""}animation-${animationName}`,

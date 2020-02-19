@@ -30,22 +30,18 @@ export type cacheT = {
 };
 
 class StyletronServer implements StandardEngine {
-  styleCache: cacheT;
-  keyframesCache: cacheT;
-  fontFaceCache: cacheT;
+  cache: cacheT;
   opts: optionsT;
 
   constructor(opts?: optionsT = {}) {
     this.opts = opts || {};
-    this.styleCache = {};
-    this.fontFaceCache = {};
-    this.keyframesCache = {};
+    this.cache = {};
   }
 
   renderStyle(styles: StyleObject): string {
     const className = hashCssObject(styles);
-    if (!this.styleCache[className]) {
-      this.styleCache[className] = injectStylePrefixed(
+    if (!this.cache[className]) {
+      this.cache[className] = injectStylePrefixed(
         styles,
         className,
         this.opts.prefix || "",
@@ -56,8 +52,8 @@ class StyletronServer implements StandardEngine {
 
   renderFontFace(fontFace: FontFaceObject): string {
     const fontName = hashCssObject(fontFace);
-    if (!this.fontFaceCache[fontName]) {
-      this.fontFaceCache[fontName] = fontFaceBlockToRule(
+    if (!this.cache[fontName]) {
+      this.cache[fontName] = fontFaceBlockToRule(
         `${this.opts.prefix || ""}font-${fontName}`,
         declarationsToBlock(fontFace),
       );
@@ -67,8 +63,8 @@ class StyletronServer implements StandardEngine {
 
   renderKeyframes(keyframes: KeyframesObject): string {
     const animationName = hashCssObject(keyframes);
-    if (!this.keyframesCache[animationName]) {
-      this.keyframesCache[animationName] = keyframesBlockToRule(
+    if (!this.cache[animationName]) {
+      this.cache[animationName] = keyframesBlockToRule(
         `${this.opts.prefix || ""}animation-${animationName}`,
         keyframesToBlock(keyframes),
       );
@@ -77,11 +73,7 @@ class StyletronServer implements StandardEngine {
   }
 
   getStylesheets(): Array<sheetT> {
-    const hashedNames = [
-      ...Object.keys(this.fontFaceCache),
-      ...Object.keys(this.keyframesCache),
-      ...Object.keys(this.styleCache),
-    ];
+    const hashedNames = [...Object.keys(this.cache)];
     return [
       {
         css: this.getCss(),
@@ -95,11 +87,7 @@ class StyletronServer implements StandardEngine {
   }
 
   getCss() {
-    return [
-      ...Object.values(this.fontFaceCache),
-      ...Object.values(this.keyframesCache),
-      ...Object.values(this.styleCache),
-    ].join("");
+    return [...Object.values(this.cache)].join("");
   }
 }
 
