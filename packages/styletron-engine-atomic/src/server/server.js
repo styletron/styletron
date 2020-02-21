@@ -23,9 +23,15 @@ import {
   fontFaceBlockToRule,
 } from "../css.js";
 
+export type attrsT = {
+  "data-hydrate"?: "keyframes" | "font-face",
+  media?: string,
+  class?: string,
+};
+
 export type sheetT = {|
   css: string,
-  attrs: {[string]: string},
+  attrs: attrsT,
 |};
 
 type optionsT = {
@@ -133,18 +139,20 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
   for (let i = 0; i < sheets.length; i++) {
     const sheet = sheets[i];
     const {class: originalClassName, ...rest} = sheet.attrs;
+
     const attrs = {
-      ...rest,
       class: originalClassName
         ? `${className} ${originalClassName}`
         : className,
+      ...(rest : attrsT),
     };
     html += `<style${attrsToString(attrs)}>${sheet.css}</style>`;
   }
   return html;
 }
 
-function attrsToString(attrs) {
+
+function attrsToString(attrs : {[string]: string}) {
   let result = "";
   for (const attr in attrs) {
     const value = attrs[attr];
@@ -170,7 +178,7 @@ function stringify(styleRules, sortedCacheKeys) {
   return result;
 }
 
-function sheetify(styleRules, sortedCacheKeys) {
+function sheetify(styleRules, sortedCacheKeys) : Array<sheetT> {
   if (sortedCacheKeys.length === 0) {
     return [{css: "", attrs: {}}];
   }
