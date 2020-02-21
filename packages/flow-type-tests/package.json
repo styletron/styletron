@@ -1,7 +1,7 @@
 {
   "name": "flow-type-tests",
   "private": true,
-  "version": "1.0.21",
+  "version": "1.0.22",
   "license": "MIT",
   "scripts": {
     "test": "unitest --node=__tests__/assert-flow-message.node.js"
