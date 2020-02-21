@@ -150,7 +150,7 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
   return html;
 }
 
-function attrsToString(attrs : {[string]: string}) {
+function attrsToString(attrs : attrsT) {
   let result = "";
   for (const attr in attrs) {
     const value = attrs[attr];
