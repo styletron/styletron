@@ -139,7 +139,6 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
   for (let i = 0; i < sheets.length; i++) {
     const sheet = sheets[i];
     const {class: originalClassName, ...rest} = sheet.attrs;
-
     const attrs = {
       class: originalClassName
         ? `${className} ${originalClassName}`
@@ -150,7 +149,6 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
   }
   return html;
 }
-
 
 function attrsToString(attrs : {[string]: string}) {
   let result = "";
