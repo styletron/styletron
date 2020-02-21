@@ -134,10 +134,10 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
     const sheet = sheets[i];
     const {class: originalClassName, ...rest} = sheet.attrs;
     const attrs = {
+      ...rest,
       class: originalClassName
         ? `${className} ${originalClassName}`
         : className,
-      ...rest,
     };
     html += `<style${attrsToString(attrs)}>${sheet.css}</style>`;
   }
