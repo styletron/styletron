@@ -6,7 +6,7 @@ import type {
   AnimationNameProperty as CTAnimationNameProperty,
   FontFamilyProperty as CTFontFamilyProperty,
   FontFace as CTFontFace,
-} from "@rtsao/csstype";
+} from "csstype";
 
 export interface KeyframesPercentageObject {
   [key: string]: Properties;
