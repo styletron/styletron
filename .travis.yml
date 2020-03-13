@@ -6,7 +6,7 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.19.1
   - export PATH=$HOME/.yarn/bin:$PATH
 cache:
-  yarn: false
+  yarn: true
 install: yarn install --network-concurrency 1
 script:
   - yarn lint
