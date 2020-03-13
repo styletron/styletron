@@ -37,7 +37,7 @@
     "create-universal-package": "3.2.4",
     "styletron-engine-atomic": "^1.4.6",
     "tape": "4.9.1",
-    "unitest": "^2.1.2"
+    "unitest": "^2.1.1"
   },
   "license": "MIT"
 }
