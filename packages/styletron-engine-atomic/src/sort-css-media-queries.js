@@ -52,7 +52,7 @@ function _testQuery(
   doubleTestFalse: RegExp,
   singleTest: RegExp,
 ) {
-  return function(query: string) {
+  return function (query: string) {
     if (doubleTestTrue.test(query)) {
       return true;
     } else if (doubleTestFalse.test(query)) {

@@ -25,7 +25,7 @@
     "eslint-plugin-react": "^7.14.3",
     "flow-bin": "^0.110.0",
     "lerna": "^2.11.0",
-    "prettier": "^1.18.2"
+    "prettier": "^2.0.5"
   },
   "license": "MIT"
 }
