@@ -7,11 +7,12 @@ import {driver, getInitialStyle} from "styletron-standard";
 const styled = createStyled({
   driver,
   getInitialStyle,
-  wrapper: StyledComponent => props => (
-    <div>
-      <StyledComponent {...props} />
-    </div>
-  ),
+  wrapper: StyledComponent => props =>
+    (
+      <div>
+        <StyledComponent {...props} />
+      </div>
+    ),
 });
 
 const Foo = styled("div", (_props: {foo: "foo"}) => ({color: "red"}));

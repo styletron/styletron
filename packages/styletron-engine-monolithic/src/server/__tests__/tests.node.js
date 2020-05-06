@@ -39,24 +39,21 @@ test("StyletronServer getStylesheets", t => {
   injectFixtureStyles(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
+      css: ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}",
       attrs: {"data-hydrate": "gMxcYW PKJb ihRfbR eaGfYw"},
     },
   ]);
   injectFixtureKeyframes(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
+      css: ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
       attrs: {"data-hydrate": "gMxcYW PKJb ihRfbR eaGfYw blGUxF"},
     },
   ]);
   injectFixtureFontFace(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}@font-face{font-family:font-WNyjs;src:local('Roboto')}",
+      css: ".css-gMxcYW{color:red;border:1px solid black;}.css-gMxcYW:hover{color:green;}@media (min-width: 200px){.css-gMxcYW{color:hotpink;}.css-gMxcYW:hover{color:red;}}@media (min-width: 400px){.css-gMxcYW{color:violet;}}@supports (display: grid){div{display:-ms-grid;display:grid;}}.css-eaGfYw{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}@keyframes animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}@font-face{font-family:font-WNyjs;src:local('Roboto')}",
       attrs: {
         "data-hydrate": "gMxcYW PKJb ihRfbR eaGfYw blGUxF WNyjs",
       },
@@ -97,8 +94,7 @@ test("StyletronServer prefix option", t => {
   t.equal(injectFixtureKeyframes(styletron), "foo_animation-blGUxF");
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        ".foo_css-jZABor{color:red;}@font-face{font-family:foo_font-WNyjs;src:local('Roboto')}@keyframes foo_animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
+      css: ".foo_css-jZABor{color:red;}@font-face{font-family:foo_font-WNyjs;src:local('Roboto')}@keyframes foo_animation-blGUxF{from{color:purple}50%{color:yellow}to{color:orange}}",
       attrs: {"data-hydrate": "jZABor WNyjs blGUxF"},
     },
   ]);
@@ -121,8 +117,7 @@ test("StyletronServer deeply nested rules", t => {
   );
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        "@supports (flex-wrap: wrap){@media (min-width: 50em){.css-gPyDTX:hover{background:blue;}}}",
+      css: "@supports (flex-wrap: wrap){@media (min-width: 50em){.css-gPyDTX:hover{background:blue;}}}",
       attrs: {"data-hydrate": "gPyDTX"},
     },
   ]);

@@ -2,7 +2,8 @@
 
 /* eslint-disable no-console */
 
-const validAnimationState = /^(from|to|\+?(\d*\.)?\d+%)(\s*,\s*(from|to|\+?(\d*\.)?\d+%))*$/;
+const validAnimationState =
+  /^(from|to|\+?(\d*\.)?\d+%)(\s*,\s*(from|to|\+?(\d*\.)?\d+%))*$/;
 
 export default function validateKeyframesObject(keyframes: Object) {
   let valid = true;

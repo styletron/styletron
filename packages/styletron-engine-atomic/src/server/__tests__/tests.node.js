@@ -34,8 +34,7 @@ test("StyletronServer getStylesheets", t => {
   injectFixtureStyles(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
+      css: ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
     {css: ".ah{color:red}", attrs: {media: "(min-width: 600px)"}},
@@ -51,8 +50,7 @@ test("StyletronServer getStylesheets", t => {
       attrs: {"data-hydrate": "keyframes"},
     },
     {
-      css:
-        ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
+      css: ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
     {css: ".ah{color:red}", attrs: {media: "(min-width: 600px)"}},
@@ -72,8 +70,7 @@ test("StyletronServer getStylesheets", t => {
       attrs: {"data-hydrate": "font-face"},
     },
     {
-      css:
-        ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
+      css: ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
     {css: ".ah{color:red}", attrs: {media: "(min-width: 600px)"}},
@@ -118,8 +115,7 @@ test("StyletronServer prefix option", t => {
   t.equal(injectFixtureKeyframes(styletron), "foo_ae");
   t.deepEqual(styletron.getStylesheets(), [
     {
-      css:
-        "@keyframes foo_ae{from{color:purple}50%{color:yellow}to{color:orange}}",
+      css: "@keyframes foo_ae{from{color:purple}50%{color:yellow}to{color:orange}}",
       attrs: {"data-hydrate": "keyframes"},
     },
     {

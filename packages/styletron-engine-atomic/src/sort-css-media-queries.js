@@ -10,9 +10,11 @@ const maxWidth = /\(\s*max(-device)?-width/i;
 const isMinWidth = _testQuery(minMaxWidth, maxMinWidth, minWidth);
 const isMaxWidth = _testQuery(maxMinWidth, minMaxWidth, maxWidth);
 
-const minMaxHeight = /(!?\(\s*min(-device)?-height).+\(\s*max(-device)?-height/i;
+const minMaxHeight =
+  /(!?\(\s*min(-device)?-height).+\(\s*max(-device)?-height/i;
 const minHeight = /\(\s*min(-device)?-height/i;
-const maxMinHeight = /(!?\(\s*max(-device)?-height).+\(\s*min(-device)?-height/i;
+const maxMinHeight =
+  /(!?\(\s*max(-device)?-height).+\(\s*min(-device)?-height/i;
 const maxHeight = /\(\s*max(-device)?-height/i;
 
 const isMinHeight = _testQuery(minMaxHeight, maxMinHeight, minHeight);
@@ -52,7 +54,7 @@ function _testQuery(
   doubleTestFalse: RegExp,
   singleTest: RegExp,
 ) {
-  return function(query: string) {
+  return function (query: string) {
     if (doubleTestTrue.test(query)) {
       return true;
     } else if (doubleTestFalse.test(query)) {
