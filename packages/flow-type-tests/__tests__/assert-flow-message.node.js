@@ -15,10 +15,7 @@ function flowVersion() {
   return new Promise(res => {
     const flow = spawn(FLOW, ["version"], {cwd: PROJECT_ROOT});
     flow.stdout.on("data", data => {
-      const v = String(data)
-        .split(" ")
-        .pop()
-        .trim();
+      const v = String(data).split(" ").pop().trim();
       res(v);
     });
   });

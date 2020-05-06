@@ -1,6 +1,6 @@
 /* global module */
 
-module.exports = function(babel, opts) {
+module.exports = function (babel, opts) {
   const packageWhitelist =
     opts.importSources === "any"
       ? void 0
