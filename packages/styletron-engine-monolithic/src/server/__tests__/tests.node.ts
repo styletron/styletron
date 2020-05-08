@@ -1,7 +1,5 @@
-// @flow
-
 import test from "tape";
-import Styletron from "../server.js";
+import Styletron from "../server";
 
 test("StyletronServer toCss", t => {
   const styletron = new Styletron();

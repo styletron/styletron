@@ -1,5 +1,3 @@
-// @flow
-
 /* eslint-env browser */
 
 import {StyleSheet} from "./sheet";
@@ -11,7 +9,7 @@ import type {
   StyleObject,
 } from "styletron-standard";
 
-import injectStylePrefixed from "../inject-style-prefixed.js";
+import injectStylePrefixed from "../inject-style-prefixed";
 
 import {
   keyframesBlockToRule,
@@ -19,24 +17,23 @@ import {
   keyframesToBlock,
   fontFaceBlockToRule,
   hashCssObject,
-} from "../css.js";
+} from "../css";
 
 declare var __DEV__: boolean;
-
 type hydrateT =
   | HTMLCollection<HTMLStyleElement>
   | Array<HTMLStyleElement>
   | NodeList<HTMLStyleElement>;
 
 type optionsT = {
-  hydrate?: hydrateT,
-  container?: Element,
-  prefix?: string,
-  strict?: boolean,
+  hydrate?: hydrateT;
+  container?: Element;
+  prefix?: string;
+  strict?: boolean;
 };
 
 type cacheT = {
-  [key: string]: true,
+  [key: string]: true;
 };
 
 class StyletronClient implements StandardEngine {
@@ -45,7 +42,7 @@ class StyletronClient implements StandardEngine {
   styleSheet: StyleSheet;
   cache: cacheT;
 
-  constructor(opts?: optionsT = {}) {
+  constructor(opts: optionsT = {}) {
     this.opts = opts || {};
     this.cache = {};
 

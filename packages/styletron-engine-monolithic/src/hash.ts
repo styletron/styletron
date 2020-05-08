@@ -1,4 +1,3 @@
-// @flow
 // vendored in from styled-components
 
 export const SEED = 5381 | 0;

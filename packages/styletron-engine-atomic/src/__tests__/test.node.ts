@@ -1,10 +1,8 @@
-// @flow
-
 import test from "tape";
 
-import {validateNoMixedHand} from "../validate-no-mixed-hand.js";
+import {validateNoMixedHand} from "../validate-no-mixed-hand";
 
-import sortMq from "../sort-css-media-queries.js";
+import sortMq from "../sort-css-media-queries";
 
 test("validateNoMixedHand", t => {
   t.deepEqual(
