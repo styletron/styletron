@@ -51,10 +51,11 @@ export const setupDevtoolsExtension = () => {
   };
 };
 
-class BrowserDebugEngine {
+// todo: export debug engine interface
+export class BrowserDebugEngine {
   private worker: any;
   private counter: number;
-  constructor(worker) {
+  constructor(worker?) {
     if (!worker) {
       const workerBlob = new Blob(
         [
@@ -103,7 +104,8 @@ class BrowserDebugEngine {
   }
 }
 
-class NoopDebugEngine {
+// todo: export debug engine interface
+export class NoopDebugEngine {
   debug() {}
 }
 
