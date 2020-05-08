@@ -102,7 +102,7 @@ if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
 
 // TODO: more precise types
 export function DevConsumer(props: {
-  children: (c: any, b: any, a: any) => React.ReactNode;
+  children: (styletron: any, debugEngine?: any, hydrating?: any) => React.ReactElement;
 }) {
   return (
     <StyletronContext.Consumer>
@@ -483,7 +483,7 @@ export function createStyledElementComponent(styletron: Styletron) {
   const StyledElement = React.forwardRef<any, StyletronProps>((props, ref) => {
     return (
       <Consumer>
-        {(styletron, debugEngine, hydrating) => {
+        {(styletron, debugEngine?, hydrating?) => {
           checkNoopEngine(styletron);
 
           const elementProps: any = omitPrefixedKeys(props);
