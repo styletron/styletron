@@ -1,6 +1,5 @@
-// @flow
 import type {StandardEngine} from "styletron-standard";
-import injectStylePrefixed from "../inject-style-prefixed.js";
+import injectStylePrefixed from "../inject-style-prefixed";
 
 import type {
   StyleObject,
@@ -16,25 +15,27 @@ import {
   hashCssObject,
 } from "../css";
 
-export type sheetT = {|
-  css: string,
-  attrs: {[string]: string},
-|};
+export type sheetT = {
+  css: string;
+  attrs: {
+    [x: string]: string;
+  };
+};
 
 export type optionsT = {
-  prefix?: string,
-  strict?: boolean,
+  prefix?: string;
+  strict?: boolean;
 };
 
 export type cacheT = {
-  [key: string]: string,
+  [key: string]: string;
 };
 
 class StyletronServer implements StandardEngine {
   cache: cacheT;
   opts: optionsT;
 
-  constructor(opts?: optionsT = {}) {
+  constructor(opts: optionsT = {}) {
     this.opts = opts || {};
     this.cache = {};
   }
@@ -84,7 +85,7 @@ class StyletronServer implements StandardEngine {
     ];
   }
 
-  getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
+  getStylesheetsHtml(className: string = "_styletron_hydrate_") {
     return generateHtmlString(this.getStylesheets(), className);
   }
 

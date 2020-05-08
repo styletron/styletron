@@ -1,5 +1,3 @@
-// @flow
-
 import test from "tape";
 
 import {Client, Server, StyletronSnapshotEngine} from "../index";

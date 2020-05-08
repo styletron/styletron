@@ -11,10 +11,11 @@ export function addDebugMetadata(instance, stackIndex) {
 
 // DEVTOOLS SETUP
 type StyletronStyles = {
-  classes?: any,
-  styles?: any,
-  extends?: any,
+  classes?: any;
+  styles?: any;
+  extends?: any;
 };
+
 export const setupDevtoolsExtension = () => {
   const atomicMap = {};
   const extensionsMap = new Map();

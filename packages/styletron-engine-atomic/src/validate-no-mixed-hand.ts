@@ -1,10 +1,8 @@
-// @flow
-
 /**
  * Adapted from https://github.com/gilmoreorless/css-shorthand-properties
  */
 
-import hyphenate from "./hyphenate-style-name.js";
+import hyphenate from "./hyphenate-style-name";
 
 const shorthandMap = {
   // CSS 2.1: https://www.w3.org/TR/CSS2/propidx.html
@@ -231,7 +229,7 @@ const shorthandMap = {
   ],
 };
 
-export function validateNoMixedHand(style: Object) {
+export function validateNoMixedHand(style: any) {
   const hyphenatedProperties = Object.keys(style).reduce((acc, property) => {
     acc[hyphenate(property)] = property;
     return acc;

@@ -1,4 +1,3 @@
-// @flow
 import test from "tape";
 import {Server} from "styletron-engine-atomic";
 import {driver} from "../index";

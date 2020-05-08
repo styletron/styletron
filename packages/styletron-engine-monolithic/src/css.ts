@@ -1,9 +1,7 @@
-// @flow
-
 declare var __DEV__: boolean;
 
-import hyphenate from "./hyphenate-style-name.js";
-import validateKeyframesObject from "./validate-keyframes-object.js";
+import hyphenate from "./hyphenate-style-name";
+import validateKeyframesObject from "./validate-keyframes-object";
 import generateAlphabeticName from "./generate-alphabetic-name";
 import {hash} from "./hash";
 
@@ -19,7 +17,7 @@ export function hashCssObject(
   return generateAlphabeticName(hash(JSON.stringify(cssObject)));
 }
 
-export function keyframesToBlock(keyframes: {[string]: Object}): string {
+export function keyframesToBlock(keyframes: {[x: string]: any}): string {
   if (__DEV__) {
     validateKeyframesObject(keyframes);
   }
@@ -41,7 +39,7 @@ export function keyframesToBlock(keyframes: {[string]: Object}): string {
   return result;
 }
 
-export function declarationsToBlock(style: Object): string {
+export function declarationsToBlock(style: any): string {
   let css = "";
   for (const prop in style) {
     const val = style[prop];

@@ -1,6 +1,4 @@
-// @flow
-
-import Styletron from "../server.js";
+import Styletron from "../server";
 
 describe("server", () => {
   it("StyletronServer toCss", () => {

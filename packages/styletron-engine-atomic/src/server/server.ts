@@ -1,12 +1,10 @@
-// @flow
-
-import SequentialIDGenerator from "../sequential-id-generator.js";
+import SequentialIDGenerator from "../sequential-id-generator";
 
 import type {StandardEngine} from "styletron-standard";
 
-import {Cache, MultiCache} from "../cache.js";
+import {Cache, MultiCache} from "../cache";
 
-import injectStylePrefixed from "../inject-style-prefixed.js";
+import injectStylePrefixed from "../inject-style-prefixed";
 
 import type {
   StyleObject,
@@ -21,32 +19,37 @@ import {
   declarationsToBlock,
   keyframesToBlock,
   fontFaceBlockToRule,
-} from "../css.js";
+} from "../css";
 
 export type attrsT = {
-  "data-hydrate"?: "keyframes" | "font-face",
-  media?: string,
-  class?: string,
+  "data-hydrate"?: "keyframes" | "font-face";
+  media?: string;
+  class?: string;
 };
 
-export type sheetT = {|
-  css: string,
-  attrs: attrsT,
-|};
+export type sheetT = {
+  css: string;
+  attrs: attrsT;
+};
 
 type optionsT = {
-  prefix?: string,
+  prefix?: string;
 };
 
 class StyletronServer implements StandardEngine {
-  styleCache: MultiCache<{pseudo: string, block: string}>;
+  styleCache: MultiCache<{
+    pseudo: string;
+    block: string;
+  }>;
   keyframesCache: Cache<KeyframesObject>;
   fontFaceCache: Cache<FontFaceObject>;
-  styleRules: {[string]: string};
+  styleRules: {
+    [x: string]: string;
+  };
   keyframesRules: string;
   fontFaceRules: string;
 
-  constructor(opts?: optionsT = {}) {
+  constructor(opts: optionsT = {}) {
     this.styleRules = {"": ""};
     this.styleCache = new MultiCache(
       new SequentialIDGenerator(opts.prefix),
@@ -121,7 +124,7 @@ class StyletronServer implements StandardEngine {
     ];
   }
 
-  getStylesheetsHtml(className?: string = "_styletron_hydrate_") {
+  getStylesheetsHtml(className: string = "_styletron_hydrate_") {
     return generateHtmlString(this.getStylesheets(), className);
   }
 
@@ -143,7 +146,7 @@ export function generateHtmlString(sheets: Array<sheetT>, className: string) {
       class: originalClassName
         ? `${className} ${originalClassName}`
         : className,
-      ...(rest: attrsT),
+      ...(rest as attrsT),
     };
     html += `<style${attrsToString(attrs)}>${sheet.css}</style>`;
   }

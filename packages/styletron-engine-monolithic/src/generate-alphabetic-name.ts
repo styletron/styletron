@@ -1,4 +1,3 @@
-// @flow
 // vendored in from styled-components
 
 const AD_REPLACER_R = /(a)(d)/gi;

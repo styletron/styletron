@@ -1,5 +1,3 @@
-// @flow
-
 import type {
   StandardProperties,
   VendorProperties,
@@ -11,9 +9,9 @@ import type {
 } from "@rtsao/csstype";
 
 export type KeyframesObject = {
-  from?: Properties,
-  to?: Properties,
-  [string]: Properties,
+  from?: Properties;
+  to?: Properties;
+  [x: string]: Properties;
 };
 
 export type AnimationNameProperty = CTAnimationNameProperty | KeyframesObject;
@@ -24,13 +22,12 @@ export type FontFamilyProperty = CTFontFamilyProperty | FontFace;
 
 type TLength = string | 0;
 export type Properties = {
-  ...StandardProperties<TLength>,
-  ...VendorProperties<TLength>,
-  ...ObsoleteProperties<TLength>,
-  ...SvgProperties<TLength>,
-  animationName?: AnimationNameProperty,
-  fontFamily?: FontFamilyProperty | FontFamilyProperty[],
-  MozAnimationName?: AnimationNameProperty,
-  WebkitAnimationName?: AnimationNameProperty,
-  OAnimationName?: AnimationNameProperty,
-};
+  animationName?: AnimationNameProperty;
+  fontFamily?: FontFamilyProperty | FontFamilyProperty[];
+  MozAnimationName?: AnimationNameProperty;
+  WebkitAnimationName?: AnimationNameProperty;
+  OAnimationName?: AnimationNameProperty;
+} & StandardProperties<TLength> &
+  VendorProperties<TLength> &
+  ObsoleteProperties<TLength> &
+  SvgProperties<TLength>;

@@ -1,9 +1,7 @@
-// @flow
-
 declare var __DEV__: boolean;
 
-import hyphenate from "./hyphenate-style-name.js";
-import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
+import hyphenate from "./hyphenate-style-name";
+import {validateNoMixedHand} from "./validate-no-mixed-hand";
 import {prefix} from "inline-style-prefixer";
 
 import type {StyleObject} from "styletron-standard";
@@ -26,9 +24,9 @@ export default function injectStylePrefixed(
       if (__DEV__) {
         validateValueType(originalVal, originalKey);
       }
-      const propValPair = `${hyphenate(
-        originalKey,
-      )}:${((originalVal: any): string)}`;
+      const propValPair = `${hyphenate(originalKey)}:${
+        (originalVal as any) as string
+      }`;
       const prefixed = prefix({[originalKey]: originalVal});
       for (const prefixedKey in prefixed) {
         const prefixedVal = prefixed[prefixedKey];

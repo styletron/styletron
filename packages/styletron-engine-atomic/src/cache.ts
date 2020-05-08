@@ -1,12 +1,12 @@
-// @flow
-
-import SequentialIDGenerator from "./sequential-id-generator.js";
-import sortMq from "./sort-css-media-queries.js";
+import SequentialIDGenerator from "./sequential-id-generator";
+import sortMq from "./sort-css-media-queries";
 
 export class MultiCache<T> {
-  caches: {[string]: Cache<T>};
+  caches: {
+    [x: string]: Cache<T>;
+  };
   idGenerator: SequentialIDGenerator;
-  onNewCache: (string, Cache<T>, ?string) => any;
+  onNewCache: (c: string, b: Cache<T>, a?: string | null) => any;
   onNewValue: (cache: Cache<T>, id: string, value: T) => any;
   sortedCacheKeys: string[];
 
@@ -45,7 +45,9 @@ export class MultiCache<T> {
 }
 
 export class Cache<T> {
-  cache: {[string]: string};
+  cache: {
+    [x: string]: string;
+  };
   idGenerator: SequentialIDGenerator;
   key: string;
   onNewValue: (cache: Cache<T>, id: string, value: any) => any;

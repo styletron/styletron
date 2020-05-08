@@ -1,8 +1,7 @@
-// @flow
-
 /* eslint-env browser */
 
 declare var __DEV__: boolean;
+
 declare var __BROWSER__: boolean;
 
 const STYLES_HYDRATOR = /\.([^{:]+)(:[^{]+)?{(?:[^}]*;)?([^}]*?)}/g;
@@ -39,7 +38,7 @@ function hydrate<T>(cache: Cache<T>, hydrator: hydratorT, css: string) {
   }
 }
 
-import SequentialIDGenerator from "../sequential-id-generator.js";
+import SequentialIDGenerator from "../sequential-id-generator";
 
 import type {
   StandardEngine,
@@ -48,9 +47,9 @@ import type {
   StyleObject,
 } from "styletron-standard";
 
-import {Cache, MultiCache} from "../cache.js";
+import {Cache, MultiCache} from "../cache";
 
-import injectStylePrefixed from "../inject-style-prefixed.js";
+import injectStylePrefixed from "../inject-style-prefixed";
 
 import {
   styleBlockToRule,
@@ -59,8 +58,8 @@ import {
   declarationsToBlock,
   keyframesToBlock,
   fontFaceBlockToRule,
-} from "../css.js";
-import {insertRuleIntoDevtools, hydrateDevtoolsRule} from "../dev-tool.js";
+} from "../css";
+import {insertRuleIntoDevtools, hydrateDevtoolsRule} from "../dev-tool";
 
 type hydrateT =
   | HTMLCollection<HTMLStyleElement>
@@ -68,28 +67,33 @@ type hydrateT =
   | NodeList<HTMLStyleElement>;
 
 type optionsT = {
-  hydrate?: hydrateT,
-  container?: Element,
-  prefix?: string,
+  hydrate?: hydrateT;
+  container?: Element;
+  prefix?: string;
 };
 
 class StyletronClient implements StandardEngine {
   container: Element;
-  styleElements: {[string]: HTMLStyleElement};
+  styleElements: {
+    [x: string]: HTMLStyleElement;
+  };
   fontFaceSheet: HTMLStyleElement;
   keyframesSheet: HTMLStyleElement;
 
-  styleCache: MultiCache<{pseudo: string, block: string}>;
+  styleCache: MultiCache<{
+    pseudo: string;
+    block: string;
+  }>;
   keyframesCache: Cache<KeyframesObject>;
   fontFaceCache: Cache<FontFaceObject>;
 
-  constructor(opts?: optionsT = {}) {
+  constructor(opts: optionsT = {}) {
     this.styleElements = {};
 
     const styleIdGenerator = new SequentialIDGenerator(opts.prefix);
     const onNewStyle = (cache, id, value) => {
       const {pseudo, block} = value;
-      const sheet: CSSStyleSheet = (this.styleElements[cache.key].sheet: any);
+      const sheet: CSSStyleSheet = this.styleElements[cache.key].sheet as any;
       const selector = atomicSelector(id, pseudo);
       const rule = styleBlockToRule(selector, block);
       try {
@@ -135,7 +139,7 @@ class StyletronClient implements StandardEngine {
       new SequentialIDGenerator(opts.prefix),
       (cache, id, value) => {
         this.styleCache.getCache("");
-        const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
+        const sheet: CSSStyleSheet = this.styleElements[""].sheet as any;
         const rule = keyframesBlockToRule(id, keyframesToBlock(value));
         try {
           sheet.insertRule(rule, sheet.cssRules.length);
@@ -154,7 +158,7 @@ class StyletronClient implements StandardEngine {
       new SequentialIDGenerator(opts.prefix),
       (cache, id, value) => {
         this.styleCache.getCache("");
-        const sheet: CSSStyleSheet = (this.styleElements[""].sheet: any);
+        const sheet: CSSStyleSheet = this.styleElements[""].sheet as any;
         const rule = fontFaceBlockToRule(id, declarationsToBlock(value));
         try {
           sheet.insertRule(rule, sheet.cssRules.length);
@@ -235,7 +239,7 @@ function findSheetIndexWithMedia(children, media) {
     const child = children[index];
     if (
       child.tagName === "STYLE" &&
-      ((child: any): HTMLStyleElement).media === media
+      ((child as any) as HTMLStyleElement).media === media
     ) {
       return index;
     }

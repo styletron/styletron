@@ -1,5 +1,3 @@
-// @flow
-
 export default class SequentialIDGenerator {
   prefix: string;
   count: number;

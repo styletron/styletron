@@ -1,8 +1,6 @@
-// @flow
+import {validateNoMixedHand} from "../validate-no-mixed-hand";
 
-import {validateNoMixedHand} from "../validate-no-mixed-hand.js";
-
-import sortMq from "../sort-css-media-queries.js";
+import sortMq from "../sort-css-media-queries";
 
 test("validateNoMixedHand", () => {
   expect(
