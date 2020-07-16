@@ -35,9 +35,25 @@ import {
   DebugEngine,
 } from "./dev-tool";
 
-export {DebugEngine};
-export type {StyleObject};
-export type {StyletronProps};
+export type {
+  StandardEngine,
+  StyleObject,
+  Styletron,
+  StyletronComponent,
+  ReducerContainer,
+  AssignmentCommutativeReducerContainer,
+  NonAssignmentCommutativeReducerContainer,
+  StyledFn,
+  WithStyleFn,
+  WithTransformFn,
+  WithWrapperFn,
+  StyletronProps,
+  addDebugMetadata,
+  setupDevtoolsExtension,
+  DebugEngine,
+};
+
+export {BrowserDebugEngine, NoopDebugEngine} from "./dev-tool";
 
 const noopEngine = {
   renderStyle: () => "",
@@ -52,14 +68,14 @@ const DebugEngineContext = React.createContext<
 >(undefined);
 //todo: theme context removed
 
-type DevProviderProps = {
+export type DevProviderProps = {
   children: React.ReactNode;
   value: StandardEngine;
   debugAfterHydration?: boolean;
   debug?: any;
 };
 
-class DevProvider extends React.Component<
+export class DevProvider extends React.Component<
   DevProviderProps,
   {
     hydrating: boolean;
@@ -130,7 +146,7 @@ export function DevConsumer(props: {
 const Consumer =
   __BROWSER__ && __DEV__ ? DevConsumer : StyletronContext.Consumer;
 
-type createStyledOpts = {
+export type createStyledOpts = {
   getInitialStyle: () => StyleObject;
   driver: typeof driver;
   wrapper: (a: React.FC<any>) => React.ComponentType<any>;

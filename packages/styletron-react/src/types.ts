@@ -46,7 +46,7 @@ export type StyletronProps<Props = {}> = Partial<{
   $style: StyleObject | ((props: Props) => StyleObject);
   $as: ComponentType<any> | keyof JSX.IntrinsicElements;
   className: string;
-  /** @deprecated */
+  /** @deprecated Use ref instead. Ref forwarding is enabled. */
   $ref: Props extends {ref?: infer T} ? T : React.Ref<any>;
   ref: Props extends {ref?: infer T} ? T : React.Ref<any>;
 }>;
