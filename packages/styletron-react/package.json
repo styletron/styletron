@@ -12,6 +12,7 @@
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
+  "types": "./lib/index.d.ts",
   "browser": {
     "./dist/index.js": "./dist/browser.es5.js",
     "./dist/index.es.js": "./dist/browser.es5.es.js"
