@@ -172,7 +172,7 @@ test("$style prop (static)", t => {
 
 test("$style prop (dynamic)", t => {
   t.plan(1);
-  const Widget = styled<'div', {$round: boolean}>("div", {
+  const Widget = styled<"div", {$round: boolean}>("div", {
     lineHeight: 1,
     color: "red",
     ":hover": {fontSize: "12px"},
@@ -246,10 +246,13 @@ test("$style overrides nested withStyle", t => {
 test("withTransform", t => {
   t.plan(1);
   const Widget = styled("div", {color: "red", background: "green"});
-  const SuperWidget = withTransform(Widget, (style, props: { $round: boolean }) => ({
-    ...style,
-    background: props.$round ? 'yellow' : 'green',
-  }));
+  const SuperWidget = withTransform(
+    Widget,
+    (style, props: {$round: boolean}) => ({
+      ...style,
+      background: props.$round ? "yellow" : "green",
+    }),
+  );
   Enzyme.mount(
     <Provider
       value={{
@@ -323,7 +326,10 @@ test("$-prefixed props not passed", t => {
     }
   }
 
-  const Widget = styled<typeof InnerComponent, {$foo: any, $baz: any}>(InnerComponent, {color: "red"});
+  const Widget = styled<typeof InnerComponent, {$foo: any; $baz: any}>(
+    InnerComponent,
+    {color: "red"},
+  );
 
   Enzyme.mount(
     <Provider
@@ -448,7 +454,7 @@ test("legacy string ref forwarding", t => {
 
 test("withWrapper", t => {
   t.plan(6);
-  const Widget = styled<'button',{foo?: string}>("button", {
+  const Widget = styled<"button", {foo?: string}>("button", {
     color: "red",
   });
   const WrappedWidget = withWrapper(Widget, StyledElement => props => {
@@ -655,7 +661,7 @@ test("createStyled wrapper", t => {
       return <div>hello world</div>;
     },
   });
-  const Widget = customStyled<'div', {foo: string}>("div", {
+  const Widget = customStyled<"div", {foo: string}>("div", {
     color: "red",
   });
   Enzyme.mount(

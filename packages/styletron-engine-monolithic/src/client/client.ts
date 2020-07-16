@@ -20,10 +20,7 @@ import {
 } from "../css";
 
 declare var __DEV__: boolean;
-type hydrateT =
-  | HTMLCollection
-  | Array<HTMLStyleElement>
-  | NodeList;
+type hydrateT = HTMLCollection | Array<HTMLStyleElement> | NodeList;
 
 type optionsT = {
   hydrate?: hydrateT;

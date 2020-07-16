@@ -64,7 +64,9 @@ export type StyledFn = {
   ): StyletronComponent<
     (T extends ComponentType<infer BaseProps>
       ? BaseProps
-      : T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : {}) &
+      : T extends keyof JSX.IntrinsicElements
+      ? JSX.IntrinsicElements[T]
+      : {}) &
       Props
   >;
 };

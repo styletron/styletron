@@ -47,7 +47,9 @@ const noopEngine = {
 
 const StyletronContext = React.createContext<StandardEngine>(noopEngine);
 const HydrationContext = React.createContext(false);
-const DebugEngineContext = React.createContext<InstanceType<typeof DebugEngine>|undefined>(undefined);
+const DebugEngineContext = React.createContext<
+  InstanceType<typeof DebugEngine> | undefined
+>(undefined);
 //todo: theme context removed
 
 type DevProviderProps = {
@@ -102,7 +104,11 @@ if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
 
 // TODO: more precise types
 export function DevConsumer(props: {
-  children: (styletron: any, debugEngine?: any, hydrating?: any) => React.ReactElement;
+  children: (
+    styletron: any,
+    debugEngine?: any,
+    hydrating?: any,
+  ) => React.ReactElement;
 }) {
   return (
     <StyletronContext.Consumer>
@@ -161,7 +167,7 @@ export function useStyletron() {
   const hydrating = React.useContext(HydrationContext);
   checkNoopEngine(styletronEngine);
 
-  const debugClassName = React.useRef<string|void>("");
+  const debugClassName = React.useRef<string | void>("");
   const prevDebugClassNameDeps = React.useRef([]);
 
   return [

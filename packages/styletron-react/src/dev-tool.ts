@@ -21,7 +21,7 @@ export const setupDevtoolsExtension = () => {
   const atomicMap = {};
   const extensionsMap = new Map();
   const stylesMap = new Map();
-  const getStyles: ((className: string) => StyletronStyles) = className => {
+  const getStyles: (className: string) => StyletronStyles = className => {
     const styles: StyletronStyles = {};
     if (typeof className !== "string") {
       return styles;
@@ -109,7 +109,5 @@ export class NoopDebugEngine {
   debug() {}
 }
 
-declare global {
-  var __BROWSER__: boolean;
-}
+// @ts-ignore todo(flow->ts) cup globals type definition
 export const DebugEngine = __BROWSER__ ? BrowserDebugEngine : NoopDebugEngine;
