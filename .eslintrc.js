@@ -29,4 +29,29 @@ module.exports = {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
   },
+  overrides: [
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx",
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "sourceType": "module",
+      },
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        // should be replaced with @typescript-eslint/no-unused-vars,
+        // but there is apparently a bug when importing type namespaces
+        "no-unused-vars": "off",
+        "no-dupe-class-members": "off",
+        "@typescript-eslint/no-dupe-class-members": "error",
+
+        // cup does not support typescript
+        "cup/no-undef": "off",
+        // todo: weird rule… should "void 0" be used instead?
+        "no-undefined": "off"
+      }
+    }
+  ],
 };

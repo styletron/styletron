@@ -7,6 +7,5 @@
   "trailingComma": "all",
   "bracketSpacing": false,
   "jsxBracketSameLine": false,
-  "parser": "babel",
   "semi": true
 }

@@ -7,7 +7,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path .gitignore --ext js,ts,tsx .",
     "pretest": "yarn run lint && yarn run tscheck",
     "test": "lerna run test",
     "build": "lerna run build",
@@ -16,6 +16,8 @@
     "playground": "lerna run --scope playground dev --stream"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^3.6.1",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.3.0",
     "eslint-config-cup-recommended": "^2.0.2",
