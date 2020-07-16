@@ -8,3 +8,4 @@ dist/
 dist-tests/
 yarn-error.log
 .next
+.idea
