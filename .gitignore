@@ -10,3 +10,4 @@ dist-tests/
 yarn-error.log
 .next
 .idea
+tsconfig.tsbuildinfo
