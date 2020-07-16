@@ -10,7 +10,7 @@ import stringify from "json-stable-stringify";
   @see: https://prettier.io/docs/en/browser.html
  */
 import prettier from "prettier/standalone";
-import babylonParser from "prettier/parser-babylon";
+import babylonParser from "prettier/parser-babel";
 
 /*
 This adds a "deterministic" engine that simply returns a `JSON.stringify`-ed
