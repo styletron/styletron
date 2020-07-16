@@ -233,7 +233,7 @@ function setup() {
   return {
     container,
     getSheets() {
-      return (container.children as any) as HTMLCollection<HTMLStyleElement>;
+      return container.children;
     },
     cleanup() {
       container.remove();
