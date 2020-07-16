@@ -1,6 +1,6 @@
 {
-  "name": "styletron-react",
-  "version": "5.2.7",
+  "name": "styletron-react-ts",
+  "version": "5.2.8",
   "description": "React bindings for Styletron",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
@@ -12,7 +12,7 @@
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
-  "types": "./lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   "browser": {
     "./dist/index.js": "./dist/browser.es5.js",
     "./dist/index.es.js": "./dist/browser.es5.es.js"
@@ -27,8 +27,7 @@
   "scripts": {
     "build": "cup build --force-flow",
     "pretest": "cup build-tests",
-    "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
-    "prepublish": "npm run build"
+    "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
