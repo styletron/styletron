@@ -24,8 +24,8 @@
     "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
   },
   "scripts": {
-    "build": "cup build --force-flow",
-    "pretest": "cup build-tests",
+    "build": "cup3 build --force-flow",
+    "pretest": "cup3 build-tests",
     "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
     "prepublish": "npm run build"
   },
@@ -37,7 +37,7 @@
     "styletron-standard": "^3.0.1"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
+    "create-universal-package-v3": "3.4.7",
     "styletron-standard": "^3.0.4",
     "tape": "4.9.1",
     "unitest": "^2.1.1"

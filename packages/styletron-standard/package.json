@@ -24,8 +24,8 @@
     "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
   },
   "scripts": {
-    "build": "cup build --force-flow",
-    "pretest": "cup build-tests",
+    "build": "cup3 build --force-flow",
+    "pretest": "cup3 build-tests",
     "test": "unitest --node=dist-tests/node.js",
     "prepublish": "npm run build"
   },
@@ -34,7 +34,7 @@
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
+    "create-universal-package-v3": "3.4.7",
     "tape": "4.9.1",
     "unitest": "^2.1.1"
   },
