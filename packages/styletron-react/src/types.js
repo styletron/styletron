@@ -32,7 +32,7 @@ export type Styletron = {
   wrapper: any,
   getInitialStyle: any,
   ext?: {
-    name?: string,
+    name?: ?string,
     base: any,
     getInitialStyle: any,
     with: any,
