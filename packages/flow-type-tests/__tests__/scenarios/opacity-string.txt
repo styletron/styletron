@@ -1,5 +1,0 @@
-// @flow
-
-import {styled} from 'styletron-react';
-
-export const A = styled('span', {':hover': {opacity: '0.7'}});
