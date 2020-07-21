@@ -6,10 +6,7 @@ lerna-debug.log
 lib/
 dist/
 dist-tests/
-dist-browser-cjs/
-dist-browser-esm/
-dist-node-cjs/
-dist-node-esm/
+dist-*/
 yarn-error.log
 .next
 .idea
