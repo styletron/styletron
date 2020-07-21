@@ -33,7 +33,7 @@
     "styletron-standard": "^3.0.4"
   },
   "devDependencies": {
-    "@miksu/create-universal-package": "0.0.2",
+    "@miksu/create-universal-package": "0.0.3",
     "@babel/plugin-transform-flow-strip-types": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "create-universal-package": "^4.1.1",
