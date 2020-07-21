@@ -26,7 +26,6 @@
     "clean": "rimraf dist* && rimraf lib && rimraf tsconfig.tsbuildinfo",
     "libdefs": "yarn api-extractor run && yarn flowgen dist/index.d.ts --add-flow-header -o dist-node-cjs/index.js.flow",
     "pretest": "cup build-tests",
-    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
     "prepublish": "npm run build"
   },
   "dependencies": {
