@@ -5,28 +5,23 @@
   "author": "Vojtech Miksu <vojtech@miksu.cz>",
   "repository": "styletron/styletron",
   "files": [
-    "dist",
+    "dist-browser-cjs",
+    "dist-browser-esm",
+    "dist-node-cjs",
+    "dist-node-esm",
     "src",
     "!__tests__"
   ],
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
+  "main": "./dist-node-cjs/index.js",
+  "module": "./dist-node-esm/index.js",
   "browser": {
-    "./dist/index.js": "./dist/browser.es5.js",
-    "./dist/index.es.js": "./dist/browser.es5.es.js"
-  },
-  "es2015": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2015.es.js"
-  },
-  "es2017": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
-    "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
+    "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
+    "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
-    "build": "cup build --force-flow",
-    "pretest": "cup build-tests",
-    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+    "build": "cup-build --force-flow",
+    "test": "jest",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -34,9 +29,10 @@
     "styletron-standard": "^3.0.4"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
-    "tape": "4.9.1",
-    "unitest": "^2.1.1"
+    "@babel/plugin-transform-flow-strip-types": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "create-universal-package": "^4.1.1",
+    "jest": "^26.1.0"
   },
   "license": "MIT"
 }
