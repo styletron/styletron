@@ -4,7 +4,12 @@
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
+  "sideEffects": false,
   "files": [
+<<<<<<< HEAD
+=======
+    "dist",
+>>>>>>> 4eea768... fix build of styletron-engine-atomic
     "dist-browser-cjs",
     "dist-browser-esm",
     "dist-node-cjs",
@@ -12,16 +17,29 @@
     "src",
     "!__tests__"
   ],
+<<<<<<< HEAD
   "sideEffects": false,
   "main": "./dist-node-cjs/index.js",
   "module": "./dist-node-esm/index.js",
+=======
+  "main": "./dist-node-cjs/index.js",
+  "module": "./dist-node-esm/index.js",
+  "types": "./dist/index.d.ts",
+>>>>>>> 4eea768... fix build of styletron-engine-atomic
   "browser": {
     "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
     "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
+<<<<<<< HEAD
     "build": "cup build --force-flow",
     "test": "jest",
+=======
+    "build": "cup build --skip-flow && yarn libdefs",
+    "libdefs": "yarn tsc && yarn api-extractor run && yarn flowgen dist/index.d.ts -o dist-node-cjs/index.js.flow",
+    "pretest": "cup build-tests",
+    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+>>>>>>> 4eea768... fix build of styletron-engine-atomic
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -29,10 +47,16 @@
     "styletron-standard": "^3.0.4"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@babel/plugin-transform-flow-strip-types": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "create-universal-package": "^4.1.1",
     "jest": "^26.1.0"
+=======
+    "@miksu/create-universal-package": "0.0.2",
+    "tape": "4.9.1",
+    "unitest": "^2.1.1"
+>>>>>>> 4eea768... fix build of styletron-engine-atomic
   },
   "license": "MIT"
 }

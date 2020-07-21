@@ -32,7 +32,7 @@ export type sheetT = {
   attrs: attrsT;
 };
 
-type optionsT = {
+export type serverOptionsT = {
   prefix?: string;
 };
 
@@ -49,7 +49,7 @@ class StyletronServer implements StandardEngine {
   keyframesRules: string;
   fontFaceRules: string;
 
-  constructor(opts: optionsT = {}) {
+  constructor(opts: serverOptionsT = {}) {
     this.styleRules = {"": ""};
     this.styleCache = new MultiCache(
       new SequentialIDGenerator(opts.prefix),

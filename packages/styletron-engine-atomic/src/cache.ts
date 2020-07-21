@@ -1,8 +1,12 @@
 import SequentialIDGenerator from "./sequential-id-generator";
 import sortMq from "./sort-css-media-queries";
 
-type OnNewCacheFn<T> = (c: string, b: Cache<T>, a?: string | null) => any;
-type OnNewValueFn<T> = (cache: Cache<T>, id: string, value: T) => any;
+export type OnNewCacheFn<T> = (
+  c: string,
+  b: Cache<T>,
+  a?: string | null,
+) => any;
+export type OnNewValueFn<T> = (cache: Cache<T>, id: string, value: T) => any;
 
 export class MultiCache<T> {
   caches: {
