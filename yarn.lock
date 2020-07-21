@@ -1305,10 +1305,10 @@
   resolved "https://unpm.uberinternal.com/@microsoft%2ftsdoc/-/tsdoc-0.12.19.tgz#2173ccb92469aaf62031fa9499d21b16d07f9b57"
   integrity sha1-IXPMuSRpqvYgMfqUmdIbFtB/m1c=
 
-"@miksu/create-universal-package@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@miksu/create-universal-package/-/create-universal-package-0.0.2.tgz#1b775393b001bcf9be5362edc2b0ad55f48b390c"
-  integrity sha512-4L9bsXO0i5nFgnxqkx1MP+OKvYeLzklkHgpNWRBUy7dgN7v9gzkjB62o3toWHv4y4VPYOaJ+HJPRigdVtX03ng==
+"@miksu/create-universal-package@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@miksu/create-universal-package/-/create-universal-package-0.0.3.tgz#73ab4c771372d2ed32294ffc51350066d8c392cb"
+  integrity sha512-GfO6PldOx2fll/RzPJZxRKYibaoHDdPA0M4Fbq3O5rhhZxknVUHuqB0vdi6YWrElK1g5opx2Lau1qbal/CUXEg==
   dependencies:
     "@babel/core" "^7.10.5"
     "@babel/plugin-syntax-flow" "^7.10.4"

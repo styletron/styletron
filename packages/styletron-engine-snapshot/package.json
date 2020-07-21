@@ -37,7 +37,7 @@
     "styletron-standard": "^3.0.1"
   },
   "devDependencies": {
-    "@miksu/create-universal-package": "0.0.2",
+    "@miksu/create-universal-package": "^0.0.3",
     "styletron-standard": "^3.0.4",
     "tape": "4.9.1",
     "unitest": "^2.1.1"

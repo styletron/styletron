@@ -33,7 +33,7 @@
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
-    "@miksu/create-universal-package": "0.0.2",
+    "@miksu/create-universal-package": "^0.0.3",
     "tape": "4.9.1",
     "unitest": "^2.1.1"
   },
