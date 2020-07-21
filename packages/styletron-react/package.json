@@ -6,25 +6,21 @@
   "repository": "styletron/styletron",
   "sideEffects": false,
   "files": [
-    "dist",
+    "dist-browser-cjs",
+    "dist-browser-esm",
+    "dist-node-cjs",
+    "dist-node-esm",
     "src",
     "!__tests__"
   ],
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
+  "main": "./dist-node-cjs/index.js",
+  "module": "./dist-node-esm/index.js",
   "browser": {
-    "./dist/index.js": "./dist/browser.es5.js",
-    "./dist/index.es.js": "./dist/browser.es5.es.js"
-  },
-  "es2015": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2015.es.js"
-  },
-  "es2017": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
-    "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
+    "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
+    "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
-    "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist/",
+    "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist-node-cjs/",
     "pretest": "cup build-tests",
     "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
     "prepublish": "npm run build"
@@ -39,8 +35,8 @@
   "devDependencies": {
     "@types/react": "^16.8.23",
     "@types/webpack-env": "^1.17.0",
-    "@babel/preset-react": "7.0.0-beta.56",
-    "create-universal-package": "3.2.4",
+    "@babel/preset-react": "^7.17.12",
+    "@zxbodya/create-universal-package": "^4.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint-plugin-react": "^7.6.1",
