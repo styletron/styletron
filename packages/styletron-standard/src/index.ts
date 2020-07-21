@@ -2,9 +2,21 @@ import type {
   Properties,
   FontFace as FontFaceObject,
   KeyframesObject,
+  KeyframesPercentageObject,
+  TLength,
+  AnimationNameProperty,
+  FontFamilyProperty,
 } from "./style-types";
 
-export type {FontFaceObject, KeyframesObject};
+export type {
+  FontFaceObject,
+  KeyframesObject,
+  KeyframesPercentageObject,
+  Properties,
+  TLength,
+  AnimationNameProperty,
+  FontFamilyProperty,
+};
 
 export interface NestedStyleObject {
   [x: string]: StyleObject;
