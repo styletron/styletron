@@ -4,75 +4,75 @@
 
 import StyletronServer from "../../server/server.js";
 import StyletronClient from "../client.js";
-import test from "tape";
 const reduce = Array.prototype.reduce;
 const map = Array.prototype.map;
 
-test("container config", t => {
+test("container config", () => {
   const instance = new StyletronClient();
-  t.strictEqual(
-    instance.container,
-    document.head,
-    "container defaults to document.head",
-  );
-  t.end();
+  expect(instance.container).toBe(document.head);
 });
 
-test("automatic stylesheet insertion", t => {
+test("automatic stylesheet insertion", () => {
   const container = document.createElement("div");
   document.body && document.body.appendChild(container);
   const instance = new StyletronClient({container});
-  t.strictEqual(instance.container, container, "uses container config");
+  expect(instance.container).toStrictEqual(container);
   // lazy instantiation
-  t.equal(document.styleSheets.length, 0, "sheet not yet instantiated");
-  t.equal(
-    instance.renderStyle({color: "purple"}),
-    "ae",
-    "new unique class returned",
-  );
-  t.equal(document.styleSheets.length, 1, "sheet added");
+  expect(document.styleSheets.length).toBe(0);
+  expect(instance.renderStyle({color: "purple"})).toBe("ae");
+  expect(document.styleSheets.length).toBe(1);
   instance.container.remove();
-  t.equal(document.styleSheets.length, 0, "no sheets after container removed");
-  t.end();
+  expect(document.styleSheets.length).toBe(0);
 });
 
-test("rendering", t => {
+test("rendering", () => {
   const container = document.createElement("div");
   document.body && document.body.appendChild(container);
   const instance = new StyletronClient({container});
-  t.equal(
-    instance.renderStyle({color: "purple"}),
-    "ae",
-    "new unique class returned",
-  );
-  t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".ae { color: purple; }"]},
+
+  expect(instance.renderStyle({color: "purple"})).toBe("ae");
+  expect(sheetsToRules(document.styleSheets)).toEqual([
+    {media: "", rules: [".ae {color: purple;}"]},
   ]);
-  t.equal(
+
+  expect(
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
     }),
-    "af",
-    "new unique class returned",
-  );
-  t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".ae { color: purple; }"]},
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+  ).toBe("af");
+  expect(sheetsToRules(document.styleSheets)).toEqual([
+    {media: "", rules: [".ae {color: purple;}"]},
+    {media: "(min-width: 800px)", rules: [".af {color: purple;}"]},
   ]);
-  instance.renderStyle({
-    userSelect: "none",
-  });
-  t.deepEqual(sheetsToRules(document.styleSheets), [
+
+  instance.renderStyle({userSelect: "none"});
+  expect(sheetsToRules(document.styleSheets)).toEqual([
     {
       media: "",
-      rules: [".ae { color: purple; }", ".ag { user-select: none; }"],
+      rules: [".ae {color: purple;}", ".ag {user-select: none;}"],
     },
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".af {color: purple;}"]},
   ]);
+
+  instance.renderStyle({display: "flex"});
+  expect(sheetsToRules(document.styleSheets)).toEqual([
+    {
+      media: "",
+      rules: [
+        ".ae {color: purple;}",
+        ".ag {user-select: none;}",
+        ".ah {display: flex;}",
+      ],
+    },
+    {media: "(min-width: 800px)", rules: [".af {color: purple;}"]},
+  ]);
+
   instance.renderStyle({
-    display: "flex",
+    "@media (min-width: 600px)": {
+      color: "red",
+    },
   });
-  t.deepEqual(sheetsToRules(document.styleSheets), [
+  expect(sheetsToRules(document.styleSheets)).toEqual([
     {
       media: "",
       rules: [
@@ -81,53 +81,23 @@ test("rendering", t => {
         ".ah { display: flex; }",
       ],
     },
+    {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
     {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
   ]);
-  instance.renderStyle({
-    "@media (min-width: 600px)": {
-      color: "red",
-    },
-  });
-  t.deepEqual(
-    sheetsToRules(document.styleSheets),
-    [
-      {
-        media: "",
-        rules: [
-          ".ae { color: purple; }",
-          ".ag { user-select: none; }",
-          ".ah { display: flex; }",
-        ],
-      },
-      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
-      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
-    ],
-    "media queries are mobile first sorted",
-  );
   instance.container.remove();
-  t.end();
 });
 
-test("prefix", t => {
+test("prefix", () => {
   const container = document.createElement("div");
   document.body && document.body.appendChild(container);
   const instance = new StyletronClient({container, prefix: "foo_"});
-  t.equal(
-    instance.renderStyle({color: "purple"}),
-    "foo_ae",
-    "new unique class returned",
-  );
-  t.equal(
-    instance.renderFontFace({src: "url(blah)"}),
-    "foo_ae",
-    "new unique font family returned",
-  );
-  t.equal(
+
+  expect(instance.renderStyle({color: "purple"})).toBe("foo_ae");
+  expect(instance.renderFontFace({src: "url(blah)"})).toBe("foo_ae");
+  expect(
     instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
-    "foo_ae",
-    "new unique animation name returned",
-  );
-  t.deepEqual(sheetsToRules(document.styleSheets), [
+  ).toBe("foo_ae");
+  expect(sheetsToRules(document.styleSheets)).toEqual([
     {
       media: "",
       rules: [
@@ -137,11 +107,11 @@ test("prefix", t => {
       ],
     },
   ]);
+
   instance.container.remove();
-  t.end();
 });
 
-test("hydration", t => {
+test("hydration", () => {
   const {getSheets, cleanup, container} = setup();
 
   // SSR
@@ -159,18 +129,9 @@ test("hydration", t => {
   injectFixtureStyles(instance);
   const afterSheetLength = document.styleSheets.length;
   const afterRules = elementsToRules(getSheets());
-  t.equal(
-    beforeSheetLength,
-    afterSheetLength,
-    "number of stylesheets should not have changed",
-  );
-  t.deepEqual(
-    afterRules,
-    beforeRules,
-    "CSSStylesheet rules not changed after rendering hydrated styles",
-  );
+  expect(beforeSheetLength).toBe(afterSheetLength);
+  expect(afterRules).toEqual(beforeRules);
   cleanup();
-  t.end();
 });
 
 test("sort client media queries", t => {
@@ -184,16 +145,15 @@ test("sort client media queries", t => {
     },
   });
 
-  t.deepEqual(sheetsToRules(document.styleSheets), [
+  expect(sheetsToRules(document.styleSheets)).toEqual([
     {media: "", rules: []},
     {media: "(min-width: 700px)", rules: [".ae { color: pink; }"]},
   ]);
 
   cleanup();
-  t.end();
 });
 
-test("sort a new media query after hydration", t => {
+test("sort a new media query after hydration", () => {
   const {getSheets, cleanup, container} = setup();
 
   // SSR
@@ -221,7 +181,7 @@ test("sort a new media query after hydration", t => {
     },
   });
 
-  t.deepEqual(sheetsToRules(document.styleSheets), [
+  expect(sheetsToRules(document.styleSheets)).toEqual([
     {
       media: "",
       rules: [
@@ -249,7 +209,6 @@ test("sort a new media query after hydration", t => {
   ]);
 
   cleanup();
-  t.end();
 });
 
 function injectFixtureStyles(styletron) {
@@ -329,6 +288,8 @@ function sheetsToRules(sheets) {
     (acc, sheet) => {
       return [
         ...acc,
+        // JSDOM does not support reading the media property... will likely need to
+        // figure out another way to unit test this feature.
         {media: sheet.media.mediaText, rules: sheetToRules(sheet)},
       ];
     },

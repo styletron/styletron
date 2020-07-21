@@ -1,0 +1,9 @@
+{
+  "plugins": ["@babel/plugin-transform-flow-strip-types"],
+  "env": {
+    "test": {
+      "plugins": ["@babel/plugin-transform-flow-strip-types"],
+      "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]]
+    }
+  }
+}
