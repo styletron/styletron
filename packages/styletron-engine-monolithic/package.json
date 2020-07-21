@@ -4,7 +4,9 @@
   "description": "Universal, high-performance JavaScript styles",
   "author": "Vojtech Miksu <vojtech@miksu.cz>",
   "repository": "styletron/styletron",
+  "sideEffects": false,
   "files": [
+    "dist",
     "dist-browser-cjs",
     "dist-browser-esm",
     "dist-node-cjs",
@@ -12,15 +14,16 @@
     "src",
     "!__tests__"
   ],
-  "sideEffects": false,
   "main": "./dist-node-cjs/index.js",
   "module": "./dist-node-esm/index.js",
+  "types": "./dist/index.d.ts",
   "browser": {
     "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
     "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
-    "build": "cup-build --force-flow",
+    "build": "cup build --skip-flow && yarn libdefs",
+    "libdefs": "yarn tsc && yarn api-extractor run && yarn flowgen dist/index.d.ts -o dist-node-cjs/index.js.flow",
     "test": "jest",
     "prepublish": "npm run build"
   },
@@ -29,6 +32,7 @@
     "styletron-standard": "^3.0.4"
   },
   "devDependencies": {
+    "@miksu/create-universal-package": "0.0.2",
     "@babel/plugin-transform-flow-strip-types": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "create-universal-package": "^4.1.1",

@@ -19,27 +19,27 @@ import {
   hashCssObject,
 } from "../css";
 
-declare var __DEV__: boolean;
-type hydrateT = HTMLCollection | Array<HTMLStyleElement> | NodeList;
+export type clientCacheT = {
+  [key: string]: true;
+};
 
-type optionsT = {
+declare var __DEV__: boolean;
+export type hydrateT = HTMLCollection | Array<HTMLStyleElement> | NodeList;
+
+export type clientOptionsT = {
   hydrate?: hydrateT;
   container?: Element;
   prefix?: string;
   strict?: boolean;
 };
 
-type cacheT = {
-  [key: string]: true;
-};
-
 class StyletronClient implements StandardEngine {
   container: Element;
-  opts: optionsT;
+  opts: clientOptionsT;
   styleSheet: StyleSheet;
-  cache: cacheT;
+  cache: clientCacheT;
 
-  constructor(opts: optionsT = {}) {
+  constructor(opts: clientOptionsT = {}) {
     this.opts = opts || {};
     this.cache = {};
 

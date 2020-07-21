@@ -22,20 +22,20 @@ export type sheetT = {
   };
 };
 
-export type optionsT = {
+export type serverOptionsT = {
   prefix?: string;
   strict?: boolean;
 };
 
-export type cacheT = {
+export type serverCacheT = {
   [key: string]: string;
 };
 
 class StyletronServer implements StandardEngine {
-  cache: cacheT;
-  opts: optionsT;
+  cache: serverCacheT;
+  opts: serverOptionsT;
 
-  constructor(opts: optionsT = {}) {
+  constructor(opts: serverOptionsT = {}) {
     this.opts = opts || {};
     this.cache = {};
   }
