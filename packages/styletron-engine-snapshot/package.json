@@ -4,28 +4,26 @@
   "description": "Universal, high-performance JavaScript styles",
   "author": "Mo Kouli <mohamad.kouli@gmail.com>",
   "repository": "styletron/styletron",
+  "sideEffects": false,
   "files": [
     "dist",
+    "dist-browser-cjs",
+    "dist-browser-esm",
+    "dist-node-cjs",
+    "dist-node-esm",
     "src",
     "!__tests__"
   ],
-  "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
-  "types": "./lib/index.d.ts",
+  "main": "./dist-node-cjs/index.js",
+  "module": "./dist-node-esm/index.js",
+  "types": "./dist/index.d.ts",
   "browser": {
-    "./dist/index.js": "./dist/browser.es5.js",
-    "./dist/index.es.js": "./dist/browser.es5.es.js"
-  },
-  "es2015": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2015.es.js"
-  },
-  "es2017": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
-    "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
+    "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
+    "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
-    "build": "cup build --force-flow",
+    "build": "cup build --skip-flow && yarn libdefs",
+    "libdefs": "yarn tsc && yarn api-extractor run && yarn flowgen dist/index.d.ts -o dist-node-cjs/index.js.flow",
     "pretest": "cup build-tests",
     "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
     "prepublish": "npm run build"
@@ -38,7 +36,7 @@
     "styletron-standard": "^3.0.1"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
+    "@miksu/create-universal-package": "0.0.2",
     "styletron-standard": "^3.0.4",
     "tape": "4.9.1",
     "unitest": "^2.1.1"
