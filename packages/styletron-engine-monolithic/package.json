@@ -6,7 +6,6 @@
   "repository": "styletron/styletron",
   "sideEffects": false,
   "files": [
-    "lib",
     "dist-browser-cjs",
     "dist-browser-esm",
     "dist-node-cjs",
