@@ -9836,14 +9836,6 @@ styled-jsx@3.2.2:
     stylis "3.5.4"
     stylis-rule-sheet "0.0.10"
 
-styletron-react@^5.2.7:
-  version "5.2.7"
-  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-5.2.7.tgz#7aa283a0b06787024f96289480c60bafed5048cf"
-  integrity sha512-PUUf7MAv9aaO8oT0B4ryPreeLi3BT1kQ7WIDNhkkpLkvCzk+pOvmtaZJJZRIxWPimj8756rLZqpF7/2ssF9KhQ==
-  dependencies:
-    prop-types "^15.6.0"
-    styletron-standard "^3.0.4"
-
 stylis-rule-sheet@0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"

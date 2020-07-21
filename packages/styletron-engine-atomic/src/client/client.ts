@@ -48,6 +48,7 @@ import type {
 } from "styletron-standard";
 
 import {Cache, MultiCache} from "../cache";
+export {Cache, MultiCache};
 
 import injectStylePrefixed from "../inject-style-prefixed";
 
@@ -61,12 +62,12 @@ import {
 } from "../css";
 import {insertRuleIntoDevtools, hydrateDevtoolsRule} from "../dev-tool";
 
-type hydrateT =
+export type hydrateT =
   | HTMLCollectionOf<HTMLStyleElement>
   | Array<HTMLStyleElement>
   | NodeListOf<HTMLStyleElement>;
 
-type optionsT = {
+export type clientOptionsT = {
   hydrate?: hydrateT;
   container?: Element;
   prefix?: string;
@@ -87,7 +88,7 @@ class StyletronClient implements StandardEngine {
   keyframesCache: Cache<KeyframesObject>;
   fontFaceCache: Cache<FontFaceObject>;
 
-  constructor(opts: optionsT = {}) {
+  constructor(opts: clientOptionsT = {}) {
     this.styleElements = {};
 
     const styleIdGenerator = new SequentialIDGenerator(opts.prefix);
