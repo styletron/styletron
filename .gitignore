@@ -7,6 +7,10 @@ lib/
 dist/
 dist-*/
 dist-tests/
+dist-browser-cjs/
+dist-browser-esm/
+dist-node-cjs/
+dist-node-esm/
 yarn-error.log
 .next
 .idea
