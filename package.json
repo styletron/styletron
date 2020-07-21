@@ -6,11 +6,11 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
+    "clean": "lerna run clean && lerna clean --yes",
     "lint": "eslint --ignore-path .gitignore --ext js,ts,tsx .",
     "pretest": "yarn run lint && yarn run tscheck",
     "test": "lerna run test",
-    "build": "lerna run build",
+    "build": "yarn tscheck && lerna run build",
     "tscheck": "tsc -b",
     "publish": "lerna publish --npm-client=npm",
     "playground": "lerna run --scope playground dev --stream"
@@ -29,6 +29,7 @@
     "flowgen": "^1.11.0",
     "lerna": "^2.11.0",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.6"
   },
   "license": "MIT"

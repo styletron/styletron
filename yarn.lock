@@ -9931,10 +9931,17 @@ rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
+<<<<<<< HEAD
 rimraf@^3.0.0:
   version "3.0.2"
   resolved "https://unpm.uberinternal.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
   integrity sha1-8aVAK6YiCtUswSgrrBrjqkn9Bho=
+=======
+rimraf@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
+  integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
+>>>>>>> 30e5081... global clean
   dependencies:
     glob "^7.1.3"
 

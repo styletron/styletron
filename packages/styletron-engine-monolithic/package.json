@@ -6,7 +6,7 @@
   "repository": "styletron/styletron",
   "sideEffects": false,
   "files": [
-    "dist",
+    "lib",
     "dist-browser-cjs",
     "dist-browser-esm",
     "dist-node-cjs",
@@ -16,14 +16,15 @@
   ],
   "main": "./dist-node-cjs/index.js",
   "module": "./dist-node-esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./lib/index.d.ts",
   "browser": {
     "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
     "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
     "build": "cup build --skip-flow && yarn libdefs",
-    "libdefs": "yarn tsc && yarn api-extractor run && yarn flowgen dist/index.d.ts -o dist-node-cjs/index.js.flow",
+    "clean": "rimraf dist* && rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "libdefs": "yarn api-extractor run && yarn flowgen dist/index.d.ts --add-flow-header -o dist-node-cjs/index.js.flow",
     "test": "jest",
     "prepublish": "npm run build"
   },
