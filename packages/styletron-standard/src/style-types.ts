@@ -23,7 +23,7 @@ export type FontFace = CTFontFace;
 
 export type FontFamilyProperty = CTFontFamilyProperty | FontFace;
 
-type TLength = string | 0;
+export type TLength = string | 0;
 export type Properties = {
   animationName?: AnimationNameProperty;
   fontFamily?: FontFamilyProperty | FontFamilyProperty[];
