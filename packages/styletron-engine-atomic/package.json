@@ -33,10 +33,12 @@
     "styletron-standard": "^3.0.4"
   },
   "devDependencies": {
-    "@miksu/create-universal-package": "^0.0.3",
     "@babel/plugin-transform-flow-strip-types": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
-    "create-universal-package": "^4.1.1",
+    "@babel/preset-typescript": "^7.10.4",
+    "@miksu/create-universal-package": "^0.0.3",
+    "@types/jest": "^26.0.5",
+    "@types/mocha": "^8.0.0",
     "jest": "^26.1.0"
   },
   "license": "MIT"
