@@ -452,8 +452,9 @@ export function composeStatic(
         base: styletron.base,
         driver: styletron.driver,
         wrapper: styletron.wrapper,
-        // @ts-ignore
-        reducers: [last.factory(composed)].concat(styletron.reducers.slice(1)),
+        reducers: [last.factory(composed)].concat(
+          styletron.reducers.slice(1) as any,
+        ),
       };
 
       if (__BROWSER__ && __DEV__) {

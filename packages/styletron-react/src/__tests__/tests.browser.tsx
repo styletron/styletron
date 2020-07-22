@@ -14,7 +14,7 @@ import {
 } from "../index";
 
 import {getInitialStyle, driver} from "styletron-standard";
-import {StyleObject} from "styletron-standard";
+import type {StyleObject} from "styletron-standard";
 
 Enzyme.configure({adapter: new Adapter()});
 
