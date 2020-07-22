@@ -28,7 +28,7 @@ test("StyletronSnapshotEngine rendering", t => {
         content: `"Hello World"`,
       },
     }),
-    "style={\n  ':after': { content: '\"Hello World\"' }\n}\n",
+    "style={\n  ':after': {\n    content: '\"Hello World\"',\n  },\n}\n",
     "render style and preserve '\"' in content",
   );
 
@@ -36,7 +36,7 @@ test("StyletronSnapshotEngine rendering", t => {
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
     }),
-    "style={\n  '@media (min-width: 800px)': {\n    color: 'purple'\n  }\n}\n",
+    "style={\n  '@media (min-width: 800px)': {\n    color: 'purple',\n  },\n}\n",
     "render media query style",
   );
 
@@ -60,7 +60,7 @@ test("StyletronSnapshotEngine rendering", t => {
         color: "orange",
       },
     }),
-    "keyFrames={\n  '50%': { color: 'yellow' },\n  from: { color: 'purple' },\n  to: { color: 'orange' }\n}\n",
+    "keyFrames={\n  '50%': { color: 'yellow' },\n  from: { color: 'purple' },\n  to: { color: 'orange' },\n}\n",
     "render keyframes",
   );
 
