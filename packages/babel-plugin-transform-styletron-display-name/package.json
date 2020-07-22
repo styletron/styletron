@@ -6,16 +6,15 @@
   "repository": "styletron/styletron",
   "main": "./src/index.js",
   "scripts": {
-    "test": "unitest --node=src/__tests__/test.node.js"
+    "test": "tape src/__tests__/test.node.js"
   },
   "files": [
     "src/index.js"
   ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "tape": "^4.9.2",
-    "unitest": "^2.1.1"
+    "@babel/core": "^7.18.2",
+    "tape": "^5.5.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0-0"

@@ -6,7 +6,6 @@
   "repository": "styletron/styletron",
   "sideEffects": false,
   "files": [
-    "dist",
     "dist-browser-cjs",
     "dist-browser-esm",
     "dist-node-cjs",
@@ -22,8 +21,7 @@
   },
   "scripts": {
     "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist-node-cjs/",
-    "pretest": "cup build-tests",
-    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+    "test": "jest",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -32,8 +30,11 @@
   },
   "devDependencies": {
     "@zxbodya/create-universal-package": "^4.2.0",
-    "tape": "4.9.1",
-    "unitest": "^2.1.1"
+    "@babel/plugin-transform-flow-strip-types": "^7.17.12",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "@types/jest": "^27.5.1",
+    "jest": "^27.5.1"
   },
   "license": "MIT"
 }

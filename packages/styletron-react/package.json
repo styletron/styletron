@@ -21,8 +21,7 @@
   },
   "scripts": {
     "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist-node-cjs/",
-    "pretest": "cup build-tests",
-    "test": "../../node_modules/.bin/unitest --browser=dist-tests/browser.js --node=dist-tests/node.js",
+    "test": "jest",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -37,12 +36,13 @@
     "@types/webpack-env": "^1.17.0",
     "@babel/preset-react": "^7.17.12",
     "@zxbodya/create-universal-package": "^4.2.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint-plugin-react": "^7.6.1",
+    "@types/jest": "^27.5.1",
+    "jest": "^27.5.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "unitest": "^2.1.1"
+    "react-dom": "^16.8.6"
   },
   "license": "MIT"
 }

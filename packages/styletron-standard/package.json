@@ -6,7 +6,6 @@
   "repository": "styletron/styletron",
   "sideEffects": false,
   "files": [
-    "dist",
     "dist-browser-cjs",
     "dist-browser-esm",
     "dist-node-cjs",
@@ -22,7 +21,7 @@
   },
   "scripts": {
     "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist-node-cjs/",
-    "pretest": "cup build-tests",
+    "test": "echo OK",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -31,9 +30,7 @@
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
-    "@zxbodya/create-universal-package": "^4.2.0",
-    "tape": "4.9.1",
-    "unitest": "^2.1.1"
+    "@zxbodya/create-universal-package": "^4.2.0"
   },
   "license": "MIT"
 }
