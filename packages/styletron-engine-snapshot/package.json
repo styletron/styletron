@@ -25,8 +25,7 @@
     "build": "cup build --skip-flow && yarn libdefs",
     "clean": "rimraf dist* && rimraf lib && rimraf tsconfig.tsbuildinfo",
     "libdefs": "yarn api-extractor run && yarn flowgen dist/index.d.ts --add-flow-header -o dist-node-cjs/index.js.flow",
-    "pretest": "cup build-tests",
-    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+    "test": "jest",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -38,9 +37,10 @@
   },
   "devDependencies": {
     "@miksu/create-universal-package": "^0.0.3",
-    "styletron-standard": "^3.0.4",
-    "tape": "4.9.1",
-    "unitest": "^2.1.1"
+    "@types/jest": "^26.0.5",
+    "@types/mocha": "^8.0.0",
+    "jest": "^26.1.0",
+    "styletron-standard": "^3.0.4"
   },
   "license": "MIT"
 }

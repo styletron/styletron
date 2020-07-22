@@ -1,52 +1,40 @@
-import test from "tape";
-
 import {Client, Server, StyletronSnapshotEngine} from "../index";
 
-test("index", t => {
-  t.true(
-    Client === Server && Client === StyletronSnapshotEngine,
-    "Client === Server === StyletronSnapshotEngine",
-  );
-  t.end();
+test("index", () => {
+  expect(Client === Server && Client === StyletronSnapshotEngine).toBe(true);
 });
 
-test("StyletronSnapshotEngine rendering", t => {
+test("StyletronSnapshotEngine rendering", () => {
   const instance = new StyletronSnapshotEngine();
 
-  t.equal(
-    instance.renderStyle({color: "purple"}),
+  expect(instance.renderStyle({color: "purple"})).toBe(
     "style={ color: 'purple' }\n",
-    "render regular style",
   );
 
   // @see: https://github.com/styletron/styletron/pull/342/files#r335055216
-  t.equal(
+  expect(
     instance.renderStyle({
       ":after": {
         content: `"Hello World"`,
       },
     }),
-    "style={\n  ':after': { content: '\"Hello World\"' }\n}\n",
-    "render style and preserve '\"' in content",
-  );
+  ).toBe("style={\n  ':after': {\n    content: '\"Hello World\"',\n  },\n}\n");
 
-  t.equal(
+  expect(
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
     }),
-    "style={\n  '@media (min-width: 800px)': {\n    color: 'purple'\n  }\n}\n",
-    "render media query style",
+  ).toBe(
+    "style={\n  '@media (min-width: 800px)': {\n    color: 'purple',\n  },\n}\n",
   );
 
-  t.equal(
+  expect(
     instance.renderFontFace({
       src: "local('Roboto')",
     }),
-    "fontFace={ src: \"local('Roboto')\" }\n",
-    "render font face",
-  );
+  ).toBe("fontFace={ src: \"local('Roboto')\" }\n");
 
-  t.equal(
+  expect(
     instance.renderKeyframes({
       from: {
         color: "purple",
@@ -58,9 +46,7 @@ test("StyletronSnapshotEngine rendering", t => {
         color: "orange",
       },
     }),
-    "keyFrames={\n  '50%': { color: 'yellow' },\n  from: { color: 'purple' },\n  to: { color: 'orange' }\n}\n",
-    "render keyframes",
+  ).toBe(
+    "keyFrames={\n  '50%': { color: 'yellow' },\n  from: { color: 'purple' },\n  to: { color: 'orange' },\n}\n",
   );
-
-  t.end();
 });
