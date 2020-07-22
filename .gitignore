@@ -6,6 +6,7 @@ lerna-debug.log
 lib/
 dist/
 dist-*/
+dist-tests/
 yarn-error.log
 .next
 .idea

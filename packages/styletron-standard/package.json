@@ -25,7 +25,6 @@
     "build": "cup build --skip-flow && yarn libdefs",
     "clean": "rimraf dist* && rimraf lib && rimraf tsconfig.tsbuildinfo",
     "libdefs": "yarn api-extractor run && yarn flowgen dist/index.d.ts --add-flow-header -o dist-node-cjs/index.js.flow",
-    "pretest": "cup build-tests",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -33,9 +32,7 @@
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
-    "@miksu/create-universal-package": "^0.0.3",
-    "tape": "4.9.1",
-    "unitest": "^2.1.1"
+    "@miksu/create-universal-package": "^0.0.3"
   },
   "license": "MIT"
 }
