@@ -3779,11 +3779,6 @@ dedent@^0.7.0:
   resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
   integrity sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=
 
-deep-equal@~1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
-  integrity sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
-
 deep-equal@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
@@ -4190,7 +4185,7 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
-es-abstract@^1.17.0, es-abstract@^1.17.0-next.1, es-abstract@^1.17.2, es-abstract@^1.17.4, es-abstract@^1.17.5, es-abstract@^1.5.0:
+es-abstract@^1.17.0, es-abstract@^1.17.0-next.1, es-abstract@^1.17.2, es-abstract@^1.17.4, es-abstract@^1.17.5:
   version "1.17.6"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.17.6.tgz#9142071707857b2cacc7b89ecb670316c3e2d52a"
   integrity sha512-Fr89bON3WFyUi5EvAeI48QTWX0AyekGgLA8H+c+7fbfCkJwRWRMLd8CQedNEyJuoYYhmtEqY92pgte1FAhBlhw==
@@ -4887,7 +4882,7 @@ fsevents@^2.1.2, fsevents@~2.1.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.3.tgz#fb738703ae8d2f9fe900c33836ddebee8b97f23e"
   integrity sha512-Auw9a4AxqWpa9GUfj370BMPzzyncfBABW8Mab7BGWBYDj4Isgq+cDKtx0i6u9jcX9pQDnswsaaOTgTmA5pEjuQ==
 
-function-bind@^1.0.2, function-bind@^1.1.1, function-bind@~1.1.1:
+function-bind@^1.1.1, function-bind@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
@@ -5051,7 +5046,7 @@ glob-to-regexp@^0.4.1:
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
   integrity sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@~7.1.2, glob@~7.1.6:
+glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@~7.1.6:
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
@@ -7038,7 +7033,7 @@ minimist@^0.1.0:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.1.0.tgz#99df657a52574c21c9057497df742790b2b4c0de"
   integrity sha1-md9lelJXTCHJBXSX33QnkLK0wN4=
 
-minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5, minimist@~1.2.0, minimist@~1.2.5:
+minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5, minimist@~1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
@@ -7466,11 +7461,6 @@ object-inspect@^1.7.0:
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.8.0.tgz#df807e5ecf53a609cc6bfe93eac3cc7be5b3a9d0"
   integrity sha512-jLdtEOB112fORuypAyl/50VRVIBIdVQOSUUGQHzJ4xBSbit81zRarz7GThkEFZy1RceYrWYcPcBFPQwHyAc1gA==
 
-object-inspect@~1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.6.0.tgz#c70b6cbf72f274aab4c34c0c82f5167bf82cf15b"
-  integrity sha512-GJzfBZ6DgDAmnuaM3104jR4s1Myxr3Y3zfIyN4z3UdqN69oSRacNK8UhnobDdC+7J2AHCjGwxQubNJfE70SXXQ==
-
 object-inspect@~1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.7.0.tgz#f4f6bd181ad77f006b5ece60bd0b6f398ff74a67"
@@ -7801,7 +7791,7 @@ path-key@^3.0.0, path-key@^3.1.0:
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3380de7753295054f375"
   integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
 
-path-parse@^1.0.5, path-parse@^1.0.6:
+path-parse@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
   integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
@@ -8902,13 +8892,6 @@ resolve@^1.1.6, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.17.0, resolve@^1.3.
   dependencies:
     path-parse "^1.0.6"
 
-resolve@~1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.7.1.tgz#aadd656374fd298aee895bc026b8297418677fd3"
-  integrity sha512-c7rwLofp8g1U+h1KNyHL/jicrKg1Ek4q+Lr33AL65uZTinUZHe30D5HlyN5V9NW0JX1D5dXQ4jqW5l7Sy/kGfw==
-  dependencies:
-    path-parse "^1.0.5"
-
 restore-cursor@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -9603,15 +9586,6 @@ string.prototype.trim@^1.2.1, string.prototype.trim@~1.2.1:
     es-abstract "^1.17.0-next.1"
     function-bind "^1.1.1"
 
-string.prototype.trim@~1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/string.prototype.trim/-/string.prototype.trim-1.1.2.tgz#d04de2c89e137f4d7d206f086b5ed2fae6be8cea"
-  integrity sha1-0E3iyJ4Tf019IG8Ia17S+ua+jOo=
-  dependencies:
-    define-properties "^1.1.2"
-    es-abstract "^1.5.0"
-    function-bind "^1.0.2"
-
 string.prototype.trimend@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/string.prototype.trimend/-/string.prototype.trimend-1.0.1.tgz#85812a6b847ac002270f5808146064c995fb6913"
@@ -9865,25 +9839,6 @@ tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.3.tgz#a1fccc06b58db61fd7a45da2da44f5f3a3e67ba2"
   integrity sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA==
-
-tape@4.9.1:
-  version "4.9.1"
-  resolved "https://registry.yarnpkg.com/tape/-/tape-4.9.1.tgz#1173d7337e040c76fbf42ec86fcabedc9b3805c9"
-  integrity sha512-6fKIXknLpoe/Jp4rzHKFPpJUHDHDqn8jus99IfPnHIjyz78HYlefTGD3b5EkbQzuLfaEvmfPK3IolLgq2xT3kw==
-  dependencies:
-    deep-equal "~1.0.1"
-    defined "~1.0.0"
-    for-each "~0.3.3"
-    function-bind "~1.1.1"
-    glob "~7.1.2"
-    has "~1.0.3"
-    inherits "~2.0.3"
-    minimist "~1.2.0"
-    object-inspect "~1.6.0"
-    resolve "~1.7.1"
-    resumer "~0.0.0"
-    string.prototype.trim "~1.1.2"
-    through "~2.3.8"
 
 tape@^4.9.2:
   version "4.13.3"

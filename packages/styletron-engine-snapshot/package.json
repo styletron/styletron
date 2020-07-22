@@ -36,6 +36,7 @@
     "styletron-standard": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.10.4",
     "@miksu/create-universal-package": "^0.0.3",
     "@types/jest": "^26.0.5",
     "@types/mocha": "^8.0.0",

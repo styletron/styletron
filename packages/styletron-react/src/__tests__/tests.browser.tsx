@@ -1,4 +1,3 @@
-import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import * as React from "react";
@@ -18,15 +17,14 @@ import {StyleObject} from "styletron-standard";
 
 Enzyme.configure({adapter: new Adapter()});
 
-test("styled (static)", t => {
-  t.plan(3);
+test("styled (static)", () => {
   const style = {color: "red"};
   const Widget = styled("div", style);
   Enzyme.mount(
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, style);
+          expect(x).toEqual(style);
           return "";
         },
         renderKeyframes: () => "",
@@ -48,13 +46,11 @@ test("styled (static)", t => {
     </Provider>,
   );
   const divs = wrapper.find("div");
-  t.equal(divs.length, 1, "single div rendered");
-  t.ok(divs.hasClass("foo bar"), "explicit and generated class names merged");
-  t.end();
+  expect(divs.length).toBe(1);
+  expect(divs.hasClass("foo bar")).toBe(true);
 });
 
-test("styled (dynamic)", t => {
-  t.plan(1);
+test("styled (dynamic)", () => {
   const Widget = styled("div", (props: {$foo: boolean}) => ({
     color: props.$foo ? "red" : "blue",
   }));
@@ -63,7 +59,7 @@ test("styled (dynamic)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {color: "red"});
+          expect(x).toEqual({color: "red"});
           return "";
         },
         renderKeyframes: () => "",
@@ -73,11 +69,9 @@ test("styled (dynamic)", t => {
       <Widget $foo={true} />
     </Provider>,
   );
-  t.end();
 });
 
-test("withStyle (static)", t => {
-  t.plan(1);
+test("withStyle (static)", () => {
   const Widget = styled("div", {
     borderWidth: 0,
     color: "red",
@@ -91,7 +85,7 @@ test("withStyle (static)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             borderWidth: 0,
             color: "blue",
             ":hover": {fontSize: "12px", borderWidth: "10px"},
@@ -105,11 +99,9 @@ test("withStyle (static)", t => {
       <SuperWidget />
     </Provider>,
   );
-  t.end();
 });
 
-test("withStyle (dynamic)", t => {
-  t.plan(1);
+test("withStyle (dynamic)", () => {
   const Widget = styled("div", {
     lineHeight: 1,
     color: "red",
@@ -123,12 +115,13 @@ test("withStyle (dynamic)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             color: "red",
             background: "yellow",
             lineHeight: 1,
             ":hover": {borderWidth: 0, fontSize: "12px"},
           });
+
           return "";
         },
         renderKeyframes: () => "",
@@ -138,11 +131,9 @@ test("withStyle (dynamic)", t => {
       <SuperWidget $round={true} />
     </Provider>,
   );
-  t.end();
 });
 
-test("$style prop (static)", t => {
-  t.plan(1);
+test("$style prop (static)", () => {
   const Widget = styled("div", {
     lineHeight: 1,
     color: "red",
@@ -153,7 +144,7 @@ test("$style prop (static)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             color: "blue",
             lineHeight: 1,
             ":hover": {fontSize: "12px"},
@@ -167,11 +158,9 @@ test("$style prop (static)", t => {
       <Widget $style={{color: "blue"}} />
     </Provider>,
   );
-  t.end();
 });
 
-test("$style prop (dynamic)", t => {
-  t.plan(1);
+test("$style prop (dynamic)", () => {
   const Widget = styled<"div", {$round: boolean}>("div", {
     lineHeight: 1,
     color: "red",
@@ -182,7 +171,7 @@ test("$style prop (dynamic)", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             color: "blue",
             background: "yellow",
             lineHeight: 1,
@@ -204,11 +193,9 @@ test("$style prop (dynamic)", t => {
       />
     </Provider>,
   );
-  t.end();
 });
 
-test("$style overrides nested withStyle", t => {
-  t.plan(1);
+test("$style overrides nested withStyle", () => {
   const Widget = styled("div", {
     color: "red",
     fontSize: "12px",
@@ -221,7 +208,7 @@ test("$style overrides nested withStyle", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             color: "yellow",
             fontSize: "14px",
             padding: "10px",
@@ -240,11 +227,9 @@ test("$style overrides nested withStyle", t => {
       />
     </Provider>,
   );
-  t.end();
 });
 
-test("withTransform", t => {
-  t.plan(1);
+test("withTransform", () => {
   const Widget = styled("div", {color: "red", background: "green"});
   const SuperWidget = withTransform(
     Widget,
@@ -257,7 +242,7 @@ test("withTransform", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {color: "red", background: "yellow"});
+          expect(x).toEqual({color: "red", background: "yellow"});
           return "";
         },
         renderFontFace: () => {
@@ -271,14 +256,12 @@ test("withTransform", t => {
       <SuperWidget $round={true} />
     </Provider>,
   );
-  t.end();
 });
 
-test("$as works", t => {
-  t.plan(2);
+test("$as works", () => {
   const Widget = styled("div", {});
   const MockComponent = props => {
-    t.equal(props.className, "foo", "styled class is passed");
+    expect(props.className).toBe("foo");
     return <div />;
   };
   Enzyme.mount(
@@ -303,25 +286,18 @@ test("$as works", t => {
       <Widget $as="span" />
     </Provider>,
   );
-  t.equal(wrapper.find("span").length, 1, "span rendered");
-  t.end();
+  expect(wrapper.find("span").length).toBe(1);
 });
 
-test("$-prefixed props not passed", t => {
-  t.plan(1);
-
+test("$-prefixed props not passed", () => {
   class InnerComponent extends React.Component<{
     className?: string;
   }> {
     render() {
-      t.deepEqual(
-        this.props,
-        {
-          className: "styleclass",
-          "data-bar": "bar",
-        },
-        "props match expected",
-      );
+      expect(this.props).toEqual({
+        className: "styleclass",
+        "data-bar": "bar",
+      });
       return <button>InnerComponent</button>;
     }
   }
@@ -344,14 +320,12 @@ test("$-prefixed props not passed", t => {
   );
 });
 
-test("callback ref forwarding", t => {
-  t.plan(1);
-
+test("callback ref forwarding", () => {
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
     widgetInner: HTMLButtonElement | undefined | null;
     componentDidMount() {
-      t.ok(this.widgetInner instanceof HTMLButtonElement, "is button");
+      expect(this.widgetInner instanceof HTMLButtonElement).toBe(true);
     }
 
     render() {
@@ -375,15 +349,13 @@ test("callback ref forwarding", t => {
   Enzyme.mount(<TestComponent />);
 });
 
-test("React.createRef() ref forwarding", t => {
-  t.plan(1);
-
+test("React.createRef() ref forwarding", () => {
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
     widgetInner = React.createRef<any>();
 
     componentDidMount() {
-      t.ok(this.widgetInner.current instanceof HTMLButtonElement, "is button");
+      expect(this.widgetInner.current instanceof HTMLButtonElement).toBe(true);
     }
 
     render() {
@@ -403,13 +375,12 @@ test("React.createRef() ref forwarding", t => {
   Enzyme.mount(<TestComponent />);
 });
 
-test("React.useRef() ref forwarding", t => {
-  t.plan(1);
+test("React.useRef() ref forwarding", () => {
   const Widget = styled("button", {color: "red"});
   const TestComponent = () => {
     const widgetInner = React.useRef<HTMLButtonElement>(null);
     React.useEffect(() => {
-      t.ok(widgetInner.current instanceof HTMLButtonElement, "is button");
+      expect(widgetInner.current instanceof HTMLButtonElement).toBe(true);
     }, []);
     return (
       <Provider
@@ -427,13 +398,11 @@ test("React.useRef() ref forwarding", t => {
   Enzyme.mount(<TestComponent />);
 });
 
-test("legacy string ref forwarding", t => {
-  t.plan(1);
-
+test("legacy string ref forwarding", () => {
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
     componentDidMount() {
-      t.ok(this.refs.myButton instanceof HTMLButtonElement, "is button");
+      expect(this.refs.myButton instanceof HTMLButtonElement).toBe(true);
     }
     render() {
       return (
@@ -452,13 +421,12 @@ test("legacy string ref forwarding", t => {
   Enzyme.mount(<TestComponent />);
 });
 
-test("withWrapper", t => {
-  t.plan(6);
+test("withWrapper", () => {
   const Widget = styled<"button", {foo?: string}>("button", {
     color: "red",
   });
   const WrappedWidget = withWrapper(Widget, StyledElement => props => {
-    t.deepEqual(props, {foo: "bar"}, "props passed");
+    expect(props).toEqual({foo: "bar"});
     return (
       <section>
         <StyledElement {...props} />
@@ -469,7 +437,7 @@ test("withWrapper", t => {
     <Provider
       value={{
         renderStyle: style => {
-          t.deepEqual(style, {color: "red"});
+          expect(style).toEqual({color: "red"});
           return "";
         },
         renderKeyframes: () => "",
@@ -479,18 +447,14 @@ test("withWrapper", t => {
       <WrappedWidget foo="bar" />
     </Provider>,
   );
-  t.equal(wrapper1.find("section").length, 1, "wrapper rendered");
+  expect(wrapper1.find("section").length).toBe(1);
 
   const DeluxeWrappedWidget = withStyle(WrappedWidget, {color: "blue"});
   const wrapper2 = Enzyme.mount(
     <Provider
       value={{
         renderStyle: style => {
-          t.deepEqual(
-            style,
-            {color: "blue"},
-            "style composition works after wrapping",
-          );
+          expect(style).toEqual({color: "blue"});
           return "";
         },
         renderKeyframes: () => "",
@@ -500,18 +464,10 @@ test("withWrapper", t => {
       <DeluxeWrappedWidget foo="bar" />
     </Provider>,
   );
-  t.equal(
-    wrapper2.find("section").length,
-    1,
-    "wrapper rendered after composition",
-  );
-
-  t.end();
+  expect(wrapper2.find("section").length).toBe(1);
 });
 
-test("styled debug mode (client only)", t => {
-  t.plan(7);
-
+test("styled debug mode (client only)", () => {
   let debugCallCount = 0;
 
   const style = {color: "red"};
@@ -527,18 +483,10 @@ test("styled debug mode (client only)", t => {
       debug={{
         debug: ({stackIndex, stackInfo}) => {
           debugCallCount++;
-          t.equal(stackIndex, 2, "stackIndex matches expected");
-          t.equal(typeof stackInfo, "object", "stackInfo is an object");
-          t.equal(
-            typeof stackInfo.stack,
-            "string",
-            "stackInfo.stack is a string (chrome)",
-          );
-          t.equal(
-            typeof stackInfo.message,
-            "string",
-            "stackInfo.message is a string (chrome)",
-          );
+          expect(stackIndex).toBe(2);
+          expect(typeof stackInfo).toBe("object");
+          expect(typeof stackInfo.stack).toBe("string");
+          expect(typeof stackInfo.message).toBe("string");
           return "__arbitrary_debug_class__";
         },
       }}
@@ -548,16 +496,15 @@ test("styled debug mode (client only)", t => {
   );
 
   const divs = wrapper.find("div");
-  t.equal(divs.length, 1, "single div rendered");
-  t.ok(divs.hasClass("__arbitrary_debug_class__ foo bar"), "adds debug class");
+  expect(divs.length).toBe(1);
+  expect(divs.hasClass("__arbitrary_debug_class__ foo bar")).toBe(true);
   wrapper.unmount();
   wrapper.mount();
   wrapper.unmount();
-  t.equal(debugCallCount, 1, "debug only called on initial render");
+  expect(debugCallCount).toBe(1);
 });
 
-test("styled debug mode (ssr)", t => {
-  t.plan(3);
+test("styled debug mode (ssr)", () => {
   const style = {color: "red"};
   let count = 0;
   const Widget = styled("div", style);
@@ -573,7 +520,7 @@ test("styled debug mode (ssr)", t => {
       }}
       debug={{
         debug: () => {
-          t.equal(count, 2, "debug class fetched during second render");
+          expect(count).toBe(2);
           return "__some_debug_class";
         },
       }}
@@ -583,16 +530,11 @@ test("styled debug mode (ssr)", t => {
     </Provider>,
   );
   const divs = wrapper.find("div");
-  t.equal(count, 2, "renders twice");
-  t.ok(
-    divs.hasClass("__some_debug_class foo"),
-    "explicit and generated class names merged",
-  );
-  t.end();
+  expect(count).toBe(2);
+  expect(divs.hasClass("__some_debug_class foo")).toBe(true);
 });
 
-test("font-face injection", t => {
-  t.plan(2);
+test("font-face injection", () => {
   const fontFace = {
     src: "foo",
   };
@@ -602,13 +544,13 @@ test("font-face injection", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             fontFamily: "foo",
           });
           return "";
         },
         renderFontFace: x => {
-          t.deepEqual(x, fontFace);
+          expect(x).toEqual(fontFace);
           return "foo";
         },
         renderKeyframes: () => "",
@@ -617,11 +559,9 @@ test("font-face injection", t => {
       <Widget />
     </Provider>,
   );
-  t.end();
 });
 
-test("keyframes injection", t => {
-  t.plan(2);
+test("keyframes injection", () => {
   const keyframes = {
     from: {color: "red"},
     to: {color: "green"},
@@ -632,13 +572,11 @@ test("keyframes injection", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
-            animationName: "foo",
-          });
+          expect(x).toEqual({animationName: "foo"});
           return "";
         },
         renderKeyframes: x => {
-          t.deepEqual(x, keyframes);
+          expect(x).toEqual(keyframes);
           return "foo";
         },
         renderFontFace: () => "",
@@ -647,17 +585,14 @@ test("keyframes injection", t => {
       <Widget />
     </Provider>,
   );
-  t.end();
 });
 
-test("createStyled wrapper", t => {
-  t.plan(1);
-
+test("createStyled wrapper", () => {
   const customStyled = createStyled({
     driver,
     getInitialStyle,
     wrapper: _Component => props => {
-      t.equal(props.foo, "foo");
+      expect(props.foo).toBe("foo");
       return <div>hello world</div>;
     },
   });
@@ -675,16 +610,13 @@ test("createStyled wrapper", t => {
       <Widget foo="foo" />
     </Provider>,
   );
-  t.end();
 });
 
-test("useStyletron css", t => {
-  t.plan(2);
-
+test("useStyletron css", () => {
   function Link() {
     const [css] = useStyletron();
     const className = css({color: "blue"});
-    t.equal(className, ".abc");
+    expect(className).toBe(".abc");
     return <a className={className}>Foo</a>;
   }
 
@@ -692,7 +624,7 @@ test("useStyletron css", t => {
     <Provider
       value={{
         renderStyle: x => {
-          t.deepEqual(x, {
+          expect(x).toEqual({
             color: "blue",
           });
           return ".abc";
@@ -704,12 +636,9 @@ test("useStyletron css", t => {
       <Link />
     </Provider>,
   );
-  t.end();
 });
 
-test("useStyletron debug mode", t => {
-  t.plan(3);
-
+test("useStyletron debug mode", () => {
   function Widget() {
     const [css] = useStyletron();
     const [on, setOn] = React.useState(false);
@@ -741,19 +670,17 @@ test("useStyletron debug mode", t => {
   );
 
   const button = wrapper.find("button");
-  t.ok(button.hasClass("__debug-1 bar"), "adds debug class");
+  expect(button.hasClass("__debug-1 bar")).toBe(true);
   button.simulate("click");
-  t.ok(button.hasClass("__debug-1 bar"), "adds debug class");
-  t.equal(debugCallCount, 1, "debug only called on initial render");
+  expect(button.hasClass("__debug-1 bar")).toBe(true);
+  expect(debugCallCount).toBe(1);
 });
 
-test("no-op engine", t => {
-  t.plan(1);
+test("no-op engine", () => {
   const consoleWarn = console.warn; // eslint-disable-line
 
   (console as any).warn = message => {
-    t.equal(
-      message.split("\n")[1],
+    expect(message.split("\n")[1]).toBe(
       "Styletron has been switched to a no-op (test) mode.",
     );
   };
@@ -763,5 +690,4 @@ test("no-op engine", t => {
   Enzyme.mount(<Widget />);
 
   (console as any).warn = consoleWarn;
-  t.end();
 });
