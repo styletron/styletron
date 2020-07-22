@@ -1407,7 +1407,7 @@
   resolved "https://unpm.uberinternal.com/@microsoft%2ftsdoc/-/tsdoc-0.12.19.tgz#2173ccb92469aaf62031fa9499d21b16d07f9b57"
   integrity sha1-IXPMuSRpqvYgMfqUmdIbFtB/m1c=
 
-"@miksu/create-universal-package@0.0.3", "@miksu/create-universal-package@^0.0.3":
+"@miksu/create-universal-package@^0.0.3":
   version "0.0.3"
   resolved "https://unpm.uberinternal.com/@miksu%2fcreate-universal-package/-/create-universal-package-0.0.3.tgz#73ab4c771372d2ed32294ffc51350066d8c392cb"
   integrity sha1-c6tMdxNy0u0yKU/8UTUAZtjDkss=
@@ -3664,9 +3664,9 @@ csstype@2.6.9:
   integrity sha1-BRQdDNVXpWuIkTlMGRHEDIqY0Jg=
 
 csstype@^2.2.0:
-  version "2.6.11"
-  resolved "https://unpm.uberinternal.com/csstype/-/csstype-2.6.11.tgz#452f4d024149ecf260a852b025e36562a253ffc5"
-  integrity sha1-RS9NAkFJ7PJgqFKwJeNlYqJT/8U=
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
+  integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -6312,7 +6312,7 @@ jju@~1.4.0:
 
 js-tokens@^3.0.2:
   version "3.0.2"
-  resolved "https://unpm.uberinternal.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
+  resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   integrity sha1-mGbfOVECEw449/mWvOtlRDIJwls=
 
 js-yaml@^3.13.1:
@@ -6411,8 +6411,8 @@ json5@^1.0.1:
 
 json5@^2.1.0, json5@^2.1.2:
   version "2.1.3"
-  resolved "https://unpm.uberinternal.com/json5/-/json5-2.1.3.tgz#c9b0f7fa9233bfe5807fe66fcf3a5617ed597d43"
-  integrity sha1-ybD3+pIzv+WAf+ZvzzpWF+1ZfUM=
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.1.3.tgz#c9b0f7fa9233bfe5807fe66fcf3a5617ed597d43"
+  integrity sha512-KXPvOm8K9IJKFM0bmdn8QXh7udDh1g/giieX0NLCaMnb4hEiVFqnop2ImTXCc5e0/oHz3LTqmHGtExn5hfMkOA==
   dependencies:
     minimist "^1.2.5"
 
@@ -8932,8 +8932,8 @@ rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.3, rimraf@^2.7.1:
 
 rimraf@^3.0.0, rimraf@^3.0.2:
   version "3.0.2"
-  resolved "https://unpm.uberinternal.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
-  integrity sha1-8aVAK6YiCtUswSgrrBrjqkn9Bho=
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
+  integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
   dependencies:
     glob "^7.1.3"
 
@@ -9181,8 +9181,8 @@ shell-quote@1.7.2:
 
 shelljs@^0.8.4:
   version "0.8.4"
-  resolved "https://unpm.uberinternal.com/shelljs/-/shelljs-0.8.4.tgz#de7684feeb767f8716b326078a8a00875890e3c2"
-  integrity sha1-3naE/ut2f4cWsyYHiooAh1iQ48I=
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.4.tgz#de7684feeb767f8716b326078a8a00875890e3c2"
+  integrity sha512-7gk3UZ9kOfPLIAbslLzyWeGiEqx9e3rxwZM0KE6EL8GlGwjym9Mrlx5/p33bWTu9YG6vcS4MBxYZDHYr5lr8BQ==
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"

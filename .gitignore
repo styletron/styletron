@@ -7,7 +7,6 @@ lib/
 dist/
 dist-*/
 dist-tests/
-dist-*/
 yarn-error.log
 .next
 .idea
