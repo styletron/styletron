@@ -8,9 +8,9 @@ import type {
   FontFace as CTFontFace,
 } from "csstype";
 
-export type KeyframesPercentageObject = {
+export interface KeyframesPercentageObject {
   [key: string]: Properties;
-};
+}
 
 export type KeyframesObject = KeyframesPercentageObject & {
   from?: Properties;
