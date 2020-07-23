@@ -18,9 +18,9 @@ export type {
   FontFamilyProperty,
 };
 
-export interface NestedStyleObject {
+export type NestedStyleObject = {
   [x: string]: StyleObject;
-}
+};
 export type StyleObject = NestedStyleObject | Properties;
 
 export interface StandardEngine {
