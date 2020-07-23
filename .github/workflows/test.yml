@@ -8,13 +8,13 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
-    - run: yarn install
-    - run: yarn lint
-    - run: yarn bootstrap
-    - run: yarn build
-    - run: yarn run flow
-    - run: yarn test
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn bootstrap
+      - run: yarn build
+      - run: yarn tscheck
+      - run: yarn test
