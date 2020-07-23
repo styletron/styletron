@@ -1,0 +1,20 @@
+name: Test
+
+on: [pull_request, push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - run: yarn install
+    - run: yarn lint
+    - run: yarn bootstrap
+    - run: yarn build
+    - run: yarn run flow
+    - run: yarn test
