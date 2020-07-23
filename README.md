@@ -1,3 +1,5 @@
+test
+
 # [![Styletron logo](https://cdn.rawgit.com/styletron/styletron/logo/logo.svg "Styletron")](https://github.com/styletron/styletron)
 
 [![build status][build-badge]][build-href]
@@ -9,22 +11,22 @@ Styletron is an universal toolkit for component-oriented styling. It falls into 
 ## Usage with React
 
 ```js
-import { styled } from "styletron-react";
+import {styled} from "styletron-react";
 
 // Create a styled component by passing an element name and a style object
-const RedAnchor = styled("a", { color: "red" });
+const RedAnchor = styled("a", {color: "red"});
 <RedAnchor href="/foo">Hello</RedAnchor>;
 
 // Or pass a function that takes props and returns a style object
 const Panel = styled("div", props => {
-  return { backgroundColor: props.$alert ? "orange" : "lightblue" };
+  return {backgroundColor: props.$alert ? "orange" : "lightblue"};
 });
 <Panel $alert>Hello</Panel>;
 
 // Do you prefer hooks?
-import { useStyletron } from "styletron-react";
+import {useStyletron} from "styletron-react";
 const [css] = useStyletron();
-<a className={css({ color: "red" })} href="/foo">
+<a className={css({color: "red"})} href="/foo">
   Hello
 </a>;
 ```
