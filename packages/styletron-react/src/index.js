@@ -92,29 +92,6 @@ export const Provider =
 if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
   setupDevtoolsExtension();
 }
-
-// TODO: more precise types
-export function DevConsumer(props: {children: (any, any, any) => React.Node}) {
-  return (
-    <StyletronContext.Consumer>
-      {styletronEngine => (
-        <DebugEngineContext.Consumer>
-          {debugEngine => (
-            <HydrationContext.Consumer>
-              {hydrating =>
-                props.children(styletronEngine, debugEngine, hydrating)
-              }
-            </HydrationContext.Consumer>
-          )}
-        </DebugEngineContext.Consumer>
-      )}
-    </StyletronContext.Consumer>
-  );
-}
-
-const Consumer =
-  __BROWSER__ && __DEV__ ? DevConsumer : StyletronContext.Consumer;
-
 type createStyledOpts = {
   getInitialStyle: () => StyleObject,
   driver: typeof driver,
@@ -464,69 +441,66 @@ export function createStyledElementComponent(styletron: Styletron) {
   }
 
   const StyledElement = React.forwardRef((props, ref) => {
-    return (
-      <Consumer>
-        {(styletron, debugEngine, hydrating) => {
-          checkNoopEngine(styletron);
+    const styletron: StandardEngine = React.useContext(StyletronContext);
+    const debugEngine = React.useContext(DebugEngineContext);
+    const hydrating = React.useContext(HydrationContext);
+    checkNoopEngine(styletron);
 
-          const elementProps = omitPrefixedKeys(props);
-          let style = resolveStyle(getInitialStyle, reducers, props);
+    const elementProps = omitPrefixedKeys(props);
+    let style = resolveStyle(getInitialStyle, reducers, props);
 
-          if (props.$style) {
-            if (typeof props.$style === "function") {
-              style = deepMerge(style, props.$style(props));
-            } else {
-              style = deepMerge(style, props.$style);
-            }
-          }
+    if (props.$style) {
+      if (typeof props.$style === "function") {
+        style = deepMerge(style, props.$style(props));
+      } else {
+        style = deepMerge(style, props.$style);
+      }
+    }
 
-          const styleClassString = driver(style, styletron);
-          const Element = props.$as ? props.$as : base;
-          elementProps.className = props.className
-            ? `${props.className} ${styleClassString}`
-            : styleClassString;
+    const styleClassString = driver(style, styletron);
+    const Element = props.$as ? props.$as : base;
+    elementProps.className = props.className
+      ? `${props.className} ${styleClassString}`
+      : styleClassString;
 
-          if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
-            if (!debugClassName) {
-              debugClassName = debugEngine.debug({
-                stackInfo: debugStackInfo,
-                stackIndex: debugStackIndex,
-              });
-            }
+    if (__BROWSER__ && __DEV__ && debugEngine && !hydrating) {
+      if (!debugClassName) {
+        debugClassName = debugEngine.debug({
+          stackInfo: debugStackInfo,
+          stackIndex: debugStackIndex,
+        });
+      }
 
-            const joined = `${debugClassName} ${elementProps.className}`;
-            elementProps.className = joined;
-          }
+      const joined = `${debugClassName} ${elementProps.className}`;
+      elementProps.className = joined;
+    }
 
-          if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
-            window.__STYLETRON_DEVTOOLS__.stylesMap.set(
-              elementProps.className,
-              style,
-            );
-            if (ext) {
-              window.__STYLETRON_DEVTOOLS__.extensionsMap.set(
-                elementProps.className,
-                {
-                  base: ext.base,
-                  displayName: ext.name,
-                  initialStyles: ext.getInitialStyle({}, props),
-                  styleOverrides:
-                    typeof ext.with === "function" ? ext.with(props) : ext.with,
-                },
-              );
-            }
-          }
+    if (__BROWSER__ && __DEV__ && window.__STYLETRON_DEVTOOLS__) {
+      window.__STYLETRON_DEVTOOLS__.stylesMap.set(
+        elementProps.className,
+        style,
+      );
+      if (ext) {
+        window.__STYLETRON_DEVTOOLS__.extensionsMap.set(
+          elementProps.className,
+          {
+            base: ext.base,
+            displayName: ext.name,
+            initialStyles: ext.getInitialStyle({}, props),
+            styleOverrides:
+              typeof ext.with === "function" ? ext.with(props) : ext.with,
+          },
+        );
+      }
+    }
 
-          if (props.$ref) {
-            // eslint-disable-next-line no-console
-            console.warn(
-              "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
-            );
-          }
-          return <Element {...elementProps} ref={ref || props.$ref} />;
-        }}
-      </Consumer>
-    );
+    if (props.$ref) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "The prop `$ref` has been deprecated. Use `ref` instead. Refs are now forwarded with React.forwardRef.",
+      );
+    }
+    return <Element {...elementProps} ref={ref || props.$ref} />;
   });
 
   const Wrapped = wrapper(StyledElement);
