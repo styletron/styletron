@@ -173,6 +173,50 @@ test("hydration", t => {
   t.end();
 });
 
+test("keyframes hydration", t => {
+  const {getSheets, cleanup, container} = setup();
+
+  const addKeyframes = styletron => {
+    styletron.renderKeyframes({
+      from: {transform: "rotate(0deg)"},
+      to: {transform: "rotate(360deg)"},
+    });
+    styletron.renderKeyframes({
+      "0%": {transform: "translateX(-100%)"},
+      "50%": {transform: "translateX(-100%)"},
+      "100%": {transform: "translateX(100%)"},
+    });
+  };
+
+  // SSR
+  const server = new StyletronServer();
+  addKeyframes(server);
+  container.innerHTML = server.getStylesheetsHtml();
+
+  // Hydration
+  const instance = new StyletronClient({
+    hydrate: getSheets(),
+  });
+
+  const beforeSheetLength = document.styleSheets.length;
+  const beforeRules = elementsToRules(getSheets());
+  addKeyframes(instance);
+  const afterSheetLength = document.styleSheets.length;
+  const afterRules = elementsToRules(getSheets());
+  t.equal(
+    beforeSheetLength,
+    afterSheetLength,
+    "number of stylesheets should not have changed",
+  );
+  t.deepEqual(
+    afterRules,
+    beforeRules,
+    "CSSStylesheet rules not changed after rendering hydrated styles",
+  );
+  cleanup();
+  t.end();
+});
+
 test("sort client media queries", t => {
   const {cleanup, container} = setup();
 
