@@ -59,6 +59,8 @@ export function renderDeclarativeRules(
         }
         style.fontFamily = result.slice(0, -1);
         continue;
+      } else if (val === void 0) {
+        continue;
       } else {
         style.fontFamily = styletron.renderFontFace((val: any));
         continue;
