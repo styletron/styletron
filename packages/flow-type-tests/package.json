@@ -1,14 +1,14 @@
 {
   "name": "flow-type-tests",
   "private": true,
-  "version": "1.0.22",
+  "version": "1.0.23",
   "license": "MIT",
   "scripts": {
     "test": "unitest --node=__tests__/assert-flow-message.node.js"
   },
   "dependencies": {
-    "styletron-react": "^5.2.7",
-    "styletron-standard": "^3.0.4"
+    "styletron-react": "^6.0.0",
+    "styletron-standard": "^3.0.5"
   },
   "devDependencies": {
     "tape": "^4.9.2",
