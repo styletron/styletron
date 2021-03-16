@@ -130,7 +130,11 @@ class StyletronServer implements StandardEngine {
             },
           ]
         : []),
-      ...sheetify(this.styleRules, this.styleCache.getSortedCacheKeys()),
+      ...sheetify(
+        this.styleRules,
+        this.styleCache.getSortedCacheKeys(),
+        this.streamingMode,
+      ),
     ];
 
     // Clear streamed styles
@@ -257,7 +261,7 @@ function stringify(styleRules, sortedCacheKeys) {
   return result;
 }
 
-function sheetify(styleRules, sortedCacheKeys): Array<sheetT> {
+function sheetify(styleRules, sortedCacheKeys, streamingMode): Array<sheetT> {
   if (sortedCacheKeys.length === 0) {
     return [{css: "", attrs: {}}];
   }
@@ -265,8 +269,14 @@ function sheetify(styleRules, sortedCacheKeys): Array<sheetT> {
   sortedCacheKeys.forEach(cacheKey => {
     // omit media (cacheKey) attribute if empty
     const attrs = cacheKey === "" ? {} : {media: cacheKey};
+    let insertBeforeMedia =
+      streamingMode && styleRules[cacheKey].insertBeforeMedia
+        ? styleRules[cacheKey].insertBeforeMedia
+        : null;
+    if (streamingMode)
+      insertBeforeMedia = styleRules[cacheKey].insertBeforeMedia || null;
     sheets.push({
-      insertBeforeMedia: styleRules[cacheKey].insertBeforeMedia,
+      ...(insertBeforeMedia && {insertBeforeMedia}),
       css: styleRules[cacheKey].rules,
       attrs,
     });
