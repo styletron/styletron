@@ -309,7 +309,7 @@ function generateScript(sheet: sheetT, className: string, attrs: attrsT) {
 
   if (sheet.insertBeforeMedia) {
     content.push(`
-      const predecessor = document.querySelectorAll('[media="${sheet.insertBeforeMedia}"]')[0]
+      var predecessor = document.querySelector('[media="${sheet.insertBeforeMedia}"]');
       document.head.insertBefore(styleElement, predecessor);`);
   } else {
     content.push(`
