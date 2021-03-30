@@ -298,7 +298,7 @@ function generateScript(sheet: sheetT, className: string, attrs: attrsT) {
     : `style.${className}:not([media])`;
 
   content.push(`
-    let styleElement = document.head.querySelector("${selector}");
+    var styleElement = document.head.querySelector("${selector}");
     if (!styleElement) {
       styleElement = document.createElement("style");`);
 
