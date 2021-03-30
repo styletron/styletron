@@ -318,7 +318,7 @@ function generateScript(sheet: sheetT, className: string, attrs: attrsT) {
 
   content.push(`
     }
-    styleElement.innerHTML = styleElement.innerHTML + " ${sheet.css}"
+    styleElement.innerHTML = styleElement.innerHTML + " ${sheet.css}";
     document.currentScript.remove();
   }());
   </script>
