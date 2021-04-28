@@ -3,7 +3,7 @@
 import test from "tape";
 import Styletron from "../server.js";
 
-test("StyletronServer toCss", t => {
+test("StyletronServer getCss", t => {
   const styletron = new Styletron();
   t.equal(styletron.getCss(), "", "returns empty string when no styles");
   injectFixtureStyles(styletron);
