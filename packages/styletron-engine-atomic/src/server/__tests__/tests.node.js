@@ -2,6 +2,11 @@
 
 import test from "tape";
 import Styletron from "../server.js";
+import {
+  injectFixtureStyles,
+  injectFixtureKeyframes,
+  injectFixtureFontFace,
+} from "./fixtures";
 
 test("StyletronServer getCss", t => {
   const styletron = new Styletron();
@@ -130,65 +135,3 @@ test("StyletronServer prefix option", t => {
   ]);
   t.end();
 });
-
-function injectFixtureStyles(styletron) {
-  styletron.renderStyle({color: "red"});
-  styletron.renderStyle({color: "green"});
-  styletron.renderStyle({
-    "@media (min-width: 800px)": {
-      color: "green",
-    },
-  });
-  // should be added before "min-width: 800px" query
-  // test that Styletron properly sort media queries
-  styletron.renderStyle({
-    "@media (min-width: 600px)": {
-      color: "red",
-    },
-  });
-  styletron.renderStyle({
-    "@media (min-width: 800px)": {
-      ":hover": {
-        color: "green",
-      },
-    },
-  });
-  styletron.renderStyle({
-    zIndex: void 0, // Should be silently ignored
-  });
-  styletron.renderStyle({
-    // null values were historically supported (albeit erronesouly)
-    opacity: null, // Should be silently ignored
-  });
-  styletron.renderStyle({
-    ":hover": {
-      display: "none",
-    },
-  });
-  styletron.renderStyle({
-    userSelect: "none",
-  });
-  styletron.renderStyle({
-    display: "flex",
-  });
-}
-
-function injectFixtureKeyframes(styletron) {
-  return styletron.renderKeyframes({
-    from: {
-      color: "purple",
-    },
-    "50%": {
-      color: "yellow",
-    },
-    to: {
-      color: "orange",
-    },
-  });
-}
-
-function injectFixtureFontFace(styletron) {
-  return styletron.renderFontFace({
-    src: "local('Roboto')",
-  });
-}
