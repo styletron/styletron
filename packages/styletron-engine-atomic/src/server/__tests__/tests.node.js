@@ -1,3 +1,4 @@
+/* eslint-disable no-undefined */
 // @flow
 
 import test from "tape";
@@ -39,12 +40,18 @@ test("StyletronServer getStylesheets", t => {
   injectFixtureStyles(styletron);
   t.deepEqual(styletron.getStylesheets(), [
     {
+      insertBeforeMedia: undefined,
       css:
         ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
-    {css: ".ah{color:red}", attrs: {media: "(min-width: 600px)"}},
     {
+      insertBeforeMedia: undefined,
+      css: ".ah{color:red}",
+      attrs: {media: "(min-width: 600px)"},
+    },
+    {
+      insertBeforeMedia: undefined,
       css: ".ag{color:green}.ai:hover{color:green}",
       attrs: {media: "(min-width: 800px)"},
     },
@@ -56,12 +63,18 @@ test("StyletronServer getStylesheets", t => {
       attrs: {"data-hydrate": "keyframes"},
     },
     {
+      insertBeforeMedia: undefined,
       css:
         ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
-    {css: ".ah{color:red}", attrs: {media: "(min-width: 600px)"}},
     {
+      insertBeforeMedia: undefined,
+      css: ".ah{color:red}",
+      attrs: {media: "(min-width: 600px)"},
+    },
+    {
+      insertBeforeMedia: undefined,
       css: ".ag{color:green}.ai:hover{color:green}",
       attrs: {media: "(min-width: 800px)"},
     },
@@ -77,12 +90,18 @@ test("StyletronServer getStylesheets", t => {
       attrs: {"data-hydrate": "font-face"},
     },
     {
+      insertBeforeMedia: undefined,
       css:
         ".ae{color:red}.af{color:green}.aj:hover{display:none}.ak{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.al{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}",
       attrs: {},
     },
-    {css: ".ah{color:red}", attrs: {media: "(min-width: 600px)"}},
     {
+      insertBeforeMedia: undefined,
+      css: ".ah{color:red}",
+      attrs: {media: "(min-width: 600px)"},
+    },
+    {
+      insertBeforeMedia: undefined,
       css: ".ag{color:green}.ai:hover{color:green}",
       attrs: {media: "(min-width: 800px)"},
     },
@@ -131,7 +150,11 @@ test("StyletronServer prefix option", t => {
       css: "@font-face{font-family:foo_ae;src:local('Roboto')}",
       attrs: {"data-hydrate": "font-face"},
     },
-    {css: ".foo_ae{color:red}", attrs: {}},
+    {
+      insertBeforeMedia: undefined,
+      css: ".foo_ae{color:red}",
+      attrs: {},
+    },
   ]);
   t.end();
 });
