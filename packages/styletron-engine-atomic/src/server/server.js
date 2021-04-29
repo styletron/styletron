@@ -39,6 +39,7 @@ export type sheetT = {|
 type optionsT = {
   prefix?: string,
   streamingMode?: boolean,
+  scriptGenerator?: (sheet: sheetT, className: string, attrs: attrsT) => string,
 };
 
 class StyletronServer implements StandardEngine {
@@ -54,15 +55,17 @@ class StyletronServer implements StandardEngine {
   keyframesRules: string;
   fontFaceRules: string;
   streamingMode: boolean;
+  scriptGenerator: (sheet: sheetT, className: string, attrs: attrsT) => string;
 
   constructor(opts?: optionsT = {}) {
     this.streamingMode = opts.streamingMode || false;
+    this.scriptGenerator = opts.scriptGenerator || generateScript;
     this.styleRules = {"": {rules: ""}};
     this.styleCache = new MultiCache(
       new SequentialIDGenerator(opts.prefix),
       (media, _cache, insertBeforeMedia) => {
         this.styleRules[media] = {
-          ...(insertBeforeMedia && {insertBeforeMedia}),
+          insertBeforeMedia,
           rules: "",
         };
       },
@@ -154,6 +157,7 @@ class StyletronServer implements StandardEngine {
       this.getStylesheets(),
       className,
       this.streamingMode,
+      this.scriptGenerator,
     );
   }
 
@@ -213,6 +217,7 @@ export function generateHtmlString(
   sheets: Array<sheetT>,
   className: string,
   streamingMode: boolean = false,
+  scriptGenerator: Function,
 ) {
   let html = "";
   for (let i = 0; i < sheets.length; i++) {
@@ -228,7 +233,7 @@ export function generateHtmlString(
     if (!streamingMode) {
       html += `<style${attrsToString(attrs)}>${sheet.css}</style>`;
     } else {
-      html += generateScript(sheet, className, attrs);
+      html += scriptGenerator(sheet, className, attrs);
     }
   }
 
