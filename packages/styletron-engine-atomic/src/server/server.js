@@ -269,14 +269,11 @@ function sheetify(styleRules, sortedCacheKeys, streamingMode): Array<sheetT> {
   sortedCacheKeys.forEach(cacheKey => {
     // omit media (cacheKey) attribute if empty
     const attrs = cacheKey === "" ? {} : {media: cacheKey};
-    let insertBeforeMedia =
-      streamingMode && styleRules[cacheKey].insertBeforeMedia
-        ? styleRules[cacheKey].insertBeforeMedia
-        : null;
+    let insertBeforeMedia;
     if (streamingMode)
-      insertBeforeMedia = styleRules[cacheKey].insertBeforeMedia || null;
+      insertBeforeMedia = styleRules[cacheKey].insertBeforeMedia;
     sheets.push({
-      ...(insertBeforeMedia && {insertBeforeMedia}),
+      insertBeforeMedia,
       css: styleRules[cacheKey].rules,
       attrs,
     });
