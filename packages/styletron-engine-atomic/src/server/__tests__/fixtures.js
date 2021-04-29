@@ -1,5 +1,7 @@
 // @flow
 
+import Styletron from "../server";
+
 const stylesFixtures = [
   {color: "red"},
   {color: "green"},
@@ -32,14 +34,14 @@ const fontFaceFixtures = {
   src: "local('Roboto')",
 };
 
-export function injectFixtureStyles(styletron) {
+export function injectFixtureStyles(styletron: Styletron) {
   stylesFixtures.forEach(style => styletron.renderStyle(style));
 }
 
-export function injectFixtureKeyframes(styletron) {
+export function injectFixtureKeyframes(styletron: Styletron) {
   return styletron.renderKeyframes(keyframesFixtures);
 }
 
-export function injectFixtureFontFace(styletron) {
+export function injectFixtureFontFace(styletron: Styletron) {
   return styletron.renderFontFace(fontFaceFixtures);
 }
