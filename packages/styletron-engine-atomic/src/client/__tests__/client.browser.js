@@ -104,6 +104,34 @@ test("rendering", t => {
     ],
     "media queries are mobile first sorted",
   );
+
+  instance.renderStyle({
+    ":hover": {
+      color: "orange",
+      ":after": {
+        content: '"abc"',
+      },
+    },
+  });
+  t.deepEqual(
+    sheetsToRules(document.styleSheets),
+    [
+      {
+        media: "",
+        rules: [
+          ".ae { color: purple; }",
+          ".ag { user-select: none; }",
+          ".ah { display: flex; }",
+          ".aj:hover { color: orange; }",
+          '.ak:hover::after { content: "abc"; }',
+        ],
+      },
+      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
+      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    ],
+    "renders nested pseudo-selectors",
+  );
+
   instance.container.remove();
   t.end();
 });
