@@ -40,6 +40,7 @@ test("rendering", t => {
   const container = document.createElement("div");
   document.body && document.body.appendChild(container);
   const instance = new StyletronClient({container});
+
   t.equal(
     instance.renderStyle({color: "purple"}),
     "css-hZftBk",
@@ -48,6 +49,7 @@ test("rendering", t => {
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {media: "", rules: [".css-hZftBk { color: purple; }"]},
   ]);
+
   t.equal(
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
@@ -67,6 +69,7 @@ test("rendering", t => {
       ],
     },
   ]);
+
   instance.renderStyle({
     userSelect: "none",
   });
@@ -80,6 +83,7 @@ test("rendering", t => {
     },
     {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
   ]);
+
   instance.renderStyle({
     display: "flex",
   });
@@ -94,6 +98,7 @@ test("rendering", t => {
     {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
     {media: "", rules: [".css-haOmqK { display: flex; }"]},
   ]);
+
   instance.renderStyle({
     "@media (min-width: 600px)": {
       color: "red",
@@ -120,6 +125,7 @@ test("rendering", t => {
     ],
     "order of rules is preserved",
   );
+
   instance.container.remove();
   t.end();
 });
@@ -205,26 +211,82 @@ test("StyletronClient deeply nested rules", t => {
   const container = document.createElement("div");
   document.body && document.body.appendChild(container);
   const instance = new StyletronClient({container});
+
   t.equal(
     instance.renderStyle({
       "@supports (flex-wrap: wrap)": {
         "@media (min-width: 50em)": {
+          color: "green",
           ":hover": {
-            background: "blue",
+            color: "blue",
           },
         },
       },
     }),
-    "css-gPyDTX",
+    "css-jrXsOI",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
       rules: [
-        "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-gPyDTX:hover { background: blue; }\n}\n}",
+        "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-jrXsOI { color: green; }\n  .css-jrXsOI:hover { color: blue; }\n}\n}",
       ],
     },
   ]);
+
+  instance.renderStyle({
+    ":hover": {
+      color: "blue",
+      "::after": {
+        content: '"abc"',
+      },
+    },
+  });
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {
+      media: "",
+      rules: [
+        "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-jrXsOI { color: green; }\n  .css-jrXsOI:hover { color: blue; }\n}\n}",
+      ],
+    },
+    {
+      media: "",
+      rules: [
+        ".css-hFfBmH:hover { color: blue; }",
+        '.css-hFfBmH:hover::after { content: "abc"; }',
+      ],
+    },
+  ]);
+
+  instance.container.remove();
+  t.end();
+});
+
+test("reference another class name", t => {
+  const container = document.createElement("div");
+  document.body && document.body.appendChild(container);
+  const instance = new StyletronClient({container});
+
+  t.equal(
+    instance.renderStyle({
+      color: "blue",
+    }),
+    "css-yrgMo",
+  );
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".css-yrgMo { color: blue; }"]},
+  ]);
+
+  instance.renderStyle({
+    ".css-yrgMo:hover": {
+      color: "green",
+    },
+  });
+  t.deepEqual(sheetsToRules(document.styleSheets), [
+    {media: "", rules: [".css-yrgMo { color: blue; }"]},
+    {media: "", rules: [".css-yrgMo:hover { color: green; }"]},
+  ]);
+
   instance.container.remove();
   t.end();
 });
