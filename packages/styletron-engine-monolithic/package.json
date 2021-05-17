@@ -1,6 +1,6 @@
 {
   "name": "styletron-engine-monolithic",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Vojtech Miksu <vojtech@miksu.cz>",
   "repository": "styletron/styletron",
