@@ -12,7 +12,7 @@ yarn add styletron-react
 
 ## [Documentation](https://www.styletron.org/react/)
 
-## [API](https://www.styletron.org/api/#styletron-react)
+## [API](https://www.styletron.org/api-reference#styletron-react)
 
 [deps-badge]: https://david-dm.org/rtsao/styletron-react.svg
 [deps-href]: https://david-dm.org/rtsao/styletron-react
