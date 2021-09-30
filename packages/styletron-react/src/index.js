@@ -52,38 +52,28 @@ type DevProviderProps = {
   debug?: any,
 };
 
-class DevProvider extends React.Component<
-  DevProviderProps,
-  {hydrating: boolean},
-> {
-  constructor(props: DevProviderProps) {
-    super();
-    this.state = {
-      hydrating: Boolean(props.debugAfterHydration),
-    };
-  }
+function DevProvider(props: DevProviderProps) {
+  const [hydrating, setHydrating] = React.useState(() =>
+    Boolean(props.debugAfterHydration),
+  );
 
-  componentDidMount() {
+  React.useEffect(() => {
     if (__BROWSER__) {
-      if (this.state.hydrating === true) {
-        this.setState({
-          hydrating: false,
-        });
+      if (hydrating === true) {
+        setHydrating(false);
       }
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <StyletronContext.Provider value={this.props.value}>
-        <DebugEngineContext.Provider value={this.props.debug}>
-          <HydrationContext.Provider value={this.state.hydrating}>
-            {this.props.children}
-          </HydrationContext.Provider>
-        </DebugEngineContext.Provider>
-      </StyletronContext.Provider>
-    );
-  }
+  return (
+    <StyletronContext.Provider value={props.value}>
+      <DebugEngineContext.Provider value={props.debug}>
+        <HydrationContext.Provider value={hydrating}>
+          {props.children}
+        </HydrationContext.Provider>
+      </DebugEngineContext.Provider>
+    </StyletronContext.Provider>
+  );
 }
 
 export const Provider =
