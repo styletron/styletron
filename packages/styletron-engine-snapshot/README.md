@@ -16,7 +16,7 @@ yarn add --dev styletron-engine-snapshot
 
 Snapshots generated with `styletron-engine-atomic` have 2 main issues
 
-1. non-debuggable classNames in snapshots (`"ae af "`)
+1. non-debuggable classNames in snapshots (`"a b c aa ab ac ae"`)
 
 2. className generation is dependent on internal engine state. If you create a new component,
 it might break an unrelated snapshot since that component rendering shifts the

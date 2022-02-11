@@ -11,13 +11,13 @@ test("driver atomic", t => {
     color: "red",
   };
   driver(styleObject, instance);
-  cssString = ".ae{color:red}";
+  cssString = ".a{color:red}";
   t.strictEqual(instance.getCss(), cssString, "injects basic style");
   const fontFallback = {
     fontFamily: ["Arial", "sans-serif"],
   };
   driver(fontFallback, instance);
-  cssString = `${cssString}.af{font-family:Arial,sans-serif}`;
+  cssString = `${cssString}.b{font-family:Arial,sans-serif}`;
   t.strictEqual(instance.getCss(), cssString, "injects font fallbacks - basic");
   const fontFace = {
     src: "url(some-awesome-font.ttf)",
@@ -26,7 +26,7 @@ test("driver atomic", t => {
     fontFamily: [fontFace, "cursive"],
   };
   driver(declaredFontFaceFallback, instance);
-  cssString = `@font-face{font-family:ae;src:url(some-awesome-font.ttf)}${cssString}.ag{font-family:ae,cursive}`;
+  cssString = `@font-face{font-family:a;src:url(some-awesome-font.ttf)}${cssString}.c{font-family:a,cursive}`;
   t.strictEqual(
     instance.getCss(),
     cssString,

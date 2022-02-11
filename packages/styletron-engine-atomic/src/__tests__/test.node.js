@@ -6,6 +6,8 @@ import {validateNoMixedHand} from "../validate-no-mixed-hand.js";
 
 import sortMq from "../sort-css-media-queries.js";
 
+import SequentialIDGenerator from "../sequential-id-generator.js";
+
 test("validateNoMixedHand", t => {
   t.deepEqual(
     validateNoMixedHand({
@@ -144,5 +146,17 @@ test("mixed", t => {
     "print and (orientation: portrait)",
   ];
   t.deepEqual(receivedOrder.sort(sortMq), expectedOrder);
+  t.end();
+});
+
+test("SequentialIDGenerator no ad", t => {
+  const genertedIds: string[] = [];
+  const sequentialIDGenerator = new SequentialIDGenerator();
+  for (let i = 0; i < 500; i++) {
+    genertedIds.push(sequentialIDGenerator.next());
+  }
+  t.deepEqual(genertedIds.length, 500);
+  t.deepEqual(new Set(genertedIds).size, 500);
+  t.deepEqual(genertedIds.includes("ad"), false);
   t.end();
 });

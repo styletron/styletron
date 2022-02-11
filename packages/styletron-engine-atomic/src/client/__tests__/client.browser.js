@@ -27,7 +27,7 @@ test("automatic stylesheet insertion", t => {
   t.equal(document.styleSheets.length, 0, "sheet not yet instantiated");
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "ae",
+    "a",
     "new unique class returned",
   );
   t.equal(document.styleSheets.length, 1, "sheet added");
@@ -42,22 +42,22 @@ test("rendering", t => {
   const instance = new StyletronClient({container});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "ae",
+    "a",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".ae { color: purple; }"]},
+    {media: "", rules: [".a { color: purple; }"]},
   ]);
   t.equal(
     instance.renderStyle({
       "@media (min-width: 800px)": {color: "purple"},
     }),
-    "af",
+    "b",
     "new unique class returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
-    {media: "", rules: [".ae { color: purple; }"]},
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "", rules: [".a { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".b { color: purple; }"]},
   ]);
   instance.renderStyle({
     userSelect: "none",
@@ -65,9 +65,9 @@ test("rendering", t => {
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
-      rules: [".ae { color: purple; }", ".ag { user-select: none; }"],
+      rules: [".a { color: purple; }", ".c { user-select: none; }"],
     },
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".b { color: purple; }"]},
   ]);
   instance.renderStyle({
     display: "flex",
@@ -76,12 +76,12 @@ test("rendering", t => {
     {
       media: "",
       rules: [
-        ".ae { color: purple; }",
-        ".ag { user-select: none; }",
-        ".ah { display: flex; }",
+        ".a { color: purple; }",
+        ".c { user-select: none; }",
+        ".d { display: flex; }",
       ],
     },
-    {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+    {media: "(min-width: 800px)", rules: [".b { color: purple; }"]},
   ]);
   instance.renderStyle({
     "@media (min-width: 600px)": {
@@ -94,13 +94,13 @@ test("rendering", t => {
       {
         media: "",
         rules: [
-          ".ae { color: purple; }",
-          ".ag { user-select: none; }",
-          ".ah { display: flex; }",
+          ".a { color: purple; }",
+          ".c { user-select: none; }",
+          ".d { display: flex; }",
         ],
       },
-      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
-      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+      {media: "(min-width: 600px)", rules: [".e { color: red; }"]},
+      {media: "(min-width: 800px)", rules: [".b { color: purple; }"]},
     ],
     "media queries are mobile first sorted",
   );
@@ -119,15 +119,15 @@ test("rendering", t => {
       {
         media: "",
         rules: [
-          ".ae { color: purple; }",
-          ".ag { user-select: none; }",
-          ".ah { display: flex; }",
-          ".aj:hover { color: orange; }",
-          '.ak:hover::after { content: "abc"; }',
+          ".a { color: purple; }",
+          ".c { user-select: none; }",
+          ".d { display: flex; }",
+          ".f:hover { color: orange; }",
+          '.g:hover::after { content: "abc"; }',
         ],
       },
-      {media: "(min-width: 600px)", rules: [".ai { color: red; }"]},
-      {media: "(min-width: 800px)", rules: [".af { color: purple; }"]},
+      {media: "(min-width: 600px)", rules: [".e { color: red; }"]},
+      {media: "(min-width: 800px)", rules: [".b { color: purple; }"]},
     ],
     "renders nested pseudo-selectors",
   );
@@ -142,26 +142,26 @@ test("prefix", t => {
   const instance = new StyletronClient({container, prefix: "foo_"});
   t.equal(
     instance.renderStyle({color: "purple"}),
-    "foo_ae",
+    "foo_a",
     "new unique class returned",
   );
   t.equal(
     instance.renderFontFace({src: "url(blah)"}),
-    "foo_ae",
+    "foo_a",
     "new unique font family returned",
   );
   t.equal(
     instance.renderKeyframes({from: {color: "red"}, to: {color: "blue"}}),
-    "foo_ae",
+    "foo_a",
     "new unique animation name returned",
   );
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {
       media: "",
       rules: [
-        ".foo_ae { color: purple; }",
-        `@font-face { font-family: foo_ae; src: url("blah"); }`,
-        "@keyframes foo_ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+        ".foo_a { color: purple; }",
+        `@font-face { font-family: foo_a; src: url("blah"); }`,
+        "@keyframes foo_a { \n  0% { color: red; }\n  100% { color: blue; }\n}",
       ],
     },
   ]);
@@ -258,7 +258,7 @@ test("sort client media queries", t => {
 
   t.deepEqual(sheetsToRules(document.styleSheets), [
     {media: "", rules: []},
-    {media: "(min-width: 700px)", rules: [".ae { color: pink; }"]},
+    {media: "(min-width: 700px)", rules: [".a { color: pink; }"]},
   ]);
 
   cleanup();
@@ -297,27 +297,27 @@ test("sort a new media query after hydration", t => {
     {
       media: "",
       rules: [
-        "@keyframes ae { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+        "@keyframes a { \n  0% { color: red; }\n  100% { color: blue; }\n}",
       ],
     },
-    {media: "", rules: ['@font-face { font-family: ae; src: url("blah"); }']},
+    {media: "", rules: ['@font-face { font-family: a; src: url("blah"); }']},
     {
       media: "",
       rules: [
-        ".ae { color: red; }",
-        ".af { color: green; }",
-        ".aj:hover { display: none; }",
-        ".ak { user-select: none; }",
-        ".al { display: flex; }",
+        ".a { color: red; }",
+        ".b { color: green; }",
+        ".f:hover { display: none; }",
+        ".g { user-select: none; }",
+        ".h { display: flex; }",
       ],
     },
-    {media: "(min-width: 600px)", rules: [".ah { color: red; }"]},
-    {media: "(min-width: 700px)", rules: [".am { color: pink; }"]},
+    {media: "(min-width: 600px)", rules: [".d { color: red; }"]},
+    {media: "(min-width: 700px)", rules: [".i { color: pink; }"]},
     {
       media: "(min-width: 800px)",
-      rules: [".ag { color: green; }", ".ai:hover { color: green; }"],
+      rules: [".c { color: green; }", ".e:hover { color: green; }"],
     },
-    {media: "(min-width: 1000px)", rules: [".an { color: black; }"]},
+    {media: "(min-width: 1000px)", rules: [".j { color: black; }"]},
   ]);
 
   cleanup();
