@@ -4,7 +4,7 @@ declare var __DEV__: boolean;
 
 import hyphenate from "./hyphenate-style-name.js";
 import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
-import {prefix as prefixRule} from "inline-style-prefixer";
+import {prefix as prefixCssDeclaration} from "stylis";
 
 import type {StyleObject} from "styletron-standard";
 
@@ -39,29 +39,16 @@ export default function injectStylePrefixed(
         }
       }
 
-      const rule = hyphenate(key) + ":" + value;
-      const prefixed = prefixRule({[key]: value});
-      for (const prefixedKey in prefixed) {
-        const prefixedVal = prefixed[prefixedKey];
-        if (
-          typeof prefixedVal === "string" ||
-          typeof prefixedVal === "number"
-        ) {
-          const prefixedRule = hyphenate(prefixedKey) + ":" + prefixedVal;
-          if (prefixedRule !== rule) {
-            rules += prefixedRule + ";";
-          }
-        } else if (Array.isArray(prefixedVal)) {
-          const hyphenated = hyphenate(prefixedKey);
-          for (let i = 0; i < prefixedVal.length; i++) {
-            const prefixedRule = hyphenated + ":" + prefixedVal[i];
-            if (prefixedRule !== rule) {
-              rules += prefixedRule + ";";
-            }
-          }
-        }
+      const hyphenatedProperty = hyphenate(key);
+      const cssDeclaration = hyphenatedProperty + ":" + value + ";";
+      const prefixed = prefixCssDeclaration(
+        cssDeclaration,
+        hyphenatedProperty.length,
+      );
+      rules += prefixed;
+      if (prefixed[prefixed.length - 1] !== ";") {
+        rules += ";";
       }
-      rules += rule + ";";
       continue;
     }
 

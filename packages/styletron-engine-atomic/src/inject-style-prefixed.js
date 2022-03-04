@@ -4,7 +4,8 @@ declare var __DEV__: boolean;
 
 import hyphenate from "./hyphenate-style-name.js";
 import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
-import {prefix} from "inline-style-prefixer";
+
+import {prefix} from "stylis";
 
 import type {StyleObject} from "styletron-standard";
 
@@ -30,9 +31,9 @@ export default function injectStylePrefixed(
         validateValueType(originalVal, originalKey);
       }
 
-      const propValPair = `${hyphenate(
-        originalKey,
-      )}:${((originalVal: any): string)}`;
+      const hyphenatedProperty = hyphenate(originalKey);
+
+      const propValPair = `${hyphenatedProperty}:${((originalVal: any): string)}`;
       const key = `${pseudo}${propValPair}`;
       const cachedId = cache.cache[key];
       if (cachedId !== void 0) {
@@ -41,27 +42,12 @@ export default function injectStylePrefixed(
         continue;
       } else {
         // cache miss
-        let block = "";
-        const prefixed = prefix({[originalKey]: originalVal});
-        for (const prefixedKey in prefixed) {
-          const prefixedVal = prefixed[prefixedKey];
-          const prefixedValType = typeof prefixedVal;
-          if (prefixedValType === "string" || prefixedValType === "number") {
-            const prefixedPair = `${hyphenate(prefixedKey)}:${prefixedVal}`;
-            if (prefixedPair !== propValPair) {
-              block += `${prefixedPair};`;
-            }
-          } else if (Array.isArray(prefixedVal)) {
-            const hyphenated = hyphenate(prefixedKey);
-            for (let i = 0; i < prefixedVal.length; i++) {
-              const prefixedPair = `${hyphenated}:${prefixedVal[i]}`;
-              if (prefixedPair !== propValPair) {
-                block += `${prefixedPair};`;
-              }
-            }
-          }
-        }
-        block += propValPair; // ensure original prop/val is last (for hydration)
+        const cssDeclaration = `${hyphenatedProperty}:${((originalVal: any): string)};`;
+        const prefixed = prefix(cssDeclaration, hyphenatedProperty.length);
+        const block =
+          prefixed[prefixed.length - 1] === ";"
+            ? prefixed.slice(0, -1)
+            : prefixed;
         const id = cache.addValue(key, {pseudo, block});
         classString += " " + id;
       }

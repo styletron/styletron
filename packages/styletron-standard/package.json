@@ -30,8 +30,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "@rtsao/csstype": "2.6.5-forked.0",
-    "inline-style-prefixer": "^5.1.0"
+    "@rtsao/csstype": "2.6.5-forked.0"
   },
   "devDependencies": {
     "create-universal-package": "3.2.4",
