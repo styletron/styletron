@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "styletron-standard": "^3.0.5",
-    "stylis": "^4.0.13"
+    "stylis": "^4.1.0"
   },
   "devDependencies": {
     "create-universal-package": "3.2.4",
