@@ -1,5 +1,3 @@
-// @flow
-
 import test from "tape";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
@@ -13,7 +11,7 @@ import {
   withTransform,
   Provider,
   useStyletron,
-} from "../index.js";
+} from "../index";
 
 import {getInitialStyle, driver} from "styletron-standard";
 
@@ -308,7 +306,9 @@ test("$as works", t => {
 test("$-prefixed props not passed", t => {
   t.plan(1);
 
-  class InnerComponent extends React.Component<{className: string}> {
+  class InnerComponent extends React.Component<{
+    className: string;
+  }> {
     render() {
       t.deepEqual(
         this.props,
@@ -342,7 +342,7 @@ test("callback ref forwarding", t => {
 
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
-    widgetInner: ?HTMLButtonElement;
+    widgetInner: HTMLButtonElement | undefined | null;
     componentDidMount() {
       t.ok(this.widgetInner instanceof HTMLButtonElement, "is button");
     }
@@ -374,7 +374,7 @@ test("React.createRef() ref forwarding", t => {
   const Widget = styled("button", {color: "red"});
   class TestComponent extends React.Component<{}> {
     widgetInner: {
-      current: React.ElementRef<any> | null,
+      current: React.RefObject<any> | null;
     } = React.createRef();
 
     componentDidMount() {
@@ -742,7 +742,7 @@ test("no-op engine", t => {
   t.plan(1);
   const consoleWarn = console.warn; // eslint-disable-line
 
-  (console: any).warn = message => {
+  (console as any).warn = message => {
     t.equal(
       message.split("\n")[1],
       "Styletron has been switched to a no-op (test) mode.",
@@ -753,6 +753,6 @@ test("no-op engine", t => {
   });
   Enzyme.mount(<Widget />);
 
-  (console: any).warn = consoleWarn;
+  (console as any).warn = consoleWarn;
   t.end();
 });

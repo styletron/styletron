@@ -1,4 +1,3 @@
-// @flow
 import test from "tape";
 import {Server as ServerMonolithic} from "styletron-engine-monolithic";
 import {Server as ServerAtomic} from "styletron-engine-atomic";

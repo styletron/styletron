@@ -1,5 +1,3 @@
-// @flow
-
 import type {
   Properties,
   FontFace as FontFaceObject,
@@ -17,10 +15,11 @@ export type {FontFaceObject, KeyframesObject};
 //
 //
 //
-export type StyleObject = $Shape<{
-  ...Properties,
-  [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
-}>;
+export type StyleObject = Partial<
+  {
+    [x: string]: StyleObject;
+  } & Properties
+>;
 
 export interface StandardEngine {
   renderStyle(style: StyleObject): string;
@@ -44,7 +43,7 @@ export function renderDeclarativeRules(
   for (const key in style) {
     const val = style[key];
     if (key === "animationName" && typeof val !== "string") {
-      style.animationName = styletron.renderKeyframes((val: any));
+      style.animationName = styletron.renderKeyframes(val as any);
       continue;
     }
     if (key === "fontFamily" && typeof val !== "string") {
@@ -52,7 +51,7 @@ export function renderDeclarativeRules(
         let result = "";
         for (const font of val) {
           if (typeof font === "object") {
-            result += `${styletron.renderFontFace((font: any))},`;
+            result += `${styletron.renderFontFace(font as any)},`;
           } else if (typeof font === "string") {
             result += `${font},`;
           }
@@ -62,7 +61,7 @@ export function renderDeclarativeRules(
       } else if (val === void 0) {
         continue;
       } else {
-        style.fontFamily = styletron.renderFontFace((val: any));
+        style.fontFamily = styletron.renderFontFace(val as any);
         continue;
       }
     }

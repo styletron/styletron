@@ -1,11 +1,9 @@
-// @flow
-
 /* eslint-disable no-console */
 
 const validAnimationState =
   /^(from|to|\+?(\d*\.)?\d+%)(\s*,\s*(from|to|\+?(\d*\.)?\d+%))*$/;
 
-export default function validateKeyframesObject(keyframes: Object) {
+export default function validateKeyframesObject(keyframes: any) {
   let valid = true;
   for (const animationState in keyframes) {
     const value = keyframes[animationState];

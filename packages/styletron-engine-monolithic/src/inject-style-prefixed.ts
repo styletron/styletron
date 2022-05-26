@@ -1,9 +1,7 @@
-// @flow
-
 declare var __DEV__: boolean;
 
-import hyphenate from "./hyphenate-style-name.js";
-import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
+import hyphenate from "./hyphenate-style-name";
+import {validateNoMixedHand} from "./validate-no-mixed-hand";
 import {prefix as prefixRule} from "inline-style-prefixer";
 
 import type {StyleObject} from "styletron-standard";

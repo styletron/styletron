@@ -1,4 +1,3 @@
-// @flow
 /* eslint-env browser */
 /*
 pretty much vendored @emotion/sheet
@@ -34,9 +33,9 @@ function sheetForTag(tag: HTMLStyleElement): CSSStyleSheet {
 }
 
 export type Options = {
-  nonce?: string,
-  container: Element,
-  speedy?: boolean,
+  nonce?: string;
+  container: Element;
+  speedy?: boolean;
 };
 
 function createStyleElement(options: {nonce: string | void}): HTMLStyleElement {

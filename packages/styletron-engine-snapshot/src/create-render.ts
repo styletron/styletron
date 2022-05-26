@@ -1,5 +1,3 @@
-// @flow
-
 import {
   type StyleObject,
   type FontFaceObject,
@@ -20,7 +18,7 @@ version of the style object (with aplha-sorted keys).
 */
 export default function createRender(kind: string) {
   return function render(
-    obj: ?(StyleObject | FontFaceObject | KeyframesObject),
+    obj: StyleObject | FontFaceObject | KeyframesObject | undefined | null,
   ): string {
     if (!obj) {
       return "";

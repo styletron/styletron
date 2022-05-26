@@ -1,17 +1,18 @@
-// @flow
-
 declare var __DEV__: boolean;
 
-import hyphenate from "./hyphenate-style-name.js";
-import {validateNoMixedHand} from "./validate-no-mixed-hand.js";
+import hyphenate from "./hyphenate-style-name";
+import {validateNoMixedHand} from "./validate-no-mixed-hand";
 import {prefix} from "inline-style-prefixer";
 
 import type {StyleObject} from "styletron-standard";
 
-import {MultiCache} from "./cache.js";
+import {MultiCache} from "./cache";
 
 export default function injectStylePrefixed(
-  styleCache: MultiCache<{pseudo: string, block: string}>,
+  styleCache: MultiCache<{
+    pseudo: string;
+    block: string;
+  }>,
   styles: StyleObject,
   media: string,
   pseudo: string,
@@ -30,9 +31,9 @@ export default function injectStylePrefixed(
         validateValueType(originalVal, originalKey);
       }
 
-      const propValPair = `${hyphenate(
-        originalKey,
-      )}:${((originalVal: any): string)}`;
+      const propValPair = `${hyphenate(originalKey)}:${
+        originalVal as any as string
+      }`;
       const key = `${pseudo}${propValPair}`;
       const cachedId = cache.cache[key];
       if (cachedId !== void 0) {

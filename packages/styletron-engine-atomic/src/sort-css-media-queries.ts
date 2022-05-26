@@ -1,7 +1,5 @@
 // adapted from https://github.com/dutchenkoOleg/sort-css-media-queries
 
-// @flow
-
 const minMaxWidth = /(!?\(\s*min(-device-)?-width).+\(\s*max(-device)?-width/i;
 const minWidth = /\(\s*min(-device)?-width/i;
 const maxMinWidth = /(!?\(\s*max(-device)?-width).+\(\s*min(-device)?-width/i;

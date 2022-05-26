@@ -1,9 +1,7 @@
-// @flow
-
 /* eslint-env browser */
 
-import StyletronServer from "../../server/server.js";
-import StyletronClient from "../client.js";
+import StyletronServer from "../../server/server";
+import StyletronClient from "../client";
 import test from "tape";
 const reduce = Array.prototype.reduce;
 const map = Array.prototype.map;
@@ -340,7 +338,7 @@ function setup() {
   return {
     container,
     getSheets() {
-      return ((container.children: any): HTMLCollection<HTMLStyleElement>);
+      return container.children as any as HTMLCollection<HTMLStyleElement>;
     },
     cleanup() {
       container.remove();

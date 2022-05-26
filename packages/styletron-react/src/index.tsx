@@ -1,8 +1,8 @@
-// @flow
 /* eslint-env browser */
 /* eslint-disable no-unused-vars, no-redeclare, no-shadow */
 
 declare var __DEV__: boolean;
+
 declare var __BROWSER__: boolean;
 declare var process: any;
 
@@ -24,12 +24,12 @@ import type {
   WithStyleFn,
   WithTransformFn,
   WithWrapperFn,
-} from "./types.js";
+} from "./types";
 import {
   addDebugMetadata,
   setupDevtoolsExtension,
   DebugEngine,
-} from "./dev-tool.js";
+} from "./dev-tool";
 
 export {DebugEngine};
 export type {StyleObject};
@@ -46,15 +46,17 @@ const DebugEngineContext = React.createContext();
 const ThemeContext = React.createContext();
 
 type DevProviderProps = {
-  children: React.Node,
-  value: StandardEngine,
-  debugAfterHydration?: boolean,
-  debug?: any,
+  children: React.ReactNode;
+  value: StandardEngine;
+  debugAfterHydration?: boolean;
+  debug?: any;
 };
 
 class DevProvider extends React.Component<
   DevProviderProps,
-  {hydrating: boolean},
+  {
+    hydrating: boolean;
+  }
 > {
   constructor(props: DevProviderProps) {
     super();
@@ -92,12 +94,11 @@ export const Provider =
 if (__BROWSER__ && __DEV__ && !window.__STYLETRON_DEVTOOLS__) {
   setupDevtoolsExtension();
 }
+
 type createStyledOpts = {
-  getInitialStyle: () => StyleObject,
-  driver: typeof driver,
-  wrapper: (
-    React.StatelessFunctionalComponent<any>,
-  ) => React.ComponentType<any>,
+  getInitialStyle: () => StyleObject;
+  driver: typeof driver;
+  wrapper: (a: React.FunctionComponent<any>) => React.ComponentType<any>;
 };
 
 function checkNoopEngine(engine: StandardEngine) {
@@ -275,7 +276,7 @@ export const withWrapper: WithWrapperFn = (component, wrapper) => {
 
 export function autoComposeShallow<Props>(
   styletron: Styletron,
-  styleArg: StyleObject | (Props => StyleObject),
+  styleArg: StyleObject | ((a: Props) => StyleObject),
 ) {
   if (typeof styleArg === "function") {
     return dynamicComposeShallow(styletron, styleArg);
@@ -300,7 +301,7 @@ function addExtension(composed, component, styleArg) {
 
 export function autoComposeDeep<Props>(
   styletron: Styletron,
-  styleArg: StyleObject | (Props => StyleObject),
+  styleArg: StyleObject | ((a: Props) => StyleObject),
 ) {
   if (typeof styleArg === "function") {
     return dynamicComposeDeep(styletron, styleArg);
@@ -319,7 +320,7 @@ export function staticComposeDeep(styletron: Styletron, style: StyleObject) {
 
 export function dynamicComposeShallow<Props>(
   styletron: Styletron,
-  styleFn: Props => StyleObject,
+  styleFn: (a: Props) => StyleObject,
 ) {
   return composeDynamic(styletron, (style, props) =>
     shallowMerge(style, styleFn(props)),
@@ -328,7 +329,7 @@ export function dynamicComposeShallow<Props>(
 
 export function dynamicComposeDeep<Props>(
   styletron: Styletron,
-  styleFn: Props => StyleObject,
+  styleFn: (a: Props) => StyleObject,
 ) {
   return composeDynamic(styletron, (style, props) =>
     deepMerge(style, styleFn(props)),
@@ -404,7 +405,7 @@ export function composeStatic(
 
 export function composeDynamic<Props>(
   styletron: Styletron,
-  reducer: (StyleObject, Props) => StyleObject,
+  reducer: (b: StyleObject, a: Props) => StyleObject,
 ) {
   const composed: Styletron = {
     getInitialStyle: styletron.getInitialStyle,
@@ -530,15 +531,18 @@ export function createStyledElementComponent(styletron: Styletron) {
 // Utility functions
 
 export function resolveStyle(
-  getInitialStyle: void => StyleObject,
+  getInitialStyle: (a: void) => StyleObject,
   reducers: Array<ReducerContainer>,
-  props: Object,
+  props: any,
 ): StyleObject {
   let result = getInitialStyle();
   let i = reducers.length;
   while (i--) {
     // Cast to allow passing unused props param in case of static reducer
-    const reducer = (reducers[i].reducer: (StyleObject, Object) => StyleObject);
+    const reducer = reducers[i].reducer as (
+      b: StyleObject,
+      a: any,
+    ) => StyleObject;
     result = reducer(result, props);
   }
   return result;

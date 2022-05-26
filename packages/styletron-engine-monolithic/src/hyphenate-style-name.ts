@@ -1,5 +1,3 @@
-// @flow
-
 const uppercasePattern = /[A-Z]/g;
 const msPattern = /^ms-/;
 const cache = {};
