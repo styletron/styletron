@@ -3,9 +3,8 @@ import type {
   VendorProperties,
   ObsoleteProperties,
   SvgProperties,
-  AnimationNameProperty as CTAnimationNameProperty,
-  FontFamilyProperty as CTFontFamilyProperty,
-  FontFace as CTFontFace,
+  Property,
+  AtRule,
 } from "csstype";
 
 export interface KeyframesPercentageObject {
@@ -17,11 +16,11 @@ export type KeyframesObject = KeyframesPercentageObject & {
   to?: Properties;
 };
 
-export type AnimationNameProperty = CTAnimationNameProperty | KeyframesObject;
+export type AnimationNameProperty = Property.AnimationName | KeyframesObject;
 
-export type FontFace = CTFontFace;
+export type FontFace = AtRule.FontFace;
 
-export type FontFamilyProperty = CTFontFamilyProperty | FontFace;
+export type FontFamilyProperty = Property.FontFamily | FontFace;
 
 type TLength = string | 0;
 export type Properties = {
