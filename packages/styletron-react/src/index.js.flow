@@ -1,0 +1,212 @@
+// @flow
+import * as React from "react";
+import type {
+  ComponentType,
+  StatelessFunctionalComponent,
+  ElementConfig,
+} from "react";
+import {
+  driver,
+  getInitialStyle,
+  type StandardEngine,
+  type StyleObject,
+} from "styletron-standard";
+
+
+type AssignmentCommutativeReducerContainer = {
+  assignmentCommutative: true,
+  reducer: StyleObject => StyleObject,
+  style: StyleObject,
+  factory: StyleObject => AssignmentCommutativeReducerContainer,
+};
+
+type NonAssignmentCommutativeReducerContainer = {
+  assignmentCommutative: false,
+  reducer: (StyleObject, Object) => StyleObject,
+};
+
+type ReducerContainer =
+  | AssignmentCommutativeReducerContainer
+  | NonAssignmentCommutativeReducerContainer;
+
+// TODO: more precise types
+type Styletron = {
+  reducers: Array<ReducerContainer>,
+  base: any,
+  driver: any,
+  name?: string,
+  wrapper: any,
+  getInitialStyle: any,
+  ext?: {
+    name?: string,
+    base: any,
+    getInitialStyle: any,
+    with: any,
+  },
+  debug?: {
+    stackIndex: number,
+    stackInfo: {stack: any, stacktrace: any, message: any},
+  },
+};
+
+type ExtractPropTypes = <T>(StyletronComponent<T>) => T;
+
+type StyletronComponent<Props> = StatelessFunctionalComponent<Props> & {
+  __STYLETRON__: any,
+};
+
+type StyledFn = {
+  (string, StyleObject): StyletronComponent<{}>,
+  <Props>(string, (Props) => StyleObject): StyletronComponent<Props>,
+  <Base: ComponentType<any>>(
+    Base,
+    StyleObject,
+  ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}>>,
+  <Base: ComponentType<any>, Props>(
+    Base,
+    (Props) => StyleObject,
+  ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+};
+
+type WithStyleFn = {
+  <Base: StyletronComponent<any>, Props>(
+    Base,
+    (Props) => StyleObject,
+  ): StyletronComponent<$Call<ExtractPropTypes, Base> & Props>,
+  <Base: StyletronComponent<any>>(
+    Base,
+    StyleObject,
+  ): StyletronComponent<$Call<ExtractPropTypes, Base>>,
+};
+
+type WithTransformFn = <Base: StyletronComponent<any>, Props>(
+  Base,
+  (StyleObject, Props) => StyleObject,
+) => StyletronComponent<$Call<ExtractPropTypes, Base> & Props>;
+
+type WithWrapperFn = <Base: StyletronComponent<any>, Props>(
+  Base,
+  (Base) => ComponentType<Props>,
+) => StyletronComponent<$Call<ExtractPropTypes, Base> & Props>;
+
+declare function addDebugMetadata(instance: any, stackIndex: any): void;
+
+// DEVTOOLS SETUP
+type StyletronStyles = {
+  classes?: any,
+  styles?: any,
+  extends?: any,
+};
+declare function setupDevtoolsExtension(): void;
+
+declare class BrowserDebugEngine {
+  constructor(worker: any): void;
+
+  debug(props: {stackIndex: any, stackInfo: any}): string;
+}
+
+declare class NoopDebugEngine {
+  debug(): void;
+}
+
+declare export var DebugEngine: typeof BrowserDebugEngine| typeof NoopDebugEngine;
+
+export type {StyleObject};
+
+const noopEngine = {
+  renderStyle: () => "",
+  renderKeyframes: () => "",
+  renderFontFace: () => "",
+};
+
+declare var StyletronContext: React.Context<StandardEngine>;
+declare var HydrationContext: React.Context<any>;
+declare var DebugEngineContext: React.Context<any>;
+declare var ThemeContext: React.Context<any>;
+
+type DevProviderProps = {
+  children: React.Node,
+  value: StandardEngine,
+  debugAfterHydration?: boolean,
+  debug?: any,
+};
+
+declare class DevProvider extends React.Component<
+  DevProviderProps,
+  {hydrating: boolean},
+> {
+  constructor(props: DevProviderProps): void;
+}
+
+declare export var Provider: typeof DevProvider | typeof StyletronContext.Provider;
+
+type createStyledOpts = {
+  getInitialStyle: () => StyleObject,
+  driver: typeof driver,
+  wrapper: (
+    React.StatelessFunctionalComponent<any>,
+  ) => React.ComponentType<any>,
+};
+
+declare export function useStyletron(): [((style: StyleObject)=>string)];
+
+declare export function createStyled(options: createStyledOpts): StyledFn;
+
+declare export var styled: StyledFn;
+declare export var withTransform: WithTransformFn;
+declare export var withStyle: WithStyleFn;
+declare export var withStyleDeep: WithStyleFn;
+declare export var withWrapper: WithWrapperFn;
+
+declare export function autoComposeShallow<Props>(
+  styletron: Styletron,
+  styleArg: StyleObject | (Props => StyleObject),
+): Styletron;
+
+
+declare export function autoComposeDeep<Props>(
+  styletron: Styletron,
+  styleArg: StyleObject | (Props => StyleObject),
+): Styletron;
+
+declare export function staticComposeShallow(styletron: Styletron, style: StyleObject): Styletron;
+
+declare export function staticComposeDeep(styletron: Styletron, style: StyleObject): Styletron;
+
+declare export function dynamicComposeShallow<Props>(
+  styletron: Styletron,
+  styleFn: Props => StyleObject,
+): Styletron;
+
+declare export function dynamicComposeDeep<Props>(
+  styletron: Styletron,
+  styleFn: Props => StyleObject,
+): Styletron;
+
+declare export function createShallowMergeReducer(
+  style: StyleObject,
+): AssignmentCommutativeReducerContainer;
+
+declare export function createDeepMergeReducer(
+  style: StyleObject,
+): AssignmentCommutativeReducerContainer;
+
+declare export function composeStatic(
+  styletron: Styletron,
+  reducerContainer: AssignmentCommutativeReducerContainer,
+): Styletron;
+
+declare export function composeDynamic<Props>(
+  styletron: Styletron,
+  reducer: (StyleObject, Props) => StyleObject,
+): Styletron;
+
+declare export function createStyledElementComponent(styletron: Styletron): StyletronComponent<any>;
+
+// Utility functions
+
+declare export function resolveStyle(
+  getInitialStyle: void => StyleObject,
+  reducers: Array<ReducerContainer>,
+  props: Object,
+): StyleObject;

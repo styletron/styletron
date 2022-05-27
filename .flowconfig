@@ -1,5 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/node_modules/documentation
+<PROJECT_ROOT>/node_modules/babel-eslint/node_modules/resolve/test
+<PROJECT_ROOT>/node_modules/resolve/test
 [include]
 
 [libs]

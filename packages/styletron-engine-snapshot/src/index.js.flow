@@ -1,0 +1,21 @@
+// @flow
+
+import type {
+  StandardEngine,
+  KeyframesObject,
+  FontFaceObject,
+  StyleObject,
+} from "styletron-standard";
+
+declare export class StyletronSnapshotEngine implements StandardEngine {
+  renderStyle(styles: StyleObject): string;
+
+  renderKeyframes(keyframes: KeyframesObject) : string;
+
+  renderFontFace(fontFace: FontFaceObject): string;
+}
+
+declare export var Client: typeof StyletronSnapshotEngine;
+declare export var Server :typeof StyletronSnapshotEngine;
+
+declare export default StyletronSnapshotEngine;

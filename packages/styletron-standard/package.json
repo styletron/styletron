@@ -24,7 +24,7 @@
     "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
   },
   "scripts": {
-    "build": "cup build --force-flow",
+    "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist/",
     "pretest": "cup build-tests",
     "test": "unitest --node=dist-tests/node.js",
     "prepublish": "npm run build"

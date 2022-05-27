@@ -1,0 +1,67 @@
+// @flow
+
+import type {
+  StandardProperties,
+  VendorProperties,
+  ObsoleteProperties,
+  SvgProperties,
+  AnimationNameProperty as CTAnimationNameProperty,
+  FontFamilyProperty as CTFontFamilyProperty,
+  FontFace as CTFontFace,
+} from "@rtsao/csstype";
+
+export type KeyframesObject = {
+  from?: Properties,
+  to?: Properties,
+  [string]: Properties,
+};
+
+type AnimationNameProperty = CTAnimationNameProperty | KeyframesObject;
+
+export type FontFaceObject = CTFontFace;
+
+type FontFamilyProperty = CTFontFamilyProperty | FontFaceObject;
+
+type TLength = string | 0;
+
+export type Properties = {
+  ...StandardProperties<TLength>,
+  ...VendorProperties<TLength>,
+  ...ObsoleteProperties<TLength>,
+  ...SvgProperties<TLength>,
+  animationName?: AnimationNameProperty,
+  fontFamily?: FontFamilyProperty | FontFamilyProperty[],
+  MozAnimationName?: AnimationNameProperty,
+  WebkitAnimationName?: AnimationNameProperty,
+  OAnimationName?: AnimationNameProperty,
+};
+
+
+// Note: $Shape is needed to make polymorphic withStyle refinements work correctly
+// It seems functions satisfy this type without $Shape
+// See: https://github.com/facebook/flow/issues/6784
+//
+//
+//
+//
+//
+//
+export type StyleObject = $Shape<{
+  ...Properties,
+  [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
+}>;
+
+export interface StandardEngine {
+  renderStyle(style: StyleObject): string;
+  renderKeyframes(keyframes: KeyframesObject): string;
+  renderFontFace(fontFace: FontFaceObject): string;
+}
+
+declare export function driver(style: StyleObject, styletron: StandardEngine): string;
+
+declare export function getInitialStyle(): StyleObject;
+
+declare export function renderDeclarativeRules(
+  style: StyleObject,
+  styletron: StandardEngine,
+): StyleObject;
