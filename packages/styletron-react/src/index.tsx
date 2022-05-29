@@ -41,6 +41,7 @@ import {
 export {DebugEngine};
 export type {StyleObject};
 export type {StyletronProps};
+export type {StyletronComponent};
 
 const noopEngine = {
   renderStyle: () => "",
