@@ -6,10 +6,9 @@ import type {
 
 export type {FontFaceObject, KeyframesObject};
 
-export interface NestedStyleObject {
-  [x: string]: StyleObject;
-}
-export type StyleObject = NestedStyleObject | Properties;
+export type StyleObject = Properties & {
+  [key in string]: Properties[keyof Properties] | StyleObject;
+};
 
 export interface StandardEngine {
   renderStyle(style: StyleObject): string;
@@ -56,7 +55,7 @@ export function renderDeclarativeRules(
       }
     }
     if (typeof val === "object" && val !== null) {
-      renderDeclarativeRules(val, styletron);
+      renderDeclarativeRules(val as StyleObject, styletron);
     }
   }
   return style;
