@@ -9,6 +9,7 @@
     "jsx": "react",
     "declaration": true,
     "declarationMap": true,
+    "emitDeclarationOnly": true,
     "composite": true,
     "sourceMap": true,
     "moduleResolution": "node",

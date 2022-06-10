@@ -73,7 +73,7 @@ export default function injectStylePrefixed(
           " " +
           injectStylePrefixed(
             styleCache,
-            originalVal,
+            originalVal as StyleObject,
             media,
             pseudo + originalKey,
           );
@@ -82,7 +82,7 @@ export default function injectStylePrefixed(
           " " +
           injectStylePrefixed(
             styleCache,
-            originalVal,
+            originalVal as StyleObject,
             originalKey.substr(7),
             pseudo,
           );

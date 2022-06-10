@@ -11,10 +11,12 @@
     "dist-node-cjs",
     "dist-node-esm",
     "src",
-    "!__tests__"
+    "!__tests__",
+    "lib"
   ],
   "main": "./dist-node-cjs/index.js",
   "module": "./dist-node-esm/index.js",
+  "types": "./lib/index.d.ts",
   "browser": {
     "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
     "./dist-node-esm/index.js": "./dist-browser-esm/index.js"

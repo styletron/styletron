@@ -66,20 +66,20 @@ export default function injectStylePrefixed(
     if (key[0] === ":") {
       classes = [
         ...classes,
-        ...injectStylePrefixed(value, selector + key, prefix, strict),
+        ...injectStylePrefixed(value as StyleObject, selector + key, prefix, strict),
       ];
       continue;
     }
 
     if (key[0] === "@") {
-      const nestedRules = injectStylePrefixed(value, selector, prefix, strict);
+      const nestedRules = injectStylePrefixed(value as StyleObject, selector, prefix, strict);
       classes = [...classes, key + "{" + nestedRules.join("") + "}"];
       continue;
     }
 
     classes = [
       ...classes,
-      key + "{" + injectStylePrefixed(value, "", prefix, strict).join("") + "}",
+      key + "{" + injectStylePrefixed(value as StyleObject, "", prefix, strict).join("") + "}",
     ];
   }
 
