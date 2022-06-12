@@ -223,7 +223,6 @@ export const styled: StyledFn = createStyled({
 });
 
 export const withTransform: WithTransformFn = (component, transformer) => {
-  // @ts-ignore
   const styletron = component.__STYLETRON__;
 
   if (__BROWSER__ && __DEV__) {
@@ -260,7 +259,6 @@ export const withStyleDeep: WithStyleFn = (component, styleArg) => {
 export const withStyle = withStyleDeep;
 
 export const withWrapper: WithWrapperFn = (component, wrapper) => {
-  // @ts-ignore
   const styletron = component.__STYLETRON__;
 
   if (__DEV__) {

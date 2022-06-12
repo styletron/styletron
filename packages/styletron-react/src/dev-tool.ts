@@ -2,7 +2,7 @@
 /* global module */
 
 export function addDebugMetadata(instance, stackIndex) {
-  // @ts-ignore todo: stacktrace does not exist on error (non standard browser?)
+  // @ts-expect-error todo: stacktrace does not exist on error (non standard browser?)
   const {stack, stacktrace, message} = new Error("stacktrace source");
   instance.debug = {
     stackInfo: {stack, stacktrace, message},
@@ -111,7 +111,5 @@ export class NoopDebugEngine {
   }
 }
 
-declare global {
-  var __BROWSER__: boolean;
-}
+declare var __BROWSER__: boolean;
 export const DebugEngine = __BROWSER__ ? BrowserDebugEngine : NoopDebugEngine;
