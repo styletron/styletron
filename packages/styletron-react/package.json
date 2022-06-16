@@ -38,7 +38,7 @@
     "@types/react": "^16.8.23",
     "@types/webpack-env": "^1.17.0",
     "@babel/preset-react": "^7.17.12",
-    "@zxbodya/create-universal-package": "^4.2.0",
+    "create-universal-package": "^4.3.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint-plugin-react": "^7.6.1",

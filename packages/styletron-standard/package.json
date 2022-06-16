@@ -32,7 +32,7 @@
     "inline-style-prefixer": "^5.1.0"
   },
   "devDependencies": {
-    "@zxbodya/create-universal-package": "^4.2.0"
+    "create-universal-package": "^4.3.0"
   },
   "license": "MIT"
 }

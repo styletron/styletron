@@ -1550,24 +1550,6 @@
     "@typescript-eslint/types" "5.26.0"
     eslint-visitor-keys "^3.3.0"
 
-"@zxbodya/create-universal-package@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/@zxbodya/create-universal-package/-/create-universal-package-4.2.0.tgz#75f26cdcc6c6f5b1b33836a4c7ba8e28028c7e99"
-  integrity sha512-AOBEW+W9TiRy5INxdWJkrrbZ/Mpnmk2+9l9FhVStmGTvz7TlDvunngjGzZYpBERLNDhZ2jYEnZ09vfis2o7Etg==
-  dependencies:
-    "@babel/core" "^7.17.10"
-    "@babel/plugin-syntax-flow" "^7.16.0"
-    "@babel/plugin-transform-flow-strip-types" "^7.16.0"
-    "@babel/plugin-transform-modules-commonjs" "^7.17.9"
-    "@babel/preset-typescript" "^7.16.7"
-    args "^5.0.0"
-    babel-plugin-transform-cup-globals "^1.0.2"
-    babel-plugin-transform-prune-unused-imports "^1.0.1"
-    chokidar "^3.4.3"
-    eliminate "^1.0.2"
-    jest-worker "^22.4.3"
-    tiny-glob "^0.2.6"
-
 JSONStream@^1.0.4:
   version "1.3.5"
   resolved "https://registry.npmjs.org/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
@@ -2521,6 +2503,24 @@ create-error-class@^3.0.0:
   integrity sha1-Br56vvlHo/FKMP1hBnHUAbyot7Y=
   dependencies:
     capture-stack-trace "^1.0.0"
+
+create-universal-package@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/create-universal-package/-/create-universal-package-4.3.0.tgz#24fc451b5552d5d10daf02ea1c141c8415dbc64d"
+  integrity sha512-9D/nsgtDe0nvxqmorocFRU0lzjqQltDEuUHVPqnbu1fdtH1CrlOY4j4yyvctNNJ1OsPT8hJ13BMAX1hDuVbqJg==
+  dependencies:
+    "@babel/core" "^7.17.10"
+    "@babel/plugin-syntax-flow" "^7.16.0"
+    "@babel/plugin-transform-flow-strip-types" "^7.16.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.17.9"
+    "@babel/preset-typescript" "^7.16.7"
+    args "^5.0.0"
+    babel-plugin-transform-cup-globals "^1.0.2"
+    babel-plugin-transform-prune-unused-imports "^1.0.1"
+    chokidar "^3.4.3"
+    eliminate "^1.0.2"
+    jest-worker "^22.4.3"
+    tiny-glob "^0.2.6"
 
 cross-spawn@^5.0.1:
   version "5.1.0"

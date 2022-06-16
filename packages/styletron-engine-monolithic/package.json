@@ -31,7 +31,7 @@
     "styletron-standard": "^3.0.5"
   },
   "devDependencies": {
-    "@zxbodya/create-universal-package": "^4.2.0",
+    "create-universal-package": "^4.3.0",
     "@babel/plugin-transform-flow-strip-types": "^7.17.12",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
