@@ -51,7 +51,7 @@ test("styled (static)", () => {
 });
 
 test("styled (dynamic)", () => {
-  const Widget = styled<"div", {$foo: boolean}>("div", props => ({
+  const Widget = styled("div", (props: {$foo: boolean}) => ({
     color: props.$foo ? "red" : "blue",
   }));
 
