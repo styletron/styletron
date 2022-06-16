@@ -30,7 +30,7 @@ describe("client", () => {
     const instance = new StyletronClient({container});
     expect(instance.renderStyle({color: "purple"})).toEqual("css-hZftBk");
     expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".css-hZftBk {color: purple;}"]},
+      {rules: [".css-hZftBk {color: purple;}"]},
     ]);
     expect(
       instance.renderStyle({
@@ -40,48 +40,38 @@ describe("client", () => {
 
     expect(sheetsToRules(document.styleSheets)).toEqual([
       {
-        media: "",
-        rules: [".css-hZftBk { color: purple; }"],
+        rules: [".css-hZftBk {color: purple;}"],
       },
       {
-        media: "",
-        rules: [
-          "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
-        ],
+        rules: ["@media (min-width: 800px) {.css-hrykRm {color: purple;}}"],
       },
     ]);
 
     instance.renderStyle({userSelect: "none"});
     expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".css-hZftBk {color: purple;}"]},
+      {rules: [".css-hZftBk {color: purple;}"]},
       {
-        media: "",
         rules: ["@media (min-width: 800px) {.css-hrykRm {color: purple;}}"],
       },
       {
-        media: "",
         rules: [
-          "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
+          ".css-eaGfYw {-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}",
         ],
       },
-      {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
     ]);
 
     instance.renderStyle({display: "flex"});
     expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".css-hZftBk {color: purple;}"]},
+      {rules: [".css-hZftBk {color: purple;}"]},
       {
-        media: "",
         rules: ["@media (min-width: 800px) {.css-hrykRm {color: purple;}}"],
       },
       {
-        media: "",
         rules: [
-          "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
+          ".css-eaGfYw {-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}",
         ],
       },
-      {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
-      {media: "", rules: [".css-haOmqK { display: flex; }"]},
+      {rules: [".css-haOmqK {display: flex;}"]},
     ]);
 
     instance.renderStyle({
@@ -90,20 +80,18 @@ describe("client", () => {
       },
     });
     expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".css-hZftBk { color: purple; }"]},
+      {rules: [".css-hZftBk {color: purple;}"]},
       {
-        media: "",
+        rules: ["@media (min-width: 800px) {.css-hrykRm {color: purple;}}"],
+      },
+      {
         rules: [
-          "@media (min-width: 800px) {\n  .css-hrykRm { color: purple; }\n}",
+          ".css-eaGfYw {-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}",
         ],
       },
-      {media: "", rules: [".css-eaGfYw { user-select: none; }"]},
-      {media: "", rules: [".css-haOmqK { display: flex; }"]},
+      {rules: [".css-haOmqK {display: flex;}"]},
       {
-        media: "",
-        rules: [
-          "@media (min-width: 600px) {\n  .css-bWjoTf { color: red; }\n}",
-        ],
+        rules: ["@media (min-width: 600px) {.css-bWjoTf {color: red;}}"],
       },
     ]);
 
@@ -121,20 +109,17 @@ describe("client", () => {
     ).toBe("foo_animation-cmOXrn");
 
     expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".foo_css-hZftBk { color: purple; }"]},
+      {rules: [".foo_css-hZftBk {color: purple;}"]},
       {
-        media: "",
-        rules: [
-          '@font-face { font-family: foo_font-lfxDGs; src: url("blah"); }',
-        ],
+        rules: ["@font-face {font-family: foo_font-lfxDGs; src: url(blah);}"],
       },
       {
-        media: "",
         rules: [
-          "@keyframes foo_animation-cmOXrn { \n  0% { color: red; }\n  100% { color: blue; }\n}",
+          "@keyframes foo_animation-cmOXrn { \n  from {color: red;} \n  to {color: blue;} \n}",
         ],
       },
     ]);
+
     instance.container.remove();
   });
 
@@ -164,8 +149,9 @@ describe("client", () => {
     const afterMarginRules = elementsToRules(getSheets());
     expect(afterMarginRules).toEqual([
       ...afterRules,
-      {media: "", rules: [".css-iMIAew { margin: 10px; }"]},
+      {rules: [".css-iMIAew {margin: 10px;}"]},
     ]);
+
     cleanup();
   });
 
@@ -178,72 +164,20 @@ describe("client", () => {
       instance.renderStyle({
         "@supports (flex-wrap: wrap)": {
           "@media (min-width: 50em)": {
-            color: "green",
             ":hover": {
-              color: "blue",
+              background: "blue",
             },
           },
         },
       }),
-    ).toBe("css-jrXsOI");
+    ).toBe("css-gPyDTX");
+
     expect(sheetsToRules(document.styleSheets)).toEqual([
       {
-        media: "",
         rules: [
-          "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-jrXsOI { color: green; }\n  .css-jrXsOI:hover { color: blue; }\n}\n}",
+          "@supports (flex-wrap: wrap) {@media (min-width: 50em) {.css-gPyDTX:hover {background: blue;}}}",
         ],
       },
-    ]);
-
-    instance.renderStyle({
-      ":hover": {
-        color: "blue",
-        "::after": {
-          content: '"abc"',
-        },
-      },
-    });
-    expect(sheetsToRules(document.styleSheets)).toEqual([
-      {
-        media: "",
-        rules: [
-          "@supports (flex-wrap: wrap) {\n  @media (min-width: 50em) {\n  .css-jrXsOI { color: green; }\n  .css-jrXsOI:hover { color: blue; }\n}\n}",
-        ],
-      },
-      {
-        media: "",
-        rules: [
-          ".css-hFfBmH:hover { color: blue; }",
-          '.css-hFfBmH:hover::after { content: "abc"; }',
-        ],
-      },
-    ]);
-
-    instance.container.remove();
-  });
-
-  it("reference another class name", () => {
-    const container = document.createElement("div");
-    document.body && document.body.appendChild(container);
-    const instance = new StyletronClient({container});
-
-    expect(
-      instance.renderStyle({
-        color: "blue",
-      }),
-    ).toBe("css-yrgMo");
-    expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".css-yrgMo { color: blue; }"]},
-    ]);
-
-    instance.renderStyle({
-      ".css-yrgMo:hover": {
-        color: "green",
-      },
-    });
-    expect(sheetsToRules(document.styleSheets)).toEqual([
-      {media: "", rules: [".css-yrgMo { color: blue; }"]},
-      {media: "", rules: [".css-yrgMo:hover { color: green; }"]},
     ]);
 
     instance.container.remove();
@@ -325,10 +259,7 @@ function sheetsToRules(sheets) {
   return reduce.call(
     sheets,
     (acc, sheet) => {
-      return [
-        ...acc,
-        {media: sheet.media.mediaText, rules: sheetToRules(sheet)},
-      ];
+      return [...acc, {rules: sheetToRules(sheet)}];
     },
     [],
   );
