@@ -25,7 +25,7 @@ module.exports = {
         "/node_modules/",
         "dist-*",
         "lib",
-        ".browser.ts",
+        ".node.ts",
         "lib",
       ],
       globals: {
