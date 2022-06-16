@@ -1,0 +1,93 @@
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:13:2
+
+Cannot create `Bar` element because property `foo` is missing in props [1] but exists in props [2]. [incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:13:2
+   13| <Bar />; // Missing foo and bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:13:1
+   13| <Bar />; // Missing foo and bar
+       ^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:8:1
+    8| <Foo foo="foo" />; // Foo usage is necessary for inference
+       ^^^^^^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:15:2
+
+Cannot create `Bar` element because property `foo` is missing in props [1] but exists in props [2]. [incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:15:2
+   15| <Bar bar="bar" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:15:1
+   15| <Bar bar="bar" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:8:1
+    8| <Foo foo="foo" />; // Foo usage is necessary for inference
+       ^^^^^^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:17:2
+
+Cannot create `Bar` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:17:2
+   17| <Bar foo="foo" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:17:1
+   17| <Bar foo="foo" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:10:37
+   10| const Bar = withStyle(Foo, (_props: {bar: "bar"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:19:2
+
+Cannot create `Bar` element because number [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:19:2
+   19| <Bar foo={12345} bar="bar" />; // Wrong foo. Note: inferred type is string instead of "foo" literal
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:19:11
+   19| <Bar foo={12345} bar="bar" />; // Wrong foo. Note: inferred type is string instead of "foo" literal
+                 ^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:6:42
+    6| const Foo = styled("div", (_props: {foo: "foo"}) => ({color: "red"}));
+                                                ^^^^^ [2]
+
+
+Error ---------------------------------------------- packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:21:2
+
+Cannot create `Bar` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:21:2
+   21| <Bar foo="a string" bar="notbar" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:21:10
+   21| <Bar foo="a string" bar="notbar" />; // Wrong bar
+                ^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/inferred-styled.js:6:42
+    6| const Foo = styled("div", (_props: {foo: "foo"}) => ({color: "red"}));
+                                                ^^^^^ [2]
+
+
+
+Found 5 errors
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches

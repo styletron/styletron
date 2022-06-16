@@ -10,8 +10,8 @@ References:
    packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:37
     4| const Foo = styled("div", {invalid: 'property'});
                                            ^^^^^^^^^^ [1]
-   packages/styletron-standard/src/index.js:22:13
-   22|   [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
+   packages/styletron-standard/dist-node-cjs/index.js.flow:51:13
+   51|   [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
                    ^^^^^^^^^^^ [2]
 
 

@@ -1,11 +1,11 @@
 Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/opacity-string.js:5:18
 
 Cannot call `styled` because a call signature declaring the expected parameter / return type is missing in object
-literal [1] but exists in function type [2].
+literal [1] but exists in function type [2]. [incompatible-call]
 
    packages/flow-type-tests/__tests__/fixtures/opacity-string.js:5:18
     5| export const A = styled('span', {':hover': {opacity: '0.7'}});
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        ^^^^^^
 
 References:
    packages/flow-type-tests/__tests__/fixtures/opacity-string.js:5:33

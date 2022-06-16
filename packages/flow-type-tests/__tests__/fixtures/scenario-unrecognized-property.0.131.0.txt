@@ -1,18 +1,23 @@
 Error ---------------------------------------- packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:13
 
-Cannot call `styled` because string [1] is incompatible with `$Shape` of `StyleObject` [2] in property `invalid`.
+Cannot call `styled` because string [1] is incompatible with `$Shape` of object type [2] in property `invalid`.
+[incompatible-call]
 
    packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:13
     4| const Foo = styled("div", {invalid: 'property'});
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   ^^^^^^
 
 References:
    packages/flow-type-tests/__tests__/fixtures/unrecognized-property.js:4:37
     4| const Foo = styled("div", {invalid: 'property'});
                                            ^^^^^^^^^^ [1]
-   packages/styletron-standard/dist-node-cjs/index.js.flow:51:13
+   packages/styletron-standard/dist-node-cjs/index.js.flow:49:34
+                                        v
+   49| export type StyleObject = $Shape<{
+   50|   ...Properties,
    51|   [string]: StyleObject, // Unrecognized properties are assumed to be media queries or pseudo selectors w/ nested style object. See: https://github.com/styletron/styletron-standard
-                   ^^^^^^^^^^^ [2]
+   52| }>;
+       ^ [2]
 
 
 

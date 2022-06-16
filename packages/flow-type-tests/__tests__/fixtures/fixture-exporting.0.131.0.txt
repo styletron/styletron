@@ -1,0 +1,365 @@
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:15:2
+
+Cannot create `Foo` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:15:2
+   15| <Foo />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:15:1
+   15| <Foo />; // Missing foo
+       ^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:27
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                 ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:18:2
+
+Cannot create `Foo` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:18:2
+   18| <Foo foo="notfoo" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:18:10
+   18| <Foo foo="notfoo" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:33
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                       ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:28:2
+
+Cannot create `Bar` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:28:2
+   28| <Bar bar="bar" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:28:1
+   28| <Bar bar="bar" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:27
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                 ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:30:2
+
+Cannot create `Bar` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:30:2
+   30| <Bar foo="notfoo" bar="bar" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:30:10
+   30| <Bar foo="notfoo" bar="bar" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:33
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                       ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:32:2
+
+Cannot create `Bar` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:32:2
+   32| <Bar foo="foo" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:32:1
+   32| <Bar foo="foo" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:22:42
+   22| export const Bar = withStyle<typeof Foo, {bar: "bar"}>(
+                                                ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:34:2
+
+Cannot create `Bar` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:34:2
+   34| <Bar foo="foo" bar="notbar" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:34:20
+   34| <Bar foo="foo" bar="notbar" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:22:48
+   22| export const Bar = withStyle<typeof Foo, {bar: "bar"}>(
+                                                      ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:44:2
+
+Cannot create `Baz` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:44:2
+   44| <Baz bar="bar" baz="baz" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:44:1
+   44| <Baz bar="bar" baz="baz" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:27
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                 ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:46:2
+
+Cannot create `Baz` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:46:2
+   46| <Baz foo="notfoo" bar="bar" baz="baz" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:46:10
+   46| <Baz foo="notfoo" bar="bar" baz="baz" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:33
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                       ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:48:2
+
+Cannot create `Baz` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:48:2
+   48| <Baz foo="foo" baz="baz" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:48:1
+   48| <Baz foo="foo" baz="baz" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:22:42
+   22| export const Bar = withStyle<typeof Foo, {bar: "bar"}>(
+                                                ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:50:2
+
+Cannot create `Baz` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:50:2
+   50| <Baz foo="foo" bar="notbar" baz="baz" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:50:20
+   50| <Baz foo="foo" bar="notbar" baz="baz" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:22:48
+   22| export const Bar = withStyle<typeof Foo, {bar: "bar"}>(
+                                                      ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:52:2
+
+Cannot create `Baz` element because property `baz` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:52:2
+   52| <Baz foo="foo" bar="bar" />; // Missing baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:52:1
+   52| <Baz foo="foo" bar="bar" />; // Missing baz
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:38:42
+   38| export const Baz = withStyle<typeof Bar, {baz: "baz"}>(
+                                                ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:54:2
+
+Cannot create `Baz` element because string [1] is incompatible with string literal `baz` [2] in property `baz`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:54:2
+   54| <Baz foo="foo" bar="bar" baz="notbaz" />; // Wrong baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:54:30
+   54| <Baz foo="foo" bar="bar" baz="notbaz" />; // Wrong baz
+                                    ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:38:48
+   38| export const Baz = withStyle<typeof Bar, {baz: "baz"}>(
+                                                      ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:64:2
+
+Cannot create `Qux` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:64:2
+   64| <Qux bar="bar" baz="baz" qux="qux" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:64:1
+   64| <Qux bar="bar" baz="baz" qux="qux" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:27
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                 ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:66:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:66:2
+   66| <Qux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:66:10
+   66| <Qux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:10:33
+   10| export const Foo = styled<{foo: "foo"}>("div", (_props: {foo: "foo"}) => ({
+                                       ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:68:2
+
+Cannot create `Qux` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:68:2
+   68| <Qux foo="foo" baz="baz" qux="qux" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:68:1
+   68| <Qux foo="foo" baz="baz" qux="qux" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:22:42
+   22| export const Bar = withStyle<typeof Foo, {bar: "bar"}>(
+                                                ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:70:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:70:2
+   70| <Qux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:70:20
+   70| <Qux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:22:48
+   22| export const Bar = withStyle<typeof Foo, {bar: "bar"}>(
+                                                      ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:72:2
+
+Cannot create `Qux` element because property `baz` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:72:2
+   72| <Qux foo="foo" bar="bar" qux="qux" />; // Missing baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:72:1
+   72| <Qux foo="foo" bar="bar" qux="qux" />; // Missing baz
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:38:42
+   38| export const Baz = withStyle<typeof Bar, {baz: "baz"}>(
+                                                ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:74:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `baz` [2] in property `baz`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:74:2
+   74| <Qux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:74:30
+   74| <Qux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+                                    ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:38:48
+   38| export const Baz = withStyle<typeof Bar, {baz: "baz"}>(
+                                                      ^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:76:2
+
+Cannot create `Qux` element because property `qux` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:76:2
+   76| <Qux foo="foo" bar="bar" baz="baz" />; // Missing qux
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:76:1
+   76| <Qux foo="foo" bar="bar" baz="baz" />; // Missing qux
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:58:42
+   58| export const Qux = withStyle<typeof Baz, {qux: "qux"}>(
+                                                ^^^^^^^^^^^^ [2]
+
+
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exporting.js:78:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `qux` [2] in property `qux`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:78:2
+   78| <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:78:40
+   78| <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+                                              ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exporting.js:58:48
+   58| export const Qux = withStyle<typeof Baz, {qux: "qux"}>(
+                                                      ^^^^^ [2]
+
+
+
+Found 20 errors
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches

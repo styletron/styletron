@@ -8,8 +8,8 @@ props [2].
        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 References:
-   packages/styletron-react/src/types.js:58:31
-   58|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}>>,
+   packages/styletron-react/dist-node-cjs/index.js.flow:64:31
+   64|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}>>,
                                      ^^^^^^^^^^^^^^^^^^^ [1]
 
 

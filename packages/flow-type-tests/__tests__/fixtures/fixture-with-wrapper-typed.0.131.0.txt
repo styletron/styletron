@@ -1,66 +1,79 @@
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:20:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:20:2
 
-Cannot create `Bar` element because property `bar` is missing in props [1] but exists in props [2].
+Cannot create `Bar` element because property `bar` is missing in props [1] but exists in props [2]. [incompatible-use]
 
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:20:2
+   20| <Bar />; // missing foo and bar
+        ^^^
+
+References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:20:1
    20| <Bar />; // missing foo and bar
        ^^^^^^^ [1]
-
-References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:14:9
    14|         <StyledComponent {...props} />
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:23:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:23:2
 
-Cannot create `Bar` element because property `bar` is missing in props [1] but exists in props [2].
+Cannot create `Bar` element because property `bar` is missing in props [1] but exists in props [2]. [incompatible-use]
 
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:23:2
+   23| <Bar foo="foo" />; // missing bar
+        ^^^
+
+References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:23:1
    23| <Bar foo="foo" />; // missing bar
        ^^^^^^^^^^^^^^^^^ [1]
-
-References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:14:9
    14|         <StyledComponent {...props} />
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:26:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:26:2
 
-Cannot create `Bar` element because property `foo` is missing in props [1] but exists in props [2].
+Cannot create `Bar` element because property `foo` is missing in props [1] but exists in props [2]. [incompatible-use]
 
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:26:2
+   26| <Bar bar="bar" />; // missing foo
+        ^^^
+
+References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:26:1
    26| <Bar bar="bar" />; // missing foo
        ^^^^^^^^^^^^^^^^^ [1]
-
-References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:14:9
    14|         <StyledComponent {...props} />
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:35:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:35:2
 
-Cannot create `Baz` element because property `foo` is missing in props [1] but exists in props [2].
+Cannot create `Baz` element because property `foo` is missing in props [1] but exists in props [2]. [incompatible-use]
 
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:35:2
+   35| <Baz bar="bar" baz="baz" />; // Missing foo
+        ^^^
+
+References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:35:1
    35| <Baz bar="bar" baz="baz" />; // Missing foo
        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
-
-References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:14:9
    14|         <StyledComponent {...props} />
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:37:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:37:2
 
 Cannot create `Baz` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
 
-   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:37:1
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:37:2
    37| <Baz foo="notfoo" bar="bar" baz="baz" />; // Wrong foo
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ^^^
 
 References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:37:10
@@ -71,27 +84,31 @@ References:
                                                ^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:39:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:39:2
 
-Cannot create `Baz` element because property `bar` is missing in props [1] but exists in props [2].
+Cannot create `Baz` element because property `bar` is missing in props [1] but exists in props [2]. [incompatible-use]
 
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:39:2
+   39| <Baz foo="foo" baz="baz" />; // Missing bar
+        ^^^
+
+References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:39:1
    39| <Baz foo="foo" baz="baz" />; // Missing bar
        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
-
-References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:14:9
    14|         <StyledComponent {...props} />
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:41:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:41:2
 
 Cannot create `Baz` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
 
-   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:41:1
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:41:2
    41| <Baz foo="foo" bar="notbar" baz="baz" />; // Wrong bar
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ^^^
 
 References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:41:20
@@ -102,27 +119,32 @@ References:
                                                       ^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:43:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:43:2
 
 Cannot create `Baz` element because property `baz` is missing in props [1] but exists in object type [2].
+[incompatible-use]
 
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:43:2
+   43| <Baz foo="foo" bar="bar" />; // Missing baz
+        ^^^
+
+References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:43:1
    43| <Baz foo="foo" bar="bar" />; // Missing baz
        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
-
-References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:30:36
    30| const Baz = withStyle(Bar, (props: {foo: "foo", bar: "bar", baz: "baz"}) => ({
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 
-Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:45:1
+Error ------------------------------------------- packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:45:2
 
 Cannot create `Baz` element because string [1] is incompatible with string literal `baz` [2] in property `baz`.
+[incompatible-use]
 
-   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:45:1
+   packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:45:2
    45| <Baz foo="foo" bar="bar" baz="notbaz" />; // Wrong baz
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ^^^
 
 References:
    packages/flow-type-tests/__tests__/fixtures/with-wrapper-typed.js:45:30

@@ -7,8 +7,8 @@ Cannot create `Bar` element because property `foo` is missing in props [1] but e
        ^^^^^^^^^^^^^^^^^ [1]
 
 References:
-   packages/styletron-react/src/types.js:62:31
-   62|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+   packages/styletron-react/dist-node-cjs/index.js.flow:68:31
+   68|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
                                      ^^^^^^^^^^^^^^^^^^^ [2]
 
 
@@ -69,8 +69,8 @@ Cannot create `Baz` element because property `foo` is missing in props [1] but e
        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
 
 References:
-   packages/styletron-react/src/types.js:62:31
-   62|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+   packages/styletron-react/dist-node-cjs/index.js.flow:68:31
+   68|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
                                      ^^^^^^^^^^^^^^^^^^^ [2]
 
 
@@ -162,8 +162,8 @@ Cannot create `Qux` element because property `foo` is missing in props [1] but e
        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
 
 References:
-   packages/styletron-react/src/types.js:62:31
-   62|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+   packages/styletron-react/dist-node-cjs/index.js.flow:68:31
+   68|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
                                      ^^^^^^^^^^^^^^^^^^^ [2]
 
 

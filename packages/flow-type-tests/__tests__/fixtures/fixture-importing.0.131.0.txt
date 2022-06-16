@@ -1,0 +1,10 @@
+Error ---------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/importing.js:4:34
+
+Cannot resolve module `./exporting.js`. [cannot-resolve-module]
+
+   4| import {Foo, Bar, Baz, Qux} from "./exporting.js";
+                                       ^^^^^^^^^^^^^^^^
+
+
+
+Found 1 error
