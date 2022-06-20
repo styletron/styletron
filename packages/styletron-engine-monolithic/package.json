@@ -11,7 +11,7 @@
     "dist-node-cjs",
     "dist-node-esm",
     "src",
-    "!__tests__",
+    "!**/__tests__",
     "lib"
   ],
   "main": "./dist-node-cjs/index.js",
