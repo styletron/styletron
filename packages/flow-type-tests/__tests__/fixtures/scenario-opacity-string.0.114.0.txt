@@ -11,8 +11,8 @@ References:
    packages/flow-type-tests/__tests__/fixtures/opacity-string.js:5:33
     5| export const A = styled('span', {':hover': {opacity: '0.7'}});
                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
-   packages/styletron-react/src/types.js:54:19
-   54|   <Props>(string, (Props) => StyleObject): StyletronComponent<Props>,
+   packages/styletron-react/dist-node-cjs/index.js.flow:60:19
+   60|   <Props>(string, (Props) => StyleObject): StyletronComponent<Props>,
                          ^^^^^^^^^^^^^^^^^^^^^^ [2]
 
 

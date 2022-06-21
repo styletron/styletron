@@ -1,0 +1,124 @@
+// @flow
+
+import type {
+  StandardEngine,
+  KeyframesObject,
+  FontFaceObject,
+  StyleObject,
+} from "styletron-standard";
+
+declare class SequentialIDGenerator {
+  prefix: string;
+  count: number;
+  offset: number;
+  msb: number;
+  power: number;
+
+  constructor(prefix?: string): void;
+  next(): string;
+
+  increment():number;
+}
+
+
+declare class MultiCache<T> {
+  caches: {[string]: Cache<T>};
+  idGenerator: SequentialIDGenerator;
+  onNewCache: (string, Cache<T>, ?string) => any;
+  onNewValue: (cache: Cache<T>, id: string, value: T) => any;
+  sortedCacheKeys: string[];
+
+  constructor(
+    idGenerator: SequentialIDGenerator,
+    onNewCache: Function,
+    onNewValue: Function,
+  ): void ;
+
+  getCache(key: string): Cache<T>;
+
+  getSortedCacheKeys(): string[];
+}
+
+declare class Cache<T> {
+  cache: {[string]: string};
+  idGenerator: SequentialIDGenerator;
+  key: string;
+  onNewValue: (cache: Cache<T>, id: string, value: any) => any;
+
+  constructor(
+    idGenerator: SequentialIDGenerator,
+    onNewValue: (cache: Cache<T>, id: string, value: any) => any,
+  ): void;
+
+  addValue(key: string, value: T):string;
+}
+
+type hydrateT =
+  | HTMLCollection<HTMLStyleElement>
+  | Array<HTMLStyleElement>
+  | NodeList<HTMLStyleElement>;
+
+type optionsT = {
+  hydrate?: hydrateT,
+  container?: Element,
+  prefix?: string,
+};
+
+declare export class Client implements StandardEngine {
+  container: Element;
+  styleElements: {[string]: HTMLStyleElement};
+  fontFaceSheet: HTMLStyleElement;
+  keyframesSheet: HTMLStyleElement;
+
+  styleCache: MultiCache<{pseudo: string, block: string}>;
+  keyframesCache: Cache<KeyframesObject>;
+  fontFaceCache: Cache<FontFaceObject>;
+
+  constructor(opts?: optionsT): void;
+
+  renderStyle(style: StyleObject): string;
+
+  renderFontFace(fontFace: FontFaceObject): string;
+
+  renderKeyframes(keyframes: KeyframesObject): string;
+}
+
+
+export type attrsT = {
+  "data-hydrate"?: "keyframes" | "font-face",
+  media?: string,
+  class?: string,
+};
+
+export type ServerSheetT = {|
+  css: string,
+  attrs: attrsT,
+|};
+
+type ServerOptionsT = {
+  prefix?: string,
+};
+
+declare export class Server implements StandardEngine {
+  styleCache: MultiCache<{pseudo: string, block: string}>;
+  keyframesCache: Cache<KeyframesObject>;
+  fontFaceCache: Cache<FontFaceObject>;
+  styleRules: {[string]: string};
+  keyframesRules: string;
+  fontFaceRules: string;
+
+  constructor(opts?: ServerOptionsT ): void;
+
+  renderStyle(style: StyleObject): string;
+
+  renderFontFace(fontFace: FontFaceObject): string;
+
+  renderKeyframes(keyframes: KeyframesObject): string;
+
+  getStylesheets(): Array<ServerSheetT>;
+
+  getStylesheetsHtml(className?: string): string;
+
+  getCss(): string;
+}
+

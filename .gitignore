@@ -5,6 +5,8 @@ htmldocs/
 lerna-debug.log
 lib/
 dist/
-dist-tests/
+dist-*/
 yarn-error.log
 .next
+.idea
+tsconfig.tsbuildinfo

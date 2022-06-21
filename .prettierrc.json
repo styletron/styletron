@@ -1,4 +1,5 @@
 {
+  "arrowParens": "avoid",
   "useTabs": false,
   "printWidth": 80,
   "tabWidth": 2,
@@ -6,6 +7,5 @@
   "trailingComma": "all",
   "bracketSpacing": false,
   "jsxBracketSameLine": false,
-  "parser": "babel",
   "semi": true
 }

@@ -1,0 +1,329 @@
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:13:2
+
+Cannot create `Bar` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:13:2
+   13| <Bar bar="bar" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:13:1
+   13| <Bar bar="bar" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^ [1]
+   packages/styletron-react/dist-node-cjs/index.js.flow:68:31
+   68|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+                                     ^^^^^^^^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:15:2
+
+Cannot create `Bar` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:15:2
+   15| <Bar foo="notfoo" bar="bar" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:15:10
+   15| <Bar foo="notfoo" bar="bar" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:6:41
+    6| class Foo extends React.Component<{foo: "foo"}> {}
+                                               ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:17:2
+
+Cannot create `Bar` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:17:2
+   17| <Bar foo="foo" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:17:1
+   17| <Bar foo="foo" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:8:34
+    8| const Bar = styled(Foo, (_props: {bar: "bar"}) => ({
+                                        ^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:19:2
+
+Cannot create `Bar` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:19:2
+   19| <Bar foo="foo" bar="notbar" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:19:20
+   19| <Bar foo="foo" bar="notbar" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:8:40
+    8| const Bar = styled(Foo, (_props: {bar: "bar"}) => ({
+                                              ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:26:2
+
+Cannot create `Baz` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:26:2
+   26| <Baz bar="bar" baz="baz" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:26:1
+   26| <Baz bar="bar" baz="baz" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/styletron-react/dist-node-cjs/index.js.flow:68:31
+   68|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+                                     ^^^^^^^^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:28:2
+
+Cannot create `Baz` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:28:2
+   28| <Baz foo="notfoo" bar="bar" baz="baz" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:28:10
+   28| <Baz foo="notfoo" bar="bar" baz="baz" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:6:41
+    6| class Foo extends React.Component<{foo: "foo"}> {}
+                                               ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:30:2
+
+Cannot create `Baz` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:30:2
+   30| <Baz foo="foo" baz="baz" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:30:1
+   30| <Baz foo="foo" baz="baz" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:8:34
+    8| const Bar = styled(Foo, (_props: {bar: "bar"}) => ({
+                                        ^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:32:2
+
+Cannot create `Baz` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:32:2
+   32| <Baz foo="foo" bar="notbar" baz="baz" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:32:20
+   32| <Baz foo="foo" bar="notbar" baz="baz" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:8:40
+    8| const Bar = styled(Foo, (_props: {bar: "bar"}) => ({
+                                              ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:34:2
+
+Cannot create `Baz` element because property `baz` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:34:2
+   34| <Baz foo="foo" bar="bar" />; // Missing baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:34:1
+   34| <Baz foo="foo" bar="bar" />; // Missing baz
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:23:37
+   23| const Baz = withStyle(Bar, (_props: {baz: "baz"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:36:2
+
+Cannot create `Baz` element because string [1] is incompatible with string literal `baz` [2] in property `baz`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:36:2
+   36| <Baz foo="foo" bar="bar" baz="notbaz" />; // Wrong baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:36:30
+   36| <Baz foo="foo" bar="bar" baz="notbaz" />; // Wrong baz
+                                    ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:23:43
+   23| const Baz = withStyle(Bar, (_props: {baz: "baz"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:43:2
+
+Cannot create `Qux` element because property `foo` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:43:2
+   43| <Qux bar="bar" baz="baz" qux="qux" />; // Missing foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:43:1
+   43| <Qux bar="bar" baz="baz" qux="qux" />; // Missing foo
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/styletron-react/dist-node-cjs/index.js.flow:68:31
+   68|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}> & Props>,
+                                     ^^^^^^^^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:45:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `foo` [2] in property `foo`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:45:2
+   45| <Qux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:45:10
+   45| <Qux foo="notfoo" bar="bar" baz="baz" qux="qux" />; // Wrong foo
+                ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:6:41
+    6| class Foo extends React.Component<{foo: "foo"}> {}
+                                               ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:47:2
+
+Cannot create `Qux` element because property `bar` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:47:2
+   47| <Qux foo="foo" baz="baz" qux="qux" />; // Missing bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:47:1
+   47| <Qux foo="foo" baz="baz" qux="qux" />; // Missing bar
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:8:34
+    8| const Bar = styled(Foo, (_props: {bar: "bar"}) => ({
+                                        ^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:49:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `bar` [2] in property `bar`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:49:2
+   49| <Qux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:49:20
+   49| <Qux foo="foo" bar="notbar" baz="baz" qux="qux" />; // Wrong bar
+                          ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:8:40
+    8| const Bar = styled(Foo, (_props: {bar: "bar"}) => ({
+                                              ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:51:2
+
+Cannot create `Qux` element because property `baz` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:51:2
+   51| <Qux foo="foo" bar="bar" qux="qux" />; // Missing baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:51:1
+   51| <Qux foo="foo" bar="bar" qux="qux" />; // Missing baz
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:23:37
+   23| const Baz = withStyle(Bar, (_props: {baz: "baz"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:53:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `baz` [2] in property `baz`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:53:2
+   53| <Qux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:53:30
+   53| <Qux foo="foo" bar="bar" baz="notbaz" qux="qux" />; // Wrong baz
+                                    ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:23:43
+   23| const Baz = withStyle(Bar, (_props: {baz: "baz"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:55:2
+
+Cannot create `Qux` element because property `qux` is missing in props [1] but exists in object type [2].
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:55:2
+   55| <Qux foo="foo" bar="bar" baz="baz" />; // Missing qux
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:55:1
+   55| <Qux foo="foo" bar="bar" baz="baz" />; // Missing qux
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:40:37
+   40| const Qux = withStyle(Baz, (_props: {qux: "qux"}) => ({color: "red"}));
+                                           ^^^^^^^^^^^^ [2]
+
+
+Error ----------------------------------------------- packages/flow-type-tests/__tests__/fixtures/component-base.js:57:2
+
+Cannot create `Qux` element because string [1] is incompatible with string literal `qux` [2] in property `qux`.
+[incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:57:2
+   57| <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+        ^^^
+
+References:
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:57:40
+   57| <Qux foo="foo" bar="bar" baz="baz" qux="notqux" />; // Wrong qux
+                                              ^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/component-base.js:40:43
+   40| const Qux = withStyle(Baz, (_props: {qux: "qux"}) => ({color: "red"}));
+                                                 ^^^^^ [2]
+
+
+
+Found 18 errors
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches

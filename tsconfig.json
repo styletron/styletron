@@ -1,0 +1,23 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/styletron-engine-atomic"
+    },
+    {
+      "path": "./packages/styletron-engine-monolithic"
+    },
+    {
+      "path": "./packages/styletron-engine-snapshot"
+    },
+    {
+      "path": "./packages/styletron-react"
+    },
+    {
+      "path": "./packages/styletron-standard"
+    },
+    {
+      "path": "./packages/typescript-type-tests"
+    }
+  ]
+}

@@ -4,29 +4,26 @@
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
-  "files": [
-    "dist",
-    "src",
-    "!__tests__"
-  ],
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.es.js",
+  "files": [
+    "dist-browser-cjs",
+    "dist-browser-esm",
+    "dist-node-cjs",
+    "dist-node-esm",
+    "src",
+    "!**/__tests__",
+    "lib"
+  ],
+  "main": "./dist-node-cjs/index.js",
+  "module": "./dist-node-esm/index.js",
+  "types": "./lib/index.d.ts",
   "browser": {
-    "./dist/index.js": "./dist/browser.es5.js",
-    "./dist/index.es.js": "./dist/browser.es5.es.js"
-  },
-  "es2015": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2015.es.js"
-  },
-  "es2017": {
-    "./dist/browser.es5.es.js": "./dist/browser.es2017.es.js",
-    "./dist/browser.es2015.es.js": "./dist/browser.es2017.es.js"
+    "./dist-node-cjs/index.js": "./dist-browser-cjs/index.js",
+    "./dist-node-esm/index.js": "./dist-browser-esm/index.js"
   },
   "scripts": {
-    "build": "cup build --force-flow",
-    "pretest": "cup build-tests",
-    "test": "unitest --node=dist-tests/node.js --browser=dist-tests/browser.js",
+    "build": "cup build --skip-flow && cp ./src/index.js.flow ./dist-node-cjs/",
+    "test": "jest",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -34,9 +31,12 @@
     "styletron-standard": "^3.0.5"
   },
   "devDependencies": {
-    "create-universal-package": "3.2.4",
-    "tape": "4.9.1",
-    "unitest": "^2.1.1"
+    "@babel/plugin-transform-flow-strip-types": "^7.17.12",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "create-universal-package": "^4.3.0",
+    "@types/jest": "^27.5.1",
+    "jest": "^27.5.1"
   },
   "license": "MIT"
 }

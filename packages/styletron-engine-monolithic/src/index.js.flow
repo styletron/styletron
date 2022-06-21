@@ -1,0 +1,91 @@
+// @flow
+
+import type {
+  StandardEngine,
+  KeyframesObject,
+  FontFaceObject,
+  StyleObject,
+} from "styletron-standard";
+
+
+type Options = {
+  nonce?: string,
+  container: Element,
+  speedy?: boolean,
+};
+
+
+declare class StyleSheet {
+  isSpeedy: boolean;
+  ctr: number;
+  tags: HTMLStyleElement[];
+  container: Element;
+  nonce: string | void;
+  before: Element | null;
+  constructor(options: Options): void;
+  flush(): void;
+}
+
+type hydrateT =
+  | HTMLCollection<HTMLStyleElement>
+  | Array<HTMLStyleElement>
+  | NodeList<HTMLStyleElement>;
+
+type optionsT = {
+  hydrate?: hydrateT,
+  container?: Element,
+  prefix?: string,
+  strict?: boolean,
+  speedy?: boolean,
+};
+
+type cacheT = {
+  [key: string]: true,
+};
+
+declare export class Client implements StandardEngine {
+  container: Element;
+  opts: optionsT;
+  styleSheet: StyleSheet;
+  cache: cacheT;
+
+  constructor(opts?: optionsT): void;
+
+  renderStyle(styles: StyleObject): string;
+
+  renderFontFace(fontFace: FontFaceObject): string;
+
+  renderKeyframes(keyframes: KeyframesObject): string;
+}
+
+
+type ServerSheetT = {|
+  css: string,
+  attrs: {[string]: string},
+|};
+
+export type ServerOptionsT = {
+  prefix?: string,
+  strict?: boolean,
+};
+
+export type SeverCacheT = {
+  [key: string]: string,
+};
+
+declare export class Server implements StandardEngine {
+  cache: SeverCacheT;
+  opts: ServerOptionsT;
+
+  constructor(opts?: ServerOptionsT): void;
+
+  renderStyle(styles: StyleObject): string ;
+
+  renderFontFace(fontFace: FontFaceObject): string;
+  renderKeyframes(keyframes: KeyframesObject): string;
+  getStylesheets(): Array<ServerSheetT>;
+  getStylesheetsHtml(className?: string): string;
+
+  getCss():string;
+}
+

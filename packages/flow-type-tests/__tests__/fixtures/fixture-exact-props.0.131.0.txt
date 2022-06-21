@@ -1,0 +1,23 @@
+Error -------------------------------------------------- packages/flow-type-tests/__tests__/fixtures/exact-props.js:15:2
+
+Cannot create `MyStyledComponent` element because property `invalidProp` is missing in object type [1] but exists in
+props [2]. [incompatible-use]
+
+   packages/flow-type-tests/__tests__/fixtures/exact-props.js:15:2
+   15| <MyStyledComponent foo={42} invalidProp={42} />; // Should fail, not in props
+        ^^^^^^^^^^^^^^^^^
+
+References:
+   packages/styletron-react/dist-node-cjs/index.js.flow:64:31
+   64|   ): StyletronComponent<$Diff<ElementConfig<Base>, {className: any}>>,
+                                     ^^^^^^^^^^^^^^^^^^^ [1]
+   packages/flow-type-tests/__tests__/fixtures/exact-props.js:15:1
+   15| <MyStyledComponent foo={42} invalidProp={42} />; // Should fail, not in props
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [2]
+
+
+
+Found 1 error
+
+Only showing the most relevant union/intersection branches.
+To see all branches, re-run Flow with --show-all-branches

@@ -4,14 +4,13 @@
   "version": "1.0.25",
   "license": "MIT",
   "scripts": {
-    "test": "unitest --node=__tests__/assert-flow-message.node.js"
+    "test": "tape __tests__/assert-flow-message.node.js"
   },
   "dependencies": {
     "styletron-react": "^6.0.2",
     "styletron-standard": "^3.0.5"
   },
   "devDependencies": {
-    "tape": "^4.9.2",
-    "unitest": "^2.1.1"
+    "tape": "^4.9.2"
   }
 }

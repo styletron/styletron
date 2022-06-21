@@ -8,11 +8,12 @@ const Foo = styled("div", (props: {foo: "foo"}) => ({
 }));
 const Bar = withWrapper(
   Foo,
-  StyledComponent => (props: {foo: "foo", bar: "bar"}) => (
-    <div>
-      <StyledComponent {...props} />
-    </div>
-  ),
+  StyledComponent => (props: {foo: "foo", bar: "bar"}) =>
+    (
+      <div>
+        <StyledComponent {...props} />
+      </div>
+    ),
 );
 
 // $FlowFixMe

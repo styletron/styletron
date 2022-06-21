@@ -8,12 +8,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow-version: [0.110.0, 0.111.3, 0.112.0, 0.113.0, 0.114.0, 0.115.0, 0.116.1, 0.117.0]
+        flow-version: [0.110.0, 0.111.3, 0.112.0, 0.113.0, 0.114.0, 0.115.0, 0.116.1, 0.117.0, 0.131.0]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: 10.x
+        node-version: 16.x
     - run: yarn install
     - run: yarn bootstrap
     - run: yarn build

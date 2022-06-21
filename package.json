@@ -7,15 +7,18 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "lint": "eslint --ignore-path .gitignore .",
-    "pretest": "yarn run lint && yarn run flow",
+    "lint": "eslint --ignore-path .gitignore --ext js,ts,tsx .",
+    "pretest": "yarn run lint && yarn run tscheck && yarn run flow",
     "test": "lerna run test",
     "build": "lerna run build",
     "flow": "flow --max-warnings=0",
-    "publish": "lerna publish --npm-client=npm",
+    "tscheck": "tsc -b",
+    "publish": "tscheck && lerna publish --npm-client=npm",
     "playground": "lerna run --scope playground dev --stream"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.3.0",
     "eslint-config-cup-recommended": "^2.0.2",
@@ -23,9 +26,10 @@
     "eslint-plugin-flowtype": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "flow-bin": "^0.110.0",
+    "flow-bin": "0.131.0",
     "lerna": "^2.11.0",
-    "prettier": "^1.18.2"
+    "prettier": "^2.6.2",
+    "typescript": "^4.7.2"
   },
   "license": "MIT"
 }

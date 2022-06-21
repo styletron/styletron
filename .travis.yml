@@ -12,5 +12,6 @@ script:
   - yarn lint
   - yarn bootstrap
   - yarn build
+  - yarn tscheck
   - yarn run flow
   - yarn test
