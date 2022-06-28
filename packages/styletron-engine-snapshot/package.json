@@ -1,6 +1,6 @@
 {
   "name": "styletron-engine-snapshot",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Mo Kouli <mohamad.kouli@gmail.com>",
   "repository": "styletron/styletron",
@@ -38,7 +38,7 @@
     "@types/jest": "^27.5.1",
     "create-universal-package": "^4.3.0",
     "jest": "^27.5.1",
-    "styletron-standard": "^3.1.0-beta.0"
+    "styletron-standard": "^3.1.0-beta.1"
   },
   "license": "MIT"
 }
