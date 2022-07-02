@@ -104,7 +104,9 @@ export type WithTransformFn = <
 
 export type WithWrapperFn = <Base extends StyletronComponent<any, any>, Props>(
   component: Base,
-  wrapper: (component: Base) => ComponentType<Props>,
+  wrapper: (
+    component: Base,
+  ) => ComponentType<Props & React.ComponentProps<Base>>,
 ) => Base extends StyletronComponent<infer D, infer P>
   ? StyletronComponent<D, P & Props>
   : never;
