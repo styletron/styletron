@@ -51,7 +51,7 @@ type Styletron = {
 
 type ExtractPropTypes = <T>(StyletronComponent<T>) => T;
 
-type StyletronComponent<Props> = StatelessFunctionalComponent<Props> & {
+export type StyletronComponent<Props> = StatelessFunctionalComponent<Props> & {
   __STYLETRON__: any,
 };
 
