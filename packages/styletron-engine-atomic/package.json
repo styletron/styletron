@@ -1,6 +1,6 @@
 {
   "name": "styletron-engine-atomic",
-  "version": "1.5.0-beta.1",
+  "version": "1.5.0-beta.2",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
   "repository": "styletron/styletron",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "inline-style-prefixer": "^5.1.0",
-    "styletron-standard": "^3.1.0-beta.1"
+    "styletron-standard": "^3.1.0-beta.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-flow-strip-types": "^7.17.12",
