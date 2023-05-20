@@ -77,7 +77,7 @@ export interface StyletronComponent<D extends React.ElementType, P extends {}> {
 }
 
 export type StyledFn = {
-  <T extends React.ElementType, Props>(
+  <T extends React.ElementType, Props extends {}>(
     component: T,
     style: StyleObject | ((props: Props) => StyleObject),
   ): StyletronComponent<T, Props>;
