@@ -1,6 +1,6 @@
 {
   "name": "styletron-engine-snapshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Universal, high-performance JavaScript styles",
   "author": "Mo Kouli <mohamad.kouli@gmail.com>",
   "repository": "styletron/styletron",
