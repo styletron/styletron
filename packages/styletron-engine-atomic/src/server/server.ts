@@ -171,7 +171,7 @@ function stringify(styleRules, sortedCacheKeys) {
   sortedCacheKeys.forEach(cacheKey => {
     const rules = styleRules[cacheKey];
     if (cacheKey !== "") {
-      result += `@media ${cacheKey}{${rules}}`;
+      result += `${cacheKey}{${rules}}`;
     } else {
       result += rules;
     }
