@@ -1,6 +1,6 @@
 # [![Styletron logo](https://cdn.rawgit.com/styletron/styletron/logo/logo.svg "Styletron")](https://github.com/styletron/styletron)
 
-[![build status][build-badge]][build-href]
+![test workflow](https://github.com/styletron/styletron/actions/workflows/test.yml/badge.svg)
 
 Styletron is an universal toolkit for component-oriented styling. It falls into the CSS in JS category. Styletron works great with React but can be used with other frameworks or plain JS as well.
 
@@ -53,6 +53,3 @@ See [docs/design.md](docs/design.md) for more details.
 - [`styletron-engine-atomic`](packages/styletron-engine-atomic)
 - [`styletron-react`](packages/styletron-react)
 - [`styletron-standard`](packages/styletron-standard)
-
-[build-badge]: https://travis-ci.org/styletron/styletron.svg?branch=master
-[build-href]: https://travis-ci.org/styletron/styletron
