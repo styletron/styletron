@@ -233,23 +233,6 @@ function injectFixtureStyles(styletron) {
     },
   });
   styletron.renderStyle({
-    "@container (min-width: 800px)": {
-      color: "yellow",
-    },
-  });
-  styletron.renderStyle({
-    "@container (min-width: 600px)": {
-      color: "blue",
-    },
-  });
-  styletron.renderStyle({
-    "@container (min-width: 800px)": {
-      ":hover": {
-        color: "yellow",
-      },
-    },
-  });
-  styletron.renderStyle({
     ":hover": {
       display: "none",
     },

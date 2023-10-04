@@ -77,16 +77,13 @@ export default function injectStylePrefixed(
             media,
             pseudo + originalKey,
           );
-      } else if (
-        originalKey.substring(0, 6) === "@media" ||
-        originalKey.substring(0, 10) === "@container"
-      ) {
+      } else if (originalKey.substring(0, 6) === "@media") {
         classString +=
           " " +
           injectStylePrefixed(
             styleCache,
             originalVal as StyleObject,
-            originalKey,
+            originalKey.substr(7),
             pseudo,
           );
       }

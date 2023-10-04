@@ -29,14 +29,6 @@ test("StyletronSnapshotEngine rendering", () => {
   );
 
   expect(
-    instance.renderStyle({
-      "@container (min-width: 600px)": {color: "purple"},
-    }),
-  ).toBe(
-    "style={\n  '@container (min-width: 600px)': {\n    color: 'purple',\n  },\n}\n",
-  );
-
-  expect(
     instance.renderFontFace({
       src: "local('Roboto')",
     }),
