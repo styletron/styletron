@@ -52,59 +52,6 @@ export const setupDevtoolsExtension = () => {
 };
 
 // todo: export debug engine interface
-export class BrowserDebugEngine {
-  private worker: any;
-  private counter: number;
-  constructor(worker?) {
-    if (!worker) {
-      const workerBlob = new Blob(
-        [
-          `importScripts("https://unpkg.com/css-to-js-sourcemap-worker@2.0.5/worker.js")`,
-        ],
-        {type: "application/javascript"},
-      );
-      worker = new Worker(URL.createObjectURL(workerBlob));
-      worker.postMessage({
-        id: "init_wasm",
-        url: "https://unpkg.com/css-to-js-sourcemap-worker@2.0.5/mappings.wasm",
-      });
-      worker.postMessage({
-        id: "set_render_interval",
-        interval: 120,
-      });
-      if (module.hot) {
-        module.hot.addStatusHandler(status => {
-          if (status === "dispose") {
-            worker.postMessage({id: "invalidate"});
-          }
-        });
-      }
-    }
-    this.worker = worker;
-    this.counter = 0;
-    this.worker.onmessage = msg => {
-      const {id, css} = msg.data;
-      if (id === "render_css" && css) {
-        const style = document.createElement("style");
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-      }
-    };
-  }
-
-  debug({stackIndex, stackInfo}) {
-    const className = `__debug-${this.counter++}`;
-    this.worker.postMessage({
-      id: "add_mapped_class",
-      className,
-      stackInfo,
-      stackIndex,
-    });
-    return className;
-  }
-}
-
-// todo: export debug engine interface
 export class NoopDebugEngine {
   debug(): undefined {
     return;
@@ -112,4 +59,4 @@ export class NoopDebugEngine {
 }
 
 declare var __BROWSER__: boolean;
-export const DebugEngine = __BROWSER__ ? BrowserDebugEngine : NoopDebugEngine;
+export const DebugEngine = NoopDebugEngine;
